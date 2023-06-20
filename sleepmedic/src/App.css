@@ -2,9 +2,9 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.logo {
+  width: 200px; /* Adjust the width to your desired size */
+  height: auto; /* Automatically adjust the height while maintaining the aspect ratio */
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,18 +14,18 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #000000; /* Black background color */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #ffd700; /* Gold text color */
 }
 
 .App-link {
-  color: #61dafb;
+  color: #ffd700; /* Gold link color */
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +35,32 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.sleep-medic-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #1e1e1e; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  color: #ffd700; /* Gold text color */
+  text-align: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ffd700; /* Gold background color */
+  color: #000000; /* Black text color */
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #e0e0e0;
 }
