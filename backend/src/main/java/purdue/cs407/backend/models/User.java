@@ -2,6 +2,8 @@ package purdue.cs407.backend.models;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "User")
 public class User {
@@ -25,12 +27,20 @@ public class User {
     @Column(name="password", length=64)
     private String password;
 
+    @Column(name="birthday")
+    private Date birthday;
 
-    public User(int firstName, String lastName, String email, String password) {
+    @Column(name="sex", length=1)
+    private String sex;
+
+
+    public User(int firstName, String lastName, String email, String password, Date birthday, String sex) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.birthday = birthday;
+        this.sex = sex;
     }
 
     public User() {
