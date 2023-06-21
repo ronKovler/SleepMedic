@@ -100,7 +100,7 @@ function CreateAccount() {
             </div>
             <br />
             <button type="submit" className="createAccount">Create Account</button>
-            <Link to="/" style={{ color: "gold" }}>Or log in to an existing account</Link>
+            <Link to="/login" style={{ color: "gold" }}>Or log in to an existing account</Link>
         </form>
     </div>}
     </div>
