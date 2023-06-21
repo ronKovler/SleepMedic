@@ -7,6 +7,8 @@ import LoginPage from './LoginPage'
 import React from 'react';
 
 
+
+
 function Welcome() {
   let navigate = useNavigate();
   const [started, setStarted] = useState(false);
@@ -57,6 +59,9 @@ function Welcome() {
               {/* Add more language options here */}
             </div>
             <button className="btn" onClick={(e) => navigate("/login")}>Next</button>
+
+            {/* TESTING ONLY */}
+            <button className="btn" onClick={(e) => navigate("/home")}>Home</button> 
           </div>
         </div>
       )}
