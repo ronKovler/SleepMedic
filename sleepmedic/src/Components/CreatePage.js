@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { TextField } from '@mui/material';
 import "./CreatePage.css";
 
 function CreateAccount() {
@@ -26,6 +27,9 @@ function CreateAccount() {
     console.log('Creating account...');
   };
 
+  const handleConfirmData = (e) => {
+    
+  }
   return (
     <div> {next ? 
     <div className="sleep-medic-container">
@@ -71,30 +75,38 @@ function CreateAccount() {
         <form className="create-form" onSubmit={handleCreateAccount}>
             <h1>Create an Account on Sleep-Medic</h1>
             <label htmlFor="email">Email:</label>
-            <input
+            <TextField
             type="email"
             id="email"
             value={email}
+            label="Email" 
+            variant="outlined"
             onChange={(e) => setEmail(e.target.value)}
             style={{ width: "70%", height: "4%" }}
             />
-            <br />
+            <br /> <br/>
             <label htmlFor="password">Password:</label>
-            <input
+            <TextField
             type="password"
             id="password"
             value={password}
+            label="Password" 
+            variant="outlined"
             onChange={(e) => setPassword(e.target.value)}
             style={{ width: "70%", height: "4%" }}
             />
+            <br/>
             <label htmlFor="password">Confirm Password:</label>
-            <input
+            <TextField
             type="password"
             id="password"
+            label="Confirm Password" 
+            variant="outlined"
             value={confirmation}
             onChange={(e) => setConfirmation(e.target.value)}
             style={{ width: "70%", height: "4%" }}
             />
+            <br/>
             <div>
                 {Object.is(confirmation, password) ? <div style={{color: "green", backgroundColor: "black"}}>Passwords Match</div>: <div style={{color: "red", backgroundColor: "black"}}>Passwords do not Match</div>}
             </div>
