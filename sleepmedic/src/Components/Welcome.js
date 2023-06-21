@@ -56,6 +56,7 @@ function Welcome() {
               </div>
               {/* Add more language options here */}
             </div>
+            <button className="btn" onClick={(e) => navigate("/login")}>Next</button>
           </div>
         </div>
       )}
