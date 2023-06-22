@@ -43,9 +43,9 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #1e1e1e; 
+  background-color: #002060; 
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-  color: #ffd700; /* Gold text color */
+  color: #ffffff; /* Gold text color */
   text-align: center;
 }
 
