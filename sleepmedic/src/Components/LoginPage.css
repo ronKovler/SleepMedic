@@ -6,9 +6,9 @@
     position: relative;
     width: 25%;
     height: 55%;
-    background-color: rgb(104, 104, 104); 
-    color: #ffd700; /* Gold text color */
-    box-shadow: 0px 4px 8px rgba(156, 156, 156);
+    background-color: rgb(62, 62, 62); 
+    color: white;
+    box-shadow: 0px 4px 8px rgb(84, 83, 83); 
     border-radius: 1rem;
   }
   
@@ -18,7 +18,7 @@
     width: 7rem;
     height: 3rem;
     border-radius: 0.25em;
-    background-color: #1e1e1e;  /* Black background color */
+    background-color: #c4c3c3;  /* Black background color */
     display: inline-flex;
     background-position: center;
     background-size: contain;
@@ -29,7 +29,7 @@
   .login {
     width: 40%;
     height: 3em;
-    background-color: #ffd700; /* Gold background color */
+    background-color: maroon; /* Gold background color */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,4 +37,6 @@
     border-radius: 0.25em;
     cursor: pointer;
   }
+  
+
   

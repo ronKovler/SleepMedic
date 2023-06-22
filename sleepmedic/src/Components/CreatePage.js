@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TextField } from '@mui/material';
+import { TextField, Button } from '@mui/material';
 import axios from 'axios';
 import { AuthProvider } from 'react-auth-kit';
 import "./CreatePage.css";
@@ -11,6 +11,7 @@ function CreateAccount() {
     const [password, setPassword] = useState('');
     const [confirmation, setConfirmation] = useState('');
     const [next, setNext] = useState(false);
+    const [matchCheck, setMatchCheck] = useState(false);
     var attempts = 0;
 
     //Second Part (Account Details)
@@ -116,6 +117,7 @@ function CreateAccount() {
                 variant="outlined"
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
+                color="secondary"
                 />
                 <br /> <br/>
                 <label htmlFor="password">Password:</label>
@@ -127,25 +129,36 @@ function CreateAccount() {
                 variant="outlined"
                 onChange={(e) => setPassword(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
+                color="secondary"
                 />
                 <br/>
-                <label htmlFor="password">Confirm Password:</label>
-                <TextField
+                <label style={{color:"white"}}>Confirm Password:</label>
+                {Object.is(confirmation, password) ? <TextField
                 type="password"
-                id="password"
+                id="confirmPassword"
                 label="Confirm Password" 
                 variant="outlined"
                 value={confirmation}
                 onChange={(e) => setConfirmation(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
-                />
+                color="secondary"
+                /> : <TextField
+                type="password"
+                error
+                id="confirmPassword"
+                label="Confirm Password" 
+                variant="outlined"
+                value={confirmation}
+                onChange={(e) => setConfirmation(e.target.value)}
+                style={{ width: "70%", height: "4%" }}
+                color="secondary"
+                helperText="These passwords do not match!"
+                />}
                 <br/>
-                <div>
-                    {Object.is(confirmation, password) ? <div style={{color: "green", backgroundColor: "black"}}>Passwords Match</div>: <div style={{color: "red", backgroundColor: "black"}}>Passwords do not Match</div>}
-                </div>
+
                 <br />
-                <button type="submit" className="createAccount">Create Account</button>
-                <Link to="/login" style={{ color: "gold" }}>Or log in to an existing account</Link>
+                <Button type="submit" variant="contained" color="primary">Create Account</Button>
+                <Link to="/login" style={{ color: "white" }}>Or log in to an existing account</Link>
             </form>
         </div>}
         </div>
