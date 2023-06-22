@@ -30,15 +30,21 @@ function CreateAccount() {
     };
 
     const handleConfirmData = async (e) => {
+        var values = {
+            "firstName":firstname, 
+            "lastName":lastname,
+            "email": email,
+            "password": password,
+            "birthday": birth,
+            "sex": sex
+        }
 
+        var jsonString = JSON.stringify(values);
+        var json = JSON.parse(jsonString);
+        console.log(json);
         try {
             let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/create_account", {
-                firstName:firstname, 
-                lastName:lastname,
-                email: email,
-                password: password,
-                birthday: birth,
-                sex: sex,
+                json,
             });
         } catch (err) {
             console.log("ACCOUNT CREATE FAILED BACKEND CALL");
@@ -61,13 +67,13 @@ function CreateAccount() {
                 <br/>
                 <div className='account-details'>
                     &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)} placeholder='First Name'/>
+                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)} placeholder='First Name'/>
                     &nbsp;
-                    <input type="text" value={lastname} onChange={(e) => setLastName(e.targetValue)} placeholder='Last Name'/>
+                    <input type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder='Last Name'/>
                     &nbsp;
-                    <input type="date" value={birth} onChange={(e) => setBirth(e.targetValue)} placeholder='Birthdate'/>
+                    <input type="date" value={birth} onChange={(e) => setBirth(e.target.value)} placeholder='Birthdate'/>
                     &nbsp;
-                    <input type="text" value={sex} onChange={(e) => setSex(e.targetValue)} placeholder='M/F/O'/>
+                    <input type="text" value={sex} onChange={(e) => setSex(e.target.value)} placeholder='M/F/O'/>
                     &nbsp;
                 </div>
                 <br/><br/><br/>
@@ -75,19 +81,19 @@ function CreateAccount() {
                     <h3>Please answer the follwing to the best of your knowledge.</h3>
                     <h4>On average:</h4>
                     How many hours do you sleep each night? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)}/>
+                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
                     <br/>
                     How many times do you wake up each night? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)}/>
+                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
                     <br/>
                     How long do you spend trying to fall asleep? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)}/>
+                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
                     <br/>
                     What time do you go to bed? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)}/>
+                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
                     <br/>
                     What time do you wake up? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)}/>
+                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
                     <button onClick={(e) => handleConfirmData(e)}>Submit</button>
                 </div>
                 <br/>
