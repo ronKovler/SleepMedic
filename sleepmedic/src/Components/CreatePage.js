@@ -43,7 +43,7 @@ function CreateAccount() {
         var json = JSON.parse(jsonString);
         console.log(json);
         try {
-            let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/create_account", {
+            let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/create_account", {
                 json,
             });
         } catch (err) {
