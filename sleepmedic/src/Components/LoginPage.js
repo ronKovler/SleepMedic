@@ -14,12 +14,15 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     // Handle login logic here
-    
+    var headers = {
+      "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+      "Content-Type": 'application/json; charset=utf-8',
+    }
     try {
       let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/", {
         email: email,
-        password: password
-      });
+        password: password,
+      }, {headers});
 
       signIn({
         token: res.data.token,
