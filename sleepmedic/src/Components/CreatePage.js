@@ -45,7 +45,11 @@ function CreateAccount() {
         try {
             let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/create_account", {
                 json,
-            });
+            },
+            { headers: {
+                "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+                "Content-Type": 'application/json; charset=utf-8',
+            }});
         } catch (err) {
             console.log("ACCOUNT CREATE FAILED BACKEND CALL");
         }
