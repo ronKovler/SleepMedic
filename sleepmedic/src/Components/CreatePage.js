@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import axios from 'axios';
+import { AuthProvider } from 'react-auth-kit';
 import "./CreatePage.css";
 
 function CreateAccount() {
@@ -29,7 +30,7 @@ function CreateAccount() {
     };
 
     const handleConfirmData = async (e) => {
-        let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/", {
+        let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/account/create_account", {
             firstName:firstname, 
             lastName:lastname,
             email: email,
