@@ -30,15 +30,19 @@ function CreateAccount() {
     };
 
     const handleConfirmData = async (e) => {
-        let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/account/create_account", {
-            firstName:firstname, 
-            lastName:lastname,
-            email: email,
-            password: password,
-            birthday: birth,
-            sex: sex,
-        });
 
+        try {
+            let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/create_account", {
+                firstName:firstname, 
+                lastName:lastname,
+                email: email,
+                password: password,
+                birthday: birth,
+                sex: sex,
+            });
+        } catch (err) {
+            console.log("ACCOUNT CREATE FAILED BACKEND CALL");
+        }
         /*if(res){
             alert("success");
             

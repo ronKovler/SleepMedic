@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TextField }  from "@mui/material/";
-import { AuthProvider } from 'react-auth-kit';
 import { useSignIn } from 'react-auth-kit';
 import axios from "axios";
 import "./LoginPage.css";
@@ -16,7 +15,6 @@ function Login() {
     // Handle login logic here
     
     try {
-      
       let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/", {
         email: email,
         password: password
