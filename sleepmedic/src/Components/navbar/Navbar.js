@@ -19,8 +19,17 @@ import { createTheme } from '@mui/material/styles';
 const barTheme = createTheme({
     palette: {
       primary: {
-        main: yellow[700],
+        light: '#ff7961',
+        main: '#ba000d',
+        dark: '#ba000d',
+        contrastText: '#000',
       },
+      info: {
+        light: '#000000',
+        main: '#000000',
+        dark: '#000000',
+        contrastText: '#000000',
+      }
     },
 });
 
@@ -28,21 +37,21 @@ const barTheme = createTheme({
 
 export default function Navbar() {
     return (
-        <AppBar position="static" theme={barTheme} sx={{fontStyle: 'italic'}}>
+        <AppBar position="static" theme={barTheme} sx={{fontStyle: 'italic',}}>
             <Toolbar>
                 {/* PUT settings here? */}
-                <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold', color: 'white'}}>
                     Sleep Medic
                 </Typography>
                 
                 {/* When more buttons added, probably use ButtonGroup for better UI */}
-                <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
                     <SignalCellularAltIcon />
                 </IconButton>
-                <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
                     <LogoutIcon /> {/* Hide Logout to left menu button??? */}
                 </IconButton>
             </Toolbar>
