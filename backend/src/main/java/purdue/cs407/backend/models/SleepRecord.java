@@ -6,14 +6,14 @@ import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-@Table(name = "SleepRecord")
+@Table(name = "sleep_record")
 public class SleepRecord {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "record_ID")
     /* TABLE indicates that the persistence provider must assign primary keys
     for the entity using an underlying database table to ensure uniqueness */
-    private int recordID;
+    private Long recordID;
 
     @Column(name="sleep_time")
     private int sleepTime;
@@ -161,7 +161,7 @@ public class SleepRecord {
         this.dreams = dreams;
     }
 
-    public int getRecordID() {
+    public Long getRecordID() {
         return recordID;
     }
 }

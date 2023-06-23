@@ -6,12 +6,12 @@ import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-@Table(name = "Goal")
+@Table(name = "goal")
 public class Goal {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "goal_ID")
-    private int goalID;
+    private Long goalID;
 
     @Column(name="sleep_time")
     private int sleepTime;
