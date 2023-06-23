@@ -1,7 +1,7 @@
 //import logo from '../logo.svg';
 import "./HomePage.css";
 import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import {TextField } from "@mui/material/";
 import axios from "axios";
 import { valueToPercent } from '@mui/base';
@@ -23,4 +23,4 @@ function OpenHomePage() {
     );
 }
 
-export default OpenProfilePage;
+export default OpenHomePage;
