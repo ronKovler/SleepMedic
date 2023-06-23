@@ -50,7 +50,7 @@ export default function Home() {
 
                     {/* Weekly Advices */}
                     {/* Create New Record Button */}
-                    
+
                 </Grid>
                 </Grid>
 
@@ -60,7 +60,7 @@ export default function Home() {
                 </Grid>
 
             </Grid>
-            
+
         </Box>
     )
 }

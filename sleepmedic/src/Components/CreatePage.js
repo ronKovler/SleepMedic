@@ -64,7 +64,7 @@ function CreateAccount() {
         }*/
     }
     return (
-        <div> {next ? 
+        <div> {next ?
         <div className="sleep-medic-container">
             <h1>Account Details</h1>
             <div className='account-details-box'>
@@ -101,9 +101,9 @@ function CreateAccount() {
                 </div>
                 <br/><br/><br/>
                 <div>
-                    <h3>Please answer the follwing to the best of your knowledge.</h3>
+                    <h3>Please answer the following to the best of your knowledge.</h3>
                     <h4>On average:</h4>
-                    How many hours do you sleep each night? &nbsp;
+                    How many hours do you sleep each night? &nbsp;                 
                     
                     <br/>
                     How many times do you wake up each night? &nbsp;
@@ -132,7 +132,7 @@ function CreateAccount() {
                 type="email"
                 id="email"
                 value={email}
-                label="Email" 
+                label="Email"
                 variant="outlined"
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
@@ -144,7 +144,7 @@ function CreateAccount() {
                 type="password"
                 id="password"
                 value={password}
-                label="Password" 
+                label="Password"
                 variant="outlined"
                 onChange={(e) => setPassword(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
