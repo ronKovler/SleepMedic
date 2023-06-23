@@ -17,7 +17,7 @@ function OpenHomePage() {
             <div className="home-page-form">
                 <h1>Sleep-Medic Home Page</h1>
                 <br/>
-                <Link to="/editgoal" style={{color: "gold"}}>Edit Your Goal</Link>
+                <Link to="/profilepage" style={{color: "gold"}}>Profile Page</Link>
             </div>
         </div>
     );

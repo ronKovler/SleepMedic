@@ -68,7 +68,7 @@ function CreateAccount() {
                 </div>
                 <br/><br/><br/>
                 <div>
-                    <h3>Please answer the follwing to the best of your knowledge.</h3>
+                    <h3>Please answer the following to the best of your knowledge.</h3>
                     <h4>On average:</h4>
                     How many hours do you sleep each night? &nbsp;
                     <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)}/>

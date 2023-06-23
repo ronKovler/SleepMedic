@@ -66,6 +66,8 @@ function Login() {
         <br/>
         <button type="submit" className="login">Login</button>
         <Link to="/createaccount" style={{color: "gold"}}>Or create an account</Link>
+        <br/>
+        <Link to="/homepage" style={{color: "gold"}}>Temporary link to homepage</Link>
       </form>
     </div>
   );
