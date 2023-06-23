@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Select } from '@mui/material';
 import axios from 'axios';
 import { AuthProvider } from 'react-auth-kit';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
 import "./CreatePage.css";
 
 function CreateAccount() {
@@ -68,14 +71,32 @@ function CreateAccount() {
                 <br/>
                 <br/>
                 <div className='account-details'>
+
                     &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)} placeholder='First Name'/>
+                    <TextField required color="secondary" type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)} placeholder='First Name'/>
                     &nbsp;
-                    <input type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder='Last Name'/>
+                    <TextField required color="secondary" type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder='Last Name'/>
                     &nbsp;
-                    <input type="date" value={birth} onChange={(e) => setBirth(e.target.value)} placeholder='Birthdate'/>
+                    <TextField required color="secondary" type="date" value={birth} onChange={(e) => setBirth(e.target.value)} placeholder='Birthdate'/>
                     &nbsp;
-                    <input type="text" value={sex} onChange={(e) => setSex(e.target.value)} placeholder='M/F/O'/>
+                    <FormControl required sx={{ m: 0, minWidth: 100 }}>
+                    <InputLabel color="secondary" id="sex-label">Sex</InputLabel>
+                    <Select
+                        labelId="Sex"
+                        id="demo-simple-select-helper"
+                        value={sex}
+                        label="Sex"
+                        onChange={(e) => setSex(e.target.value)}
+                        color="secondary"
+                        >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={"M"}>Male</MenuItem>
+                        <MenuItem value={"F"}>Female</MenuItem>
+                        <MenuItem value={"O"}>Other</MenuItem>
+                    </Select>
+                    </FormControl>
                     &nbsp;
                 </div>
                 <br/><br/><br/>
@@ -83,20 +104,21 @@ function CreateAccount() {
                     <h3>Please answer the follwing to the best of your knowledge.</h3>
                     <h4>On average:</h4>
                     How many hours do you sleep each night? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
+                    
                     <br/>
                     How many times do you wake up each night? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
+                    
                     <br/>
                     How long do you spend trying to fall asleep? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
+                    
                     <br/>
                     What time do you go to bed? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
+                    
                     <br/>
                     What time do you wake up? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
-                    <button onClick={(e) => handleConfirmData(e)}>Submit</button>
+                    <br/>
+                    <br/>
+                    <Button variant="contained" onClick={(e) => handleConfirmData(e)}>Submit</Button>
                 </div>
                 <br/>
             </div>
