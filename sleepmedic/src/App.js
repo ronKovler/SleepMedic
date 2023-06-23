@@ -4,6 +4,7 @@ import {Routes, Route } from 'react-router-dom';
 import LoginPage from './Components/LoginPage';
 import CreateAccount from './Components/CreatePage';
 import Welcome from './Components/Welcome';
+import { createTheme, colors, ThemeProvider } from '@mui/material';
 import OpenHomePage from './Components/HomePage';
 import OpenProfilePage from './Components/ProfilePage';
 import EditGoal from './Components/EditGoalPage';
