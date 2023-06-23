@@ -77,7 +77,7 @@ function CreateAccount() {
                     &nbsp;
                     <TextField required color="secondary" type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder='Last Name'/>
                     &nbsp;
-                    <input type="date" value={birth} onChange={(e) => setBirth(e.targetValue)} placeholder='Birthdate'/>
+                    <TextField required color="secondary" type="date" value={birth} onChange={(e) => setBirth(e.target.value)} placeholder='Birthdate'/>
                     &nbsp;
                     <FormControl required sx={{ m: 0, minWidth: 100 }}>
                     <InputLabel color="secondary" id="sex-label">Sex</InputLabel>

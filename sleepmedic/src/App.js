@@ -20,7 +20,6 @@ function App() {
         <Route path="/login" element={<LoginPage/>} />
         <Route path="/createaccount" element={<CreateAccount/>} />
         <Route path="/home" element={<Home/>} />
-        //<Route path="/homepage" element={<OpenHomePage/>} />
         <Route path="/profilepage" element={<OpenProfilePage/>} />
         <Route path="/editgoal" element={<EditGoal/>} />
         <Route path="/createreminder" element={<CreateRem/>} />

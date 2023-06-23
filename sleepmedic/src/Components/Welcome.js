@@ -42,8 +42,8 @@ function Welcome() {
       {started && (
         <div>
           <div className="LanguageSelect-form">
-            <label htmlFor="language">Select Language:</label>
             <div className="language-list">
+            <h2>Select Language:</h2>
               <div onClick={(e) => handleLanguageChange('English')}>
                 {Object.is("English", selectedLanguage) ? "✅ English" : "English"}
               </div>
@@ -57,7 +57,9 @@ function Welcome() {
               </div>
               {/* Add more language options here */}
             </div>
-            <button className="btn" onClick={(e) => navigate("/login")}>Next</button>
+            <br/>
+            <Button variant="contained" color="primary" onClick={(e) => navigate("/login")}>Next</Button>
+            <Button variant="contained" color="primary" onClick={(e) => navigate("/home")}>Home</Button>
           </div>
         </div>
       )}

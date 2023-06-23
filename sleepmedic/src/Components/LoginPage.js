@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TextField }  from "@mui/material/";
-import { AuthProvider } from 'react-auth-kit';
 import { useSignIn } from 'react-auth-kit';
 import axios from "axios";
 import "./LoginPage.css";
-import { valueToPercent } from '@mui/base';
+import { Button } from '@mui/material';
+import { styled } from '@mui/system';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -14,13 +14,15 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     // Handle login logic here
-    
+    var headers = {
+          "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+          "Content-Type": 'application/json; charset=utf-8',
+    }
     try {
-      
       let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/", {
         email: email,
-        password: password
-      });
+        password: password,
+      }, {headers});
 
       signIn({
         token: res.data.token,
@@ -36,6 +38,14 @@ function Login() {
 
     console.log('Logging in...');
   };
+  //Styled MUI
+  const StyledButton = styled(Button)(() => ({
+
+  }));
+
+  const StyledTextField = styled(TextField)(() => ({
+
+  }));
 
 
   return (
@@ -50,6 +60,7 @@ function Login() {
           label="Username" 
           variant="outlined"
           onChange={(e) => setEmail(e.target.value)}
+          color="secondary"
           style={{width: "70%", height: "4%"}}
         />
         <br/>
@@ -61,13 +72,12 @@ function Login() {
           label="Password"
           variant="outlined"
           onChange={(e) => setPassword(e.target.value)}
+          color="secondary"
           style={{width: "70%", height: "4%"}}
         />
         <br/>
-        <button type="submit" className="login">Login</button>
-        <Link to="/createaccount" style={{color: "gold"}}>Or create an account</Link>
-        <br/>
-        <Link to="/homepage" style={{color: "gold"}}>Temporary link to homepage</Link>
+        <Button variant="contained" color="primary">Login</Button>
+        <Link to="/createaccount" style={{color: "white"}}>Or create an account</Link>
       </form>
     </div>
   );
