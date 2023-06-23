@@ -4,8 +4,8 @@ import {Routes, Route } from 'react-router-dom';
 import LoginPage from './Components/LoginPage';
 import CreateAccount from './Components/CreatePage';
 import Welcome from './Components/Welcome';
+import Home from "./Components/home/Home"
 import { createTheme, colors, ThemeProvider } from '@mui/material';
-import OpenHomePage from './Components/HomePage';
 import OpenProfilePage from './Components/ProfilePage';
 import EditGoal from './Components/EditGoalPage';
 import CreateRem from './Components/CreateReminderPage';
@@ -19,7 +19,8 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<LoginPage/>} />
         <Route path="/createaccount" element={<CreateAccount/>} />
-        <Route path="/homepage" element={<OpenHomePage/>} />
+        <Route path="/home" element={<Home/>} />
+        //<Route path="/homepage" element={<OpenHomePage/>} />
         <Route path="/profilepage" element={<OpenProfilePage/>} />
         <Route path="/editgoal" element={<EditGoal/>} />
         <Route path="/createreminder" element={<CreateRem/>} />

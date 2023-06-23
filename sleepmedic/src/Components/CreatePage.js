@@ -34,15 +34,26 @@ function CreateAccount() {
     };
 
     const handleConfirmData = async (e) => {
-        let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/account/create_account", {
-            firstName:firstname, 
-            lastName:lastname,
-            email: email,
-            password: password,
-            birthday: birth,
-            sex: sex,
-        });
+        const values = {
+                    firstName:firstname,
+                    lastName:lastname,
+                    email: email,
+                    password: password,
+                    birthday: birth,
+                    sex: sex
+        }
 
+        var stringify = JSON.stringify(values);
+        console.log(stringify);
+        var headers = {
+            "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+            "Content-Type": 'application/json; charset=utf-8',
+        }
+        try {
+            let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/create_account", stringify, {headers})
+        } catch (err) {
+            console.log("ACCOUNT CREATE FAILED BACKEND CALL");
+        }
         /*if(res){
             alert("success");
             
@@ -53,21 +64,39 @@ function CreateAccount() {
         }*/
     }
     return (
-        <div> {next ? 
+        <div> {next ?
         <div className="sleep-medic-container">
             <h1>Account Details</h1>
             <div className='account-details-box'>
                 <br/>
                 <br/>
                 <div className='account-details'>
+
                     &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)} placeholder='First Name'/>
+                    <TextField required color="secondary" type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)} placeholder='First Name'/>
                     &nbsp;
-                    <input type="text" value={lastname} onChange={(e) => setLastName(e.targetValue)} placeholder='Last Name'/>
+                    <TextField required color="secondary" type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder='Last Name'/>
                     &nbsp;
                     <input type="date" value={birth} onChange={(e) => setBirth(e.targetValue)} placeholder='Birthdate'/>
                     &nbsp;
-                    <input type="text" value={sex} onChange={(e) => setSex(e.targetValue)} placeholder='M/F/O'/>
+                    <FormControl required sx={{ m: 0, minWidth: 100 }}>
+                    <InputLabel color="secondary" id="sex-label">Sex</InputLabel>
+                    <Select
+                        labelId="Sex"
+                        id="demo-simple-select-helper"
+                        value={sex}
+                        label="Sex"
+                        onChange={(e) => setSex(e.target.value)}
+                        color="secondary"
+                        >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={"M"}>Male</MenuItem>
+                        <MenuItem value={"F"}>Female</MenuItem>
+                        <MenuItem value={"O"}>Other</MenuItem>
+                    </Select>
+                    </FormControl>
                     &nbsp;
                 </div>
                 <br/><br/><br/>
@@ -75,20 +104,21 @@ function CreateAccount() {
                     <h3>Please answer the following to the best of your knowledge.</h3>
                     <h4>On average:</h4>
                     How many hours do you sleep each night? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)}/>
+
                     <br/>
                     How many times do you wake up each night? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)}/>
+
                     <br/>
                     How long do you spend trying to fall asleep? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)}/>
+
                     <br/>
                     What time do you go to bed? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)}/>
+
                     <br/>
                     What time do you wake up? &nbsp;
-                    <input type="text" value={firstname} onChange={(e) => setFirstName(e.targetValue)}/>
-                    <button onClick={(e) => handleConfirmData(e)}>Submit</button>
+                    <br/>
+                    <br/>
+                    <Button variant="contained" onClick={(e) => handleConfirmData(e)}>Submit</Button>
                 </div>
                 <br/>
             </div>
@@ -102,10 +132,11 @@ function CreateAccount() {
                 type="email"
                 id="email"
                 value={email}
-                label="Email" 
+                label="Email"
                 variant="outlined"
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
+                color="secondary"
                 />
                 <br /> <br/>
                 <label htmlFor="password">Password:</label>
@@ -113,29 +144,40 @@ function CreateAccount() {
                 type="password"
                 id="password"
                 value={password}
-                label="Password" 
+                label="Password"
                 variant="outlined"
                 onChange={(e) => setPassword(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
+                color="secondary"
                 />
                 <br/>
-                <label htmlFor="password">Confirm Password:</label>
-                <TextField
+                <label style={{color:"white"}}>Confirm Password:</label>
+                {Object.is(confirmation, password) ? <TextField
                 type="password"
-                id="password"
-                label="Confirm Password" 
+                id="confirmPassword"
+                label="Confirm Password"
                 variant="outlined"
                 value={confirmation}
                 onChange={(e) => setConfirmation(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
-                />
+                color="secondary"
+                                /> : <TextField
+                                type="password"
+                                error
+                                id="confirmPassword"
+                                label="Confirm Password"
+                                variant="outlined"
+                                value={confirmation}
+                                onChange={(e) => setConfirmation(e.target.value)}
+                                style={{ width: "70%", height: "4%" }}
+                                color="secondary"
+                                helperText="These passwords do not match!"
+                                />}
                 <br/>
-                <div>
-                    {Object.is(confirmation, password) ? <div style={{color: "green", backgroundColor: "black"}}>Passwords Match</div>: <div style={{color: "red", backgroundColor: "black"}}>Passwords do not Match</div>}
-                </div>
-                <br />
-                <button type="submit" className="createAccount">Create Account</button>
-                <Link to="/login" style={{ color: "gold" }}>Or log in to an existing account</Link>
+
+                <br/>
+                <Button type="submit" variant="contained" color="primary">Create Account</Button>
+                <Link to="/login" style={{ color: "white" }}>Or log in to an existing account</Link>
             </form>
         </div>}
         </div>

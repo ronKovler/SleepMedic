@@ -2,6 +2,7 @@ import logo from '../logo.svg';
 import "./Welcome.css";
 import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { Button } from '@mui/material';
 import { useState } from 'react';
 import LoginPage from './LoginPage'
 import React from 'react';
@@ -33,7 +34,7 @@ function Welcome() {
       <img src={logo} alt="Sleep-Medic Logo" className="logo" />
       <p>Achieve better sleep and improve your well-being with Sleep-Medic App.</p>
       <br/>
-      <button onClick={(e) => handleGetStarted(e)} className="btn btn-primary">Get Started</button>
+      <Button variant="contained" color="primary" onClick={(e) => handleGetStarted(e)}>Get Started</Button>
       </div>)
       }
 
