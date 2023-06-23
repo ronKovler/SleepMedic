@@ -15,8 +15,8 @@ function Login() {
     e.preventDefault();
     // Handle login logic here
     var headers = {
-          "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
-          "Content-Type": 'application/json; charset=utf-8',
+      "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+      "Content-Type": 'application/json; charset=utf-8',
     }
     try {
       let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/", {
@@ -40,11 +40,11 @@ function Login() {
   };
   //Styled MUI
   const StyledButton = styled(Button)(() => ({
-
+    
   }));
 
   const StyledTextField = styled(TextField)(() => ({
-
+    
   }));
 
 

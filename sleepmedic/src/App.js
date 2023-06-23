@@ -3,6 +3,7 @@ import './App.css';
 import {Routes, Route } from 'react-router-dom';
 import LoginPage from './Components/LoginPage';
 import CreateAccount from './Components/CreatePage';
+
 import Welcome from './Components/Welcome';
 import Home from "./Components/home/Home"
 import { createTheme, colors, ThemeProvider } from '@mui/material';
@@ -10,7 +11,6 @@ import OpenProfilePage from './Components/ProfilePage';
 import EditGoal from './Components/EditGoalPage';
 import CreateRem from './Components/CreateReminderPage';
 import React from 'react';
-
 
 function App() {
   return (

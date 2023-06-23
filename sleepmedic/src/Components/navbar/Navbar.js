@@ -46,7 +46,7 @@ export default function Navbar() {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold', color: 'white'}}>
                     Sleep Medic
                 </Typography>
-
+                
                 {/* When more buttons added, probably use ButtonGroup for better UI */}
                 <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
                     <SignalCellularAltIcon />

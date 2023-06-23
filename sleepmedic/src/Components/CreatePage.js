@@ -35,12 +35,12 @@ function CreateAccount() {
 
     const handleConfirmData = async (e) => {
         const values = {
-                    firstName:firstname,
-                    lastName:lastname,
-                    email: email,
-                    password: password,
-                    birthday: birth,
-                    sex: sex
+            firstName:firstname, 
+            lastName:lastname,
+            email: email,
+            password: password,
+            birthday: birth,
+            sex: sex
         }
 
         var stringify = JSON.stringify(values);
@@ -103,17 +103,17 @@ function CreateAccount() {
                 <div>
                     <h3>Please answer the following to the best of your knowledge.</h3>
                     <h4>On average:</h4>
-                    How many hours do you sleep each night? &nbsp;
-
+                    How many hours do you sleep each night? &nbsp;                 
+                    
                     <br/>
                     How many times do you wake up each night? &nbsp;
-
+                    
                     <br/>
                     How long do you spend trying to fall asleep? &nbsp;
-
+                    
                     <br/>
                     What time do you go to bed? &nbsp;
-
+                    
                     <br/>
                     What time do you wake up? &nbsp;
                     <br/>
@@ -155,27 +155,27 @@ function CreateAccount() {
                 {Object.is(confirmation, password) ? <TextField
                 type="password"
                 id="confirmPassword"
-                label="Confirm Password"
+                label="Confirm Password" 
                 variant="outlined"
                 value={confirmation}
                 onChange={(e) => setConfirmation(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
                 color="secondary"
-                                /> : <TextField
-                                type="password"
-                                error
-                                id="confirmPassword"
-                                label="Confirm Password"
-                                variant="outlined"
-                                value={confirmation}
-                                onChange={(e) => setConfirmation(e.target.value)}
-                                style={{ width: "70%", height: "4%" }}
-                                color="secondary"
-                                helperText="These passwords do not match!"
-                                />}
+                /> : <TextField
+                type="password"
+                error
+                id="confirmPassword"
+                label="Confirm Password" 
+                variant="outlined"
+                value={confirmation}
+                onChange={(e) => setConfirmation(e.target.value)}
+                style={{ width: "70%", height: "4%" }}
+                color="secondary"
+                helperText="These passwords do not match!"
+                />}
                 <br/>
 
-                <br/>
+                <br />
                 <Button type="submit" variant="contained" color="primary">Create Account</Button>
                 <Link to="/login" style={{ color: "white" }}>Or log in to an existing account</Link>
             </form>

@@ -6,12 +6,12 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "Reminder")
+@Table(name = "reminder")
 public class Reminder {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "reminder_ID")
-    private int reminderID;
+    private Long reminderID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_ID")
@@ -53,7 +53,7 @@ public class Reminder {
         this.message = message;
     }
 
-    public int getReminderID() {
+    public Long getReminderID() {
         return reminderID;
     }
 }

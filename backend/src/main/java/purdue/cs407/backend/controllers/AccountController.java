@@ -1,44 +1,48 @@
 package purdue.cs407.backend.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import purdue.cs407.backend.models.User;
+import purdue.cs407.backend.DTO.AuthRequest;
+import purdue.cs407.backend.DTO.AuthResponse;
+import purdue.cs407.backend.DTO.RegisterRequest;
 import purdue.cs407.backend.repositories.UserRepository;
-
-import java.net.URISyntaxException;
+import purdue.cs407.backend.service.AuthService;
 
 @RestController
 @RequestMapping("/api/account/")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class AccountController {
-    @Autowired  // Autowired annotation automatically injects an instance
-    private UserRepository userRepository;
+
+    private final UserRepository userRepository;
+    private final AuthService authService;
+
+    public AccountController(UserRepository userRepository, AuthService authService ) {
+        this.userRepository = userRepository;
+        this.authService = authService;
+    }
 
 
-    /**
-     * Create account API
-     * @param newUser
-     * @return
-     * @throws URISyntaxException
-     */
+
     @RequestMapping(value="create_account", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> createAccount(@RequestBody User newUser) throws URISyntaxException {
-        HttpHeaders responseHeaders = new HttpHeaders();
+    public ResponseEntity<AuthResponse> createAccount(@RequestBody RegisterRequest request) {
 
-        // Ensure email is not already in use
-        User checkExists = userRepository.findByEmailEquals(newUser.getEmail());
-        if (checkExists != null) {
-            System.out.println("Email already used: " + checkExists.getEmail());
-            return ResponseEntity.ok().headers(responseHeaders).body(-1);
-        }
+        System.out.println("NEW ACCOUNT F:" + request.getFirstName() + " L:" + request.getLastName() + " E:" + request.getEmail() + " P:" + request.getPassword());
 
-        // Saves user to database
-        userRepository.save(newUser);
-
-        return ResponseEntity.ok().headers(responseHeaders).body(newUser.getUserID());
+        return ResponseEntity.ok(authService.register(request));
     }
+
+    @RequestMapping(value="login", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+
+        System.out.println("NEW LOGIN ATTEMPT E:" + request.getEmail() + " P:" + request.getPassword());
+
+        return ResponseEntity.ok(authService.authenticate(request));
+    }
+
+
+
 }

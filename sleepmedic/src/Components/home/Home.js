@@ -32,11 +32,11 @@ export default function Home() {
                             <Typography variant="h4" component="div"
                                         sx={{flexGrow: 1,
                                             fontWeight: 'bold',
-                                            color: 'black',
+                                            color: 'black', 
                                             paddingTop: '10px',
                                             paddingBottom: '10px',
                                             textAlign: 'center', color: 'white'}}>
-                                {username}
+                                {username} 
                             </Typography>
                         </Paper>
                     </Grid>
