@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { TextField }  from "@mui/material/";
 import { useSignIn } from 'react-auth-kit';
 import axios from "axios";
@@ -11,6 +11,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const signIn = useSignIn();
+  const navigate = useNavigate(); 
   const handleLogin = async (e) => {
     e.preventDefault();
     // Handle login logic here
@@ -18,19 +19,26 @@ function Login() {
       "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
       "Content-Type": 'application/json; charset=utf-8',
     }
-    try {
-      let res = await axios.post("ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/", {
+    var loginInfo = {
         email: email,
         password: password,
-      }, {headers});
+    }
+    try {
+      let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/login",  loginInfo , {headers});
 
+
+      if (Object.is(res.data.token,"-1")) {
+        console.log("Login Failed");
+      }
       signIn({
         token: res.data.token,
         expiresIn: 3600,
         tokenType: "Bearer",
         authState: {email: email}
       })
-
+      
+      console.log(res.data);
+      navigate("/home");
     } catch (err) {
       console.log("LOGIN BACKEND CALL FAILED");
     }
@@ -76,7 +84,7 @@ function Login() {
           style={{width: "70%", height: "4%"}}
         />
         <br/>
-        <Button variant="contained" color="primary">Login</Button>
+        <Button variant="contained" color="primary" onClick={(e) => handleLogin(e)}>Login</Button>
         <Link to="/createaccount" style={{color: "white"}}>Or create an account</Link>
       </form>
     </div>
