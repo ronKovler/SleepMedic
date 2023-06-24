@@ -150,6 +150,17 @@ public class User implements UserDetails {
         this.sex = sex;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof User u)) {
+            return false;
+        }
 
+        return u.getUserID().equals(this.getUserID());
+
+    }
 
 }
