@@ -1,6 +1,7 @@
 package purdue.cs407.backend.models;
 
 import jakarta.persistence.*;
+import purdue.cs407.backend.DTO.RecordRequest;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -16,10 +17,10 @@ public class SleepRecord {
     private Long recordID;
 
     @Column(name="sleep_time")
-    private int sleepTime;
+    private double sleepTime;
 
     @Column(name="falling_time")
-    private String fallingTime;
+    private int fallingTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_ID")
@@ -55,7 +56,7 @@ public class SleepRecord {
      * @param restlessness - Int 1 - 10 of how restless sleep was
      * @param dreams - Dream diary
      */
-    public SleepRecord(int sleepTime, String fallingTime, User user, Date date, Time downTime, Time upTime, int wakeUpCount, int restlessness, String dreams) {
+    public SleepRecord(int sleepTime, int fallingTime, User user, Date date, Time downTime, Time upTime, int wakeUpCount, int restlessness, String dreams) {
         this.sleepTime = sleepTime;
         this.fallingTime = fallingTime;
         this.user = user;
@@ -78,7 +79,7 @@ public class SleepRecord {
      * @param wakeUpCount - Count of times user woke up
      * @param restlessness - Int 1 - 10 of how restless sleep was
      */
-    public SleepRecord(int sleepTime, String fallingTime, User user, Date date, Time downTime, Time upTime, int wakeUpCount, int restlessness) {
+    public SleepRecord(int sleepTime, int fallingTime, User user, Date date, Time downTime, Time upTime, int wakeUpCount, int restlessness) {
         this.sleepTime = sleepTime;
         this.fallingTime = fallingTime;
         this.user = user;
@@ -89,23 +90,35 @@ public class SleepRecord {
         this.restlessness = restlessness;
     }
 
+    public SleepRecord(RecordRequest request, User user) {
+        this.sleepTime = request.getSleepTime();
+        this.fallingTime = request.getFallingTime();
+        this.user = user;
+        this.date = request.getDate();
+        this.downTime = request.getDownTime();
+        this.upTime = request.getUpTime();
+        this.wakeUpCount = request.getWakeUpCount();
+        this.restlessness = request.getRestlessness();
+        this.dreams = request.getDreams();
+    }
+
     public SleepRecord() {
 
     }
 
-    public int getSleepTime() {
+    public double getSleepTime() {
         return sleepTime;
     }
 
-    public void setSleepTime(int sleepTime) {
+    public void setSleepTime(double sleepTime) {
         this.sleepTime = sleepTime;
     }
 
-    public String getFallingTime() {
+    public int getFallingTime() {
         return fallingTime;
     }
 
-    public void setFallingTime(String fallingTime) {
+    public void setFallingTime(int fallingTime) {
         this.fallingTime = fallingTime;
     }
 

@@ -20,5 +20,7 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Integer> {
 
     SleepRecord findByUserAndDate(User user, Date date);
 
-    SleepRecord findByRecordID(int recordID);
+    SleepRecord findByRecordID(Long recordID);
+
+    Boolean existsByUserAndDate(User user, Date date);
 }
