@@ -13,6 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { yellow } from "@mui/material/colors";
 import { createTheme } from '@mui/material/styles';
 
@@ -53,6 +54,10 @@ export default function Navbar() {
                 </IconButton>
                 <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
                     <LogoutIcon /> {/* Hide Logout to left menu button??? */}
+                </IconButton>
+
+                <IconButton href="/profilepage" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
+                    <AccountBoxIcon />
                 </IconButton>
             </Toolbar>
         </AppBar>
