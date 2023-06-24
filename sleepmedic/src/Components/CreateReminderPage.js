@@ -10,12 +10,40 @@ import React from 'react';
 
 //Shaun
 function CreateRem() {
+    const [ReminderType, setRemType] = useState('');
+    const [ReminderTime, setRemTime] = useState('');
+    const [ReminderName, setRemName] = useState('');
     //implement logic for collecting parameters
+    //
+
 
     return (
         <div className="sleep-medic-container">
             <div className="create-rem-form">
                 <h1>Create a Reminder</h1>
+                <label>
+                Reminder Type:
+                <input
+                    value={ReminderType}
+                    onChange = {e => setRemType(e.target.value)}
+                />
+                </label>
+                <br/>
+                <label>
+                Reminder Time:
+                <input
+                    value={ReminderTime}
+                    onChange = {e => setRemTime(e.target.value)}
+                />
+                </label>
+                <br/>
+                <label>
+                Reminder Name:
+                <input
+                    value={ReminderName}
+                    onChange = {e => setRemName(e.target.value)}
+                />
+                </label>
             </div>
         </div>
     );
