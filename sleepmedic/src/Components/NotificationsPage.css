@@ -1,0 +1,13 @@
+.notif-page-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    width: 50%;
+    height: 55%;
+    background-color: white;
+    color: maroon; /* Gold text color */
+    box-shadow: 0px 4px 8px rgba(156, 156, 156);
+    border-radius: 1rem;
+  }
