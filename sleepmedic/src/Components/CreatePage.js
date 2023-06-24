@@ -51,8 +51,12 @@ function CreateAccount() {
         }
         try {
             let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/create_account", stringify, {headers})
+
+            if (Object.is(res.data.token,"-1")) {
+                console.log("Email Taken");
+              }
         } catch (err) {
-            console.log("ACCOUNT CREATE FAILED BACKEND CALL");
+            console.log("ACCOUNT CREATE FAILED BACKEND CALL/Account Taken");
         }
         /*if(res){
             alert("success");
