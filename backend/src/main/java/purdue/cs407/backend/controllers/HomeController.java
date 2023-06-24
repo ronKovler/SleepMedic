@@ -95,6 +95,11 @@ public class HomeController {
         int avgRestlessness = restlessnessTotal / count;
 
         return ResponseEntity.ok(new WeekAverageResponse(avgFallingTime, avgHoursSlept, avgWakeUpCount, avgDownTime, avgUpTime, avgRestlessness));
+//        SELECT AVG(sleep_time), CONVERT(AVG(CONVERT(down_time AS INT)) AS DATE), AVG(falling_time), AVG(restlessness), CONVERT(AVG(CONVERT(up_time AS INT)) AS DATE), AVG(wake_up_count)
+//        FROM sleep_record
+//        WHERE date >= STR_TO_DATE('06/18/2023', '%m/%d/%Y') AND date <= STR_TO_DATE('06/24/2023', '%m/%d/%Y')
+//        GROUP BY user_id
+//        HAVING user_id = 17
     }
 
     @RequestMapping(value="month", method = RequestMethod.GET,
@@ -114,6 +119,17 @@ public class HomeController {
         List<SleepRecord> records = recordRepository.findAllByUserAndDateBetween(user, startDate, endDate);
 
         return ResponseEntity.ok(records);
+
+    }
+
+    @RequestMapping(value="info", method = {RequestMethod.OPTIONS, RequestMethod.GET},
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<InfoResponse> getInfo() {
+        // Get the user
+        User user = getCurrentUser();
+
+
+        return ResponseEntity.ok(new InfoResponse(user.getFirstName(), user.getLastName()));
 
     }
 
