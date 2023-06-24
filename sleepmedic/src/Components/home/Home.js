@@ -3,6 +3,8 @@
  */
 import dayjs from 'dayjs';
 import * as React from 'react';
+import axios from "axios";
+
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -11,26 +13,38 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+
+
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { createTheme, styled } from '@mui/material/styles';
 
+
 // TODO: grab username from cookies
 let username = "User Name";
 
+// TODO: request avg from backend
 let now = new Date();
 let avgFallAsleepTime = 27.00; // minutes
-let avgSleepTime = 7.05;
-let avgWokeUpTime = 2;
+let avgSleepDuration = 7.05;
+let avgWokeUpCount = 2;
 let avgBedTime = '11:45'; //TODO: temporarily, need to change
 let avgUpTime = '07:28'; //TODO: temporarily, need to change
-console.log(avgBedTime);
 
 
 function getCurrentWeek() {
     // start of week (Sunday)
-    let startOfWeek = new Date(now.setDate(now.getDate() - (now.getDay() + 6) % 7));
+    let startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
     // End of week (Saturday)
     let endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(endOfWeek.getDate() + 6);
@@ -43,7 +57,73 @@ function getCurrentWeek() {
     return `${formatDate(startOfWeek)}-${formatDate(endOfWeek)}`;
 }
 
+// TODO
+const getSleepData = async (e) => {
+    var headers = {
+        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+        "Content-Type": 'application/json; charset=utf-8',
+    }
+
+    try {
+        let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/average", {headers});
+        console.log(res);
+    }
+    catch (err) {
+        console.log("Failed to retrieve data.");
+    }
+}
+
+const getCookies = (e) => {
+    let cookies = document.cookie.split("; ");
+    let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
+        acc[key] = val.join('=');
+        return acc;
+    }, {});
+    console.log(cookiesDict._auth);
+    return cookiesDict;
+}
+
+function getCookiesDict() {
+    let cookies = document.cookie.split("; ");
+    let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
+        acc[key] = val.join('=');
+        return acc;
+    }, {});
+    return cookiesDict;
+}
+
+
+
+
 export default function Home() {
+    // Control of popup sleep record window
+    const[recordOpen, setRecordOpen] = React.useState(false);
+    const[fallAsleepTime, setFallAsleepTime] = React.useState('');
+    const[sleepDuration, setSleepDuration] = React.useState('');
+    const[wokeUpCount, setWokeUpCount] = React.useState('');
+    const[bedTime, setBedTime] = React.useState('');
+    const[upTime, setUpTime] = React.useState('');
+
+    
+
+    function resetInput() {
+        setFallAsleepTime('');
+        setSleepDuration('');
+        setWokeUpCount('');
+        setBedTime('');
+        setUpTime('');
+    }
+
+    const handleClickOpen = () => {
+        setRecordOpen(true);
+    };
+    const handleClose = () => {
+        setRecordOpen(false);
+        console.log(fallAsleepTime);
+        resetInput();
+    };
+
+
     const currentWeek = getCurrentWeek();
 
     return (
@@ -90,8 +170,8 @@ export default function Home() {
                                 <Grid item xs={1}>
                                     <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='20pt'>
                                         {avgFallAsleepTime}<br/>
-                                        {avgSleepTime}<br/>
-                                        {avgWokeUpTime}<br/>
+                                        {avgSleepDuration}<br/>
+                                        {avgWokeUpCount}<br/>
                                         {avgBedTime}<br/>
                                         {avgUpTime}<br/>
                                     </Typography>
@@ -117,7 +197,8 @@ export default function Home() {
                     {/* Create New Record Button */}
                     <Grid item xs={1} justifyContent='center' display='flex' marginTop='20pt'>
                         {/* TODO: add event listener to create  */}
-                        <Button variant='outlined' endIcon={<AddCircleOutlineIcon/>}>New Record</Button>
+                        <Button variant='outlined' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>New Record</Button>
+                        <Button onClick={(e) => getCookies(e)}>Test get</Button>
                     </Grid>
 
                 </Grid>
@@ -131,6 +212,75 @@ export default function Home() {
                 </Grid>
 
             </Grid>
+
+            {/* Record Popup window */}
+            <Dialog open={recordOpen} onClose={handleClose}>
+                <DialogTitle>New Record</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
+                    
+                    {/* Fall Asleep Time Input */}
+                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+                        <InputLabel>Fall asleep</InputLabel>
+                        <OutlinedInput
+                            value={fallAsleepTime}
+                            label="fallAsleepTime"
+                            onChange = {(e)=>
+                                setFallAsleepTime(e.target.value)}
+                            type="text"
+                        />
+                    </FormControl>
+
+                    {/* Sleep Duration Input */}
+                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+                        <InputLabel>Sleep Duration</InputLabel>
+                        <OutlinedInput
+                            value={sleepDuration}
+                            label="sleepDuration"
+                            onChange = {(e)=>
+                                setSleepDuration(e.target.value)}
+                            type="text"
+                        />
+                    </FormControl>
+
+                    {/* Work Up Count */}
+                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+                        <InputLabel>Woke Up Time</InputLabel>
+                        <OutlinedInput
+                            value={wokeUpCount}
+                            label="wokeUpCount"
+                            onChange = {(e)=>
+                                setWokeUpCount(e.target.value)}
+                            type="text"
+                        />
+                    </FormControl>
+
+                    {/* Bed Time */}
+                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+                        <InputLabel>Bed Time</InputLabel>
+                        <OutlinedInput
+                            value={bedTime}
+                            label="wokeUpCount"
+                            onChange = {(e)=>
+                                setBedTime(e.target.value)}
+                            type="text"
+                        />
+                    </FormControl>
+
+                    {/* Up Time */}
+                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+                        <InputLabel>Up Time</InputLabel>
+                        <OutlinedInput
+                            value={upTime}
+                            label="wokeUpCount"
+                            onChange = {(e)=>
+                                setUpTime(e.target.value)}
+                            type="text"
+                        />
+                    </FormControl>
+
+                </DialogContent>
+            </Dialog>
 
         </Box>
     )
