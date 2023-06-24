@@ -58,31 +58,6 @@ function getCurrentWeek() {
 }
 
 // TODO
-const getSleepData = async (e) => {
-    var headers = {
-        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
-        "Content-Type": 'application/json; charset=utf-8',
-    }
-
-    try {
-        let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/average", {headers});
-        console.log(res);
-    }
-    catch (err) {
-        console.log("Failed to retrieve data.");
-    }
-}
-
-const getCookies = (e) => {
-    let cookies = document.cookie.split("; ");
-    let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
-        acc[key] = val.join('=');
-        return acc;
-    }, {});
-    console.log(cookiesDict._auth);
-    return cookiesDict;
-}
-
 function getCookiesDict() {
     let cookies = document.cookie.split("; ");
     let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
@@ -90,6 +65,24 @@ function getCookiesDict() {
         return acc;
     }, {});
     return cookiesDict;
+}
+
+const getSleepData = async (e) => {
+    const cookies = getCookiesDict();
+    let test_tok = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrb3Yucm9uQG91dGxvb2suY29tIiwiaWF0IjoxNjg3NjM4NTM4LCJleHAiOjE2ODc2Mzg3Nzh9.z6T_zcdvo2NSy5UyDKiZNqfGRcgT_wNH2bRj0Or37Rk';
+    
+    var headers = {
+        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+        "Authorization":'Bearer ' + test_tok
+    }
+
+    try {
+        let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/info", {headers});
+        console.log(res);
+    }
+    catch (err) {
+        console.log("Failed to retrieve data.");
+    }
 }
 
 
@@ -198,7 +191,7 @@ export default function Home() {
                     <Grid item xs={1} justifyContent='center' display='flex' marginTop='20pt'>
                         {/* TODO: add event listener to create  */}
                         <Button variant='outlined' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>New Record</Button>
-                        <Button onClick={(e) => getCookies(e)}>Test get</Button>
+                        <Button onClick={(e) => getSleepData(e)}>Test get</Button>
                     </Grid>
 
                 </Grid>
