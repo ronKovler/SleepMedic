@@ -29,12 +29,18 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         String email = request.getEmail();
+        if (userRepository.existsByEmail(email)) {
+            return new AuthResponse("-1");
+        }
 
+        /* Create user and encode password */
         User user = new User(request);
         String password = request.getPassword();
+        String encodedPass = passwordEncoder.encode(password);
 
-        user.setPassword(passwordEncoder.encode(password));
 
+        user.setPassword(encodedPass);
+        // Save User to DB
         userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
 
@@ -49,6 +55,7 @@ public class AuthService {
                 )
         );
 
+        System.out.println("Authenticated User: " + request.getEmail());
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         String jwtToken = jwtService.generateToken(user);
 

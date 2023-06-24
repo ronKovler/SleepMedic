@@ -31,7 +31,7 @@ public class User implements UserDetails {
     @Column(name="email", length=128, unique=true)
     private String email;
 
-    @Column(name="password", length=64)
+    @Column(name="password", length=60)
     private String password;
 
     @Column(name="birthday")
@@ -103,7 +103,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return email;
+        return password;
     }
 
     @Override
@@ -150,6 +150,17 @@ public class User implements UserDetails {
         this.sex = sex;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof User u)) {
+            return false;
+        }
 
+        return u.getUserID().equals(this.getUserID());
+
+    }
 
 }

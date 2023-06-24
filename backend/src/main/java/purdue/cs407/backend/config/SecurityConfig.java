@@ -3,10 +3,9 @@ package purdue.cs407.backend.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -26,31 +25,22 @@ public class SecurityConfig {
     }
 
 
-
+    /* Setup Filter Chain to restrict/allow endpoints */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/account/**").permitAll() // Making these endpoints public
+                        .requestMatchers("/").permitAll()
                         .anyRequest().authenticated())     // Lock all other endpoints
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
+                //.httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // Insert JWT filter before authent filter
 
         return http.build();
 
-
-//        return http
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/account/create_account").permitAll()
-//                        .requestMatchers("/login").permitAll()
-//                        .requestMatchers("/").permitAll()
-//                        .anyRequest().authenticated())
-//                .userDetailsService(jpaUserDetailsService)
-//                .httpBasic(Customizer.withDefaults())
-//                .build();
     }
 
 
