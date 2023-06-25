@@ -13,7 +13,9 @@ function OpenProfilePage() {
         <div className="sleep-medic-container">
             <div className="profile-page-form">
                 <h1>User Profile</h1>
-                <Link to="/editgoal" style={{color: "maroon"}}>Edit Your Goals</Link>
+                <Link to="/editgoal">
+                    <Button variant="contained">Edit Your Goals</Button>
+                </Link>
                 <Link to="/notificationspage">
                     <Button variant="contained">Notification Preferences</Button>
                 </Link>
