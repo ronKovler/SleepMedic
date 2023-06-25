@@ -1,10 +1,7 @@
-//import logo from '../logo.svg';
 import "./ProfilePage.css";
 import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
-//import { Link } from "react-router-dom";
-import {TextField } from "@mui/material/";
+import {TextField, Button } from "@mui/material/";
 import axios from "axios";
-import { valueToPercent } from '@mui/base';
 import { useState } from 'react';
 import React from 'react';
 
@@ -15,9 +12,14 @@ function OpenProfilePage() {
     return (
         <div className="sleep-medic-container">
             <div className="profile-page-form">
-                <h1>Sleep-Medic Profile Page</h1>
-                <br/>
-                <Link to="/editgoal" style={{color: "gold"}}>Edit Your Goal</Link>
+                <h1>User Profile</h1>
+                <Link to="/editgoal" style={{color: "maroon"}}>Edit Your Goals</Link>
+                <Link to="/notificationspage">
+                    <Button variant="contained">Notification Preferences</Button>
+                </Link>
+                <Link to="/home">
+                                    <Button variant="contained">Home</Button>
+                                </Link>
             </div>
         </div>
     );

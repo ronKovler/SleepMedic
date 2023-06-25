@@ -10,6 +10,7 @@ import { createTheme, colors, ThemeProvider } from '@mui/material';
 import OpenProfilePage from './Components/ProfilePage';
 import EditGoal from './Components/EditGoalPage';
 import CreateRem from './Components/CreateReminderPage';
+import OpenNotificationsPage from "./Components/NotificationsPage";
 import React from 'react';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/profilepage" element={<OpenProfilePage/>} />
         <Route path="/editgoal" element={<EditGoal/>} />
         <Route path="/createreminder" element={<CreateRem/>} />
+        <Route path="/notificationspage" element={<OpenNotificationsPage/>} />
       </Routes>
     </div>
   );

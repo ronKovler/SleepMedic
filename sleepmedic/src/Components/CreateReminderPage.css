@@ -4,32 +4,42 @@
     justify-content: space-around;
     align-items: center;
     position: relative;
-    width: 25%;
-    height: 55%;
-    background-color: rgb(104, 104, 104); 
-    color: #ffd700; /* Gold text color */
+    width: 50%;
+    height: 75%;
+    background-color: white;
+    color: maroon; /* Gold text color */
     box-shadow: 0px 4px 8px rgba(156, 156, 156);
     border-radius: 1rem;
   }
-  
-  
-  
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.button-group > * {
+  margin-left: 1rem;
+}
+
+
+
   .alt-login div {
     width: 7rem;
     height: 3rem;
     border-radius: 0.25em;
-    background-color: #1e1e1e;  /* Black background color */
+    background-color: #1f1e1e;  /* Blue background color */
     display: inline-flex;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
   }
-  
+
   .createRem {
-    width: 40%;
+    width: 60%;
     height: 3em;
-    background-color: #ffd700; /* Gold background color */
+    background-color: #ff700; /* gray background color */
     display: flex;
     justify-content: center;
     align-items: center;
