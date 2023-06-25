@@ -13,9 +13,28 @@ function CreateRem() {
     const [ReminderName, setRemName] = useState('');
     //implement logic for collecting parameters
     const handleCreate = () => {
-        // Handle create button click behavior here
         console.log('Create button clicked');
-        // Add your desired behavior or function invocation
+        // Handle create button click behavior here
+        //headers
+        var headers = {
+            "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+            "Content-Type": 'application/json; charset=utf-8',
+        }
+        //reminder Information - Type, Reminder
+        var reminderInfo = {
+            //time - hr:hr:-min-min
+            //days - as list of integers where 1 is Monday.
+            //msg
+
+            /////all in JSON message
+
+        }
+        try {
+
+        }
+        catch {
+
+        }
     };
 
 
@@ -48,14 +67,7 @@ function CreateRem() {
              onChange={(e) => setRemTime(e.target.value)}
            />
          </div>
-         <div className="form-group">
-           <label htmlFor="reminder-name">Reminder Name:</label>
-           <input
-             id="reminder-name"
-             value={ReminderName}
-             onChange={(e) => setRemName(e.target.value)}
-           />
-         </div>
+
          <div className="button-group">
             <Link to="/editgoal">
             <Button variant="contained">Cancel</Button>
