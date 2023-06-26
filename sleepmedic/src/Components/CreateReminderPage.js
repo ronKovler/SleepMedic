@@ -47,10 +47,14 @@ function CreateRem() {
         } else {
             reminderTypeInt = 0; // Default value when ReminderType is "None"
         }
-        //convert ReminderTime to the required format (hr-min-clock)
+        // Convert ReminderTime to the required format (hr-min)
         const [time, clock] = ReminderTime.split(/(?<=[0-9]{2})(?=[AP]M)/);
         const [hours, minutes] = time.split(":");
-        const formattedReminderTime = `${hours}-${minutes}-${clock}`;
+        let formattedHours = parseInt(hours, 10); // Parse hours as integer
+        if (clock === "PM") {
+            formattedHours += 12; // Add 12 hours for PM format
+        }
+        const formattedReminderTime = `${formattedHours}-${minutes}`;
         //grabbing the days selected by user
         const selectedDays = checkedState
             .map((isChecked, index) => (isChecked ? index + 1 : null))
@@ -71,11 +75,11 @@ function CreateRem() {
         }
         try {
                //this is supposed to be POST right?
-               let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/reminder/create_reminder", reminderInfo, {headers});
+               let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/reminder/create_reminder", reminderInfo, {headers});
                console.log(res);
         }
        catch (err) {
-            console.log("Failed to retrieve data.");
+            console.log("Failed to send CreateReminder data.");
        }
     };
     return (
