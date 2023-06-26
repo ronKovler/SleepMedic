@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
 import {TextField, Select, MenuItem, Button } from "@mui/material/";
 import axios from "axios";
 import { valueToPercent } from '@mui/base';
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
+//import React from 'react';
 
 
 function getCookiesDict() {
@@ -33,11 +33,12 @@ function CreateRem() {
         setCheckedState(updatedCheckedState);
     };
 
-    const handleCreate = async(e) => {
+    const handleCreateReminder = async(e) => {
         e.preventDefault();
         const cookies = getCookiesDict();
         let tok = cookies._auth;
         console.log('Create button clicked');
+        //grabbing reminderType
         let reminderTypeInt;
         if (ReminderType == "Bedtime Reminder") {
             reminderTypeInt = 1;
@@ -46,19 +47,22 @@ function CreateRem() {
         } else {
             reminderTypeInt = 0; // Default value when ReminderType is "None"
         }
-
+        //convert ReminderTime to the required format (hr-min-clock)
+        const [time, clock] = ReminderTime.split(/(?<=[0-9]{2})(?=[AP]M)/);
+        const [hours, minutes] = time.split(":");
+        const formattedReminderTime = `${hours}-${minutes}-${clock}`;
+        //grabbing the days selected by user
         const selectedDays = checkedState
             .map((isChecked, index) => (isChecked ? index + 1 : null))
             .filter((day) => day !== null);
-
         //headers
         var headers = {
                 "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
                 "Authorization":'Bearer ' + tok
         }
         var reminderInfo = {
-            //time - hr-min
-            time: ReminderTime,
+            //time: hr-min
+            time: formattedReminderTime,
             //days - as list of integers where 1 is Monday.
             days: selectedDays,
             //ReminderType ; 1-2 (Bedtime or General Reminder)
@@ -66,7 +70,7 @@ function CreateRem() {
             /////all in JSON message
         }
         try {
-               //this is supposed to be POST or get?
+               //this is supposed to be POST right?
                let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/reminder/create_reminder", reminderInfo, {headers});
                console.log(res);
         }
@@ -124,7 +128,7 @@ function CreateRem() {
             <Link to="/editgoal">
             <Button variant="contained">Cancel</Button>
             </Link>
-            <Button variant="contained" onClick={handleCreate}>Create</Button>
+            <Button variant="contained" onClick={handleCreateReminder}>Create</Button>
          </div>
        </div>
      </div>
