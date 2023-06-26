@@ -6,43 +6,78 @@ import { valueToPercent } from '@mui/base';
 import { useState } from 'react';
 import React from 'react';
 
+
+function getCookiesDict() {
+    let cookies = document.cookie.split("; ");
+    let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
+        acc[key] = val.join('=');
+        return acc;
+    }, {});
+    return cookiesDict;
+}
+
 //Shaun
 function CreateRem() {
     const [ReminderType, changeRemType] = useState("None");
     const [ReminderTime, setRemTime] = useState('');
     const [ReminderName, setRemName] = useState('');
-    //implement logic for collecting parameters
-    const handleCreate = () => {
-        console.log('Create button clicked');
-        // Handle create button click behavior here
-        //headers
-        var headers = {
-            "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
-            "Content-Type": 'application/json; charset=utf-8',
-        }
-        //reminder Information - Type, Reminder
-        var reminderInfo = {
-            //time - hr:hr:-min-min
-            //days - as list of integers where 1 is Monday.
-            //msg
-
-            /////all in JSON message
-
-        }
-        try {
-
-        }
-        catch {
-
-        }
+    const daysOfWeek = [{day: "Mon"}, {day:"Tue"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}, {day:"Sun"}];
+    const [checkedState, setCheckedState] = useState(
+        new Array(daysOfWeek.length).fill(false)
+    );
+    //handleChange() for checkboxes
+    const handleOnChange = (position) => {
+        const updatedCheckedState = checkedState.map((item, index) =>
+          index === position ? !item : item
+        );
+        setCheckedState(updatedCheckedState);
     };
 
+    const handleCreate = async(e) => {
+        e.preventDefault();
+        const cookies = getCookiesDict();
+        let tok = cookies._auth;
+        console.log('Create button clicked');
+        let reminderTypeInt;
+        if (ReminderType == "Bedtime Reminder") {
+            reminderTypeInt = 1;
+        } else if (ReminderType === "Sleep Hygiene Reminder") {
+            reminderTypeInt = 2;
+        } else {
+            reminderTypeInt = 0; // Default value when ReminderType is "None"
+        }
 
+        const selectedDays = checkedState
+            .map((isChecked, index) => (isChecked ? index + 1 : null))
+            .filter((day) => day !== null);
 
+        //headers
+        var headers = {
+                "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+                "Authorization":'Bearer ' + tok
+        }
+        var reminderInfo = {
+            //time - hr-min
+            time: ReminderTime,
+            //days - as list of integers where 1 is Monday.
+            days: selectedDays,
+            //ReminderType ; 1-2 (Bedtime or General Reminder)
+            ReminderType: reminderTypeInt,
+            /////all in JSON message
+        }
+        try {
+               //this is supposed to be POST or get?
+               let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/reminder/create_reminder", reminderInfo, {headers});
+               console.log(res);
+        }
+       catch (err) {
+            console.log("Failed to retrieve data.");
+       }
+    };
     return (
      <div className="sleep-medic-container">
        <div className="create-rem-form">
-<h1>Create a Reminder</h1>
+        <h1>Create a Reminder</h1>
          <div className="form-group">
            <label htmlFor="reminder-type">Reminder Type:</label>
            &nbsp;
@@ -52,12 +87,30 @@ function CreateRem() {
              value={ReminderType}
              label="Reminder Type"
              onChange={(e) => changeRemType(e.target.value)}   //do onChange={(e) => stuff
-            style={{ width: "230px" }} // Set the width of the Select component
-           >
+            style={{ width: "230px" }} >
              <MenuItem value="None">None</MenuItem>
              <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
              <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
            </Select>
+         </div>
+         <div className="days-list">
+            {daysOfWeek.map(({day}, index) => {
+                return(
+                <li key={index}>
+                <div className="days-list-item">
+                    <input
+                        type="checkbox"
+                        id={`custom-checkbox-${index}`}
+                        name={day}
+                        value={day}
+                        checked={checkedState[index]}
+                        onChange={() => handleOnChange(index)}
+                    />
+                    <label htmlFor={`custom-checkbox-${index}`}>{day}</label>
+                </div>
+                </li>
+                );
+            })}
          </div>
          <div className="form-group">
            <label htmlFor="reminder-time">Reminder Time:</label>
@@ -67,7 +120,6 @@ function CreateRem() {
              onChange={(e) => setRemTime(e.target.value)}
            />
          </div>
-
          <div className="button-group">
             <Link to="/editgoal">
             <Button variant="contained">Cancel</Button>

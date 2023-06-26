@@ -22,7 +22,19 @@
   margin-left: 10rem;
 }
 
+.days-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 
+.days-list-item {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
 
   .alt-login div {
     width: 7rem;
