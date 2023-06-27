@@ -24,6 +24,8 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Tooltip from '@mui/material/Tooltip';
 import InfoIcon from '@mui/icons-material/Info';
+import Checkbox from '@mui/material/Checkbox';
+
 
 
 
@@ -42,7 +44,6 @@ Restlessness is the level of restless you felt when you decide to sleep.
 Sleep duration is the amount of time you take for a continous sleep.
 Woke up time is the 
 `;
-
 
 function getCurrentWeek() {
     let now = new Date();
@@ -69,7 +70,7 @@ function getCookiesDict() {
     return cookiesDict;
 }
 
-function getHeaders() {
+function getGetHeaders() {
     const cookies = getCookiesDict();
     const headers = {
         "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
@@ -102,16 +103,21 @@ export default function Home() {
     const[avgUpTime, setAvgUpTime] = React.useState('00:00:00');
 
     // New record data
+    // Integers
     const[fallAsleepTime, setFallAsleepTime] = React.useState(0);
     const[restlessness, setRestlessness] = React.useState(0); //Maybe a bar??
     const[sleepDuration, setSleepDuration] = React.useState(0);
     const[wokeUpCount, setWokeUpCount] = React.useState(0);
-    const[bedTime, setBedTime] = React.useState('');
-    const[upTime, setUpTime] = React.useState('');
-    const[dream, setDreams] = React.useState('');
+    // Strings
+    const[dream, setDreams] = React.useState(false);
+    const today = dayjs();
+    const[bedTimeHelper, setBedTimeHelper] = React.useState(today.set('hour', 8).set('minute',  30).set('second', 0));
+    const[upTimeHelper, setUpTimeHelper] = React.useState(today.set('hour', 23).set('minute',  30).set('second', 0));
+
+
 
     async function getData() {
-        const headers = getHeaders();
+        const headers = getGetHeaders();
         
         try {
             // Get user name
@@ -133,21 +139,31 @@ export default function Home() {
         }
     }
 
+    function formatRecord() {
+        let monthFix = today.get('month') + 1; 
+        const f_date = `${today.get('year')}-${monthFix.toString().padStart(2, '0')}-${today.get('date').toString().padStart(2, '0')}`;
+        const f_bedTime = `${bedTimeHelper.get('hour').toString().padStart(2, '0')}:${bedTimeHelper.get('minute').toString().padStart(2, '0')}:00`;
+        const f_upTime = `${upTimeHelper.get('hour').toString().padStart(2, '0')}:${upTimeHelper.get('minute').toString().padStart(2, '0')}:00`;
+        console.log(f_bedTime);
+
+        return { 
+            date: f_date,
+            fallingTime: fallAsleepTime,
+            sleepTime: sleepDuration,
+            wakeUpCount: wokeUpCount,
+            downTime: f_bedTime,
+            upTime: f_upTime,
+            restlessness: restlessness,
+
+        };
+    }
+
     const handleSubmit = async (e) => {
         const headers = getPostHeaders();
 
         try {
-            let test = {
-                date: '2023-06-30',
-                fallingTime: 10, //int
-                sleepTime: 10.0, //double
-                wakeUpCount: 10, //int
-                downTime: '22:00:00', //str
-                upTime: '10:00:00', //str
-                restlessness: 10, //int
-                dreams: '' //str
-            }
-            let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/create_record", test, {headers});
+            let record = formatRecord();
+            let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/create_record", record, {headers});
         }
         catch (err) {
             alert("Already recorded!");
@@ -155,22 +171,20 @@ export default function Home() {
         }
     }
 
+    // Auto loading
     React.useEffect(() => {
         getData();
     }, []);
 
     
-
+    // Popup window handlers
     function resetInput() {
         setFallAsleepTime(0);
         setRestlessness(0);
         setSleepDuration(0);
         setWokeUpCount(0);
-        setBedTime('');
-        setUpTime('');
-        setDreams('');
+        setDreams(false);
     }
-
     const handleClickOpen = () => {
         setRecordOpen(true);
     };
@@ -180,8 +194,6 @@ export default function Home() {
         resetInput();
     };
 
-
-    const currentWeek = getCurrentWeek();
 
     return (
         <Box>
@@ -212,7 +224,7 @@ export default function Home() {
                                 Weekly Summary Statistics
                             </Typography>
                             <Typography variant='h6' component='div' textAlign='center'>
-                                {currentWeek}
+                                {getCurrentWeek()}
                             </Typography>
                             <Grid container columns={2}>
                                 <Grid item xs={1}>
@@ -274,7 +286,7 @@ export default function Home() {
             {/* Record Popup window */}
             <Dialog open={recordOpen} onClose={handleClose}>
                 <DialogTitle>
-                    <Grid container columns={2}>
+                    <Grid container columns={2} justify='flex-end' alignItems='center'>
                         <Grid item xs={1}>New Record</Grid>
                         <Grid item xs={1}>
                         <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
@@ -301,7 +313,7 @@ export default function Home() {
                         />
                     </FormControl>
 
-                    {/* Restlessness */}
+                    {/* Restlessness Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <InputLabel>Restlessness</InputLabel>
                         <OutlinedInput
@@ -325,7 +337,7 @@ export default function Home() {
                         />
                     </FormControl>
 
-                    {/* Work Up Count */}
+                    {/* Work Up Count Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <InputLabel>Woke Up Time</InputLabel>
                         <OutlinedInput
@@ -337,33 +349,45 @@ export default function Home() {
                         />
                     </FormControl>
 
-                    {/* Bed Time */}
+                    {/* Bed Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>Bed Time</InputLabel>
-                        <OutlinedInput
-                            value={bedTime}
-                            label="wokeUpCount"
-                            onChange = {(e)=>
-                                setBedTime(e.target.value)}
-                            type="text"
-                        />
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <TimePicker label="Bed Time" value={bedTimeHelper} onChange={(newTime) => setBedTimeHelper(newTime)}/>
+                        </LocalizationProvider>
                     </FormControl>
 
-                    {/* Up Time */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>Up Time</InputLabel>
-                        <OutlinedInput
-                            value={upTime}
-                            label="wokeUpCount"
-                            onChange = {(e)=>
-                                setUpTime(e.target.value)}
-                            type="text"
-                        />
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <TimePicker label="Up Time" value={upTimeHelper} onChange={(newTime) => setUpTimeHelper(newTime)}/>
+                        </LocalizationProvider>
                     </FormControl>
 
+                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+                        <Grid container columns={2} justify='flex-end' alignItems='center'>
+                            <Grid item xs={1}>
+                                <Box>
+                                    Dreams
+                                </Box>
+                            </Grid>
+                            <Grid item xs={1}>
+                            <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
+                                <Checkbox checked={dream} onChange={(e)=>{setDreams(e.target.checked)}}/>
+                            </Box>
+                            </Grid>
+                        </Grid>
+                       
+                    </FormControl>
 
+                    {/* Submit/Cancel */}
                     <Grid container columns={2}>
-                        <Grid item xs={1}><Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button></Grid>
+                        <Grid item xs={1}>
+                            <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button>
+                            <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={
+                                () => {
+                                    formatRecord()
+                                }
+                            }>TEst</Button>
+                        </Grid>
                         <Grid item xs={1}>
                             <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
                                 <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>Cancel</Button>
