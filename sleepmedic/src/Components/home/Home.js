@@ -68,8 +68,24 @@ function getCookiesDict() {
     return cookiesDict;
 }
 
+function getHeaders() {
+    const cookies = getCookiesDict();
+    const headers = {
+        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+        "Authorization":'Bearer ' + cookies._auth
+    };
+    return headers; 
+}
 
-
+function getPostHeaders() {
+    const cookies = getCookiesDict();
+    const headers = {
+        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+        "Content-Type": 'application/json; charset=utf-8',
+        "Authorization":'Bearer ' + cookies._auth
+    };
+    return headers;
+}
 
 export default function Home() {
     // Control of popup sleep record window
@@ -81,25 +97,20 @@ export default function Home() {
     const[avgRestlessness, setAvgRestlessness] = React.useState('0');
     const[avgSleepDuration, setAvgSleepDuration] = React.useState('0');
     const[avgWokeUpCount, setAvgWokeUpCount] = React.useState('0');
-    const[avgBedTime, setAvgBedTime] = React.useState('00:00');
-    const[avgUpTime, setAvgUpTime] = React.useState('00:00');
+    const[avgBedTime, setAvgBedTime] = React.useState('00:00:00');
+    const[avgUpTime, setAvgUpTime] = React.useState('00:00:00');
 
     // New record data
-    const[fallAsleepTime, setFallAsleepTime] = React.useState('');
-    const[restlessness, setRestlessness] = React.useState('');
-    const[sleepDuration, setSleepDuration] = React.useState('');
-    const[wokeUpCount, setWokeUpCount] = React.useState('');
+    const[fallAsleepTime, setFallAsleepTime] = React.useState(0);
+    const[restlessness, setRestlessness] = React.useState(0); //Maybe a bar??
+    const[sleepDuration, setSleepDuration] = React.useState(0);
+    const[wokeUpCount, setWokeUpCount] = React.useState(0);
     const[bedTime, setBedTime] = React.useState('');
     const[upTime, setUpTime] = React.useState('');
-
-
+    const[dream, setDreams] = React.useState('');
 
     async function getData() {
-        const cookies = getCookiesDict();
-        const headers = {
-            "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
-            "Authorization":'Bearer ' + cookies._auth
-        }
+        const headers = getHeaders();
         
         try {
             // Get user name
@@ -115,11 +126,31 @@ export default function Home() {
             setAvgWokeUpCount(res.data.wakeUpCount);
             setAvgBedTime(res.data.downTime);
             setAvgUpTime(res.data.upTime);
-            
-            
         }
         catch (err) {
             console.log("Failed to retrieve name.");
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        const headers = getPostHeaders();
+
+        try {
+            let test = {
+                date: '2023-06-30',
+                fallingTime: 10, //int
+                sleepTime: 10.0, //double
+                wakeUpCount: 10, //int
+                downTime: '22:00:00', //str
+                upTime: '10:00:00', //str
+                restlessness: 10, //int
+                dreams: '' //str
+            }
+            let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/create_record", test, {headers});
+        }
+        catch (err) {
+            alert("Already recorded!");
+            console.log('Failed to create record.');
         }
     }
 
@@ -130,12 +161,13 @@ export default function Home() {
     
 
     function resetInput() {
-        setFallAsleepTime('');
-        setRestlessness('');
-        setSleepDuration('');
-        setWokeUpCount('');
+        setFallAsleepTime(0);
+        setRestlessness(0);
+        setSleepDuration(0);
+        setWokeUpCount(0);
         setBedTime('');
         setUpTime('');
+        setDreams('');
     }
 
     const handleClickOpen = () => {
@@ -145,9 +177,6 @@ export default function Home() {
         setRecordOpen(false);
         console.log(fallAsleepTime);
         resetInput();
-    };
-    const handleNewRecord = () => {
-        // TODO: post to db
     };
 
 
@@ -275,7 +304,7 @@ export default function Home() {
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <InputLabel>Restlessness</InputLabel>
                         <OutlinedInput
-                            value={upTime}
+                            value={restlessness}
                             label="restlessness"
                             onChange = {(e)=>
                                 setRestlessness(e.target.value)}
@@ -331,7 +360,14 @@ export default function Home() {
                         />
                     </FormControl>
 
-                    <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleNewRecord}>Submit</Button>
+                    <Grid container columns={2}>
+                        <Grid item xs={1}><Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button></Grid>
+                        <Grid item xs={1}>
+                            <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
+                                <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>Cancel</Button>
+                            </Box>
+                        </Grid>
+                    </Grid>
 
                 </DialogContent>
             </Dialog>
