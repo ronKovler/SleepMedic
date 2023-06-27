@@ -22,27 +22,29 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import Tooltip from '@mui/material/Tooltip';
+import InfoIcon from '@mui/icons-material/Info';
+
 
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { createTheme, styled } from '@mui/material/styles';
+import { IconButton } from '@mui/material';
 
 
-// TODO: grab username from cookies
-let username = "User Name";
-
-// TODO: request avg from backend
-let now = new Date();
-let avgFallAsleepTime = 27.00; // minutes
-let avgSleepDuration = 7.05;
-let avgWokeUpCount = 2;
-let avgBedTime = '11:45'; //TODO: temporarily, need to change
-let avgUpTime = '07:28'; //TODO: temporarily, need to change
+const FIELDS_SPECIFICATION = `
+Fields Explanation: 
+Fall asleep is the time you take to fall asleep.
+Restlessness is the level of restless you felt when you decide to sleep.
+Sleep duration is the amount of time you take for a continous sleep.
+Woke up time is the 
+`;
 
 
 function getCurrentWeek() {
+    let now = new Date();
     // start of week (Sunday)
     let startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
     // End of week (Saturday)
@@ -57,7 +59,6 @@ function getCurrentWeek() {
     return `${formatDate(startOfWeek)}-${formatDate(endOfWeek)}`;
 }
 
-// TODO
 function getCookiesDict() {
     let cookies = document.cookie.split("; ");
     let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
@@ -67,44 +68,106 @@ function getCookiesDict() {
     return cookiesDict;
 }
 
-const getSleepData = async (e) => {
+function getHeaders() {
     const cookies = getCookiesDict();
-    let test_tok = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrb3Yucm9uQG91dGxvb2suY29tIiwiaWF0IjoxNjg3NjM4NTM4LCJleHAiOjE2ODc2Mzg3Nzh9.z6T_zcdvo2NSy5UyDKiZNqfGRcgT_wNH2bRj0Or37Rk';
-    
-    var headers = {
+    const headers = {
         "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
-        "Authorization":'Bearer ' + test_tok
-    }
-
-    try {
-        let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/info", {headers});
-        console.log(res);
-    }
-    catch (err) {
-        console.log("Failed to retrieve data.");
-    }
+        "Authorization":'Bearer ' + cookies._auth
+    };
+    return headers; 
 }
 
-
-
+function getPostHeaders() {
+    const cookies = getCookiesDict();
+    const headers = {
+        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+        "Content-Type": 'application/json; charset=utf-8',
+        "Authorization":'Bearer ' + cookies._auth
+    };
+    return headers;
+}
 
 export default function Home() {
     // Control of popup sleep record window
     const[recordOpen, setRecordOpen] = React.useState(false);
-    const[fallAsleepTime, setFallAsleepTime] = React.useState('');
-    const[sleepDuration, setSleepDuration] = React.useState('');
-    const[wokeUpCount, setWokeUpCount] = React.useState('');
+    
+    // User data
+    const[username, setUsername] = React.useState('User Name');
+    const[avgFallAsleepTime, setAvgFallAsleepTime] = React.useState('0');
+    const[avgRestlessness, setAvgRestlessness] = React.useState('0');
+    const[avgSleepDuration, setAvgSleepDuration] = React.useState('0');
+    const[avgWokeUpCount, setAvgWokeUpCount] = React.useState('0');
+    const[avgBedTime, setAvgBedTime] = React.useState('00:00:00');
+    const[avgUpTime, setAvgUpTime] = React.useState('00:00:00');
+
+    // New record data
+    const[fallAsleepTime, setFallAsleepTime] = React.useState(0);
+    const[restlessness, setRestlessness] = React.useState(0); //Maybe a bar??
+    const[sleepDuration, setSleepDuration] = React.useState(0);
+    const[wokeUpCount, setWokeUpCount] = React.useState(0);
     const[bedTime, setBedTime] = React.useState('');
     const[upTime, setUpTime] = React.useState('');
+    const[dream, setDreams] = React.useState('');
+
+    async function getData() {
+        const headers = getHeaders();
+        
+        try {
+            // Get user name
+            let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/info", {headers});
+            let name = res.data.firstName + ' ' + res.data.lastName;
+            setUsername(name);
+
+            // Get user average sleep data
+            res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/average", {headers});
+            setAvgFallAsleepTime(res.data.fallingTime);
+            setAvgRestlessness(res.data.restlessness);
+            setAvgSleepDuration(res.data.sleepTime);
+            setAvgWokeUpCount(res.data.wakeUpCount);
+            setAvgBedTime(res.data.downTime);
+            setAvgUpTime(res.data.upTime);
+        }
+        catch (err) {
+            console.log("Failed to retrieve name.");
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        const headers = getPostHeaders();
+
+        try {
+            let test = {
+                date: '2023-06-30',
+                fallingTime: 10, //int
+                sleepTime: 10.0, //double
+                wakeUpCount: 10, //int
+                downTime: '22:00:00', //str
+                upTime: '10:00:00', //str
+                restlessness: 10, //int
+                dreams: '' //str
+            }
+            let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/create_record", test, {headers});
+        }
+        catch (err) {
+            alert("Already recorded!");
+            console.log('Failed to create record.');
+        }
+    }
+
+    React.useEffect(() => {
+        getData();
+    }, []);
 
     
 
     function resetInput() {
-        setFallAsleepTime('');
-        setSleepDuration('');
-        setWokeUpCount('');
+        setFallAsleepTime(0);
+        setRestlessness(0);
+        setSleepDuration(0);
+        setWokeUpCount(0);
         setBedTime('');
         setUpTime('');
+        setDreams('');
     }
 
     const handleClickOpen = () => {
@@ -154,6 +217,7 @@ export default function Home() {
                                 <Grid item xs={1}>
                                     <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt'>
                                         Time spent falling asleep: <br/>
+                                        Restlessness: <br/>
                                         Time spent sleeping: <br/>
                                         Woke up in the night: <br/>
                                         Went to bed at: <br/>
@@ -163,6 +227,7 @@ export default function Home() {
                                 <Grid item xs={1}>
                                     <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='20pt'>
                                         {avgFallAsleepTime}<br/>
+                                        {avgRestlessness}<br/>
                                         {avgSleepDuration}<br/>
                                         {avgWokeUpCount}<br/>
                                         {avgBedTime}<br/>
@@ -191,7 +256,6 @@ export default function Home() {
                     <Grid item xs={1} justifyContent='center' display='flex' marginTop='20pt'>
                         {/* TODO: add event listener to create  */}
                         <Button variant='outlined' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>New Record</Button>
-                        <Button onClick={(e) => getSleepData(e)}>Test get</Button>
                     </Grid>
 
                 </Grid>
@@ -208,7 +272,19 @@ export default function Home() {
 
             {/* Record Popup window */}
             <Dialog open={recordOpen} onClose={handleClose}>
-                <DialogTitle>New Record</DialogTitle>
+                <DialogTitle>
+                    <Grid container columns={2}>
+                        <Grid item xs={1}>New Record</Grid>
+                        <Grid item xs={1}>
+                        <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
+                            <Tooltip title={FIELDS_SPECIFICATION} arrow>
+                                <IconButton size='small'><InfoIcon/></IconButton>
+                            </Tooltip>
+                        </Box>
+                        </Grid>
+                    </Grid>
+                </DialogTitle>
+
                 <DialogContent>
                     <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
                     
@@ -220,6 +296,18 @@ export default function Home() {
                             label="fallAsleepTime"
                             onChange = {(e)=>
                                 setFallAsleepTime(e.target.value)}
+                            type="text"
+                        />
+                    </FormControl>
+
+                    {/* Restlessness */}
+                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+                        <InputLabel>Restlessness</InputLabel>
+                        <OutlinedInput
+                            value={restlessness}
+                            label="restlessness"
+                            onChange = {(e)=>
+                                setRestlessness(e.target.value)}
                             type="text"
                         />
                     </FormControl>
@@ -271,6 +359,15 @@ export default function Home() {
                             type="text"
                         />
                     </FormControl>
+
+                    <Grid container columns={2}>
+                        <Grid item xs={1}><Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button></Grid>
+                        <Grid item xs={1}>
+                            <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
+                                <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>Cancel</Button>
+                            </Box>
+                        </Grid>
+                    </Grid>
 
                 </DialogContent>
             </Dialog>
