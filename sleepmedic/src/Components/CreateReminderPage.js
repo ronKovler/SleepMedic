@@ -47,14 +47,19 @@ function CreateRem() {
         } else {
             reminderTypeInt = 0; // Default value when ReminderType is "None"
         }
-        // Convert ReminderTime to the required format (hr-min)
+        //convert ReminderTime to the required format (hr-min)
         const [time, clock] = ReminderTime.split(/(?<=[0-9]{2})(?=[AP]M)/);
         const [hours, minutes] = time.split(":");
         let formattedHours = parseInt(hours, 10); // Parse hours as integer
         if (clock === "PM") {
-            formattedHours += 12; // Add 12 hours for PM format
+          if (formattedHours !== 12) {
+            formattedHours += 12; // Add 12 hours for PM format (except when it's 12PM)
+          }
+        } else if (formattedHours === 12) {
+          formattedHours = 0; // Convert 12 AM to 0 hours
         }
-        const formattedReminderTime = `${formattedHours}-${minutes}`;
+        const formattedMinutes = minutes.padStart(2, '0'); // Pad minutes with leading zero if necessary
+        const formattedReminderTime = `${formattedHours}:${formattedMinutes}:00`;
         //grabbing the days selected by user
         const selectedDays = checkedState
             .map((isChecked, index) => (isChecked ? index + 1 : null))
@@ -66,11 +71,11 @@ function CreateRem() {
         }
         var reminderInfo = {
             //time: hr-min
-            time: formattedReminderTime,
+            triggerTime: formattedReminderTime,
             //days - as list of integers where 1 is Monday.
-            days: selectedDays,
+            triggerDays: selectedDays,
             //ReminderType ; 1-2 (Bedtime or General Reminder)
-            ReminderType: reminderTypeInt,
+            message: reminderTypeInt,
             /////all in JSON message
         }
         try {
