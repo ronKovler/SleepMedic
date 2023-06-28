@@ -32,7 +32,7 @@ function Login() {
       }
       signIn({
         token: res.data.token,
-        expiresIn: 3600,
+        expiresIn: 240,
         tokenType: "Bearer",
         authState: {email: email}
       })
@@ -65,25 +65,28 @@ function Login() {
           type="email"
           id="email"
           value={email}
-          label="Username" 
+          placeholder="Username" 
           variant="outlined"
           onChange={(e) => setEmail(e.target.value)}
           color="secondary"
           style={{width: "70%", height: "4%"}}
+          sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
         />
+        <br/>
         <br/>
         <label htmlFor="password">Password:</label>
         <TextField
           type="password"
           id="password"
           value={password}
-          label="Password"
+          placeholder="Password"
           variant="outlined"
           onChange={(e) => setPassword(e.target.value)}
           color="secondary"
           style={{width: "70%", height: "4%"}}
+          sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
         />
-        <br/>
+        <br/><br/>
         <Button variant="contained" color="primary" onClick={(e) => handleLogin(e)}>Login</Button>
         <Link to="/createaccount" style={{color: "white"}}>Or create an account</Link>
       </form>
