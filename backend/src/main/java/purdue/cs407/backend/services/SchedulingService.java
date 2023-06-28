@@ -23,4 +23,12 @@ public class SchedulingService {
         ScheduledFuture<?> scheduledTask = taskScheduler.schedule(tasklet, new CronTrigger(cronExpression, TimeZone.getTimeZone("UTC")));
         jobsMap.put(jobId, scheduledTask);
     }
+
+    public void removeScheduledTask(String jobId) {
+        ScheduledFuture<?> scheduledTask = jobsMap.get(jobId);
+        if(scheduledTask != null) {
+            scheduledTask.cancel(true);
+            jobsMap.put(jobId, null);
+        }
+    }
 }

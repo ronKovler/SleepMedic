@@ -30,6 +30,13 @@ public class Reminder {
     @Column(name="trigger_days")
     private byte triggerDays;
 
+    @Column(name = "cron", length = 20)
+    private String cron;
+
+    @Column(name = "job_ID", length = 196)
+    private String jobID;
+
+
     public Reminder(User user, Time triggerTime, int message) {
         this.user = user;
         this.triggerTime = triggerTime;
@@ -43,21 +50,32 @@ public class Reminder {
         byte trigger = 0;
 
         //Bitvector for storing days of week. rightmost bit = MONDAY, leftmost bit - 1 = SUNDAY
-        for (DayOfWeek dayOfWeek: request.getTriggerDays()) {
+        for (byte dayOfWeek: request.getTriggerDays()) {
             byte shift = 0x01;
-            byte mask = (byte) (shift << (byte) (dayOfWeek.getValue() - 1));
+            byte mask = (byte) (shift << (byte) (dayOfWeek));
             trigger = (byte) (trigger | mask);
         }
         this.triggerDays = trigger;
         this.message = request.getMessage();
     }
 
-    public Reminder(Long reminderID, User user, Time triggerTime, int message, byte triggerDays) {
+    public Reminder(User user, ReminderRequest request, byte triggerDays, String cron, String jobID) {
+        this.user = user;
+        this.triggerTime = request.getTriggerTime();
+        this.message = request.getMessage();
+        this.triggerDays = triggerDays;
+        this.cron = cron;
+        this.jobID = jobID;
+    }
+
+    public Reminder(Long reminderID, User user, Time triggerTime, int message, byte triggerDays, String cron, String jobID) {
         this.reminderID = reminderID;
         this.user = user;
         this.triggerTime = triggerTime;
         this.message = message;
         this.triggerDays = triggerDays;
+        this.cron = cron;
+        this.jobID = jobID;
     }
 
     public Reminder() {
@@ -104,4 +122,19 @@ public class Reminder {
         this.triggerDays = triggerDays;
     }
 
+    public String getCron() {
+        return cron;
+    }
+
+    public void setCron(String cron) {
+        this.cron = cron;
+    }
+
+    public String getJobID() {
+        return jobID;
+    }
+
+    public void setJobID(String jobID) {
+        this.jobID = jobID;
+    }
 }

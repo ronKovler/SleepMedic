@@ -31,18 +31,6 @@ public class SecurityConfig {
         this.authenticationProvider = authenticationProvider;
     }
 
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of("*"));
-//        configuration.setAllowedMethods(Arrays.asList("GET","POST", "OPTIONS"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-
-
-
 
     /* Setup Filter Chain to restrict/allow endpoints */
     @Bean
@@ -51,6 +39,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // CSRF - cross site request forgery disabled for now TODO enable properly
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/account/**").permitAll() // Making these endpoints public
+                        .requestMatchers("/api/reminder/cancel_reminder").permitAll()
                         .requestMatchers("/").permitAll() // Think this is needed for CORS preflight?
                         .anyRequest().authenticated())     // Lock all other endpoints
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //No state

@@ -6,13 +6,13 @@ import java.util.List;
 
 public class ReminderRequest {
 
-    private List<DayOfWeek> triggerDays;
+    private List<Byte> triggerDays;
 
     private Time triggerTime;
 
     private int message;
 
-    public ReminderRequest(List<DayOfWeek> triggerDays, Time triggerTime, int message) {
+    public ReminderRequest(List<Byte> triggerDays, Time triggerTime, int message) {
         this.triggerDays = triggerDays;
         this.triggerTime = triggerTime;
         this.message = message;
@@ -20,11 +20,11 @@ public class ReminderRequest {
 
     public ReminderRequest(){}
 
-    public List<DayOfWeek> getTriggerDays() {
+    public List<Byte> getTriggerDays() {
         return triggerDays;
     }
 
-    public void setTriggerDays(List<DayOfWeek> triggerDays) {
+    public void setTriggerDays(List<Byte> triggerDays) {
         this.triggerDays = triggerDays;
     }
 
