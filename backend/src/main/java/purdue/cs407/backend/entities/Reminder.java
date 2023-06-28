@@ -1,5 +1,6 @@
-package purdue.cs407.backend.models;
+package purdue.cs407.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import purdue.cs407.backend.dtos.ReminderRequest;
 
@@ -9,12 +10,14 @@ import java.time.DayOfWeek;
 @Entity
 @Table(name = "reminder")
 public class Reminder {
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "reminder_ID")
     private Long reminderID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER) // Us
     @JoinColumn(name="user_ID")
     private User user;
 
@@ -39,9 +42,10 @@ public class Reminder {
         this.triggerTime = request.getTriggerTime();
         byte trigger = 0;
 
+        //Bitvector for storing days of week. rightmost bit = MONDAY, leftmost bit - 1 = SUNDAY
         for (DayOfWeek dayOfWeek: request.getTriggerDays()) {
             byte shift = 0x01;
-            byte mask = (byte) (shift << (byte) dayOfWeek.getValue());
+            byte mask = (byte) (shift << (byte) (dayOfWeek.getValue() - 1));
             trigger = (byte) (trigger | mask);
         }
         this.triggerDays = trigger;
@@ -83,4 +87,21 @@ public class Reminder {
     public Long getReminderID() {
         return reminderID;
     }
+
+    public void setReminderID(Long reminderID) {
+        this.reminderID = reminderID;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public byte getTriggerDays() {
+        return triggerDays;
+    }
+
+    public void setTriggerDays(byte triggerDays) {
+        this.triggerDays = triggerDays;
+    }
+
 }

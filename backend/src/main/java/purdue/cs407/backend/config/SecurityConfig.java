@@ -48,14 +48,14 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable) // CSRF - cross site request forgery disabled for now TODO enable properly
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/account/**").permitAll() // Making these endpoints public
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/").permitAll() // Think this is needed for CORS preflight?
                         .anyRequest().authenticated())     // Lock all other endpoints
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //No state
                 .authenticationProvider(authenticationProvider)
-                //.httpBasic(Customizer.withDefaults())
+                //.httpBasic(Customizer.withDefaults()) //Not necessary with JWT implementation
 
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // Insert JWT filter before authent filter
 

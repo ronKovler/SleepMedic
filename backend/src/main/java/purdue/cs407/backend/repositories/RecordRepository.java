@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import purdue.cs407.backend.models.SleepRecord;
-import purdue.cs407.backend.models.User;
+import purdue.cs407.backend.entities.SleepRecord;
+import purdue.cs407.backend.entities.User;
 
 import java.sql.Date;
 import java.util.Collection;
@@ -19,8 +19,8 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
 
     @Query("select s from SleepRecord s where s.user = ?1 and s.date >= ?2 and s.date <= ?3")
     List<SleepRecord> findAllByUserAndDateGreaterThanEqualAndDateLessThanEqual(User user, Date date, Date date2);
-
-//    @Query("SELECT AVG(r.sleepTime), AVG(r.downTime), AVG(r.fallingTime), AVG(r.restlessness), AVG(r.upTime), AVG(r.wakeUpCount)" +
+// Not sure why this didn't work yet..
+//    @Query("SELECT AVG(r.sleepTime), AVG(r.downTime), AVG(r.fallingTime), AVG(r.restlessness), AVG(r.upTime), AVG(r.wakeUpCount) " +
 //            "FROM SleepRecord r " +
 //            "WHERE r.date >= :date1 AND r.date <= :date2 " +
 //            "GROUP BY r.user " +

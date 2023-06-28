@@ -1,15 +1,10 @@
-package purdue.cs407.backend.service;
+package purdue.cs407.backend.services;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import purdue.cs407.backend.pojos.EmailDetails;
-import purdue.cs407.backend.models.Reminder;
-import purdue.cs407.backend.models.User;
 import purdue.cs407.backend.repositories.ReminderRepository;
-
-import java.util.List;
 
 @Service
 public class EmailService {
@@ -20,7 +15,9 @@ public class EmailService {
     private final String sender;
 
 
-    public EmailService(JavaMailSender javaMailSender, ReminderRepository reminderRepository) {
+
+    public EmailService(JavaMailSender javaMailSender,
+                        ReminderRepository reminderRepository) {
         this.javaMailSender = javaMailSender;
         this.reminderRepository = reminderRepository;
         this.sender = "SleepMedic";
@@ -42,17 +39,35 @@ public class EmailService {
     }
 
 
+
     public String sendMailWithAttachment(EmailDetails details) {
         return null;
     }
+
+
+
+
     /* Should execute every SUNDAY (1) at 00:00:00 (0, 0, 0) at any month and any day of week (?, ?) */
-    @Scheduled(cron = "0 0 0 ? ? 1")
-    public void scheduleReminders() {
-        List<Reminder> reminders = reminderRepository.findAll();
+//    @Scheduled(cron = "0 0 0 ? ? 1")
+//    public void scheduleReminders() {
+//        List<Reminder> reminders = reminderRepository.findAll();
+//
+//        for (Reminder reminder : reminders) {
+//            User user = reminder.getUser();
+//            StringBuilder daysStr = new StringBuilder(" ");
+//            //Leftmost bit - 1 is SUNDAY, rightmost bit is MONDAY. eg Monday & Sunday: 0100 0001
+//            byte days = reminder.getTriggerDays();
+//            byte mask = (byte) 0b01000000; // Create a bit mask to check individual days. Binary: 0100 0000
+//            byte counter = 0;
+//            while (mask > 0) {
+//                if ((days & mask) != 0) {
+//
+//                }
+//
+//                mask = (byte) (mask >> 1); // Right shift to check new day
+//            }
+//        }
+//    }
 
-        for (Reminder reminder : reminders) {
-            User user = reminder.getUser();
 
-        }
-    }
 }

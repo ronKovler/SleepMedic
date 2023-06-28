@@ -6,8 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import purdue.cs407.backend.dtos.*;
-import purdue.cs407.backend.models.SleepRecord;
-import purdue.cs407.backend.models.User;
+import purdue.cs407.backend.entities.SleepRecord;
+import purdue.cs407.backend.entities.User;
 import purdue.cs407.backend.repositories.RecordRepository;
 import purdue.cs407.backend.repositories.UserRepository;
 
@@ -117,9 +117,9 @@ public class HomeController {
         Date startDate = Date.valueOf(start);
         Date endDate = Date.valueOf(end);
 
-        List<SleepRecord> records = recordRepository.findAllByUserAndDateGreaterThanEqualAndDateLessThanEqual(user, startDate, endDate);
+        Collection<SleepRecord> records = recordRepository.getBetween(user.getUserID(), startDate.toString(), endDate.toString());
 
-        return ResponseEntity.ok(records);
+        return ResponseEntity.ok(records.stream().toList());
 
     }
 
@@ -160,6 +160,7 @@ public class HomeController {
         }
 
         SleepRecord record = new SleepRecord(request, user);
+        user.addRecord(record);
         recordRepository.save(record);
 
         return ResponseEntity.ok("Success");

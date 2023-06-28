@@ -1,4 +1,4 @@
-package purdue.cs407.backend.service;
+package purdue.cs407.backend.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
