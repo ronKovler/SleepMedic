@@ -7,27 +7,22 @@ import axios from "axios";
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 import Navbar from '../navbar/Navbar';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Tooltip from '@mui/material/Tooltip';
 import InfoIcon from '@mui/icons-material/Info';
+import LegendToggleIcon from '@mui/icons-material/LegendToggle';
 import Checkbox from '@mui/material/Checkbox';
-
-
-
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -238,7 +233,7 @@ export default function Home() {
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='20pt'>
+                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt'>
                                         {avgFallAsleepTime}<br/>
                                         {avgRestlessness}<br/>
                                         {avgSleepDuration}<br/>
@@ -248,7 +243,9 @@ export default function Home() {
                                     </Typography>
                                 </Grid>
                             </Grid>
-
+                            <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
+                                <Button href="/statistics" endIcon={<LegendToggleIcon/>}>View Insights</Button>
+                            </Box>
                         </Paper>
                     </Grid>
 
