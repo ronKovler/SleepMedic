@@ -4,9 +4,9 @@ package purdue.cs407.backend.controllers;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import purdue.cs407.backend.DTO.AuthRequest;
-import purdue.cs407.backend.DTO.AuthResponse;
-import purdue.cs407.backend.DTO.RegisterRequest;
+import purdue.cs407.backend.dtos.AuthRequest;
+import purdue.cs407.backend.dtos.AuthResponse;
+import purdue.cs407.backend.dtos.RegisterRequest;
 import purdue.cs407.backend.repositories.UserRepository;
 import purdue.cs407.backend.service.AuthService;
 

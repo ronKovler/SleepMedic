@@ -1,4 +1,4 @@
-package purdue.cs407.backend.models;
+package purdue.cs407.backend.pojos;
 
 public class EmailDetails {
 

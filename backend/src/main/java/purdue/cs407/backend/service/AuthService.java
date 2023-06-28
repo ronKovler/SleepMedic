@@ -4,9 +4,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import purdue.cs407.backend.DTO.AuthRequest;
-import purdue.cs407.backend.DTO.AuthResponse;
-import purdue.cs407.backend.DTO.RegisterRequest;
+import purdue.cs407.backend.dtos.AuthRequest;
+import purdue.cs407.backend.dtos.AuthResponse;
+import purdue.cs407.backend.dtos.RegisterRequest;
 import purdue.cs407.backend.models.User;
 import purdue.cs407.backend.repositories.UserRepository;
 

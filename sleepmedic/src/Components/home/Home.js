@@ -69,15 +69,15 @@ function getCookiesDict() {
 
 const getSleepData = async (e) => {
     const cookies = getCookiesDict();
-    let test_tok = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrb3Yucm9uQG91dGxvb2suY29tIiwiaWF0IjoxNjg3NjM4NTM4LCJleHAiOjE2ODc2Mzg3Nzh9.z6T_zcdvo2NSy5UyDKiZNqfGRcgT_wNH2bRj0Or37Rk';
+    let test_tok = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrb3ZsZXIucm9uQGdtYWlsLmNvbSIsImlhdCI6MTY4NzY0MzQ4NiwiZXhwIjoxNjg3NjQzNzI2fQ._uCWwgDge6JRp6xPlcESQDjLP2WfJQkBO7AxAaYYbuU";
     
     var headers = {
-        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+        "Access-Control-Allow-Origin": "http://localhost:8080/",
         "Authorization":'Bearer ' + test_tok
     }
 
     try {
-        let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/info", {headers});
+        let res = await axios.get("http://localhost:8080/api/home/info", {headers});
         console.log(res);
     }
     catch (err) {

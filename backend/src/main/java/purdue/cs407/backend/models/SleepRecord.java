@@ -1,7 +1,7 @@
 package purdue.cs407.backend.models;
 
 import jakarta.persistence.*;
-import purdue.cs407.backend.DTO.RecordRequest;
+import purdue.cs407.backend.dtos.RecordRequest;
 
 import java.sql.Date;
 import java.sql.Time;
