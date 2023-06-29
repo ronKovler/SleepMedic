@@ -3,7 +3,7 @@
  */
 
 
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import AppBar from "@mui/material/AppBar"
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -17,6 +17,8 @@ import LegendToggleIcon from '@mui/icons-material/LegendToggle';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { yellow } from "@mui/material/colors";
 import { createTheme } from '@mui/material/styles';
+import {useCookies} from 'react-cookie';
+
 
 import styles from './Navbar.module.css';
 
@@ -39,7 +41,18 @@ const barTheme = createTheme({
 
 // TOOD: add button event listeners
 
+
+
 export default function Navbar() {
+    const [cookies, setCookie, removeCookie] = useCookies(["_auth_state"]);
+    const navigate = useNavigate();
+    const handleLogout = (e) => {
+        removeCookie("_auth_storage");
+        removeCookie("_auth_state");
+        removeCookie("_auth_type");
+        removeCookie("_auth");
+        navigate("/login")
+    }
     return (
         <AppBar position="static" theme={barTheme} sx={{fontStyle: 'italic',}}>
             <Toolbar>
@@ -55,7 +68,7 @@ export default function Navbar() {
                 <IconButton href="/statistics" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
                     <LegendToggleIcon />
                 </IconButton>
-                <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
+                <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }} onClick={(e) => handleLogout(e)}>
                     <LogoutIcon /> {/* Hide Logout to left menu button??? */}
                 </IconButton>
 
