@@ -1,4 +1,4 @@
-package purdue.cs407.backend.service;
+package purdue.cs407.backend.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -38,7 +38,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration((new Date(System.currentTimeMillis() + 1000 * 60 * 4)))
+                .setExpiration((new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 4)))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

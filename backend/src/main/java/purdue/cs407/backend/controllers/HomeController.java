@@ -2,21 +2,20 @@ package purdue.cs407.backend.controllers;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import purdue.cs407.backend.DTO.*;
-import purdue.cs407.backend.models.SleepRecord;
-import purdue.cs407.backend.models.User;
+import purdue.cs407.backend.dtos.*;
+import purdue.cs407.backend.entities.SleepRecord;
+import purdue.cs407.backend.entities.User;
 import purdue.cs407.backend.repositories.RecordRepository;
 import purdue.cs407.backend.repositories.UserRepository;
-import purdue.cs407.backend.service.AuthService;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -62,8 +61,8 @@ public class HomeController {
 
         Date startDate = Date.valueOf(start);
         Date endDate = Date.valueOf(end);
-
-        List<SleepRecord> records = recordRepository.findAllByUserAndDateBetween(user, startDate, endDate);
+        System.out.println("DATE: " + startDate.toString() + " USERID: " + user.getUserID().toString());
+        Collection<SleepRecord> records = recordRepository.getBetween(user.getUserID(), startDate.toString(), endDate.toString());
 
         // No data for week available, return empty.
         if (records.size() == 0) {
@@ -94,7 +93,14 @@ public class HomeController {
         int avgWakeUpCount = wakeUpCountTotal / count;
         int avgRestlessness = restlessnessTotal / count;
 
+
+
         return ResponseEntity.ok(new WeekAverageResponse(avgFallingTime, avgHoursSlept, avgWakeUpCount, avgDownTime, avgUpTime, avgRestlessness));
+//        SELECT AVG(sleep_time), CONVERT(AVG(CONVERT(down_time AS INT)) AS DATE), AVG(falling_time), AVG(restlessness), CONVERT(AVG(CONVERT(up_time AS INT)) AS DATE), AVG(wake_up_count)
+//        FROM sleep_record
+//        WHERE date >= STR_TO_DATE('06/18/2023', '%m/%d/%Y') AND date <= STR_TO_DATE('06/24/2023', '%m/%d/%Y')
+//        GROUP BY user_id
+//        HAVING user_id = 17
     }
 
     @RequestMapping(value="month", method = RequestMethod.GET,
@@ -111,9 +117,20 @@ public class HomeController {
         Date startDate = Date.valueOf(start);
         Date endDate = Date.valueOf(end);
 
-        List<SleepRecord> records = recordRepository.findAllByUserAndDateBetween(user, startDate, endDate);
+        Collection<SleepRecord> records = recordRepository.getBetween(user.getUserID(), startDate.toString(), endDate.toString());
 
-        return ResponseEntity.ok(records);
+        return ResponseEntity.ok(records.stream().toList());
+
+    }
+
+    @RequestMapping(value="info", method = {RequestMethod.OPTIONS, RequestMethod.GET},
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<InfoResponse> getInfo() {
+        // Get the user
+        User user = getCurrentUser();
+
+
+        return ResponseEntity.ok(new InfoResponse(user.getFirstName(), user.getLastName()));
 
     }
 
@@ -143,6 +160,7 @@ public class HomeController {
         }
 
         SleepRecord record = new SleepRecord(request, user);
+        user.addRecord(record);
         recordRepository.save(record);
 
         return ResponseEntity.ok("Success");

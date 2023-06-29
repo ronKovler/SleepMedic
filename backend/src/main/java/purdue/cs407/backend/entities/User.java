@@ -1,15 +1,16 @@
-package purdue.cs407.backend.models;
+package purdue.cs407.backend.entities;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import purdue.cs407.backend.DTO.RegisterRequest;
+import purdue.cs407.backend.dtos.RegisterRequest;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -40,8 +41,24 @@ public class User implements UserDetails {
     @Column(name="sex", length=1)
     private String sex;
 
+    @OneToMany(mappedBy = "user")
+    private Set<SleepRecord> records = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<Reminder> reminders = new HashSet<>();
+
 
     public User(String firstName, String lastName, String email, String password, Date birthday, String sex) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.birthday = birthday;
+        this.sex = sex;
+    }
+
+    public User(Long userID, String firstName, String lastName, String email, String password, Date birthday, String sex) {
+        this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -53,7 +70,7 @@ public class User implements UserDetails {
     public User(RegisterRequest request) {
         this.firstName = request.getFirstName();
         this.lastName = request.getLastName();
-        this.email = request.getEmail();
+        this.email = request.getEmail().toLowerCase();
         this.password = request.getPassword();
         this.birthday = request.getBirthday();
         this.sex = request.getSex();
@@ -148,6 +165,42 @@ public class User implements UserDetails {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
+    }
+
+    public Set<SleepRecord> getRecords() {
+        return records;
+    }
+
+    public void setRecords(Set<SleepRecord> records) {
+        this.records = records;
+    }
+
+    public Set<Reminder> getReminders() {
+        return reminders;
+    }
+
+    public void setReminders(Set<Reminder> reminders) {
+        this.reminders = reminders;
+    }
+
+    public void addReminder(Reminder reminder) {
+        this.reminders.add(reminder);
+    }
+
+    public void removeReminder(Reminder reminder) {
+        this.reminders.remove(reminder);
+    }
+
+    public void addRecord(SleepRecord record) {
+        this.records.add(record);
+    }
+
+    public void removeRecord(SleepRecord record) {
+        this.records.remove(record);
     }
 
     @Override

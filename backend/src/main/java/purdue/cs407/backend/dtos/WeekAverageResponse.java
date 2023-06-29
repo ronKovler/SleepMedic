@@ -1,4 +1,4 @@
-package purdue.cs407.backend.DTO;
+package purdue.cs407.backend.dtos;
 
 import java.sql.Time;
 
@@ -67,5 +67,13 @@ public class WeekAverageResponse {
 
     public void setUpTime(Time upTime) {
         this.upTime = upTime;
+    }
+
+    public int getRestlessness() {
+        return restlessness;
+    }
+
+    public void setRestlessness(int restlessness) {
+        this.restlessness = restlessness;
     }
 }

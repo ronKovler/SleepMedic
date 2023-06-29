@@ -1,7 +1,8 @@
-package purdue.cs407.backend.models;
+package purdue.cs407.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import purdue.cs407.backend.DTO.RecordRequest;
+import purdue.cs407.backend.dtos.RecordRequest;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -22,7 +23,8 @@ public class SleepRecord {
     @Column(name="falling_time")
     private int fallingTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY) // Use lazy for speed
     @JoinColumn(name="user_ID")
     private User user;
 
@@ -88,6 +90,19 @@ public class SleepRecord {
         this.upTime = upTime;
         this.wakeUpCount = wakeUpCount;
         this.restlessness = restlessness;
+    }
+
+    public SleepRecord(Long recordID, double sleepTime, int fallingTime, User user, Date date, Time downTime, Time upTime, int wakeUpCount, int restlessness, String dreams) {
+        this.recordID = recordID;
+        this.sleepTime = sleepTime;
+        this.fallingTime = fallingTime;
+        this.user = user;
+        this.date = date;
+        this.downTime = downTime;
+        this.upTime = upTime;
+        this.wakeUpCount = wakeUpCount;
+        this.restlessness = restlessness;
+        this.dreams = dreams;
     }
 
     public SleepRecord(RecordRequest request, User user) {

@@ -1,8 +1,7 @@
-package purdue.cs407.backend.models;
+package purdue.cs407.backend.entities;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
 import java.sql.Time;
 
 @Entity
