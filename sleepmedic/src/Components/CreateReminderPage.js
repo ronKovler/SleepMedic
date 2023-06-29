@@ -21,7 +21,7 @@ function CreateRem() {
     const [ReminderType, changeRemType] = useState("None");
     const [ReminderTime, setRemTime] = useState('');
     const [ReminderName, setRemName] = useState('');
-    const daysOfWeek = [{day: "Mon"}, {day:"Tue"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}, {day:"Sun"}];
+    const daysOfWeek = [{day: "Sun"}, {day:"Mon"}, {day:"Tues"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}];
     const [checkedState, setCheckedState] = useState(
         new Array(daysOfWeek.length).fill(false)
     );
@@ -62,7 +62,7 @@ function CreateRem() {
         const formattedReminderTime = `${formattedHours}:${formattedMinutes}:00`;
         //grabbing the days selected by user
         const selectedDays = checkedState
-            .map((isChecked, index) => (isChecked ? index + 1 : null))
+            .map((isChecked, index) => (isChecked ? index : null))
             .filter((day) => day !== null);
         //headers
         var headers = {
