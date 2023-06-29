@@ -30,8 +30,8 @@ public class AuthService {
     public AuthResponse register(RegisterRequest request) {
         String email = request.getEmail().toLowerCase();
         if (userRepository.existsByEmail(email)) {
-            return new AuthResponse("-1");
-        }
+            return new AuthResponse("-1"); // Sanity check, should be handled by frontend making calls to
+        }                                        // /api/account/check_email/{email}
 
         /* Create user and encode password */
         User user = new User(request);
@@ -41,7 +41,7 @@ public class AuthService {
 
         user.setPassword(encodedPass);
         // Save User to DB
-        userRepository.save(user);
+        user = userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
 
         return new AuthResponse(jwtToken);
@@ -54,7 +54,7 @@ public class AuthService {
                         request.getPassword()
                 )
         );
-
+        // If we get here, user has been authenticated
         System.out.println("Authenticated User: " + request.getEmail());
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         String jwtToken = jwtService.generateToken(user);

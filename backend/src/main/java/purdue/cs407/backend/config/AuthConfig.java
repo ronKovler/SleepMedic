@@ -42,7 +42,6 @@ public class AuthConfig {
     /* Actual AuthManager, will be responsible for checking credentials */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-
         return config.getAuthenticationManager();
     }
 

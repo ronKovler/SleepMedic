@@ -3,9 +3,7 @@ package purdue.cs407.backend.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import purdue.cs407.backend.dtos.ReminderRequest;
-
 import java.sql.Time;
-import java.time.DayOfWeek;
 
 @Entity
 @Table(name = "reminder")
@@ -17,7 +15,7 @@ public class Reminder {
     private Long reminderID;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER) // Us
+    @ManyToOne(fetch = FetchType.EAGER) // Simply did not want to work with lazy even thought it theoretically should...
     @JoinColumn(name="user_ID")
     private User user;
 
@@ -36,7 +34,6 @@ public class Reminder {
     @Column(name = "job_ID", length = 196)
     private String jobID;
 
-
     public Reminder(User user, Time triggerTime, int message) {
         this.user = user;
         this.triggerTime = triggerTime;
@@ -49,10 +46,10 @@ public class Reminder {
         this.triggerTime = request.getTriggerTime();
         byte trigger = 0;
 
-        //Bitvector for storing days of week. rightmost bit = MONDAY, leftmost bit - 1 = SUNDAY
+        //Bitvector for storing days of week. rightmost bit = SUNDAY, leftmost bit - 1 = SATURDAY
         for (byte dayOfWeek: request.getTriggerDays()) {
-            byte shift = 0x01;
-            byte mask = (byte) (shift << (byte) (dayOfWeek));
+            byte shift = 0b00000001;
+            byte mask = (byte) (shift << dayOfWeek);
             trigger = (byte) (trigger | mask);
         }
         this.triggerDays = trigger;

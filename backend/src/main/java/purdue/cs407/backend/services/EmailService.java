@@ -11,21 +11,15 @@ public class EmailService {
 
 
     private final JavaMailSender javaMailSender;
-    private final ReminderRepository reminderRepository;
-    private final String sender;
 
-
-
-    public EmailService(JavaMailSender javaMailSender,
-                        ReminderRepository reminderRepository) {
+    public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
-        this.reminderRepository = reminderRepository;
-        this.sender = "SleepMedic";
     }
 
     public String sendSimpleMail(EmailDetails details) {
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
+            String sender = "SleepMedic";
             mailMessage.setFrom(sender);
             mailMessage.setTo(details.getRecipient());
             mailMessage.setText(details.getMsgBody());
