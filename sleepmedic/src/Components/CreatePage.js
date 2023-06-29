@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TextField, Button, Select } from '@mui/material';
+import { TextField, Button, Select, Alert, AlertTitle } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
@@ -10,13 +10,51 @@ import { useSignIn } from 'react-auth-kit';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import "./CreatePage.css";
 
+
 function CreateAccount() {
     //First Part
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmation, setConfirmation] = useState('');
     const [next, setNext] = useState(false);
-    const [matchCheck, setMatchCheck] = useState(false);
+    const [confirmError, setConfirmError] = useState(true);
+    const [emailFree, setEmailFree] = useState(true);
+    const [complexError, setComplexError] = useState(false);
+    var headers = {
+        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+    }
+
+    function checkvalidpassword(str) {
+        
+        if (password.length < 8){
+            console.log("wrong format of password");
+            return false;
+        }
+        var hasUpperCase = /[A-Z]/.test(password);
+        var hasLowerCase = /[a-z]/.test(password);
+        var hasNumbers = /\d/.test(password);
+        var hasNonalphas = /\W/.test(password);
+        if (hasUpperCase + hasLowerCase + hasNumbers + hasNonalphas < 4) 
+        {
+            console.log("wrong format of password");
+            return false;
+        }
+        console.log("nicepassword!: " + password);
+         return true;
+    } 
+    const checkMatch = (e) => {
+        if (Object.is(confirmation, password)) {
+            setConfirmError(true);
+        } else {
+            setConfirmError(false);
+        }
+    }
+
+    const checkEmail = async (e) => {
+        let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/check_email/" + email, headers)
+
+        setEmailFree(res.data);
+    }
 
     //Second Part (Account Details)
     const [firstname, setFirstName] = useState('');
@@ -36,9 +74,19 @@ function CreateAccount() {
     const handleCreateAccount = (e) => {
         e.preventDefault();
         // Handle create account logic here
-        if (!Object.is(password, "")) {
-            setNext(true);
-        }
+        if (emailFree){
+            if(checkvalidpassword(password)){
+                if (confirmError){
+                    setNext(true);
+                    return;
+                }
+                
+            } else{
+                setComplexError(true);
+                
+                return;
+            }
+        } 
     };
 
     const handleConfirmData = async (e) => {
@@ -60,18 +108,11 @@ function CreateAccount() {
         try {
             let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/create_account", stringify, {headers})
 
-            if (Object.is(res.data.token,"-1")) {
-                console.log("Email Taken");
-            }
 
             if(res){
                 alert("success");
                 
                 console.log('Creating account & Logging In');
-                var headers = {
-                    "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
-                    "Content-Type": 'application/json; charset=utf-8',
-                }
                 var loginInfo = {
                     email: email,
                     password: password,
@@ -82,6 +123,7 @@ function CreateAccount() {
             
                   if (Object.is(res.data.token,"-1")) {
                     console.log("Login Failed");
+                    return;
                   }
                   signIn({
                     token: res.data.token,
@@ -94,11 +136,12 @@ function CreateAccount() {
                   navigate("/home");
                 } catch (err) {
                   console.log("LOGIN BACKEND CALL FAILED");
+                  return;
                 }
     
             }
         } catch (err) {
-            console.log("ACCOUNT CREATE FAILED BACKEND CALL/Account Taken");
+            console.log(err.response);
         }
         
     }
@@ -120,6 +163,7 @@ function CreateAccount() {
                     <InputLabel sx={{ color: 'white'}} color="secondary" id="sex-label">Sex</InputLabel>
                     <Select
                         labelId="Sex"
+                        required
                         id="demo-simple-select-helper"
                         value={sex}
                         label="Sex"
@@ -198,9 +242,9 @@ function CreateAccount() {
         :
         <div className="sleep-medic-container">
             <form className="create-form" onSubmit={handleCreateAccount}>
-                <h1>Create an Account on Sleep-Medic</h1>
-                <label htmlFor="email">Email:</label>
-                <TextField
+                <h1 style={{maxWidth: "22rem"}}>Create an Account on Sleep-Medic</h1>
+                <label style={{fontWeight: "bold"}} htmlFor="email">Email:</label>
+                {emailFree ? <TextField
                 type="email"
                 id="email"
                 value={email}
@@ -208,11 +252,36 @@ function CreateAccount() {
                 variant="outlined"
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
+                onBlur={e => checkEmail(e)}
                 sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
                 color="secondary"
-                />
-                <br /> <br/>
-                <label htmlFor="password">Password:</label>
+                required
+                /> : <TextField
+                type="email"
+                id="email"
+                error
+                value={email}
+                placeholder="Email"
+                variant="outlined"
+                onChange={(e) => setEmail(e.target.value)}
+                style={{ width: "70%", height: "4%" }}
+                helperText="This email is already being used!"
+                onBlur={e => checkEmail(e)}
+                sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+                color="secondary"
+                required
+                />}
+                <br/><br/>
+                {complexError && <Alert severity="info">
+                    <AlertTitle><strong>Password Not Complex Enough</strong></AlertTitle>
+                    Please make sure your password is <br/>
+                    <strong> - is longer than 8 characters</strong> <br/>
+                    <strong> - contains an UpperCase Letter</strong> <br/>
+                    <strong> - contains an LowerCase Letter</strong> <br/>
+                    <strong> - contains a Number</strong> <br/>
+                    <strong> - contains a Complex Character (ex. !@#$%&)</strong> 
+                </Alert>}
+                <label style={{fontWeight: "bold"}} htmlFor="password">Password:</label>
                 <TextField
                 type="password"
                 id="password"
@@ -223,10 +292,11 @@ function CreateAccount() {
                 style={{ width: "70%", height: "4%" }}
                 sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
                 color="secondary"
+                required
                 />
                 <br/><br/>
-                <label style={{color:"white"}}>Confirm Password:</label>
-                {Object.is(confirmation, password) ? <TextField
+                <label style={{fontWeight: "bold"}}>Confirm Password:</label>
+                {confirmError ? <TextField
                 type="password"
                 id="confirmPassword"
                 placeholder="Confirm Password" 
@@ -236,6 +306,8 @@ function CreateAccount() {
                 style={{ width: "70%", height: "4%" }}
                 sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
                 color="secondary"
+                onBlur={(e) => checkMatch(e)}
+                required
                 /> : <TextField
                 type="password"
                 error
@@ -248,6 +320,8 @@ function CreateAccount() {
                 sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
                 color="secondary"
                 helperText="These passwords do not match!"
+                onBlur={(e) => checkMatch(e)}
+                required
                 />}
                 <br/>
 

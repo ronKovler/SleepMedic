@@ -25,8 +25,8 @@ function Welcome() {
   };
 
   return (
+ 
     <div className="sleep-medic-container">
-
       {/*Welcome Message - Getting Started*/}
       {!started &&
       (<div>
