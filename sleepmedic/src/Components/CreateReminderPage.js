@@ -19,11 +19,15 @@ function getCookiesDict() {
 function CreateRem() {
     const [ReminderType, setRemType] = useState("None");
     const [ReminderTime, setRemTime] = useState('');
-    const [ReminderName, setRemName] = useState('');
+    //const [ReminderName, setRemName] = useState('');
     const daysOfWeek = [{day: "Sun"}, {day:"Mon"}, {day:"Tues"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}];
     const [checkedState, setCheckedState] = useState(
         new Array(daysOfWeek.length).fill(false)
     );
+    //state-set function for setRemTypeErrMsg
+    const [RemTypeErrMsg, setRemTypeErrMsg] = useState("");
+    //state-set function for setDaysErrMsg
+    //state-set function for setRemTimeErrMsg
 
     //handleChange() method for checkboxes: maintains which days are selected by the user
     const handleOnChangeCB = (position) => {
@@ -31,12 +35,28 @@ function CreateRem() {
           index === position ? !item : item
         );
         setCheckedState(updatedCheckedState);
+        //if the checkedState.get(position) is true, then remove the setDaysErrMsg
     };
 
+    /* reminderTypeInputValidation, set error message accordingly
+        The drop-down MUST be set to something besides "None"
+    */
+    const reminderTypeInputValidation = () => {
+        if (ReminderType == "None") {
+            //invoke state function
+            setRemTypeErrMsg("Please choose a reminder type to complete reminder creation.")
+            return false;
+        }
+        return true;
+    }
 
-    /* dayInputValidation, set error message accordingly
+    /* daysInputValidation, set error message accordingly
         at least one day (checkbox) should be selected.
     */
+    const daysInputValidation = () => {
+
+        return true;
+    }
 
     /* Time input validation, set error message accordingly
         Should be in format: 00:00PM or AM
@@ -45,16 +65,23 @@ function CreateRem() {
         if input does not have hours and minute in format of 00:00, prompt error message
         if input does not end in PM or AM, prompt error message.
     */
+    const timeInputValidation = () => {
+
+        return true;
+    }
 
     //TODO: input validation - are days selected? is there a time specified? Has it been inputted in the correct format?
     /* Main input validation
         call reminderTypeInputValidation, set error message accordingly
-        call dayInputValidation, set error message accordingly
+        call daysInputValidation, set error message accordingly
         call timeInputValidation, set error message accordingly
         Error messages should be displayed on the right side of their respective component
     */
     const validate = () => {
         //call your specific input functions here.
+        if (reminderTypeInputValidation() || daysInputValidation() || timeInputValidation()) {
+            return false;
+        }
         return true;
     }
 
@@ -71,7 +98,7 @@ function CreateRem() {
             } else if (ReminderType === "Sleep Hygiene Reminder") {
                 reminderTypeInt = 2;
             } else {
-                reminderTypeInt = 0; // Default value when ReminderType is "None"
+                reminderTypeInt = 0; // Default value when ReminderType is "None" <-- comment this line out when input validation is finished.
             }
             //grab ReminderTime and convert to the required format (hr:min:sec) (military)
             const [time, clock] = ReminderTime.split(/(?<=[0-9]{2})(?=[AP]M)/);
@@ -127,6 +154,9 @@ function CreateRem() {
              <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
              <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
            </Select>
+           <br/>
+           <br/>
+         <label htmlFor="reminder-type-err-msg">{RemTypeErrMsg}</label>
          </div>
          <div className="days-list">
             {daysOfWeek.map(({day}, index) => {
