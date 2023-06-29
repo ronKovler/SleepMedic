@@ -13,11 +13,14 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
+import LegendToggleIcon from '@mui/icons-material/LegendToggle';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { yellow } from "@mui/material/colors";
 import { createTheme } from '@mui/material/styles';
 import {useCookies} from 'react-cookie';
 
+
+import styles from './Navbar.module.css';
 
 const barTheme = createTheme({
     palette: {
@@ -58,12 +61,12 @@ export default function Navbar() {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold', color: 'white'}}>
-                    Sleep Medic
+                    <Link to="/home" className={styles['noDecorTitles']}>Sleep Medic</Link>
                 </Typography>
                 
                 {/* When more buttons added, probably use ButtonGroup for better UI */}
-                <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
-                    <SignalCellularAltIcon />
+                <IconButton href="/statistics" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
+                    <LegendToggleIcon />
                 </IconButton>
                 <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }} onClick={(e) => handleLogout(e)}>
                     <LogoutIcon /> {/* Hide Logout to left menu button??? */}

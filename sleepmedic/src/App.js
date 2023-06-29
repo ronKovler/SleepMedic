@@ -6,6 +6,7 @@ import CreateAccount from './Components/CreatePage';
 
 import Welcome from './Components/Welcome';
 import Home from "./Components/home/Home"
+import Statistics from "./Components/statistics/Statistic"
 import { createTheme, colors, ThemeProvider } from '@mui/material';
 import OpenProfilePage from './Components/ProfilePage';
 import EditGoal from './Components/EditGoalPage';
@@ -25,6 +26,7 @@ function App() {
         <Route path="/editgoal" element={<EditGoal/>} />
         <Route path="/createreminder" element={<CreateRem/>} />
         <Route path="/notificationspage" element={<OpenNotificationsPage/>} />
+        <Route path="/statistics" element={<Statistics/>} />
       </Routes>
     </div>
   );

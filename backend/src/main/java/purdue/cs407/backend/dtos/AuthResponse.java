@@ -1,4 +1,4 @@
-package purdue.cs407.backend.DTO;
+package purdue.cs407.backend.dtos;
 
 import lombok.Builder;
 
