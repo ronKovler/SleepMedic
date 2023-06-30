@@ -19,14 +19,13 @@ function getCookiesDict() {
 function CreateRem() {
     const [ReminderType, setRemType] = useState("None");
     const [ReminderTime, setRemTime] = useState('');
-    //const [ReminderName, setRemName] = useState('');
     const daysOfWeek = [{day: "Sun"}, {day:"Mon"}, {day:"Tues"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}];
     const [checkedState, setCheckedState] = useState(
         new Array(daysOfWeek.length).fill(false)
     );
-    //state-set function for setRemTypeErrMsg
     const [RemTypeErrMsg, setRemTypeErrMsg] = useState("");
-    //state-set function for setDaysErrMsg
+    const [daysInputErrMsg, setDaysErrMsg] = useState("hey bro");
+    const [timeErrMsg, setRemTimeErrMsg] = useState("hey bro");
     //state-set function for setRemTimeErrMsg
 
     //handleChange() method for checkboxes: maintains which days are selected by the user
@@ -37,6 +36,13 @@ function CreateRem() {
         setCheckedState(updatedCheckedState);
         //if the checkedState.get(position) is true, then remove the setDaysErrMsg
     };
+
+    const handleOnChangeRemType = (value) => {
+        setRemType(value);
+        if (value != "None") {
+            setRemTypeErrMsg("");
+        }
+    }
 
     /* reminderTypeInputValidation, set error message accordingly
         The drop-down MUST be set to something besides "None"
@@ -54,8 +60,9 @@ function CreateRem() {
         at least one day (checkbox) should be selected.
     */
     const daysInputValidation = () => {
-
-        return true;
+        setDaysErrMsg("Please select at least one day to complete reminder creation.")
+        //return true;
+        return false;
     }
 
     /* Time input validation, set error message accordingly
@@ -66,8 +73,10 @@ function CreateRem() {
         if input does not end in PM or AM, prompt error message.
     */
     const timeInputValidation = () => {
-
-        return true;
+        //if.....
+        setRemTimeErrMsg("sdfdsasdkfja;dlfjalkdjflaskdjfsadf");
+        //return true;
+        return false;
     }
 
     //TODO: input validation - are days selected? is there a time specified? Has it been inputted in the correct format?
@@ -79,6 +88,15 @@ function CreateRem() {
     */
     const validate = () => {
         //call your specific input functions here.
+
+        if (reminderTypeInputValidation() && daysInputValidation() && timeInputValidation()) {
+            //return false;
+            return true
+        }
+        return false;
+
+
+
         if (reminderTypeInputValidation() || daysInputValidation() || timeInputValidation()) {
             return false;
         }
@@ -148,7 +166,8 @@ function CreateRem() {
              id="reminder-type"
              value={ReminderType}
              label="Reminder Type"
-             onChange={(e) => setRemType(e.target.value)}    //TODO: implement informational box rendering.
+             onChange={(e) => handleOnChangeRemType(e.target.value)}
+             //onChange={(e) => setRemType(e.target.value)}    //TODO: implement informational box rendering.
             style={{ width: "230px" }} >
              <MenuItem value="None">None</MenuItem>
              <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
@@ -176,7 +195,11 @@ function CreateRem() {
                 </li>
                 );
             })}
+
+
+
          </div>
+         <label htmlFor="days-input-err-msg">{daysInputErrMsg}</label>
          <div className="form-group">
            <label htmlFor="reminder-time">Reminder Time:</label>
            <input
@@ -184,6 +207,7 @@ function CreateRem() {
              value={ReminderTime}
              onChange={(e) => setRemTime(e.target.value)}
            />
+           <label htmlFor="reminder-time-err-msg">{timeErrMsg}</label>
          </div>
          <div className="button-group">
             <Link to="/editgoal">

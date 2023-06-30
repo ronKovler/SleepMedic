@@ -16,12 +16,10 @@ function OpenProfilePage() {
                 <Link to="/editgoal">
                     <Button variant="contained">Edit Your Goals</Button>
                 </Link>
-                <Link to="/notificationspage">
-                    <Button variant="contained">Notification Preferences</Button>
-                </Link>
+
                 <Link to="/home">
-                                    <Button variant="contained">Home</Button>
-                                </Link>
+                    <Button variant="contained">Home</Button>
+                </Link>
             </div>
         </div>
     );
