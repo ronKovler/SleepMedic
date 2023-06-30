@@ -36,7 +36,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String jwt;
         final String email;
 
-        if ( authHeader == null || !authHeader.startsWith( "Bearer " ) ) {
+        // Less than 20 is sanity check to prevent jwt.Exception when Bearer is null but exists in header.
+        if ( authHeader == null || !authHeader.startsWith( "Bearer " ) || authHeader.length() < 20) {
             filterChain.doFilter( request, response );
             return;
         }

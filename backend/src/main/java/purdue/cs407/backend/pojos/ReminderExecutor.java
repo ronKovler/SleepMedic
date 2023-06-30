@@ -10,7 +10,7 @@ import purdue.cs407.backend.services.EmailService;
 import java.util.Base64;
 
 @Service
-@Scope("prototype")
+@Scope("prototype") // Essentially makes this service a "class"
 public class ReminderExecutor implements Runnable {
 
     private ReminderTask reminderTask;
