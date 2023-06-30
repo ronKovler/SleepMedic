@@ -6,12 +6,14 @@ import axios from "axios";
 import "./LoginPage.css";
 import { Button } from '@mui/material';
 import { styled } from '@mui/system';
+import { Alert } from '@mui/material';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const signIn = useSignIn();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const [error, setError] = useState(false);
   const handleLogin = async (e) => {
     e.preventDefault();
     // Handle login logic here
@@ -29,6 +31,8 @@ function Login() {
 
       if (Object.is(res.data.token,"-1")) {
         console.log("Login Failed");
+        setError(true);
+        return;
       }
       signIn({
         token: res.data.token,
@@ -41,26 +45,21 @@ function Login() {
       navigate("/home");
     } catch (err) {
       console.log("LOGIN BACKEND CALL FAILED");
+      setError(true);
+      return;
     }
 
 
     console.log('Logging in...');
   };
-  //Styled MUI
-  const StyledButton = styled(Button)(() => ({
-    
-  }));
-
-  const StyledTextField = styled(TextField)(() => ({
-    
-  }));
 
 
   return (
     <div className="sleep-medic-container">
       <form className="login-form" onSubmit={handleLogin}>
         <h1>Log in to Sleep-Medic</h1>
-        <label htmlFor="email">Email:</label>
+        {error && <Alert severity="error" sx={{color: "red", fontSize: "0.85rem"}}><strong>Username/Password was Entered Incorrectly!</strong></Alert>}
+        <label style={{fontWeight: "bold"}} htmlFor="email">Email:</label>
         <TextField
           type="email"
           id="email"
@@ -71,10 +70,11 @@ function Login() {
           color="secondary"
           style={{width: "70%", height: "4%"}}
           sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+          required
         />
         <br/>
         <br/>
-        <label htmlFor="password">Password:</label>
+        <label style={{fontWeight: "bold"}} htmlFor="password">Password:</label>
         <TextField
           type="password"
           id="password"
@@ -85,6 +85,7 @@ function Login() {
           color="secondary"
           style={{width: "70%", height: "4%"}}
           sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+          required
         />
         <br/><br/>
         <Button variant="contained" color="primary" onClick={(e) => handleLogin(e)}>Login</Button>
