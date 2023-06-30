@@ -17,7 +17,7 @@ import LegendToggleIcon from '@mui/icons-material/LegendToggle';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { yellow } from "@mui/material/colors";
 import { createTheme } from '@mui/material/styles';
-import {useCookies} from 'react-cookie';
+import { useSignOut } from "react-auth-kit";
 
 
 import styles from './Navbar.module.css';
@@ -44,14 +44,11 @@ const barTheme = createTheme({
 
 
 export default function Navbar() {
-    const [cookies, setCookie, removeCookie] = useCookies(["_auth_state"]);
+    const logOut = useSignOut();
     const navigate = useNavigate();
     const handleLogout = (e) => {
-        removeCookie("_auth_storage");
-        removeCookie("_auth_state");
-        removeCookie("_auth_type");
-        removeCookie("_auth");
-        navigate("/login")
+        logOut();
+        navigate("/login");
     }
     return (
         <AppBar position="static" theme={barTheme} sx={{fontStyle: 'italic',}}>

@@ -59,7 +59,6 @@ function Welcome() {
             </div>
             <br/>
             <Button variant="contained" color="primary" onClick={(e) => navigate("/login")}>Next</Button>
-            <Button variant="contained" color="primary" onClick={(e) => navigate("/home")}>Home</Button>
           </div>
         </div>
       )}
