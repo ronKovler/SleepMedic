@@ -1,5 +1,5 @@
 import "./CreateReminderPage.css";
-import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Link, Route, useNavigate } from 'react-router-dom';
 import {TextField, Select, MenuItem, Button } from "@mui/material/";
 import axios from "axios";
 import { valueToPercent } from '@mui/base';
@@ -30,6 +30,7 @@ function CreateRem() {
     const [timeErrMsg, setRemTimeErrMsg] = useState("");
     const emptyTimeInputMsg = "You must input a time to trigger the reminder.";
     const badTimeInputFormat = "Please input time in the following format; e.g. 10:45PM, 8:00AM"
+    const navigate = useNavigate();
 
     //handleChange() method for reminderType
     const handleOnChangeRemType = (value) => {
@@ -74,13 +75,6 @@ function CreateRem() {
         return false;
     };
 
-    /* Time input validation, set error message accordingly
-        Should be in format: 00:00PM or AM
-        if input is empty, prompt error message
-        if input does not contain :, prompt error message
-        if input does not have hours and minute in format of 00:00, prompt error message
-        if input does not end in PM or AM, prompt error message.
-    */
     const timeInputValidation = () => {
         if (ReminderTime === "") {
             setRemTimeErrMsg(emptyTimeInputMsg);
@@ -149,6 +143,7 @@ function CreateRem() {
             try {
                 let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/reminder/create_reminder", reminderInfo, {headers});
                 console.log(res);
+                navigate("/editgoal");
             }
             catch (err) {
                 console.log("Failed to send CreateReminder data.");
