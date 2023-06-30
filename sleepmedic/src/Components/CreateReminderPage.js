@@ -24,9 +24,20 @@ function CreateRem() {
         new Array(daysOfWeek.length).fill(false)
     );
     const [RemTypeErrMsg, setRemTypeErrMsg] = useState("");
-    const [daysInputErrMsg, setDaysErrMsg] = useState("hey bro");
-    const [timeErrMsg, setRemTimeErrMsg] = useState("hey bro");
-    //state-set function for setRemTimeErrMsg
+    const reminderTypeErrMsg = "Please specify a type of reminder to complete creation.";
+    const [daysInputErrMsg, setDaysErrMsg] = useState("");
+    const daysErrMsg = "You must select at least one day for your reminder.";
+    const [timeErrMsg, setRemTimeErrMsg] = useState("");
+    const emptyTimeInputMsg = "You must input a time to trigger the reminder.";
+    const badTimeInputFormat = "Please input time in the following format; e.g. 10:45PM, 8:00AM"
+
+    //handleChange() method for reminderType
+    const handleOnChangeRemType = (value) => {
+        setRemType(value);
+        if (value != "None") {
+            setRemTypeErrMsg("");
+        }
+    };
 
     //handleChange() method for checkboxes: maintains which days are selected by the user
     const handleOnChangeCB = (position) => {
@@ -34,36 +45,34 @@ function CreateRem() {
           index === position ? !item : item
         );
         setCheckedState(updatedCheckedState);
-        //if the checkedState.get(position) is true, then remove the setDaysErrMsg
+        //if the updated position's value is true, then we know at least one box is checked, make sure errMsg is empty.
+        if (updatedCheckedState[position] == true) {
+            setDaysErrMsg("");
+        }
     };
 
-    const handleOnChangeRemType = (value) => {
-        setRemType(value);
-        if (value != "None") {
-            setRemTypeErrMsg("");
-        }
-    }
-
-    /* reminderTypeInputValidation, set error message accordingly
-        The drop-down MUST be set to something besides "None"
-    */
     const reminderTypeInputValidation = () => {
         if (ReminderType == "None") {
             //invoke state function
-            setRemTypeErrMsg("Please choose a reminder type to complete reminder creation.")
+            setRemTypeErrMsg(reminderTypeErrMsg);
             return false;
         }
         return true;
-    }
+    };
 
-    /* daysInputValidation, set error message accordingly
-        at least one day (checkbox) should be selected.
-    */
     const daysInputValidation = () => {
-        setDaysErrMsg("Please select at least one day to complete reminder creation.")
-        //return true;
+        //if there is at least one box selected, reset errMsg and return true
+        let len = checkedState.length;
+        for (let i = 0; i < len; i++) {
+            if (checkedState[i] == true) {
+                setDaysErrMsg("");
+                return true;
+            }
+        }
+        //otherwise setDaysErrMsg("Please select at least one day to complete reminder creation" and return false.
+        setDaysErrMsg(daysErrMsg);
         return false;
-    }
+    };
 
     /* Time input validation, set error message accordingly
         Should be in format: 00:00PM or AM
@@ -73,35 +82,26 @@ function CreateRem() {
         if input does not end in PM or AM, prompt error message.
     */
     const timeInputValidation = () => {
-        //if.....
-        setRemTimeErrMsg("sdfdsasdkfja;dlfjalkdjflaskdjfsadf");
-        //return true;
-        return false;
-    }
-
-    //TODO: input validation - are days selected? is there a time specified? Has it been inputted in the correct format?
-    /* Main input validation
-        call reminderTypeInputValidation, set error message accordingly
-        call daysInputValidation, set error message accordingly
-        call timeInputValidation, set error message accordingly
-        Error messages should be displayed on the right side of their respective component
-    */
-    const validate = () => {
-        //call your specific input functions here.
-
-        if (reminderTypeInputValidation() && daysInputValidation() && timeInputValidation()) {
-            //return false;
-            return true
-        }
-        return false;
-
-
-
-        if (reminderTypeInputValidation() || daysInputValidation() || timeInputValidation()) {
+        if (ReminderTime === "") {
+            setRemTimeErrMsg(emptyTimeInputMsg);
             return false;
         }
+        const timePattern = /^(1[0-2]|0?[1-9]):[0-5][0-9](AM|PM)$/;
+        if (!timePattern.test(ReminderTime)) {
+            setRemTimeErrMsg(badTimeInputFormat);
+            return false;
+        }
+        setRemTimeErrMsg("");
         return true;
-    }
+    };
+
+    //Main input validation function. Calls other specific inputValidation functions.
+    const validate = () => {
+        if (reminderTypeInputValidation() && daysInputValidation() && timeInputValidation()) {
+            return true;
+        }
+        return false;
+    };
 
     const handleCreateReminder = async(e) => {
         if (validate()) {
@@ -116,7 +116,7 @@ function CreateRem() {
             } else if (ReminderType === "Sleep Hygiene Reminder") {
                 reminderTypeInt = 2;
             } else {
-                reminderTypeInt = 0; // Default value when ReminderType is "None" <-- comment this line out when input validation is finished.
+                reminderTypeInt = 0;
             }
             //grab ReminderTime and convert to the required format (hr:min:sec) (military)
             const [time, clock] = ReminderTime.split(/(?<=[0-9]{2})(?=[AP]M)/);
@@ -131,6 +131,7 @@ function CreateRem() {
             }
             const formattedMinutes = minutes.padStart(2, '0'); // Pad minutes with leading zero if necessary
             const formattedReminderTime = `${formattedHours}:${formattedMinutes}:00`;
+
             //grabbing the days selected by user
             const selectedDays = checkedState
                 .map((isChecked, index) => (isChecked ? index : null))
@@ -167,7 +168,6 @@ function CreateRem() {
              value={ReminderType}
              label="Reminder Type"
              onChange={(e) => handleOnChangeRemType(e.target.value)}
-             //onChange={(e) => setRemType(e.target.value)}    //TODO: implement informational box rendering.
             style={{ width: "230px" }} >
              <MenuItem value="None">None</MenuItem>
              <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
@@ -195,9 +195,6 @@ function CreateRem() {
                 </li>
                 );
             })}
-
-
-
          </div>
          <label htmlFor="days-input-err-msg">{daysInputErrMsg}</label>
          <div className="form-group">
@@ -207,8 +204,8 @@ function CreateRem() {
              value={ReminderTime}
              onChange={(e) => setRemTime(e.target.value)}
            />
-           <label htmlFor="reminder-time-err-msg">{timeErrMsg}</label>
          </div>
+         <label htmlFor="reminder-time-err-msg">{timeErrMsg}</label>
          <div className="button-group">
             <Link to="/editgoal">
             <Button variant="contained">Cancel</Button>
