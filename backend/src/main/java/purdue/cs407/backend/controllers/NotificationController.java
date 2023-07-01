@@ -129,7 +129,7 @@ public class NotificationController {
     @RequestMapping(value="cancel_reminder/{hash}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> cancelReminder(@PathVariable String hash) {
-        Base64.Decoder decoder = Base64.getDecoder();
+        Base64.Decoder decoder = Base64.getUrlDecoder();
         String[] decrypted = new String(decoder.decode(hash)).split(":"); // Should now be reminder_job:{email}:{reminder_id}
         if (decrypted.length != 3) {
             return ResponseEntity.ok("Error decoding went wrong.");

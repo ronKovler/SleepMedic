@@ -17,13 +17,14 @@ public class EmailConfig {
         mailSender.setPort(587);
 
         mailSender.setUsername("sleep.medic.donotreply@gmail.com");
-        mailSender.setPassword("pxjdokotkimuorsu");
+        mailSender.setPassword("kjibjjeqohevovwu\n");
         //34gtqhwWBTE9uwWGsfn2u94g
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true"); //TODO disable
+
 
         return mailSender;
     }
