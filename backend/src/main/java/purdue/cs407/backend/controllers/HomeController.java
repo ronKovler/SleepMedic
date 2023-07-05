@@ -32,7 +32,6 @@ public class HomeController {
 
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();;
         return (User) authentication.getPrincipal();
     }
 

@@ -55,6 +55,7 @@ public class EmailService {
         String path = switch (msg) {
             case 1 -> "classpath:BedtimeReminder.html";
             case 2 -> "classpath:SleepHygieneReminder.html";
+            case 4 -> "classpath:PasswordReset.html";
             default -> null;
         };
 
@@ -70,6 +71,8 @@ public class EmailService {
         }
         return template;
     }
+
+
 
 
 

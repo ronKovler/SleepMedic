@@ -31,7 +31,7 @@ public class SecurityConfig {
         http    //TODO update to use SSL https authorizeChannel()
                 .csrf(AbstractHttpConfigurer::disable) // CSRF - cross site request forgery disabled for now TODO enable properly
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/account/**").permitAll() // Making these endpoints public
+                        .requestMatchers("/api/account/auth/**").permitAll() // Making these endpoints public
                         .requestMatchers("/api/reminder/cancel_reminder/**").permitAll()
                         .requestMatchers("/").permitAll() // Think this is needed for CORS preflight?
                         .anyRequest().authenticated())     // Lock all other endpoints

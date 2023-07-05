@@ -24,7 +24,7 @@ public class SleepRecord {
     private int fallingTime;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY) // Use lazy for speed
+    @ManyToOne(fetch = FetchType.EAGER) // Use lazy for speed
     @JoinColumn(name="user_ID")
     private User user;
 

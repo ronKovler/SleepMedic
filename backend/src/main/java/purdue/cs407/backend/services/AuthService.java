@@ -10,6 +10,8 @@ import purdue.cs407.backend.dtos.RegisterRequest;
 import purdue.cs407.backend.entities.User;
 import purdue.cs407.backend.repositories.UserRepository;
 
+import java.util.Random;
+
 @Service
 public class AuthService {
     private final UserRepository userRepository;
@@ -60,5 +62,36 @@ public class AuthService {
         String jwtToken = jwtService.generateToken(user);
 
         return new AuthResponse(jwtToken);
+    }
+
+    public String resetForgottenPassword(User user) {
+        String password = generateTemporaryPassword();
+        String encodedPass = passwordEncoder.encode(password);
+
+        user.setPassword(encodedPass);
+        userRepository.save(user);
+
+        return password;
+    }
+
+    public AuthResponse updatePassword(User user, String password) {
+        String encodedPass = passwordEncoder.encode(password);
+        user.setPassword(encodedPass);
+        user = userRepository.save(user);
+
+        String jwtToken = jwtService.generateToken(user);
+
+        return new AuthResponse(jwtToken);
+    }
+
+    private String generateTemporaryPassword() {
+        String charBank = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz!@#$%^&*()_?.";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 18) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * charBank.length());
+            salt.append(charBank.charAt(index));
+        }
+        return salt.toString();
     }
 }
