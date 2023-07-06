@@ -41,7 +41,7 @@ public class User implements UserDetails {
     @Column(name="sex", length=1)
     private String sex;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<SleepRecord> records = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
