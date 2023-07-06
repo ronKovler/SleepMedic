@@ -26,7 +26,7 @@ function Login() {
         password: password,
     }
     try {
-      let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/login",  loginInfo , {headers});
+      let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/login",  loginInfo , {headers});
 
 
       if (Object.is(res.data.token,"-1")) {
