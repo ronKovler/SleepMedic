@@ -51,7 +51,7 @@ function CreateAccount() {
     }
 
     const checkEmail = async (e) => {
-        let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/check_email/" + email, headers)
+        let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/check_email/" + email, headers)
 
         setEmailFree(res.data);
     }
@@ -106,7 +106,7 @@ function CreateAccount() {
             "Content-Type": 'application/json; charset=utf-8',
         }
         try {
-            let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/create_account", stringify, {headers})
+            let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/create_account", stringify, {headers})
 
 
             if(res){
@@ -118,7 +118,7 @@ function CreateAccount() {
                     password: password,
                 }
                 try {
-                  let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/login",  loginInfo , {headers});
+                  let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/login",  loginInfo , {headers});
             
             
                   if (Object.is(res.data.token,"-1")) {
