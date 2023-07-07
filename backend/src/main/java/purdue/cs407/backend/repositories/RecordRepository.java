@@ -36,4 +36,6 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
     SleepRecord findByRecordID(Long recordID);
 
     Boolean existsByUserAndDate(User user, Date date);
+
+    void deleteByUser(User user);
 }
