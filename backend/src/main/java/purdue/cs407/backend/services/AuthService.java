@@ -66,6 +66,7 @@ public class AuthService {
 
     public String resetForgottenPassword(User user) {
         String password = generateTemporaryPassword();
+        System.out.println("TEMP PASSWORD IS " + password);
         String encodedPass = passwordEncoder.encode(password);
 
         user.setPassword(encodedPass);

@@ -7,10 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-import purdue.cs407.backend.dtos.AuthRequest;
-import purdue.cs407.backend.dtos.AuthResponse;
-import purdue.cs407.backend.dtos.RegisterRequest;
-import purdue.cs407.backend.dtos.ResetPasswordRequest;
+import purdue.cs407.backend.dtos.*;
 import purdue.cs407.backend.entities.User;
 import purdue.cs407.backend.pojos.EmailDetails;
 import purdue.cs407.backend.repositories.UserRepository;
@@ -91,9 +88,10 @@ public class AccountController {
 
     @RequestMapping(value = "update_password", method = RequestMethod.PATCH,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AuthResponse> updatePassword(@RequestBody String password) {
+    public ResponseEntity<AuthResponse> updatePassword(@RequestBody UpdatePassRequest request) {
         User user = getCurrentUser();
-        return ResponseEntity.ok(authService.updatePassword(user, password));
+        System.out.println("New PASSWORD: " + request.getPassword());
+        return ResponseEntity.ok(authService.updatePassword(user, request.getPassword()));
     }
 
 

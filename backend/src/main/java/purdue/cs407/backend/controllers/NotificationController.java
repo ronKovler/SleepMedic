@@ -1,5 +1,8 @@
 package purdue.cs407.backend.controllers;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -149,6 +152,13 @@ public class NotificationController {
         return ResponseEntity.badRequest().build();
     }
 
+    @RequestMapping(value="test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> test() {
+        Twilio.init("ACdbe2a10f1104a35c0d19d360cc275022", "abd46cf3f7ca46885f76d82237dc5d80");
+        Message.creator(new PhoneNumber("9259970661"), new PhoneNumber("+18443683930"), "Hello From Sleep Medic Spring Boot.").create();
+
+        return ResponseEntity.ok("Ok");
+    }
 
     /**
      * This initializes all previously made reminders before current server boot.
