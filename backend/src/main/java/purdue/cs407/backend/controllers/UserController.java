@@ -4,10 +4,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import purdue.cs407.backend.dtos.RecordRequest;
 import purdue.cs407.backend.entities.SleepRecord;
 import purdue.cs407.backend.entities.User;
@@ -16,6 +13,9 @@ import purdue.cs407.backend.repositories.UserRepository;
 
 import java.util.Optional;
 
+@RestController
+@RequestMapping("/api/user/")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -35,15 +35,8 @@ public class UserController {
      * Delete User Account
      */
     @RequestMapping(value = "delete_account", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteAccount(@PathVariable("user_Id") Long userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-
-        // User with the given userId does not exist
-        if (optionalUser.isEmpty()) {
-            return ResponseEntity.status(404).build();
-        }
-
-        User user = optionalUser.get();
+    public ResponseEntity<String> deleteAccount() {
+        User user = getCurrentUser();
 
         // Delete associated records using cascade delete
         recordRepository.deleteByUser(user);
@@ -58,7 +51,7 @@ public class UserController {
     /**
      * Update User sleep record (already existing record)
      */
-    @RequestMapping(value = "update_record/{recordId}", method = RequestMethod.PUT,
+    @RequestMapping(value = "update_record/{recordId}", method = RequestMethod.PATCH,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateRecord(@PathVariable("recordId") Long recordId,
                                                @RequestBody RecordRequest request) {

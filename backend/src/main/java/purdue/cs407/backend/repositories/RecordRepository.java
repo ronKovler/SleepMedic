@@ -29,8 +29,6 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
     Collection<SleepRecord> getBetween(@Param("userID") Long userID, @Param("date1") String date1, @Param("date2")String date2);
 
 
-
-
     SleepRecord findByUserAndDate(User user, Date date);
 
     SleepRecord findByRecordID(Long recordID);

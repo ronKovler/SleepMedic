@@ -3,77 +3,48 @@ package purdue.cs407.backend.dtos;
 import java.sql.Time;
 
 public class WeekAverageResponse {
-    private int fallingTime;
-    private double sleepTime;
-    private int wakeUpCount;
+
+    // Avg time user gets into bed
     private Time downTime;
+    // Avg time user gets out of bed
     private Time upTime;
-
-    private int restlessness;
-
-    public WeekAverageResponse(int fallingTime, double sleepTime, int wakeUpCount, Time downTime, Time upTime, int restlessness) {
-        this.fallingTime = fallingTime;
-        this.sleepTime = sleepTime;
-        this.wakeUpCount = wakeUpCount;
-        this.downTime = downTime;
-        this.upTime = upTime;
-        this.restlessness = restlessness;
-    }
+    // Avg time user slept
+    private double hoursSlept;
+    // Avg time user spent falling asleep
+    private int fallTime;
+    // Avg time user woke up
+    private Time wakeTime;
+    // Avg time user fell asleep
+    private Time sleepTime;
+    // Avg quality of sleep
+    private double quality;
+    // Avg time awake in the night
+    private int awakeTime;
+    // Avg efficiency of sleep
+    private double efficiency;
 
     public WeekAverageResponse() {
-        this.fallingTime = -1;
-        this.sleepTime = -1;
-        this.wakeUpCount = -1;
+        this.fallTime = -1;
+        this.sleepTime = null;
+        this.wakeTime = null;
         this.downTime = null;
         this.upTime = null;
-        this.restlessness = -1;
+        this.quality = -1;
+        this.awakeTime = -1;
+        this.hoursSlept = -1;
+        this.efficiency = -1;
     }
 
-    public int getFallingTime() {
-        return fallingTime;
-    }
-
-    public void setFallingTime(int fallingTime) {
-        this.fallingTime = fallingTime;
-    }
-
-    public double getSleepTime() {
-        return sleepTime;
-    }
-
-    public void setSleepTime(double sleepTime) {
-        this.sleepTime = sleepTime;
-    }
-
-    public int getWakeUpCount() {
-        return wakeUpCount;
-    }
-
-    public void setWakeUpCount(int wakeUpCount) {
-        this.wakeUpCount = wakeUpCount;
-    }
-
-    public Time getDownTime() {
-        return downTime;
-    }
-
-    public void setDownTime(Time downTime) {
+    public WeekAverageResponse(Time downTime, Time upTime, double hoursSlept, int fallTime,
+                               Time wakeTime, Time sleepTime, double quality, int awakeTime, double efficiency) {
         this.downTime = downTime;
-    }
-
-    public Time getUpTime() {
-        return upTime;
-    }
-
-    public void setUpTime(Time upTime) {
         this.upTime = upTime;
-    }
-
-    public int getRestlessness() {
-        return restlessness;
-    }
-
-    public void setRestlessness(int restlessness) {
-        this.restlessness = restlessness;
+        this.hoursSlept = hoursSlept;
+        this.fallTime = fallTime;
+        this.wakeTime = wakeTime;
+        this.sleepTime = sleepTime;
+        this.quality = quality;
+        this.awakeTime = awakeTime;
+        this.efficiency = efficiency;
     }
 }

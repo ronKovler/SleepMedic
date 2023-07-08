@@ -1,6 +1,7 @@
 package purdue.cs407.backend.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,6 +33,9 @@ public class User implements UserDetails {
     @Column(name="email", length=128, unique=true)
     private String email;
 
+    @Column(name="phone", length=12)
+    private String phone;
+
     @Column(name="password", length=60)
     private String password;
 
@@ -41,9 +45,10 @@ public class User implements UserDetails {
     @Column(name="sex", length=1)
     private String sex;
 
+    //@Cascade(value = )
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<SleepRecord> records = new HashSet<>();
-
+    //@Cascade(value = )
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Reminder> reminders = new HashSet<>();
 
@@ -71,6 +76,7 @@ public class User implements UserDetails {
         this.firstName = request.getFirstName();
         this.lastName = request.getLastName();
         this.email = request.getEmail().toLowerCase();
+        this.phone = request.getPhone();
         this.password = request.getPassword();
         this.birthday = request.getBirthday();
         this.sex = request.getSex();

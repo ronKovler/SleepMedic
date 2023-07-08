@@ -61,46 +61,51 @@ public class HomeController {
 
         Date startDate = Date.valueOf(start);
         Date endDate = Date.valueOf(end);
-        System.out.println("DATE: " + startDate.toString() + " USERID: " + user.getUserID().toString());
-        Collection<SleepRecord> records = recordRepository.getBetween(user.getUserID(), startDate.toString(), endDate.toString());
+        System.out.println("Getting weekly averages for DATE: " + startDate.toString() + " USERID: " +
+                user.getUserID().toString());
+        Collection<SleepRecord> records = recordRepository.getBetween(user.getUserID(),
+                startDate.toString(), endDate.toString());
 
         // No data for week available, return empty.
         if (records.size() == 0) {
             return ResponseEntity.ok(new WeekAverageResponse());
         }
 
-        int hoursSleptTotal = 0;
-        int fallingTimeTotal = 0;
+        double hoursSleptTotal = 0;
+        int fallTimeTotal = 0;
         long downTimeTotal = 0;
         long upTimeTotal = 0;
-        int wakeUpCountTotal = 0;
-        int restlessnessTotal = 0;
+        long sleepTimeTotal = 0;
+        long wakeTimeTotal = 0;
+        int awakeTimeTotal = 0;
+        int qualityTotal = 0;
+        double efficiencyTotal = 0;
 
         for (SleepRecord record: records) {
-            hoursSleptTotal += record.getSleepTime();
-            fallingTimeTotal += record.getFallingTime();
+            hoursSleptTotal += record.hoursSlept();
+            fallTimeTotal += record.getFallTime();
             downTimeTotal += record.getDownTime().getTime();
             upTimeTotal += record.getUpTime().getTime();
-            wakeUpCountTotal += record.getWakeUpCount();
-            restlessnessTotal += record.getRestlessness();
+            sleepTimeTotal += record.getSleepTime().getTime();
+            wakeTimeTotal += record.getWakeTime().getTime();
+            awakeTimeTotal += record.getAwakeTime();
+            qualityTotal += record.getQuality();
+            efficiencyTotal += record.getEfficiency();
         }
 
         int count = records.size();
         Time avgDownTime = new Time(downTimeTotal / count);
         Time avgUpTime = new Time(upTimeTotal / count);
-        double avgHoursSlept = (double)hoursSleptTotal / (double)count;
-        int avgFallingTime = fallingTimeTotal / count;
-        int avgWakeUpCount = wakeUpCountTotal / count;
-        int avgRestlessness = restlessnessTotal / count;
+        double avgHoursSlept = hoursSleptTotal / (double) count;
+        int avgFallTime = fallTimeTotal / count;
+        Time avgWakeTime = new Time(wakeTimeTotal / count);
+        Time avgSleepTime = new Time(sleepTimeTotal / count);
+        double avgQuality = (double) qualityTotal / count;
+        int avgAwakeTime = awakeTimeTotal / count;
+        double avgEfficiency = efficiencyTotal / count;
 
-
-
-        return ResponseEntity.ok(new WeekAverageResponse(avgFallingTime, avgHoursSlept, avgWakeUpCount, avgDownTime, avgUpTime, avgRestlessness));
-//        SELECT AVG(sleep_time), CONVERT(AVG(CONVERT(down_time AS INT)) AS DATE), AVG(falling_time), AVG(restlessness), CONVERT(AVG(CONVERT(up_time AS INT)) AS DATE), AVG(wake_up_count)
-//        FROM sleep_record
-//        WHERE date >= STR_TO_DATE('06/18/2023', '%m/%d/%Y') AND date <= STR_TO_DATE('06/24/2023', '%m/%d/%Y')
-//        GROUP BY user_id
-//        HAVING user_id = 17
+        return ResponseEntity.ok(new WeekAverageResponse(avgDownTime, avgUpTime, avgHoursSlept,
+                avgFallTime, avgWakeTime, avgSleepTime, avgQuality, avgAwakeTime, avgEfficiency));
     }
 
     @RequestMapping(value="month", method = RequestMethod.GET,
@@ -128,8 +133,6 @@ public class HomeController {
     public ResponseEntity<InfoResponse> getInfo() {
         // Get the user
         User user = getCurrentUser();
-
-
         return ResponseEntity.ok(new InfoResponse(user.getFirstName(), user.getLastName()));
 
     }
@@ -160,6 +163,8 @@ public class HomeController {
         }
 
         SleepRecord record = new SleepRecord(request, user);
+        double efficiency = record.hoursSlept() / record.hoursInBed();
+        record.setEfficiency(efficiency);
         user.addRecord(record);
         recordRepository.save(record);
 

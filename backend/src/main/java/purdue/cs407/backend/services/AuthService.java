@@ -87,12 +87,12 @@ public class AuthService {
 
     private String generateTemporaryPassword() {
         String charBank = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz!@#$%^&*()_?.";
-        StringBuilder salt = new StringBuilder();
+        StringBuilder password = new StringBuilder();
         Random rnd = new Random();
-        while (salt.length() < 18) { // length of the random string.
+        while (password.length() < 18) { // length of the random string.
             int index = (int) (rnd.nextFloat() * charBank.length());
-            salt.append(charBank.charAt(index));
+            password.append(charBank.charAt(index));
         }
-        return salt.toString();
+        return password.toString();
     }
 }
