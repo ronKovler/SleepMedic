@@ -1,5 +1,8 @@
 package purdue.cs407.backend.controllers;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -67,6 +70,11 @@ public class NotificationController {
         return null;
     }
 
+    /**
+     * Create a new reminder by user request (opt-in)
+     * @param request - Information of when to send reminder and type
+     * @return - Message on success, badRequest otherwise
+     */
     @RequestMapping(value="create_reminder", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createReminder(@RequestBody ReminderRequest request) {
@@ -116,6 +124,10 @@ public class NotificationController {
         return ResponseEntity.ok("Success");
     }
 
+    /**
+     * Test endpoint for checking reminder. TODO Remove when not needed.
+     * @return
+     */
     @RequestMapping(value="get_reminder", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Reminder> getReminder() {
@@ -126,6 +138,11 @@ public class NotificationController {
         return ResponseEntity.ok(reminder);
     }
 
+    /**
+     * Cancel a reminder with the hash given in the reminder itself (link).
+     * @param hash - hashed jobID.
+     * @return - Message on success/failure.
+     */
     @RequestMapping(value="cancel_reminder/{hash}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> cancelReminder(@PathVariable String hash) {
@@ -149,6 +166,17 @@ public class NotificationController {
         return ResponseEntity.badRequest().build();
     }
 
+    /**
+     * TEST endpoint for sending texts -- dont spam me TODO Remove
+     * @return
+     */
+    @RequestMapping(value="test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> test() {
+        Twilio.init("ACdbe2a10f1104a35c0d19d360cc275022", "abd46cf3f7ca46885f76d82237dc5d80");
+        Message.creator(new PhoneNumber("9259970661"), new PhoneNumber("+18443683930"), "Hello From Sleep Medic Spring Boot.").create();
+
+        return ResponseEntity.ok("Ok");
+    }
 
     /**
      * This initializes all previously made reminders before current server boot.

@@ -21,14 +21,14 @@ public class AuthConfig {
         this.userRepository = userRepository;
     }
 
-    /* User detail service used to find our User objects from DB by AuthenticatorManager */
+    /** User detail service used to find our User objects from DB by AuthenticatorManager */
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
     }
 
-    /* AuthProvider we will give to AuthManager to use the above UserDetailService Bean and our password encoder*/
+    /** AuthProvider we will give to AuthManager to use the above UserDetailService Bean and our password encoder*/
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -39,13 +39,13 @@ public class AuthConfig {
         return authProvider;
     }
 
-    /* Actual AuthManager, will be responsible for checking credentials */
+    /** Actual AuthManager, will be responsible for checking credentials */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
-    /* BCrypt Password Encoder */
+    /** BCrypt Password Encoder */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

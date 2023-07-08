@@ -7,12 +7,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-import purdue.cs407.backend.dtos.AuthRequest;
-import purdue.cs407.backend.dtos.AuthResponse;
-import purdue.cs407.backend.dtos.RegisterRequest;
-import purdue.cs407.backend.dtos.ResetPasswordRequest;
+import purdue.cs407.backend.dtos.*;
 import purdue.cs407.backend.entities.User;
 import purdue.cs407.backend.pojos.EmailDetails;
+import purdue.cs407.backend.repositories.RecordRepository;
 import purdue.cs407.backend.repositories.UserRepository;
 import purdue.cs407.backend.services.AuthService;
 import purdue.cs407.backend.services.EmailService;
@@ -23,12 +21,15 @@ import purdue.cs407.backend.services.EmailService;
 public class AccountController {
 
     private final UserRepository userRepository;
+    private final RecordRepository recordRepository;
     private final AuthService authService;
-
     private final EmailService emailService;
 
-    public AccountController(UserRepository userRepository, AuthService authService, EmailService emailService) {
+
+    public AccountController(UserRepository userRepository, RecordRepository recordRepository,
+                             AuthService authService, EmailService emailService) {
         this.userRepository = userRepository;
+        this.recordRepository = recordRepository;
         this.authService = authService;
         this.emailService = emailService;
     }
@@ -38,6 +39,11 @@ public class AccountController {
         return (User) authentication.getPrincipal();
     }
 
+    /**
+     * Create a new user account by request
+     * @param request - user information to make new account.
+     * @return - JWT token of newly created account
+     */
     @RequestMapping(value="auth/create_account", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthResponse> createAccount(@RequestBody RegisterRequest request) {
@@ -48,6 +54,11 @@ public class AccountController {
         return ResponseEntity.ok(authService.register(request));
     }
 
+    /**
+     * Login pathway
+     * @param request - credentials to login: email and password
+     * @return - JWT token if credentials match
+     */
     @RequestMapping(value="auth/login", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
@@ -57,6 +68,11 @@ public class AccountController {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
+    /**
+     * Check if we can make an account with the given email
+     * @param email - Email to check
+     * @return - True if its free, false if not
+     */
     @RequestMapping(value="auth/check_email/{email}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> checkEmail(@PathVariable String email) {
@@ -67,6 +83,11 @@ public class AccountController {
         return ResponseEntity.ok(!exists);
     }
 
+    /**
+     * Generate and send a new random password upon request
+     * @param request - Users email and birthday of account to reset password
+     * @return - nothing, we don't say if we did or not, to prevent users from attempting to gleam info
+     */
     @RequestMapping(value="auth/reset_password", method = RequestMethod.PATCH,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
@@ -89,11 +110,33 @@ public class AccountController {
         return ResponseEntity.ok("");
     }
 
+    /**
+     * Update users password by request
+     * @param request - The new password to be set
+     * @return - AuthResponse containing new JWT token for further authentication.
+     */
     @RequestMapping(value = "update_password", method = RequestMethod.PATCH,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AuthResponse> updatePassword(@RequestBody String password) {
+    public ResponseEntity<AuthResponse> updatePassword(@RequestBody UpdatePassRequest request) {
         User user = getCurrentUser();
-        return ResponseEntity.ok(authService.updatePassword(user, password));
+        System.out.println("New PASSWORD: " + request.getPassword());
+        return ResponseEntity.ok(authService.updatePassword(user, request.getPassword()));
+    }
+
+    /**
+     * Delete User Account
+     */
+    @RequestMapping(value = "delete_account", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteAccount() {
+        User user = getCurrentUser();
+
+        // Delete associated records using cascade delete
+        recordRepository.deleteByUser(user);
+
+        // Now delete the user account
+        userRepository.delete(user);
+
+        return ResponseEntity.ok("Account deleted successfully");
     }
 
 
