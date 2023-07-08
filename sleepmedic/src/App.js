@@ -13,6 +13,7 @@ import EditGoal from './Components/EditGoalPage';
 import CreateRem from './Components/CreateReminderPage';
 import OpenNotificationsPage from "./Components/NotificationsPage";
 import React from 'react';
+import theme from './theme';
 
 function App() {
   return (
