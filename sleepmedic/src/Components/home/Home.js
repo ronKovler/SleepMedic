@@ -93,27 +93,32 @@ export default function Home() {
     const[recordOpen, setRecordOpen] = React.useState(false);
     
     // User data
+    // INFO
     const[username, setUsername] = React.useState('User Name');
-    const[avgFallAsleepTime, setAvgFallAsleepTime] = React.useState('0');
-    const[avgRestlessness, setAvgRestlessness] = React.useState('0');
-    const[avgSleepDuration, setAvgSleepDuration] = React.useState('0');
-    const[avgWokeUpCount, setAvgWokeUpCount] = React.useState('0');
-    const[avgBedTime, setAvgBedTime] = React.useState('00:00:00');
-    const[avgUpTime, setAvgUpTime] = React.useState('00:00:00');
+    // AVG STATISTICS
+    const[avgFallTime, setAvgFallTime] = React.useState('0');
+    const[avgQuality, setAvgQuality] = React.useState('0');
+    const[avgHoursSlept, setAvgHoursSlept] = React.useState('0');
+    const[avgWakeTime, setAvgWakeTime] = React.useState('0');
+    const[avgDownTime, setAvgDownTime] = React.useState('00:00:00');
+    const[avgUpTime, setAvgUpTime] = React.useState('00:00:00'); 
+    const[avgSleepTime, setAvgSleepTime] = React.useState('');
+    const[avgAwakeTime, setAvgAwakeTime] = React.useState('');
+    const[avgEfficiency, setAvgEfficiency] = React.useState('');
 
     // New record data
     // Date
     const today = dayjs();
     const[recordDate, setRecordDate] = React.useState(today);
-    // Integers
-    const[fallAsleepTime, setFallAsleepTime] = React.useState(0);
-    const[restlessness, setRestlessness] = React.useState(0); //Maybe a bar??
-    const[sleepDuration, setSleepDuration] = React.useState(0);
-    const[wokeUpCount, setWokeUpCount] = React.useState(0);
-    // Strings
-    const[dream, setDreams] = React.useState(false);
-    const[bedTimeHelper, setBedTimeHelper] = React.useState(today.set('hour', 8).set('minute',  30).set('second', 0));
-    const[upTimeHelper, setUpTimeHelper] = React.useState(today.set('hour', 23).set('minute',  30).set('second', 0));
+
+    const[fallAsleepTime, setFallAsleepTime] = React.useState(0); //Falltime
+    const[restlessness, setRestlessness] = React.useState(0); //Quality
+    const[sleepDuration, setSleepDuration] = React.useState(0); // SleeptTime
+    const[wokeUpCount, setWokeUpCount] = React.useState(0); //WakeTime
+    const[dream, setDreams] = React.useState(false); // DELETE
+    const[bedTimeHelper, setBedTimeHelper] = React.useState(today.set('hour', 8).set('minute',  30).set('second', 0)); //downTime
+    const[upTimeHelper, setUpTimeHelper] = React.useState(today.set('hour', 23).set('minute',  30).set('second', 0)); //upTime
+    const[awakeTime, setAwakeTime] = React.useState('');
 
     const handleRestlessnessChange = (e, value) => {
         setRestlessness(value);
@@ -130,12 +135,13 @@ export default function Home() {
 
             // Get user average sleep data
             res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/average", {headers});
-            setAvgFallAsleepTime(res.data.fallingTime);
-            setAvgRestlessness(res.data.restlessness);
-            setAvgSleepDuration(res.data.sleepTime);
-            setAvgWokeUpCount(res.data.wakeUpCount);
-            setAvgBedTime(res.data.downTime);
-            setAvgUpTime(res.data.upTime);
+            console.log(res);
+            // setAvgFallTime(res.data.fallTime);
+            // setAvgQuality(res.data.restlessness);
+            // setAvgHoursSlept(res.data.sleepTime);
+            // setAvgWakeTime(res.data.wakeUpCount);
+            // setAvgDownTime(res.data.downTime);
+            // setAvgUpTime(res.data.upTime);
         }
         catch (err) {
             console.log("Failed to retrieve name.");
@@ -156,13 +162,13 @@ export default function Home() {
 
         return { 
             date: f_date,
-            fallingTime: fallAsleepTime,
+            fallTime: fallAsleepTime,
             sleepTime: sleepDuration,
-            wakeUpCount: wokeUpCount,
+            wakeTime: wokeUpCount,
             downTime: f_bedTime,
             upTime: f_upTime,
-            restlessness: restlessness,
-
+            quality: restlessness,
+            awakeTime: 30,
         };
     }
 
@@ -256,11 +262,11 @@ export default function Home() {
                                 </Grid>
                                 <Grid item xs={1}>
                                     <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt'>
-                                        {avgFallAsleepTime}<br/>
-                                        {avgRestlessness}<br/>
-                                        {avgSleepDuration}<br/>
-                                        {avgWokeUpCount}<br/>
-                                        {avgBedTime}<br/>
+                                        {avgFallTime}<br/>
+                                        {avgQuality}<br/>
+                                        {avgHoursSlept}<br/>
+                                        {avgWakeTime}<br/>
+                                        {avgDownTime}<br/>
                                         {avgUpTime}<br/>
                                     </Typography>
                                 </Grid>
