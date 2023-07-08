@@ -69,7 +69,7 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           color="secondary"
           style={{width: "70%", height: "4%"}}
-          sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+          sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
           required
         />
         <br/>
@@ -84,12 +84,12 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           color="secondary"
           style={{width: "70%", height: "4%"}}
-          sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+          sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
           required
         />
         <br/><br/>
         <Button variant="contained" color="primary" onClick={(e) => handleLogin(e)}>Login</Button>
-        <Link to="/createaccount" style={{color: "white"}}>Or create an account</Link>
+        <Link to="/createaccount">Or create an account</Link>
       </form>
     </div>
   );

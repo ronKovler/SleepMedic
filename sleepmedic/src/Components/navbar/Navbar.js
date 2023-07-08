@@ -27,6 +27,9 @@ const barTheme = createTheme({
       primary: {
         light: '#ff7961',
         main: '#ba000d',
+        //main: '#2ebcdb',    //darker baby blue, used with baby blue and water blue
+        //main: '#58aff5',      //baby blue, used with darker baby blue and water blue
+        //main: '#5b6ff5',        //purple-blue, used with muted purple
         dark: '#ba000d',
         contrastText: '#000',
       },
