@@ -25,7 +25,7 @@ public class SecurityConfig {
     }
 
 
-    /* Setup Filter Chain to restrict/allow endpoints */
+    /** Setup Filter Chain to restrict/allow endpoints */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http    //TODO update to use SSL https authorizeChannel()

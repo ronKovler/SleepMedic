@@ -108,6 +108,10 @@ public class HomeController {
                 avgFallTime, avgWakeTime, avgSleepTime, avgQuality, avgAwakeTime, avgEfficiency));
     }
 
+    /**
+     * View all sleep records from this month
+     * @return - List of sleep records of this month by the user
+     */
     @RequestMapping(value="month", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SleepRecord>> getCalendar() {
@@ -128,6 +132,10 @@ public class HomeController {
 
     }
 
+    /**
+     * Get the users info (name)
+     * @return - First and last names.
+     */
     @RequestMapping(value="info", method = {RequestMethod.OPTIONS, RequestMethod.GET},
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InfoResponse> getInfo() {
@@ -137,6 +145,11 @@ public class HomeController {
 
     }
 
+    /**
+     * View an individual record
+     * @param recordID - ID of record to view
+     * @return - record if found from user, notFound error else
+     */
     @RequestMapping(value="view_record/{recordID}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SleepRecord> getRecord(@PathVariable long recordID) {
@@ -152,6 +165,11 @@ public class HomeController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Create a new sleep record
+     * @param request - Contains details about the record
+     * @return - Message upon success
+     */
     @RequestMapping(value="create_record", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createRecord(@RequestBody RecordRequest request) {
@@ -169,6 +187,37 @@ public class HomeController {
         recordRepository.save(record);
 
         return ResponseEntity.ok("Success");
+    }
+
+    /**
+     * Update User sleep record (already existing record)
+     */
+    @RequestMapping(value = "update_record/{recordId}", method = RequestMethod.PATCH,
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateRecord(@PathVariable("recordId") Long recordId,
+                                               @RequestBody RecordRequest request) {
+        User currentUser = getCurrentUser();
+
+        Optional<SleepRecord> optionalRecord = recordRepository.findById(recordId);
+        if (optionalRecord.isEmpty()) {
+            // does not exist
+            return ResponseEntity.status(404).build();
+        }
+
+        SleepRecord record = optionalRecord.get();
+
+        // In a case were user does not have permission to update the record
+        if (!record.getUser().equals(currentUser)) {
+            return ResponseEntity.status(403).build();
+        }
+
+        // Now we can update the record with the new data
+        record.setDate(request.getDate());
+        record.setSleepTime(request.getSleepTime());
+
+        recordRepository.save(record);
+
+        return ResponseEntity.ok("Record updated successfully");
     }
 
 }

@@ -29,6 +29,11 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
 
+    /**
+     * Register a new user from the create account endpoint
+     * @param request - details of new account to make
+     * @return - JWT token of -1 of failure (account exists) and JWT token on success
+     */
     public AuthResponse register(RegisterRequest request) {
         String email = request.getEmail().toLowerCase();
         if (userRepository.existsByEmail(email)) {
@@ -49,6 +54,11 @@ public class AuthService {
         return new AuthResponse(jwtToken);
     }
 
+    /**
+     * Authenticate a user from login endpoint
+     * @param request - credentials to check
+     * @return - JWT token on success.
+     */
     public AuthResponse authenticate(AuthRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -64,6 +74,11 @@ public class AuthService {
         return new AuthResponse(jwtToken);
     }
 
+    /**
+     * Resets a users password to random on request of forget password endpoint
+     * @param user - Account to reset password
+     * @return - New password to send in notification.
+     */
     public String resetForgottenPassword(User user) {
         String password = generateTemporaryPassword();
         System.out.println("TEMP PASSWORD IS " + password);
@@ -75,6 +90,12 @@ public class AuthService {
         return password;
     }
 
+    /**
+     * Update password on request from update password endpoint
+     * @param user - account to update
+     * @param password - new password
+     * @return - new JWT token for new credentials
+     */
     public AuthResponse updatePassword(User user, String password) {
         String encodedPass = passwordEncoder.encode(password);
         user.setPassword(encodedPass);
