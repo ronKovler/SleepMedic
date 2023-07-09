@@ -44,6 +44,15 @@ import { IconButton } from '@mui/material';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
+const calendarTheme = createTheme({
+    palette: {
+        text: {
+            primary: '#ffffff',
+            secondary: '#ffffff',
+        },
+    }
+});
+
 
 const MARKS = [
     {value: 1, label: <SentimentVeryDissatisfiedIcon/>},
@@ -267,7 +276,7 @@ export default function Home() {
 
 
     return (
-        <Box>
+        <Box sx={{backgroundColor: "#57618E", height: '100vh' }}>
             <Navbar/>
             <Grid container spacing={2} columns={2} sx={{margin: 0}}>
                 {/* LEFT PANEL */}
@@ -275,7 +284,7 @@ export default function Home() {
                 <Grid container space={2} columns={1}>
                     {/* Username Display */}
                     <Grid item xs={1}>
-                        <Paper elevation={3} sx={{backgroundColor: '#ba000d'}}>
+                        <Paper elevation={3} sx={{backgroundColor: '#7293A0'}}>
                             <Typography variant="h4" component="div"
                                         sx={{flexGrow: 1,
                                             fontWeight: 'bold',
@@ -290,7 +299,7 @@ export default function Home() {
 
                     {/* Weekly Summary Statistics */}
                     <Grid item xs={1} sx={{marginTop: '20pt'}}>
-                        <Paper elevation={3}>
+                        <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
                             <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                 Weekly Summary Statistics
                             </Typography>
@@ -299,7 +308,7 @@ export default function Home() {
                             </Typography>
                             <Grid container columns={2}>
                                 <Grid item xs={1}>
-                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt'>
+                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='#81899c' fontWeight='bold'>
                                         Time spent falling asleep: <br/>
                                         Time awake during the night: <br/>
                                         Quality: <br/>
@@ -311,7 +320,7 @@ export default function Home() {
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt'>
+                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='#81899c' fontWeight='bold'>
                                         {avgFallTime}<br/>
                                         {avgAwakeTime}<br/>
                                         {avgQuality}<br/>
@@ -324,13 +333,13 @@ export default function Home() {
                                 </Grid>
                             </Grid>
                             <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                <Button href="/statistics" endIcon={<LegendToggleIcon/>}>View Insights</Button>
+                                <Button href="/statistics" endIcon={<LegendToggleIcon/>} variant='contained'>View Insights</Button>
                             </Box>
                         </Paper>
                     </Grid>
 
                     <Grid item xs={1} sx={{marginTop: '20pt'}}>
-                        <Paper elevation={3} sx={{paddingBottom: '20pt'}}>
+                        <Paper elevation={3} sx={{paddingBottom: '20pt', backgroundColor: '#D9D3E4'}}>
                             <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold' paddingBottom='10pt'>
                                 Weekly Efficiency
                             </Typography>
@@ -339,7 +348,9 @@ export default function Home() {
                                     <CircularProgressWithLabel value={avgEfficiency * 100}/>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    {effAdvice}
+                                    <Typography variant='body' component='div' textAlign='left' paddingBottom='10pt' color='#81899c' fontWeight='bold'>
+                                        {effAdvice}
+                                    </Typography>
                                 </Grid>
                             </Grid>
                         </Paper>
@@ -347,11 +358,11 @@ export default function Home() {
 
                     {/* Weekly Advices */}
                     <Grid item xs={1} sx={{marginTop: '20pt'}}>
-                        <Paper elevation={3}>
+                        <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
                             <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                 Weekly Advices
                             </Typography>
-                            <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' paddingBottom='10pt'>
+                            <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' paddingBottom='10pt' color='#81899c' fontWeight='bold'>
                                 I already want to take a nap tomorrow.
                             </Typography>
                         </Paper>
@@ -361,7 +372,7 @@ export default function Home() {
                     {/* Create New Record Button */}
                     <Grid item xs={1} justifyContent='center' display='flex' marginTop='20pt'>
                         {/* TODO: add event listener to create  */}
-                        <Button variant='outlined' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>New Record</Button>
+                        <Button variant='contained' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>New Record</Button>
                     </Grid>
 
                 </Grid>
@@ -369,9 +380,11 @@ export default function Home() {
 
                 {/* RIGHT PANEL */}
                 <Grid item xs={1}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DateCalendar views={['day']}/>
-                    </LocalizationProvider>            
+                    <Paper elevation={3} sx={{width: '90%'}}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DateCalendar views={['day']}/>
+                        </LocalizationProvider>      
+                    </Paper>      
                 </Grid>
 
             </Grid>
