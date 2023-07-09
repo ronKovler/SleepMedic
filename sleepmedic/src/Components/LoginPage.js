@@ -4,9 +4,10 @@ import { TextField }  from "@mui/material/";
 import { useSignIn } from 'react-auth-kit';
 import axios from "axios";
 import "./LoginPage.css";
-import { Button } from '@mui/material';
+import { Button, Alert, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { styled } from '@mui/system';
-import { Alert } from '@mui/material';
+
+
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -14,20 +15,19 @@ function Login() {
   const signIn = useSignIn();
   const navigate = useNavigate();
   const [error, setError] = useState(false);
+  var headers = {
+    "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+    "Content-Type": 'application/json; charset=utf-8',
+  }
   const handleLogin = async (e) => {
     e.preventDefault();
     // Handle login logic here
-    var headers = {
-      "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
-      "Content-Type": 'application/json; charset=utf-8',
-    }
     var loginInfo = {
         email: email,
         password: password,
     }
     try {
       let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/login",  loginInfo , {headers});
-
 
       if (Object.is(res.data.token,"-1")) {
         console.log("Login Failed");
@@ -53,6 +53,25 @@ function Login() {
     console.log('Logging in...');
   };
 
+  //Forgot Password
+  const [open, setOpen] = useState(false);
+  const [remail, setREmail] = useState('');
+  const [birth, setBirth] = useState('');
+
+  const handleForgotPassword = async (e) => {
+    var resetInfo = {
+        email: remail,
+        birthday: birth,
+    }
+    try {
+      let res = await axios.patch("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/reset_password", resetInfo, {headers});
+
+      
+    } catch (err) {
+      console.log("Reset Password Failed");
+      return;
+    }
+  }
 
   return (
     <div className="sleep-medic-container">
@@ -88,8 +107,46 @@ function Login() {
           required
         />
         <br/><br/>
+        <Button style={{color: "white"}} onClick={() => setOpen(true)}>Forgot Password</Button>
         <Button variant="contained" color="primary" onClick={(e) => handleLogin(e)}>Login</Button>
-        <Link to="/createaccount">Or create an account</Link>
+        <Link to="/createaccount" style={{color: "white"}}>Or create an account</Link>
+        <Dialog open={open} onClose={() => setOpen(false)}>
+          <DialogTitle>Forgot Password</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please enter the email and your birthday associated with your account to initiate the password recovery process.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="email"
+              label="Email Address"
+              type="email"
+              value={remail}
+              onChange={(e) => setREmail(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              margin="dense"
+              id="birthday"
+              label="Birthday"
+              type="date"
+              fullWidth
+              variant="standard"
+              value={birth}
+              onChange={(e) => setBirth(e.target.value)}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpen(false)}>Cancel</Button>
+            <Button onClick={(e) => handleForgotPassword(e)}>Recover Password</Button>
+          </DialogActions>
+        </Dialog>
+
       </form>
     </div>
   );
