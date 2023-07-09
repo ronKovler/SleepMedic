@@ -88,7 +88,7 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           color="secondary"
           style={{width: "70%", height: "4%"}}
-          sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+          sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
           required
         />
         <br/>
@@ -103,7 +103,7 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           color="secondary"
           style={{width: "70%", height: "4%"}}
-          sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+          sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
           required
         />
         <br/><br/>
@@ -146,7 +146,6 @@ function Login() {
             <Button onClick={(e) => handleForgotPassword(e)}>Recover Password</Button>
           </DialogActions>
         </Dialog>
-
       </form>
     </div>
   );

@@ -6,11 +6,17 @@
     position: relative;
     width: auto;
     height: auto;
-    background-color: rgb(62, 62, 62); 
-    color: #ffffff; /* Gold text color */
+    background-color: #D9D3E4;        /* <--- chosen foreground   */
+    /*background-color: rgb(62, 62, 62);    <-- original */
+      /*background-color: #1976d2;  */    /* <-- water blue, goes with baby blue combo */
+    /*background-color: #8874ad;   */   /* <--  muted purple, goes with purple-blue  */
+    /*color: #8a909e;   */           /* <-- chosen gray text color against the foreground    */
+    color: #81899c;               /* <-- slightly darker than gray above against the foreground   */
+    /*color: #ffffff; */    /* Gold text color */
     box-shadow: 0px 4px 8px rgb(84, 83, 83); 
     border-radius: 1rem;
     padding: 2rem;
+    font-weight: bold; /* Added property */
   }
   .language-list {
     cursor: pointer;

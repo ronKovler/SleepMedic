@@ -17,14 +17,8 @@ public class SleepRecord {
     for the entity using an underlying database table to ensure uniqueness */
     private Long recordID;
 
-    @Column(name="sleep_time")
-    private double sleepTime;
-
-    @Column(name="falling_time")
-    private int fallingTime;
-
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY) // Use lazy for speed
+    @ManyToOne(fetch = FetchType.EAGER) // Use lazy for speed
     @JoinColumn(name="user_ID")
     private User user;
 
@@ -37,108 +31,70 @@ public class SleepRecord {
     @Column(name="up_time")
     private Time upTime;
 
-    @Column(name="wake_up_count")
-    private int wakeUpCount;
+    @Column(name="fall_time")
+    private int fallTime;
 
-    @Column(name="restlessness")
-    private int restlessness;
+    @Column(name="sleep_time")
+    private Time sleepTime;
 
-    @Column(name="dreams", length = 256)
-    private String dreams;
+    @Column(name="wake_time")
+    private Time wakeTime;
 
-    /**
-     * Constructor with DREAMS
-     * @param sleepTime - Time sleeping
-     * @param fallingTime - Time spent falling asleep
-     * @param user - User who owns record
-     * @param date - Date record pertains to
-     * @param downTime - Time user went to sleep HH:MM
-     * @param upTime - Time user woke up HH:MM
-     * @param wakeUpCount - Count of times user woke up
-     * @param restlessness - Int 1 - 10 of how restless sleep was
-     * @param dreams - Dream diary
-     */
-    public SleepRecord(int sleepTime, int fallingTime, User user, Date date, Time downTime, Time upTime, int wakeUpCount, int restlessness, String dreams) {
-        this.sleepTime = sleepTime;
-        this.fallingTime = fallingTime;
-        this.user = user;
-        this.date = date;
-        this.downTime = downTime;
-        this.upTime = upTime;
-        this.wakeUpCount = wakeUpCount;
-        this.restlessness = restlessness;
-        this.dreams = dreams;
-    }
+    @Column(name="awake_time")
+    private int awakeTime;
 
-    /**
-     * Constructor WITHOUT DREAMS
-     * @param sleepTime - Time sleeping
-     * @param fallingTime - Time spent falling asleep
-     * @param user - User who owns record
-     * @param date - Date record pertains to
-     * @param downTime - Time user went to sleep HH:MM
-     * @param upTime - Time user woke up HH:MM
-     * @param wakeUpCount - Count of times user woke up
-     * @param restlessness - Int 1 - 10 of how restless sleep was
-     */
-    public SleepRecord(int sleepTime, int fallingTime, User user, Date date, Time downTime, Time upTime, int wakeUpCount, int restlessness) {
-        this.sleepTime = sleepTime;
-        this.fallingTime = fallingTime;
-        this.user = user;
-        this.date = date;
-        this.downTime = downTime;
-        this.upTime = upTime;
-        this.wakeUpCount = wakeUpCount;
-        this.restlessness = restlessness;
-    }
+    @Column(name="quality")
+    private int quality;
 
-    public SleepRecord(Long recordID, double sleepTime, int fallingTime, User user, Date date, Time downTime, Time upTime, int wakeUpCount, int restlessness, String dreams) {
+    @Column(name="efficiency")
+    private double efficiency;
+
+
+    public SleepRecord(Long recordID, User user, Date date, Time downTime, Time upTime, int fallTime, Time sleepTime,
+                       Time wakeTime, int awakeTime, int quality, double efficiency) {
         this.recordID = recordID;
-        this.sleepTime = sleepTime;
-        this.fallingTime = fallingTime;
         this.user = user;
         this.date = date;
         this.downTime = downTime;
         this.upTime = upTime;
-        this.wakeUpCount = wakeUpCount;
-        this.restlessness = restlessness;
-        this.dreams = dreams;
+        this.fallTime = fallTime;
+        this.sleepTime = sleepTime;
+        this.wakeTime = wakeTime;
+        this.awakeTime = awakeTime;
+        this.quality = quality;
+        this.efficiency = efficiency;
     }
 
     public SleepRecord(RecordRequest request, User user) {
-        this.sleepTime = request.getSleepTime();
-        this.fallingTime = request.getFallingTime();
         this.user = user;
         this.date = request.getDate();
         this.downTime = request.getDownTime();
         this.upTime = request.getUpTime();
-        this.wakeUpCount = request.getWakeUpCount();
-        this.restlessness = request.getRestlessness();
-        this.dreams = request.getDreams();
+        this.fallTime = request.getFallTime();
+        this.sleepTime = request.getSleepTime();
+        this.wakeTime = request.getWakeTime();
+        this.awakeTime = request.getAwakeTime();
+        this.quality = request.getQuality();
     }
 
     public SleepRecord() {
 
     }
 
-    public double getSleepTime() {
-        return sleepTime;
+    public Long getRecordID() {
+        return recordID;
     }
 
-    public void setSleepTime(double sleepTime) {
-        this.sleepTime = sleepTime;
-    }
-
-    public int getFallingTime() {
-        return fallingTime;
-    }
-
-    public void setFallingTime(int fallingTime) {
-        this.fallingTime = fallingTime;
+    public void setRecordID(Long recordID) {
+        this.recordID = recordID;
     }
 
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Date getDate() {
@@ -165,31 +121,105 @@ public class SleepRecord {
         this.upTime = upTime;
     }
 
-    public int getWakeUpCount() {
-        return wakeUpCount;
+    public int getFallTime() {
+        return fallTime;
     }
 
-    public void setWakeUpCount(int wakeUpCount) {
-        this.wakeUpCount = wakeUpCount;
+    public void setFallTime(int fallTime) {
+        this.fallTime = fallTime;
     }
 
-    public int getRestlessness() {
-        return restlessness;
+    public Time getSleepTime() {
+        return sleepTime;
     }
 
-    public void setRestlessness(int restlessness) {
-        this.restlessness = restlessness;
+    public void setSleepTime(Time sleepTime) {
+        this.sleepTime = sleepTime;
     }
 
-    public String getDreams() {
-        return dreams;
+    public Time getWakeTime() {
+        return wakeTime;
     }
 
-    public void setDreams(String dreams) {
-        this.dreams = dreams;
+    public void setWakeTime(Time wakeTime) {
+        this.wakeTime = wakeTime;
     }
 
-    public Long getRecordID() {
-        return recordID;
+    public int getAwakeTime() {
+        return awakeTime;
+    }
+
+    public void setAwakeTime(int awakeTime) {
+        this.awakeTime = awakeTime;
+    }
+
+    public int getQuality() {
+        return quality;
+    }
+
+    public void setQuality(int quality) {
+        this.quality = quality;
+    }
+
+    public double getEfficiency() {
+        return efficiency;
+    }
+
+    public void setEfficiency(double efficiency) {
+        this.efficiency = efficiency;
+    }
+
+    public double hoursSlept() {
+        long start = this.sleepTime.getTime();
+        long end = this.wakeTime.getTime();
+
+        String[] slept = (new Time(end - start)).toString().split(":");
+
+        // time.getMinutes and .getHours() deprecated
+        int hours = Integer.parseInt(slept[0]);
+        int minutes = Integer.parseInt(slept[1]);
+
+        //awakeTime is integer minutes
+        hours -= (this.awakeTime / 60); //Should be -= 0 in most cases (I would hope but in case)
+        minutes -= (this.awakeTime % 60);
+
+        return hours + ((double) minutes / 60.0);
+    }
+
+    public double hoursAwake() {
+        int hours = 0;
+        int minutes = 0;
+
+        String[] awakeEvening = getTimeDurationString(this.downTime, this.upTime).split(":");
+        hours += Integer.parseInt(awakeEvening[0]); //Hours in the evening
+        minutes += Integer.parseInt(awakeEvening[1]); // Minutes in the evening
+
+        hours += (this.awakeTime / 60); // Hours in the night
+        minutes += (this.awakeTime % 60); // Minutes in the night
+
+        String[] awakeMorning = getTimeDurationString(this.wakeTime, this.upTime).split(":");
+        hours += Integer.parseInt(awakeMorning[0]); // Hours in the morning
+        minutes += Integer.parseInt(awakeMorning[1]); // Minutes in morning
+
+        return hours + ((double) minutes / 60.0);
+    }
+
+    public double hoursInBed() {
+        String[] inBed = getTimeDurationString(this.downTime, this.upTime).split(":");
+
+        // time.getMinutes and .getHours() deprecated
+        int hours = Integer.parseInt(inBed[0]);
+        int minutes = Integer.parseInt(inBed[1]);
+
+        return hours + ((double) minutes / 60.0);
+    }
+
+    public String getTimeDurationString(Time from, Time to) {
+        long start = from.getTime();
+        long end = to.getTime();
+
+        Time time = new Time(end - start);
+
+        return time.toString();
     }
 }

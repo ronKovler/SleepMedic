@@ -38,7 +38,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration((new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 4)))
+                .setExpiration((new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 4))) // 4hrs
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -54,8 +54,6 @@ public class JwtService {
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
-
-
 
     private Claims extractAllClaims(String token) {
         return Jwts

@@ -266,7 +266,7 @@ function CreateAccount() {
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
                 onBlur={e => checkEmail(e)}
-                sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+                sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
                 color="secondary"
                 required
                 /> : <TextField
@@ -303,7 +303,7 @@ function CreateAccount() {
                 variant="outlined"
                 onChange={(e) => setPassword(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
-                sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+                sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
                 color="secondary"
                 required
                 />
@@ -317,7 +317,7 @@ function CreateAccount() {
                 value={confirmation}
                 onChange={(e) => setConfirmation(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
-                sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+                sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
                 color="secondary"
                 onBlur={(e) => checkMatch(e)}
                 required
@@ -340,7 +340,7 @@ function CreateAccount() {
 
                 <br />
                 <Button type="submit" variant="contained" color="primary">Create Account</Button>
-                <Link to="/login" style={{ color: "white" }}>Or log in to an existing account</Link>
+                <Link to="/login">Or log in to an existing account</Link>
             </form>
         </div>}
         </div>

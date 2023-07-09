@@ -7,14 +7,18 @@ public class RegisterRequest {
     private String firstName;
     private String lastName;
     private String email;
+
+    private String phone;
     private String password;
     private Date birthday;
     private String sex;
 
-    public RegisterRequest(String firstName, String lastName, String email, String password, Date birthday, String sex) {
+    public RegisterRequest(String firstName, String lastName, String email, String phone, String password,
+                           Date birthday, String sex) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.phone = phone;
         this.password = password;
         this.birthday = birthday;
         this.sex = sex;
@@ -44,6 +48,14 @@ public class RegisterRequest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {

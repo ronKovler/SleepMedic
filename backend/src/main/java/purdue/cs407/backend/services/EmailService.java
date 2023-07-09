@@ -1,42 +1,78 @@
 package purdue.cs407.backend.services;
 
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import purdue.cs407.backend.pojos.EmailDetails;
 import purdue.cs407.backend.repositories.ReminderRepository;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class EmailService {
 
 
     private final JavaMailSender javaMailSender;
-    private final ReminderRepository reminderRepository;
-    private final String sender;
+    private final ResourceLoader resourceLoader = new DefaultResourceLoader();
 
-
-
-    public EmailService(JavaMailSender javaMailSender,
-                        ReminderRepository reminderRepository) {
+    public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
-        this.reminderRepository = reminderRepository;
-        this.sender = "SleepMedic";
     }
 
     public String sendSimpleMail(EmailDetails details) {
         try {
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setFrom(sender);
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setText(details.getMsgBody());
-            mailMessage.setSubject(details.getSubject());
+            MimeMessage message = javaMailSender.createMimeMessage();
+            message.setSubject(details.getSubject());
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom("SleepMedic");
+            helper.setTo(details.getRecipient());
+            helper.setText(details.getMsgBody(), true);
 
-            javaMailSender.send(mailMessage);
+            javaMailSender.send(message);
+
+//            SimpleMailMessage mailMessage = new SimpleMailMessage();
+//            String sender = "SleepMedic";
+//            mailMessage.setFrom(sender);
+//            mailMessage.setTo(details.getRecipient());
+//            mailMessage.setText(details.getMsgBody());
+//            mailMessage.setSubject(details.getSubject());
+//
+//            javaMailSender.send(mailMessage);
             return "Success";
         } catch (Exception e) {
             return "Failed to send message";
         }
     }
+
+    public String getTemplate(int msg) {
+        String path = switch (msg) {
+            case 1 -> "classpath:BedtimeReminder.html";
+            case 2 -> "classpath:SleepHygieneReminder.html";
+            case 4 -> "classpath:PasswordReset.html";
+            default -> null;
+        };
+
+        if (path == null) {
+            return null;
+        }
+        Resource resource = resourceLoader.getResource(path);
+        String template = null;
+        try {
+            template = resource.getContentAsString(StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.out.println("Failed to get resource for reminder template.");
+        }
+        return template;
+    }
+
+
 
 
 
