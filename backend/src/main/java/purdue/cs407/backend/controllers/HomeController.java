@@ -211,6 +211,9 @@ public class HomeController {
             return ResponseEntity.status(403).build();
         }
 
+        if (recordRepository.existsByUserAndDate(currentUser, request.getDate())){
+            return ResponseEntity.status(409).build();
+        }
         // Now we can update the record with the new data
         record.setDate(request.getDate());
         record.setSleepTime(request.getSleepTime());
