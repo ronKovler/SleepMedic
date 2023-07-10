@@ -6,6 +6,8 @@ import { Button } from '@mui/material';
 import { useState } from 'react';
 import LoginPage from './LoginPage'
 import React from 'react';
+import theme from '../theme';
+
 
 
 function Welcome() {

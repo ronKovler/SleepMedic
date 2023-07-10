@@ -16,7 +16,7 @@ function EditGoal() {
         <div className="sleep-medic-container">
             <div className="edit-goal-form">
                 <h1>Edit your Goals</h1>
-                <Link to="/createreminder" style={{color: "gold"}}>Create a Reminder</Link>
+                <Link to="/createreminder">Create a Reminder</Link>
                 <Link to="/home">
                     <Button variant="contained">Home</Button>
                 </Link>

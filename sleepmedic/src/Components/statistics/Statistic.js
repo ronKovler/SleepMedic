@@ -58,6 +58,7 @@ export default function Statistics() {
         try {
             let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/month", {headers});
             setMonthRecords(res.data);
+            console.log(monthRecords);
         }
         catch (err) {
             console.log('Failed to get records.');
@@ -68,22 +69,23 @@ export default function Statistics() {
         getRecords();
     }, []);
 
-
-    return (
+    if (monthRecords === []) return (<div>HI</div>)
+    else return (
         <Box>
             <Navbar/>
-            {/* <Button onClick={() => {console.log(monthRecords)}}>HI</Button> */}
             <Grid container spacing={2} columns={2} sx={{margin: 0}}>
                 <Grid item xs={1}>
-                    {makeLineGraph(monthRecords, "date", 'restlessness', 'Monthly Restlessness', [0,10], 6)}
+                    {makeLineGraph(monthRecords, "date", 'quality', 'Monthly Quality', [0,5], 6)}
                 </Grid>
                 <Grid item xs={1}>
-                    {makeLineGraph(monthRecords, "date", 'sleepTime', 'Monthly Sleep Duration', [0,24], 13)}
+                    {makeLineGraph(monthRecords, "date", 'efficiency', 'Monthly Efficiency', [0,1], 6)}
                 </Grid>
                 <Grid item xs={1}>
-                    {makeLineGraph(monthRecords, "date", 'wakeUpCount', 'Monthly Wakeup Count', [0,10], 6)}
+                    {makeLineGraph(monthRecords, "date", 'fallTime', 'Monthly Falling Asleep Time', [0,100], 6)}
                 </Grid>
             </Grid>
+            
+            
         </Box>
     )
 }
