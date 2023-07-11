@@ -61,6 +61,7 @@ function CreateAccount() {
     const [lastname, setLastName] = useState('');
     const [birth, setBirth] = useState('');
     const [sex, setSex] = useState('');
+    const [phone, setPhone] = useState('');
     const navigate = useNavigate();
     const signIn = useSignIn();
 
@@ -80,10 +81,8 @@ function CreateAccount() {
                     setNext(true);
                     return;
                 }
-                
             } else{
                 setComplexError(true);
-                
                 return;
             }
         } 
@@ -96,7 +95,8 @@ function CreateAccount() {
             email: email,
             password: password,
             birthday: birth,
-            sex: sex
+            sex: sex,
+            phone: phone,
         }
 
         var stringify = JSON.stringify(values);
@@ -243,6 +243,19 @@ function CreateAccount() {
         <div className="sleep-medic-container">
             <form className="create-form" onSubmit={handleCreateAccount}>
                 <h1 style={{maxWidth: "22rem"}}>Create an Account on Sleep-Medic</h1>
+                <label style={{fontWeight: "bold"}} htmlFor="email">Phone #:</label>
+                <TextField 
+                type="tel" 
+                id="number"
+                value={phone}
+                style={{width: "70%", height: "4%"}}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="(XXX)-XXX-XXXX"
+                sx={{ input: {color: "white" }, fieldset: {borderColor: "white"}}}
+                color="secondary"
+                required
+                />
+                <br/><br/>
                 <label style={{fontWeight: "bold"}} htmlFor="email">Email:</label>
                 {emailFree ? <TextField
                 type="email"
@@ -253,7 +266,7 @@ function CreateAccount() {
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
                 onBlur={e => checkEmail(e)}
-                sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+                sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
                 color="secondary"
                 required
                 /> : <TextField
@@ -290,7 +303,7 @@ function CreateAccount() {
                 variant="outlined"
                 onChange={(e) => setPassword(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
-                sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+                sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
                 color="secondary"
                 required
                 />
@@ -304,7 +317,7 @@ function CreateAccount() {
                 value={confirmation}
                 onChange={(e) => setConfirmation(e.target.value)}
                 style={{ width: "70%", height: "4%" }}
-                sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }}
+                sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
                 color="secondary"
                 onBlur={(e) => checkMatch(e)}
                 required
@@ -327,7 +340,7 @@ function CreateAccount() {
 
                 <br />
                 <Button type="submit" variant="contained" color="primary">Create Account</Button>
-                <Link to="/login" style={{ color: "white" }}>Or log in to an existing account</Link>
+                <Link to="/login">Or log in to an existing account</Link>
             </form>
         </div>}
         </div>

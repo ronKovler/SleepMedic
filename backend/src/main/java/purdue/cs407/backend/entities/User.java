@@ -45,11 +45,13 @@ public class User implements UserDetails {
     @Column(name="sex", length=1)
     private String sex;
 
-    //@Cascade(value = )
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Set<SleepRecord> records = new HashSet<>();
     //@Cascade(value = )
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Set<Reminder> reminders = new HashSet<>();
 
 
