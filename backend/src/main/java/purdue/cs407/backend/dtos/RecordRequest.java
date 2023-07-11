@@ -33,6 +33,8 @@ public class RecordRequest {
         this.quality = quality;
     }
 
+    public RecordRequest(){}
+
     public Date getDate() {
         return date;
     }
