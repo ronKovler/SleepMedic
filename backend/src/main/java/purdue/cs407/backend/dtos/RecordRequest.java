@@ -21,8 +21,28 @@ public class RecordRequest {
 
     private int quality;
 
+    private boolean physicalActivity;
+
+    private boolean naps;
+
+    private boolean caffeineConsumption;
+
+    private boolean alcoholConsumption;
+
+    private boolean electronics;
+
+    private boolean difficultStayingAsleep;
+
+    private boolean difficultFallingAsleep;
+
+    private boolean racingThoughts;
+
+    private String dreams;
+
     public RecordRequest(Date date, Time downTime, int fallTime, Time sleepTime, Time wakeTime, int awakeTime,
-                         Time upTime, int quality) {
+                         Time upTime, int quality, boolean physicalActivity, boolean naps, boolean caffeineConsumption,
+                         boolean alcoholConsumption, boolean electronics, boolean difficultStayingAsleep,
+                         boolean difficultFallingAsleep, boolean racingThoughts, String dreams) {
         this.date = date;
         this.downTime = downTime;
         this.fallTime = fallTime;
@@ -31,6 +51,15 @@ public class RecordRequest {
         this.awakeTime = awakeTime;
         this.upTime = upTime;
         this.quality = quality;
+        this.physicalActivity = physicalActivity;
+        this.naps = naps;
+        this.caffeineConsumption = caffeineConsumption;
+        this.alcoholConsumption = alcoholConsumption;
+        this.electronics = electronics;
+        this.difficultStayingAsleep = difficultStayingAsleep;
+        this.difficultFallingAsleep = difficultFallingAsleep;
+        this.racingThoughts = racingThoughts;
+        this.dreams = dreams;
     }
 
     public RecordRequest(){}
@@ -97,5 +126,77 @@ public class RecordRequest {
 
     public void setUpTime(Time upTime) {
         this.upTime = upTime;
+    }
+
+    public boolean isPhysicalActivity() {
+        return physicalActivity;
+    }
+
+    public void setPhysicalActivity(boolean physicalActivity) {
+        this.physicalActivity = physicalActivity;
+    }
+
+    public boolean isNaps() {
+        return naps;
+    }
+
+    public void setNaps(boolean naps) {
+        this.naps = naps;
+    }
+
+    public boolean isCaffeineConsumption() {
+        return caffeineConsumption;
+    }
+
+    public void setCaffeineConsumption(boolean caffeineConsumption) {
+        this.caffeineConsumption = caffeineConsumption;
+    }
+
+    public boolean isAlcoholConsumption() {
+        return alcoholConsumption;
+    }
+
+    public void setAlcoholConsumption(boolean alcoholConsumption) {
+        this.alcoholConsumption = alcoholConsumption;
+    }
+
+    public boolean isElectronics() {
+        return electronics;
+    }
+
+    public void setElectronics(boolean electronics) {
+        this.electronics = electronics;
+    }
+
+    public boolean isDifficultStayingAsleep() {
+        return difficultStayingAsleep;
+    }
+
+    public void setDifficultStayingAsleep(boolean difficultStayingAsleep) {
+        this.difficultStayingAsleep = difficultStayingAsleep;
+    }
+
+    public boolean isDifficultFallingAsleep() {
+        return difficultFallingAsleep;
+    }
+
+    public void setDifficultFallingAsleep(boolean difficultFallingAsleep) {
+        this.difficultFallingAsleep = difficultFallingAsleep;
+    }
+
+    public boolean isRacingThoughts() {
+        return racingThoughts;
+    }
+
+    public void setRacingThoughts(boolean racingThoughts) {
+        this.racingThoughts = racingThoughts;
+    }
+
+    public String getDreams() {
+        return dreams;
+    }
+
+    public void setDreams(String dreams) {
+        this.dreams = dreams;
     }
 }
