@@ -110,7 +110,11 @@ function CreateRem() {
             let tok = cookies._auth;
             console.log('Create button clicked');
             //grabbing the carrier type
-
+            let chosenCarrier;
+            if (Carrier == "No, email it") {
+                chosenCarrier = null;
+            }
+            else chosenCarrier = Carrier;
 
             //grabbing reminderType
             let reminderTypeInt;
@@ -145,7 +149,8 @@ function CreateRem() {
                 "Authorization":'Bearer ' + tok
             }
             var reminderInfo = {
-                //pass the carrier to Ron.
+                //pass the carrier.
+                carrier: chosenCarrier,
                 triggerTime: formattedReminderTime, //Time at which reminder emails will be triggered on the chosen days
                 triggerDays: selectedDays,          //a list of integers where 0 is Sun, 6 is Sat
                 message: reminderTypeInt,           //1 or 2; Bedtime or General Sleep Reminder
@@ -206,7 +211,7 @@ function CreateRem() {
            </Select>
            <br/>
            <br/>
-         <label htmlFor="reminder-type-err-msg">{RemTypeErrMsg}</label>
+            <label htmlFor="reminder-type-err-msg">{RemTypeErrMsg}</label>
          </div>
          <div className="days-list">
             {daysOfWeek.map(({day}, index) => {
