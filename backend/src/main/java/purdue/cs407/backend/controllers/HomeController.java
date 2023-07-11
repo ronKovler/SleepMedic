@@ -171,7 +171,7 @@ public class HomeController {
      * @return - Message upon success
      */
     @RequestMapping(value="create_record", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createRecord(@RequestBody RecordRequest request) {
         User user = getCurrentUser();
 
@@ -186,7 +186,37 @@ public class HomeController {
         user.addRecord(record);
         recordRepository.save(record);
 
-        return ResponseEntity.ok("Success");
+        String response = analyzeData(record);
+
+        return ResponseEntity.ok(response);
+    }
+
+    private String analyzeData(SleepRecord record) {
+        StringBuilder data = new StringBuilder();
+        if (record.getEfficiency() >= 0.87) {
+            data.append(String.format("You achieved %.2f sleep efficiency, nice job!\n", record.getEfficiency()));
+        } else {
+            data.append(String.format("Your sleep efficiency was %.2f, try to minimize the time spent in bed when you're not sleeping!\n", record.getEfficiency()));
+        }
+
+        long fifteenMin = 15 /*minutes*/ * 60 /*seconds*/ * 1000 /*ms*/;
+        if (record.hoursSlept() < 7.0) {
+            data.append("It looks like you should try to get more sleep, most people need around 7-8 hours each night.\n");
+        } else if (record.hoursSlept() > 8.0) {
+            data.append("Be careful about sleeping too much in one night, it can affect your other nights sleep. Shoot for 7-8 hours.\n");
+        } else if (record.getEfficiency() <= 0.87 || record.getEfficiency() >= 0.95){
+            // User is getting good amount of sleep, check if time in bed before sleep greater than time in bed after sleep
+            long morningTime = record.getUpTime().getTime() - record.getWakeTime().getTime();
+            long eveningTime = record.getSleepTime().getTime() - record.getDownTime().getTime();
+            if (eveningTime > fifteenMin && morningTime > eveningTime) {
+                Time newTime = new Time(record.getUpTime().getTime() - fifteenMin);
+                data.append("Try to get out of bed around ").append(newTime).append(" next time. It's important to only spend time in bed when you are actively sleeping.\n");
+            } else if (morningTime > fifteenMin && eveningTime > morningTime) {
+                Time newTime = new Time(record.getDownTime().getTime() + fifteenMin);
+                data.append("Try to get into bed later around ").append(newTime).append(" next time. This helps your body associate bed time with sleep time.");
+            }
+        }
+        return data.toString();
     }
 
     /**

@@ -49,9 +49,16 @@ public class SleepRecord {
     @Column(name="efficiency")
     private double efficiency;
 
+    /**
+             * (01000000) 1 - physical activity, 2 - naps, 3 - alcohol, 4- caffeine, 5-electronics, 6- difficultStayingAsleep
+     * 7 - difficultFallingAsleep, LEAST SIG BIT (00000001) 8- racingThoughts,
+     */
+    @Column(name="journal")
+    private byte journal;
+
 
     public SleepRecord(Long recordID, User user, Date date, Time downTime, Time upTime, int fallTime, Time sleepTime,
-                       Time wakeTime, int awakeTime, int quality, double efficiency) {
+                       Time wakeTime, int awakeTime, int quality, double efficiency, byte journal) {
         this.recordID = recordID;
         this.user = user;
         this.date = date;
@@ -63,6 +70,7 @@ public class SleepRecord {
         this.awakeTime = awakeTime;
         this.quality = quality;
         this.efficiency = efficiency;
+        this.journal = journal;
     }
 
     public SleepRecord(RecordRequest request, User user) {
@@ -75,6 +83,36 @@ public class SleepRecord {
         this.wakeTime = request.getWakeTime();
         this.awakeTime = request.getAwakeTime();
         this.quality = request.getQuality();
+        byte journal = 0;
+        if(request.isPhysicalActivity()) {
+            byte mask = 0b01000000;
+            journal = (byte) (journal | mask);
+        }
+        if (request.isNaps()) {
+            byte mask = 0b00100000;
+            journal = (byte) (journal | mask);
+        }
+        if (request.isAlcoholConsumption()) {
+            byte mask = 0b00010000;
+            journal = (byte) (journal | mask);
+        }
+        if (request.isCaffeineConsumption()) {
+            byte mask = 0b00001000;
+            journal = (byte) (journal | mask);
+        }
+        if(request.isElectronics()) {
+            byte mask = 0b00000100;
+            journal = (byte) (journal | mask);
+        }
+        if (request.isDifficultStayingAsleep()) {
+            byte mask = 0b00000010;
+            journal = (byte) (journal | mask);
+        }
+        if (request.isDifficultFallingAsleep()) {
+            byte mask = 0b00000001;
+            journal = (byte) (journal | mask);
+        }
+        this.journal = journal;
     }
 
     public SleepRecord() {

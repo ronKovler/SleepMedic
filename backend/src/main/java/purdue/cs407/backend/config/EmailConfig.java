@@ -17,7 +17,7 @@ public class EmailConfig {
         mailSender.setPort(587);
 
         mailSender.setUsername("sleep.medic.donotreply@gmail.com");
-        mailSender.setPassword("kjibjjeqohevovwu\n");
+        mailSender.setPassword("uoqeumdozfvbeqws\n");
         //34gtqhwWBTE9uwWGsfn2u94g
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

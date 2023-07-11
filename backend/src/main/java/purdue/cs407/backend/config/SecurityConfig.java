@@ -28,7 +28,7 @@ public class SecurityConfig {
     /** Setup Filter Chain to restrict/allow endpoints */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http    //TODO update to use SSL https authorizeChannel()
+        http    //TODO update to use SSL https .authorizeChannel()
                 .csrf(AbstractHttpConfigurer::disable) // CSRF - cross site request forgery disabled for now TODO enable properly
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/account/auth/**").permitAll() // Making these endpoints public
