@@ -17,6 +17,7 @@ function getCookiesDict() {
 
 //Shaun
 function CreateRem() {
+    const [Carrier, setCarrier] = useState("No, email it");
     const [ReminderType, setRemType] = useState("None");
     const [ReminderTime, setRemTime] = useState('');
     const daysOfWeek = [{day: "Sun"}, {day:"Mon"}, {day:"Tues"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}];
@@ -31,6 +32,11 @@ function CreateRem() {
     const emptyTimeInputMsg = "You must input a time to trigger the reminder.";
     const badTimeInputFormat = "Please input time in the following format; e.g. 10:45PM, 8:00AM"
     const navigate = useNavigate();
+
+    //handleChange() method for Carrier
+    const handleOnChangeCarrier = (value) => {
+        setCarrier(value);
+    };
 
     //handleChange() method for reminderType
     const handleOnChangeRemType = (value) => {
@@ -103,6 +109,9 @@ function CreateRem() {
             const cookies = getCookiesDict();
             let tok = cookies._auth;
             console.log('Create button clicked');
+            //grabbing the carrier type
+
+
             //grabbing reminderType
             let reminderTypeInt;
             if (ReminderType == "Bedtime Reminder") {
@@ -136,6 +145,7 @@ function CreateRem() {
                 "Authorization":'Bearer ' + tok
             }
             var reminderInfo = {
+                //pass the carrier to Ron.
                 triggerTime: formattedReminderTime, //Time at which reminder emails will be triggered on the chosen days
                 triggerDays: selectedDays,          //a list of integers where 0 is Sun, 6 is Sat
                 message: reminderTypeInt,           //1 or 2; Bedtime or General Sleep Reminder
@@ -155,18 +165,44 @@ function CreateRem() {
        <div className="create-rem-form">
         <h1>Create a Reminder</h1>
          <div className="form-group">
-           <label htmlFor="reminder-type">Reminder Type:</label>
+           <label htmlFor="reminder-method">To enable SMS notifications, please select your carrier:</label>
+           <br/>
            &nbsp;
            <Select
-             labelId="Reminder Type"
-             id="reminder-type"
-             value={ReminderType}
-             label="Reminder Type"
-             onChange={(e) => handleOnChangeRemType(e.target.value)}
-            style={{ width: "230px" }} >
-             <MenuItem value="None">None</MenuItem>
-             <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
-             <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
+                labelId="Carrier Type"
+                id="carrier-type"
+                value={Carrier}
+                label="Carrier Type"
+                onChange={(e) => handleOnChangeCarrier(e.target.value)}
+                style={{ width: "230px" }} >
+                <MenuItem value="No, email it">No, email it </MenuItem>
+                <MenuItem value="T-Mobile">T-Mobile</MenuItem>
+                <MenuItem value="AT&T">AT&T</MenuItem>
+                <MenuItem value="Google Fi Wireless">Google Fi Wireless</MenuItem>
+                <MenuItem value="Xfinity Mobile">Xfinity Mobile</MenuItem>
+                <MenuItem value="Sprint">Sprint</MenuItem>
+                <MenuItem value="U.S. Cellular">U.S. Cellular</MenuItem>
+                <MenuItem value="Cricket Wireless">Cricket Wireless</MenuItem>
+                <MenuItem value="Boost Mobile">Boost Mobile</MenuItem>
+                <MenuItem value="Consumer Cellular">Consumer Cellular</MenuItem>
+                <MenuItem value="MetroPCS">MetroPCS</MenuItem>
+           </Select>
+           <br/>
+           <br/>
+           <br/>
+           <label htmlFor="reminder-type">Reminder Type:</label>
+           <br/>
+           &nbsp;
+           <Select
+                labelId="Reminder Type"
+                id="reminder-type"
+                value={ReminderType}
+                label="Reminder Type"
+                onChange={(e) => handleOnChangeRemType(e.target.value)}
+                style={{ width: "230px" }} >
+                <MenuItem value="None">None</MenuItem>
+                <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
+                <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
            </Select>
            <br/>
            <br/>
