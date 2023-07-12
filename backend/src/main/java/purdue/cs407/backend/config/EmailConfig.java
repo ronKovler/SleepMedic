@@ -1,5 +1,6 @@
 package purdue.cs407.backend.config;
 
+import jakarta.mail.Session;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,9 +17,10 @@ public class EmailConfig {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("sleep.medic.donotreply@gmail.com");
-        mailSender.setPassword("uoqeumdozfvbeqws\n");
+        mailSender.setUsername("sleepmedic.me@gmail.com");
+        mailSender.setPassword("hxevomamxpigdxox");
         //34gtqhwWBTE9uwWGsfn2u94g
+        // PASS: 4C931%k4J0wk$LMcvWR5
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
@@ -27,6 +29,23 @@ public class EmailConfig {
 
 
         return mailSender;
+    }
+
+    @Bean
+    public Session getMailReadSession() {
+        Properties properties = new Properties();
+        properties.put("mail.store.protocol", "imaps");
+        properties.put("mail.imaps.host", "imap.gmail.com");
+        properties.put("mail.imaps.port", "993");
+        properties.put("mail.imaps.starttls.enable", "true");
+        properties.put("mail.imaps.auth", "true");
+        properties.put("mail.imaps.user", "sleepmedic.me@gmail.com");
+        properties.put("mail.imaps.password", "rmnrufeaijzxegcq");
+        properties.put("mail.debug", "true");
+        properties.put("mail.imaps.connectiontimeout", "5000");
+        properties.put("mail.imaps.timeout", "5000");
+
+        return Session.getInstance(properties);
     }
 
 }

@@ -17,10 +17,10 @@ public class SchedulingService {
         this.taskScheduler = taskScheduler;
     }
 
-    public void scheduleATask(String jobId, Runnable tasklet, String cronExpression) {
+    public void scheduleATask(String jobId, Runnable tasklet, String cronExpression, String timeZone) {
         System.out.println("Scheduling task with job id: " + jobId + " and cron expression: " + cronExpression);
         // TODO change TimeZone.getTimeZone("UTC") to users timezone or adjust users time to UTC.
-        ScheduledFuture<?> scheduledTask = taskScheduler.schedule(tasklet, new CronTrigger(cronExpression, TimeZone.getTimeZone("UTC")));
+        ScheduledFuture<?> scheduledTask = taskScheduler.schedule(tasklet, new CronTrigger(cronExpression, TimeZone.getTimeZone(timeZone)));
         jobsMap.put(jobId, scheduledTask);
     }
 

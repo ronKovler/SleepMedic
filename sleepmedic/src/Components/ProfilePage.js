@@ -39,7 +39,7 @@ function OpenProfilePage() {
         var cookies = getCookiesDict();
         console.log(cookies._auth);
         var headers = {
-            "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+            "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
             "Content-Type": 'application/json; charset=utf-8',
             "Authorization":'Bearer ' + cookies._auth,
         }
@@ -48,7 +48,7 @@ function OpenProfilePage() {
         }
         try {
             console.log("hi");
-            let res = await axios.patch("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/update_password", password, {headers});
+            let res = await axios.patch("http://18.224.194.235:8080/api/account/update_password", password, {headers});
             console.log(res.data.token);
             setCookies("_auth", res.data.token);
         } catch(err) {
@@ -83,6 +83,25 @@ function OpenProfilePage() {
         } else {
             setConfirmError(false);
             return false;
+        }
+    }
+
+    //Delete Account
+
+    const deleteAccount = async (e) => {
+        try {
+            var cookies = getCookiesDict();
+            console.log(cookies._auth);
+            var headers = {
+                "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
+                "Content-Type": 'application/json; charset=utf-8',
+                "Authorization":'Bearer ' + cookies._auth,
+            }
+            let res = await axios.delete("http://18.224.194.235:8080/api/account/delete_account", {headers});
+            console.log(res.data.token);
+
+        } catch(err) {
+            return;
         }
     }
 
@@ -153,6 +172,8 @@ function OpenProfilePage() {
                     </DialogActions>
                 </Dialog>
 
+
+                <Button onClick={(e)=>deleteAccount(e)}>Delete Account</Button>
             </div>
         </div>
     );

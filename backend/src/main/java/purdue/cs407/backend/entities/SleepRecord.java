@@ -9,7 +9,7 @@ import java.sql.Time;
 
 @Entity
 @Table(name = "sleep_record")
-public class SleepRecord {
+public class SleepRecord extends RecordRequest {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "record_ID")
@@ -18,7 +18,7 @@ public class SleepRecord {
     private Long recordID;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER) // Use lazy for speed
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_ID")
     private User user;
 
@@ -207,6 +207,14 @@ public class SleepRecord {
         this.efficiency = efficiency;
     }
 
+    public byte getJournal() {
+        return journal;
+    }
+
+    public void setJournal(byte journal) {
+        this.journal = journal;
+    }
+
     public double hoursSlept() {
         long start = this.sleepTime.getTime();
         long end = this.wakeTime.getTime();
@@ -260,4 +268,6 @@ public class SleepRecord {
 
         return time.toString();
     }
+
+
 }
