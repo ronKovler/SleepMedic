@@ -33,7 +33,7 @@ public class User implements UserDetails {
     @Column(name="email", length=128, unique=true)
     private String email;
 
-    @Column(name="phone", length=12)
+    @Column(name="phone", length=12, unique = true)
     private String phone;
 
     @Column(name="password", length=60)
@@ -45,11 +45,13 @@ public class User implements UserDetails {
     @Column(name="sex", length=1)
     private String sex;
 
-    //@Cascade(value = )
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Set<SleepRecord> records = new HashSet<>();
     //@Cascade(value = )
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Set<Reminder> reminders = new HashSet<>();
 
 
@@ -175,6 +177,14 @@ public class User implements UserDetails {
 
     public void setUserID(Long userID) {
         this.userID = userID;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Set<SleepRecord> getRecords() {

@@ -17,8 +17,10 @@ function getCookiesDict() {
 
 //Shaun
 function CreateRem() {
+    const [Carrier, setCarrier] = useState("No, email it");
     const [ReminderType, setRemType] = useState("None");
     const [ReminderTime, setRemTime] = useState('');
+    const [Timezone, setTimezone] = useState("Pacific");
     const daysOfWeek = [{day: "Sun"}, {day:"Mon"}, {day:"Tues"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}];
     const [checkedState, setCheckedState] = useState(
         new Array(daysOfWeek.length).fill(false)
@@ -31,6 +33,11 @@ function CreateRem() {
     const emptyTimeInputMsg = "You must input a time to trigger the reminder.";
     const badTimeInputFormat = "Please input time in the following format; e.g. 10:45PM, 8:00AM"
     const navigate = useNavigate();
+
+    //handleChange() method for Carrier
+    const handleOnChangeCarrier = (value) => {
+        setCarrier(value);
+    };
 
     //handleChange() method for reminderType
     const handleOnChangeRemType = (value) => {
@@ -51,6 +58,11 @@ function CreateRem() {
             setDaysErrMsg("");
         }
     };
+
+    //handleChange() method for Timezone
+        const handleOnChangeTimezone = (value) => {
+            setTimezone(value);
+        };
 
     const reminderTypeInputValidation = () => {
         if (ReminderType == "None") {
@@ -103,6 +115,13 @@ function CreateRem() {
             const cookies = getCookiesDict();
             let tok = cookies._auth;
             console.log('Create button clicked');
+            //grabbing the carrier type
+            let chosenCarrier;
+            if (Carrier == "No, email it") {
+                chosenCarrier = null;
+            }
+            else chosenCarrier = Carrier;
+
             //grabbing reminderType
             let reminderTypeInt;
             if (ReminderType == "Bedtime Reminder") {
@@ -112,6 +131,7 @@ function CreateRem() {
             } else {
                 reminderTypeInt = 0;
             }
+
             //grab ReminderTime and convert to the required format (hr:min:sec) (military)
             const [time, clock] = ReminderTime.split(/(?<=[0-9]{2})(?=[AP]M)/);
             const [hours, minutes] = time.split(":");
@@ -126,6 +146,19 @@ function CreateRem() {
             const formattedMinutes = minutes.padStart(2, '0'); // Pad minutes with leading zero if necessary
             const formattedReminderTime = `${formattedHours}:${formattedMinutes}:00`;
 
+            //grabbing the timezone selected by user
+            let chosenTimezone;
+            if (Timezone == "Pacific") {
+                chosenTimezone = 0;
+            }
+            else if (Timezone == "Mountain")    {
+                chosenTimezone = 1;
+            }
+            else if (Timezone == "Central")    {
+                chosenTimezone = 2;
+            }
+            else chosenTimezone = 3;
+
             //grabbing the days selected by user
             const selectedDays = checkedState
                 .map((isChecked, index) => (isChecked ? index : null))
@@ -136,6 +169,9 @@ function CreateRem() {
                 "Authorization":'Bearer ' + tok
             }
             var reminderInfo = {
+                //pass the carrier.
+                carrier: chosenCarrier,
+                timezone: chosenTimezone,
                 triggerTime: formattedReminderTime, //Time at which reminder emails will be triggered on the chosen days
                 triggerDays: selectedDays,          //a list of integers where 0 is Sun, 6 is Sat
                 message: reminderTypeInt,           //1 or 2; Bedtime or General Sleep Reminder
@@ -155,22 +191,49 @@ function CreateRem() {
        <div className="create-rem-form">
         <h1>Create a Reminder</h1>
          <div className="form-group">
-           <label htmlFor="reminder-type">Reminder Type:</label>
+           <label htmlFor="reminder-method">To enable SMS notifications, please select your carrier:</label>
+           <br/>
            &nbsp;
            <Select
-             labelId="Reminder Type"
-             id="reminder-type"
-             value={ReminderType}
-             label="Reminder Type"
-             onChange={(e) => handleOnChangeRemType(e.target.value)}
-            style={{ width: "230px" }} >
-             <MenuItem value="None">None</MenuItem>
-             <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
-             <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
+                labelId="Carrier Type"
+                id="carrier-type"
+                value={Carrier}
+                label="Carrier Type"
+                onChange={(e) => handleOnChangeCarrier(e.target.value)}
+                style={{ width: "230px" }} >
+                <MenuItem value="No, email it">No, email it </MenuItem>
+                <MenuItem value="AT&T">AT&T</MenuItem>
+                <MenuItem value="Boost Mobile">Boost Mobile</MenuItem>
+                <MenuItem value="Consumer Cellular">Consumer Cellular</MenuItem>
+                <MenuItem value="Cricket Wireless">Cricket Wireless</MenuItem>
+                <MenuItem value="Google Fi Wireless">Google Fi Wireless</MenuItem>
+                <MenuItem value="MetroPCS">MetroPCS</MenuItem>
+                <MenuItem value="Sprint">Sprint</MenuItem>
+                <MenuItem value="T-Mobile">T-Mobile</MenuItem>
+                <MenuItem value="U.S. Cellular">U.S. Cellular</MenuItem>
+                <MenuItem value="Verizon">Verizon</MenuItem>
+                <MenuItem value="Xfinity Mobile">Xfinity Mobile</MenuItem>
            </Select>
            <br/>
            <br/>
-         <label htmlFor="reminder-type-err-msg">{RemTypeErrMsg}</label>
+           <br/>
+           <label htmlFor="reminder-type">Reminder Type:</label>
+           <br/>
+           &nbsp;
+           <Select
+                labelId="Reminder Type"
+                id="reminder-type"
+                value={ReminderType}
+                label="Reminder Type"
+                onChange={(e) => handleOnChangeRemType(e.target.value)}
+                style={{ width: "230px" }} >
+                <MenuItem value="None">None</MenuItem>
+                <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
+                <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
+           </Select>
+           <br/>
+           <br/>
+            <label htmlFor="reminder-type-err-msg">{RemTypeErrMsg}</label>
          </div>
          <div className="days-list">
             {daysOfWeek.map(({day}, index) => {
@@ -200,6 +263,20 @@ function CreateRem() {
              onChange={(e) => setRemTime(e.target.value)}
            />
          </div>
+         <label htmlFor="Timezone">Timezone:
+         <Select
+                         labelId="Timezone"
+                         id="Timezone"
+                         value={Timezone}
+                         label="Timezone"
+                         onChange={(e) => handleOnChangeTimezone(e.target.value)}
+                         style={{ width: "230px" }} >
+                         <MenuItem value="Pacific">Pacific</MenuItem>
+                         <MenuItem value="Mountain">Mountain</MenuItem>
+                         <MenuItem value="Central">Central</MenuItem>
+                         <MenuItem value="Eastern">Eastern</MenuItem>
+                    </Select>
+                    </label>
          <label htmlFor="reminder-time-err-msg">{timeErrMsg}</label>
          <div className="button-group">
             <Link to="/editgoal">
