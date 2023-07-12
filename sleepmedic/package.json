@@ -14,7 +14,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "dayjs": "^1.11.8",
-    "i18next": "^23.2.8",
+    "i18next": "^23.2.11",
     "react": "^18.2.0",
     "react-auth-kit": "^2.12.3",
     "react-cookie": "^4.1.1",
