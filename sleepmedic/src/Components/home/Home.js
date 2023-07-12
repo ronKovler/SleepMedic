@@ -542,8 +542,19 @@ export default function Home() {
                 :
                 <DialogContent>
                     <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
-                    {makeBooleanCheckbox("Physical Activity", physicalActivity, setPhysicalActivity)}
+                    {/* Did you engage in any physical activity today? */}
+                    {makeBooleanCheckbox("Did you engage in any physical activity today?", physicalActivity, setPhysicalActivity)}
+                    {/* Did you have any naps during the day? */}
+                    {makeBooleanCheckbox("Did you have any naps during the day?", physicalActivity, setPhysicalActivity)}
                     {/* TODO: add other booleans values here */}
+                    {/* Did you consume alcohol less than 6 hours before bedtime? */}
+                    {makeBooleanCheckbox("Did you consume caffeine less than 6 hours before bedtime?", physicalActivity, setPhysicalActivity)}
+                    {/* Did you consume caffeine less than 6 hours before bedtime? */}
+                    {/* Did you use electronics while in bed (phone, tablet, etc)? */}
+                    {/* Did you have any difficulty falling asleep? */}
+                    {/* Did you have any difficulty staying asleep? */}
+                    {/* Did you have any racing thoughts? */}
+                    {/* Did you have any dreams? If so, feel free to jot some notes -- empty string */}
                 </DialogContent>
                 }
                 <Pagination count={2} page={page} onChange={handlePageChange} />
