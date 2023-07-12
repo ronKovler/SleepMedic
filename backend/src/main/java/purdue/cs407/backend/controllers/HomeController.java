@@ -244,9 +244,19 @@ public class HomeController {
         if (recordRepository.existsByUserAndDate(currentUser, request.getDate())){
             return ResponseEntity.status(409).build();
         }
+
         // Now we can update the record with the new data
         record.setDate(request.getDate());
         record.setSleepTime(request.getSleepTime());
+        record.setPhysicalActivity(request.isPhysicalActivity());
+        record.setNaps(request.isNaps());
+        record.setCaffeineConsumption(request.isCaffeineConsumption());
+        record.setAlcoholConsumption(request.isAlcoholConsumption());
+        record.setElectronics(request.isElectronics());
+        record.setDifficultStayingAsleep(request.isDifficultStayingAsleep());
+        record.setDifficultFallingAsleep(request.isDifficultFallingAsleep());
+        record.setRacingThoughts(request.isRacingThoughts());
+        record.setDreams(request.getDreams());
 
         recordRepository.save(record);
 

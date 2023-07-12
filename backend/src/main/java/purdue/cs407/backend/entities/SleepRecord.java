@@ -9,7 +9,7 @@ import java.sql.Time;
 
 @Entity
 @Table(name = "sleep_record")
-public class SleepRecord {
+public class SleepRecord extends RecordRequest {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "record_ID")
@@ -268,4 +268,6 @@ public class SleepRecord {
 
         return time.toString();
     }
+
+
 }
