@@ -1,7 +1,6 @@
 package purdue.cs407.backend.dtos;
 
 import java.sql.Time;
-import java.time.DayOfWeek;
 import java.util.List;
 
 public class ReminderRequest {
@@ -12,10 +11,16 @@ public class ReminderRequest {
 
     private int message;
 
-    public ReminderRequest(List<Byte> triggerDays, Time triggerTime, int message) {
+    private String carrier;
+
+    private byte timezone;
+
+    public ReminderRequest(List<Byte> triggerDays, Time triggerTime, int message, String carrier, byte timezone) {
         this.triggerDays = triggerDays;
         this.triggerTime = triggerTime;
         this.message = message;
+        this.carrier = carrier;
+        this.timezone = timezone;
     }
 
     public ReminderRequest(){}
@@ -42,6 +47,22 @@ public class ReminderRequest {
 
     public void setMessage(int message) {
         this.message = message;
+    }
+
+    public String getCarrier() {
+        return carrier;
+    }
+
+    public void setCarrier(String carrier) {
+        this.carrier = carrier;
+    }
+
+    public byte getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(byte timezone) {
+        this.timezone = timezone;
     }
 
     // days of week, time, message

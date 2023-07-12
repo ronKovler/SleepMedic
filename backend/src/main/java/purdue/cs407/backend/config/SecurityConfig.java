@@ -32,12 +32,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // CSRF - cross site request forgery disabled for now TODO enable properly
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/account/auth/**").permitAll() // Making these endpoints public
-                        .requestMatchers("/api/reminder/cancel_reminder/**").permitAll()
+                        .requestMatchers("/api/reminder/cr/**").permitAll()
                         .requestMatchers("/").permitAll() // Think this is needed for CORS preflight?
                         .anyRequest().authenticated())     // Lock all other endpoints
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //No state
                 .authenticationProvider(authenticationProvider)
-                //.httpBasic(Customizer.withDefaults()) //Not necessary with JWT implementation
+                //.httpBasic(Customizer.withDefaults()) //Not necessary with JWT implementation?
 
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // Insert JWT filter before authent filter
 

@@ -18,7 +18,7 @@ public class SleepRecord {
     private Long recordID;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER) // Use lazy for speed
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_ID")
     private User user;
 
@@ -205,6 +205,14 @@ public class SleepRecord {
 
     public void setEfficiency(double efficiency) {
         this.efficiency = efficiency;
+    }
+
+    public byte getJournal() {
+        return journal;
+    }
+
+    public void setJournal(byte journal) {
+        this.journal = journal;
     }
 
     public double hoursSlept() {
