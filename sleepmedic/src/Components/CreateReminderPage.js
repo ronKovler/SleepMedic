@@ -131,6 +131,7 @@ function CreateRem() {
             } else {
                 reminderTypeInt = 0;
             }
+
             //grab ReminderTime and convert to the required format (hr:min:sec) (military)
             const [time, clock] = ReminderTime.split(/(?<=[0-9]{2})(?=[AP]M)/);
             const [hours, minutes] = time.split(":");
@@ -201,17 +202,17 @@ function CreateRem() {
                 onChange={(e) => handleOnChangeCarrier(e.target.value)}
                 style={{ width: "230px" }} >
                 <MenuItem value="No, email it">No, email it </MenuItem>
-                <MenuItem value="T-Mobile">T-Mobile</MenuItem>
                 <MenuItem value="AT&T">AT&T</MenuItem>
-                <MenuItem value="Google Fi Wireless">Google Fi Wireless</MenuItem>
-                <MenuItem value="Google Fi Wireless">Google Fi Wireless</MenuItem>
-                <MenuItem value="Xfinity Mobile">Xfinity Mobile</MenuItem>
-                <MenuItem value="Sprint">Sprint</MenuItem>
-                <MenuItem value="U.S. Cellular">U.S. Cellular</MenuItem>
-                <MenuItem value="Cricket Wireless">Cricket Wireless</MenuItem>
                 <MenuItem value="Boost Mobile">Boost Mobile</MenuItem>
                 <MenuItem value="Consumer Cellular">Consumer Cellular</MenuItem>
+                <MenuItem value="Cricket Wireless">Cricket Wireless</MenuItem>
+                <MenuItem value="Google Fi Wireless">Google Fi Wireless</MenuItem>
                 <MenuItem value="MetroPCS">MetroPCS</MenuItem>
+                <MenuItem value="Sprint">Sprint</MenuItem>
+                <MenuItem value="T-Mobile">T-Mobile</MenuItem>
+                <MenuItem value="U.S. Cellular">U.S. Cellular</MenuItem>
+                <MenuItem value="Verizon">Verizon</MenuItem>
+                <MenuItem value="Xfinity Mobile">Xfinity Mobile</MenuItem>
            </Select>
            <br/>
            <br/>
