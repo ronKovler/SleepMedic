@@ -231,7 +231,6 @@ export default function Home() {
         const f_sleepTime = `${sleepTime.get('hour').toString().padStart(2, '0')}:${sleepTime.get('minute').toString().padStart(2, '0')}:00`;
         const f_wakeTime = `${wakeTime.get('hour').toString().padStart(2, '0')}:${wakeTime.get('minute').toString().padStart(2, '0')}:00`;
         const f_upTime = `${upTime.get('hour').toString().padStart(2, '0')}:${upTime.get('minute').toString().padStart(2, '0')}:00`;
-        
         console.log(f_downTime);
 
         return { 
@@ -244,6 +243,14 @@ export default function Home() {
             awakeTime: parseInt(awakeTime),
             upTime: f_upTime,
             //sleep journal data below (qualitative)
+            physicalActivity: physicalActivity,
+            naps: naps,
+            caffeineConsumption: caffeineConsumption,
+            alcoholConsumption: alcoholConsumption,
+            electronics: electronics,
+            difficultStayingAsleep: difficultStayingAsleep,
+            difficultFallingAsleep: difficultFallingAsleep,
+            racingThoughts: racingThoughts
 
         };
     }
@@ -546,6 +553,7 @@ export default function Home() {
                     <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
                     {/* Did you engage in any physical activity today? */}
                     {makeBooleanCheckbox("Did you engage in any physical activity today?", physicalActivity, setPhysicalActivity)}
+                    console.log(physicalActivity);
                     {/* Did you have any naps during the day? */}
                     {makeBooleanCheckbox("Did you have any naps during the day?", naps, setNaps)}
                     {/* TODO: add other booleans values here */}
@@ -561,7 +569,7 @@ export default function Home() {
                     {makeBooleanCheckbox("Did you have any difficulty staying asleep?", difficultStayingAsleep, setDifficultStayingAsleep)}
                     {/* Did you have any racing thoughts? */}
                     {makeBooleanCheckbox("Did you have any racing thoughts while in bed?", racingThoughts, setRacingThoughts)}
-                    {/* Did you have any dreams? If so, feel free to jot some notes -- empty string */}
+                    {/* Did you have any dreams? If so, feel free to jot some notes -- empty string and pull up a textfield if checked. */}
                     {makeBooleanCheckbox("Did you have any dreams? If so, feel free to jot some notes.", dreams, setdreams)}
                 </DialogContent>
                 }
