@@ -165,7 +165,7 @@ function CreateRem() {
                 .filter((day) => day !== null);
 
             var headers = {
-                "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+                "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
                 "Authorization":'Bearer ' + tok
             }
             var reminderInfo = {
@@ -177,7 +177,7 @@ function CreateRem() {
                 message: reminderTypeInt,           //1 or 2; Bedtime or General Sleep Reminder
             }
             try {
-                let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/reminder/create_reminder", reminderInfo, {headers});
+                let res = await axios.post("http://18.224.194.235:8080/api/reminder/create_reminder", reminderInfo, {headers});
                 console.log(res);
                 navigate("/editgoal");
             }

@@ -38,7 +38,7 @@ function Login() {
   }
 
   var headers = {
-    "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+    "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
     "Content-Type": 'application/json; charset=utf-8',
   }
   const handleLogin = async (e) => {
@@ -49,7 +49,7 @@ function Login() {
         password: password,
     }
     try {
-      let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/login",  loginInfo , {headers});
+      let res = await axios.post("http://18.224.194.235:8080/api/account/auth/login",  loginInfo , {headers});
 
       if (Object.is(res.data.token,"-1")) {
         console.log("Login Failed");
@@ -86,7 +86,7 @@ function Login() {
         birthday: birth,
     }
     try {
-      let res = await axios.patch("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/reset_password", resetInfo, {headers});
+      let res = await axios.patch("http://18.224.194.235:8080/api/account/auth/reset_password", resetInfo, {headers});
 
       
     } catch (err) {
