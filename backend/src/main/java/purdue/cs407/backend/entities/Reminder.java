@@ -34,6 +34,13 @@ public class Reminder {
     @Column(name = "job_ID", length = 196)
     private String jobID;
 
+    /* SMS reminder?*/
+    @Column(name = "carrier", length = 64)
+    private String carrier;
+
+    @Column(name = "timezone")
+    private byte timezone;
+
     public Reminder(User user, Time triggerTime, int message) {
         this.user = user;
         this.triggerTime = triggerTime;
@@ -54,6 +61,8 @@ public class Reminder {
         }
         this.triggerDays = trigger;
         this.message = request.getMessage();
+        this.carrier = request.getCarrier();
+        this.timezone = request.getTimezone();
     }
 
     public Reminder(User user, ReminderRequest request, byte triggerDays, String cron, String jobID) {
@@ -63,9 +72,12 @@ public class Reminder {
         this.triggerDays = triggerDays;
         this.cron = cron;
         this.jobID = jobID;
+        this.carrier = request.getCarrier();
+        this.timezone = request.getTimezone();
     }
 
-    public Reminder(Long reminderID, User user, Time triggerTime, int message, byte triggerDays, String cron, String jobID) {
+    public Reminder(Long reminderID, User user, Time triggerTime, int message, byte triggerDays, String cron,
+                    String jobID, String carrier) {
         this.reminderID = reminderID;
         this.user = user;
         this.triggerTime = triggerTime;
@@ -73,6 +85,7 @@ public class Reminder {
         this.triggerDays = triggerDays;
         this.cron = cron;
         this.jobID = jobID;
+        this.carrier = carrier;
     }
 
     public Reminder() {
@@ -133,5 +146,21 @@ public class Reminder {
 
     public void setJobID(String jobID) {
         this.jobID = jobID;
+    }
+
+    public String getCarrier() {
+        return carrier;
+    }
+
+    public void setCarrier(String carrier) {
+        this.carrier = carrier;
+    }
+
+    public byte getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(byte timezone) {
+        this.timezone = timezone;
     }
 }

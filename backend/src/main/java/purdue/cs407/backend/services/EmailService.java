@@ -1,30 +1,58 @@
 package purdue.cs407.backend.services;
 
+import jakarta.mail.*;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import purdue.cs407.backend.controllers.NotificationController;
 import purdue.cs407.backend.pojos.EmailDetails;
 import purdue.cs407.backend.repositories.ReminderRepository;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+
+import static java.util.Map.entry;
 
 @Service
 public class EmailService {
 
-
     private final JavaMailSender javaMailSender;
+    private final Session javaReadSession;
     private final ResourceLoader resourceLoader = new DefaultResourceLoader();
 
-    public EmailService(JavaMailSender javaMailSender) {
+    /** <a href="https://en.wikipedia.org/wiki/SMS_gateway">...</a>*/
+    private final Map<String, String> carrierGatewayMap = Map.ofEntries(
+            entry("Verizon", "@vtext.com"),
+            entry("T-Mobile", "@tmomail.net"),
+            entry("AT&T", "@txt.att.net"),
+            entry("Google Fi Wireless", "@msg.fi.google.com"),
+            entry("XFinity Mobile", "@vtext.com"),
+            entry("Sprint", "@messaging.sprintpcs.com"), // TODO Does sprint still exist???
+            entry("U.S. Cellular", "@email.uscc.net"),
+            entry("Cricket Wireless", "@mms.cricketwireless.net"),
+            entry("Boost Mobile", "@sms.myboostmobile.com"),
+            entry("Consumer Cellular", "@mailmymobile.net"),
+            entry("MetroPCS", "@mymetropcs.com")
+            // TODO add more US and other country carriers.
+    );
+
+    public EmailService(JavaMailSender javaMailSender, Session javaReadSession) {
         this.javaMailSender = javaMailSender;
+        this.javaReadSession = javaReadSession;
     }
+
 
     public String sendSimpleMail(EmailDetails details) {
         try {
@@ -51,6 +79,60 @@ public class EmailService {
         }
     }
 
+
+    public String[] checkAndProcessInbox() {
+        try {
+            ArrayList<String> cancelRequests = new ArrayList<>();
+            Store store = javaReadSession.getStore("imaps");
+            store.connect("imap.gmail.com", 993, "sleepmedic.me@gmail.com", "rmnrufeaijzxegcq");
+
+            Folder inbox = store.getFolder("INBOX");
+            inbox.open(Folder.READ_WRITE);
+
+            Message[] messages = inbox.getMessages();
+            for (Message message : messages) {
+                String from = Arrays.toString(message.getFrom());
+                System.out.println("-----------------FROM: " + from);
+                Object content = message.getContent();
+                String body = "";
+                if (content instanceof String) {
+                    body = (String) content;
+                } else if(content instanceof MimeMultipart multipart) {
+
+                    StringBuilder temp = new StringBuilder();
+                    for (int i = 0; i < multipart.getCount(); i++) {
+                        BodyPart bodyPart = multipart.getBodyPart(i);
+                        String partContent = bodyPart.getContentType();
+                        if (partContent.contains("text/plain") || partContent.contains("text/html")) {
+                            temp.append((String) bodyPart.getContent());
+                        }
+                    }
+                    body = temp.toString();
+                }
+                System.out.println("------------BODY: " + body);
+
+
+                if (body.startsWith("CANCEL")) {
+                    String ID = body.substring(7);
+                    ID = ID.replaceAll("\\s","");
+                    from = from.replace("\n", "").replace("[", "").replace("]","");
+                    String temp = ID + " " + from;
+                    System.out.println("----------------------------------------PRINT: " +temp);
+                    cancelRequests.add(ID.replace("\n", "") + " " + from.replace("\n", ""));
+                }
+                message.setFlag(Flags.Flag.DELETED, true);
+            }
+
+            inbox.expunge();
+            inbox.close();
+            store.close();
+            return cancelRequests.toArray(new String[0]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public String getTemplate(int msg) {
         String path = switch (msg) {
             case 1 -> "classpath:BedtimeReminder.html";
@@ -73,7 +155,9 @@ public class EmailService {
     }
 
 
-
+    public String getCarrierGateway(String carrier) {
+        return carrierGatewayMap.get(carrier);
+    }
 
 
     public String sendMailWithAttachment(EmailDetails details) {

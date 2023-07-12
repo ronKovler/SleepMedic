@@ -1,15 +1,14 @@
 package purdue.cs407.backend.controllers;
 
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import purdue.cs407.backend.dtos.ReminderRequest;
 import purdue.cs407.backend.pojos.EmailDetails;
@@ -24,10 +23,12 @@ import purdue.cs407.backend.services.SchedulingService;
 
 import java.sql.Time;
 import java.time.DayOfWeek;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.TextStyle;
-import java.util.Base64;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+
+import static java.util.Map.entry;
 
 @RestController
 @RequestMapping("/api/reminder/")
@@ -39,6 +40,8 @@ public class NotificationController {
     private final SchedulingService schedulingService;
     private final ReminderExecutor reminderExecutor;
     private final UserRepository userRepository;
+
+
 
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -58,16 +61,26 @@ public class NotificationController {
     }
 
     public String getCronDayName(byte day) {
-        switch (day) {
-            case 0, 7 : return "SUN"; //redundant 0
-            case 1 : return "MON";
-            case 2 : return "TUE";
-            case 3 : return "WED";
-            case 4 : return "THU";
-            case 5 : return "FRI";
-            case 6 : return "SAT";
-        }
-        return null;
+        return switch (day) {
+            case 0, 7 -> "SUN"; //redundant 0
+            case 1 -> "MON";
+            case 2 -> "TUE";
+            case 3 -> "WED";
+            case 4 -> "THU";
+            case 5 -> "FRI";
+            case 6 -> "SAT";
+            default -> null;
+        };
+    }
+
+    public String getZoneName(int zone) {
+        return switch(zone) {
+            case 0 -> "America/Los_Angeles";
+            case 1 -> "America/Denver";
+            case 2 -> "America/Chicago";
+            case 3 -> "America/New_York";
+            default -> null;
+        };
     }
 
     /**
@@ -80,9 +93,7 @@ public class NotificationController {
     public ResponseEntity<String> createReminder(@RequestBody ReminderRequest request) {
         User user = getCurrentUser();
 
-        // TO-DO add instrumentation code here for scheduling reminders -- Done
-        // TODO add similar code to app startup to restore old reminders
-        // TODO adjust for users timezone
+        // TODO adjust for users timezone -- TESTING
 
         StringBuilder days = new StringBuilder();
         String prefix = "";
@@ -112,11 +123,12 @@ public class NotificationController {
         String jobID = "reminder_job:" + user.getEmail() + ":";
 
         Reminder reminder = reminderRepository.save(new Reminder(user, request, reminderDaysOfWeek, cron, jobID));
-        reminder.setJobID(jobID + reminder.getReminderID()); //TODO This should be persisted  by jpa automagically but verify it works
+        reminder.setJobID(jobID + reminder.getReminderID());
+        reminder = reminderRepository.save(reminder); // Persist the reminder to get a reminderID
         ReminderTask reminderTask = new ReminderTask(cron, reminder);
 
         reminderExecutor.setReminderTask(reminderTask);
-        schedulingService.scheduleATask(reminder.getJobID(), reminderExecutor, cron);
+        schedulingService.scheduleATask(reminder.getJobID(), reminderExecutor, cron, getZoneName(request.getTimezone()));
 
         user.addReminder(reminder);
        // reminderRepository.save(reminder);
@@ -143,38 +155,78 @@ public class NotificationController {
      * @param hash - hashed jobID.
      * @return - Message on success/failure.
      */
-    @RequestMapping(value="cancel_reminder/{hash}", method = RequestMethod.GET,
+
+    @RequestMapping(value="cr/{hash}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> cancelReminder(@PathVariable String hash) {
         Base64.Decoder decoder = Base64.getUrlDecoder();
-        String[] decrypted = new String(decoder.decode(hash)).split(":"); // Should now be reminder_job:{email}:{reminder_id}
-        if (decrypted.length != 3) {
-            return ResponseEntity.ok("Error decoding went wrong.");
+        String decrypted = new String(decoder.decode(hash)); // reminder_id
+        System.out.println("GOT CANCEL REQUEST DECRYPTED: " + decrypted);
+        long reminderID;
+        try {
+            reminderID = Long.parseLong(decrypted);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+//            return ResponseEntity.ok("Error decoding went wrong.");
         }
 
-        User user = userRepository.findByEmail(decrypted[1]).orElseThrow(() -> new UsernameNotFoundException(decrypted[1]));
-        Reminder reminder = reminderRepository.findById(Long.parseLong(decrypted[2])).orElseThrow();
-        if (reminder.getUser().equals(user)) {
-            // Valid delete request
+
+        Reminder reminder = reminderRepository.findByReminderID(reminderID).orElseThrow();
+        reminder.getUser().removeReminder(reminder);
+        // Valid delete request
+        schedulingService.removeScheduledTask(reminder.getJobID());
+        reminderRepository.delete(reminder);
+
+        return ResponseEntity.ok("Reminder Deleted Successfully.\n" +
+                    "You can exit out of this tab.");
+
+
+
+    }
+
+    @Transactional
+    @Scheduled(fixedRate = 90000) // 60000 is 1.5m in ms
+    public void checkTextCancel() {
+        String[] requests = emailService.checkAndProcessInbox();
+        for (String request : requests) {
+            System.out.println("NotifCont: CANCELLING REMINDER TEXT");
+            System.out.println("----------------------------------REQ: <" + request + ">");
+            cancelMobileReminders(request.replace("\"", "").replace("\n", ""));
+        }
+    }
+
+    @Transactional
+    public void cancelMobileReminders(String request) {
+        String[] req = request.split(" ");
+        long reminderID = Long.parseLong(req[0].replaceAll("\\s",""));
+        String phoneEmail = req[1].replaceAll("\\s","");
+        String phone = phoneEmail.split("@")[0].replaceAll("\\s","");
+
+        Reminder reminder = reminderRepository.findByReminderID(reminderID).orElse(null);
+        if (reminder != null && reminder.getUser().getPhone().equals(phone)) {
+            reminder.getUser().removeReminder(reminder);
             schedulingService.removeScheduledTask(reminder.getJobID());
             reminderRepository.delete(reminder);
-
-            return ResponseEntity.ok("Reminder Deleted Successfully.\n" +
-                    "You can exit out of this tab.");
+            reminderRepository.deleteById(reminderID);
+            EmailDetails details = new EmailDetails(phoneEmail, "", "SM Your reminder has been deleted.", null);
+            emailService.sendSimpleMail(details);
+            return;
         }
 
-        return ResponseEntity.badRequest().build();
+        EmailDetails details = new EmailDetails(phoneEmail, "", "SM Sorry, we didn't find this reminder.", null);
+        emailService.sendSimpleMail(details);
+
     }
 
     /**
      * TEST endpoint for sending texts -- dont spam me TODO Remove
      * @return
      */
-    @RequestMapping(value="test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> test() {
-        Twilio.init("ACdbe2a10f1104a35c0d19d360cc275022", "abd46cf3f7ca46885f76d82237dc5d80");
-        Message.creator(new PhoneNumber("9259970661"), new PhoneNumber("+18443683930"), "Hello From Sleep Medic Spring Boot.").create();
-
+    @RequestMapping(value="test/{carrier}/{phone}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> test(@PathVariable String carrier, @PathVariable String phone) {
+        String recipient = phone + emailService.getCarrierGateway(carrier);
+        EmailDetails details = new EmailDetails(recipient, "TestBody", "testSubject", null);
+        emailService.sendSimpleMail(details);
         return ResponseEntity.ok("Ok");
     }
 
@@ -190,7 +242,7 @@ public class NotificationController {
 
             ReminderTask reminderTask = new ReminderTask(cron, reminder);
             reminderExecutor.setReminderTask(reminderTask);
-            schedulingService.scheduleATask(jobID, reminderExecutor, cron);
+            schedulingService.scheduleATask(jobID, reminderExecutor, cron, getZoneName(reminder.getTimezone()));
         }
     }
 

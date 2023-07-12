@@ -47,4 +47,76 @@ public class WeekAverageResponse {
         this.awakeTime = awakeTime;
         this.efficiency = efficiency;
     }
+
+    public Time getDownTime() {
+        return downTime;
+    }
+
+    public void setDownTime(Time downTime) {
+        this.downTime = downTime;
+    }
+
+    public Time getUpTime() {
+        return upTime;
+    }
+
+    public void setUpTime(Time upTime) {
+        this.upTime = upTime;
+    }
+
+    public double getHoursSlept() {
+        return hoursSlept;
+    }
+
+    public void setHoursSlept(double hoursSlept) {
+        this.hoursSlept = hoursSlept;
+    }
+
+    public int getFallTime() {
+        return fallTime;
+    }
+
+    public void setFallTime(int fallTime) {
+        this.fallTime = fallTime;
+    }
+
+    public Time getWakeTime() {
+        return wakeTime;
+    }
+
+    public void setWakeTime(Time wakeTime) {
+        this.wakeTime = wakeTime;
+    }
+
+    public Time getSleepTime() {
+        return sleepTime;
+    }
+
+    public void setSleepTime(Time sleepTime) {
+        this.sleepTime = sleepTime;
+    }
+
+    public double getQuality() {
+        return quality;
+    }
+
+    public void setQuality(double quality) {
+        this.quality = quality;
+    }
+
+    public int getAwakeTime() {
+        return awakeTime;
+    }
+
+    public void setAwakeTime(int awakeTime) {
+        this.awakeTime = awakeTime;
+    }
+
+    public double getEfficiency() {
+        return efficiency;
+    }
+
+    public void setEfficiency(double efficiency) {
+        this.efficiency = efficiency;
+    }
 }

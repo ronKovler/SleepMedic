@@ -32,6 +32,7 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress';
 import PropTypes from 'prop-types';
+import Pagination from '@mui/material/Pagination';
 
 
 
@@ -114,9 +115,32 @@ function getPostHeaders() {
     return headers;
 }
 
+function makeBooleanCheckbox(title, value, onChangeFunction) {
+    return (
+        <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+            <Grid container columns={2} justify='flex-end' alignItems='center'>
+                <Grid item xs={1}>
+                    <Box>
+                        {title}
+                    </Box>
+                </Grid>
+                <Grid item xs={1}>
+                <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
+                    <Checkbox checked={value} onChange={(e)=>{onChangeFunction(e.target.checked)}}/>
+                </Box>
+                </Grid>
+            </Grid>
+        </FormControl>
+    )
+}
+
 export default function Home() {
     // Control of popup sleep record window
     const[recordOpen, setRecordOpen] = React.useState(false);
+    const [page, setPage] = React.useState(1);
+    const handlePageChange = (event, value) => {
+        setPage(value);
+    };
     
     // User data
     // INFO
@@ -138,15 +162,26 @@ export default function Home() {
     // Date
     const today = dayjs();
     const[recordDate, setRecordDate] = React.useState(today);
+    // Integer
     const[quality, setQuality] = React.useState(0); 
     const[fallTime, setFallTime] = React.useState(0); 
     const[awakeTime, setAwakeTime] = React.useState(0);
-    
-    const[downTime, setDownTime] = React.useState(today.set('hour', 22).set('minute',  30).set('second', 0)); // TIME 
-    const[sleepTime, setSleepTime] = React.useState(today.set('hour', 23).set('minute',  30).set('second', 0)); // TIME
-    const[wakeTime, setWakeTime] = React.useState(today.set('hour', 8).set('minute',  30).set('second', 0)); // TIME
-    const[upTime, setUpTime] = React.useState(today.set('hour', 9).set('minute',  30).set('second', 0)); // TIME
-    
+    // Time
+    const[downTime, setDownTime] = React.useState(today.set('hour', 22).set('minute',  30).set('second', 0)); 
+    const[sleepTime, setSleepTime] = React.useState(today.set('hour', 23).set('minute',  30).set('second', 0));
+    const[wakeTime, setWakeTime] = React.useState(today.set('hour', 8).set('minute',  30).set('second', 0));
+    const[upTime, setUpTime] = React.useState(today.set('hour', 9).set('minute',  30).set('second', 0));
+    // Boolean
+    const[physicalActivity, setPhysicalActivity] = React.useState(false);
+    const[naps, setNaps] = React.useState(false);
+    const[caffineConsumption, setCaffineConsumption] = React.useState(false);
+    const[alcoholConsumption, setIllegalConsumption] = React.useState(false);
+    const[electronics, setElectronics] = React.useState(false);
+    const[difficultStayingAsleep, setDifficultStayingAsleep] = React.useState(false);
+    const[difficultFallingAsleep, setDifficultFallingAsleep] = React.useState(false);
+    const[racingThoughts, setRacingThoughts] = React.useState(false);
+    // String: Dream & Description
+    const[dreams, setdreams] = React.useState("");
 
     const handleRestlessnessChange = (e, value) => {
         setQuality(value);
@@ -189,6 +224,7 @@ export default function Home() {
     }
 
     function formatRecord() {
+        // TODO: add the boolean & String values to the record, format them as needed
         let monthFix = recordDate.get('month') + 1; 
         const f_date = `${recordDate.get('year')}-${monthFix.toString().padStart(2, '0')}-${recordDate.get('date').toString().padStart(2, '0')}`;
         const f_downTime = `${downTime.get('hour').toString().padStart(2, '0')}:${downTime.get('minute').toString().padStart(2, '0')}:00`;
@@ -240,6 +276,7 @@ export default function Home() {
     
     // Popup window handlers
     function resetInput() {
+        // TODO: reset all booleans to default values (false), String to empty string
         setRecordDate(today);
         setQuality(0);
         setFallTime(0);
@@ -276,7 +313,7 @@ export default function Home() {
 
 
     return (
-        <Box sx={{backgroundColor: "#57618E", height: '100vh' }}>
+        <Box sx={{backgroundColor: "#57618E", height: '200vh' }}>
             <Navbar/>
             <Grid container spacing={2} columns={2} sx={{margin: 0}}>
                 {/* LEFT PANEL */}
@@ -403,8 +440,10 @@ export default function Home() {
                         </Grid>
                     </Grid>
                 </DialogTitle>
-
-                <DialogContent>
+                
+                {
+                    page === 1 ?
+                    <DialogContent>
                     <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
 
                     {/* Date Picker */}
@@ -500,6 +539,25 @@ export default function Home() {
                     </Grid>
 
                 </DialogContent>
+                :
+                <DialogContent>
+                    <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
+                    {/* Did you engage in any physical activity today? */}
+                    {makeBooleanCheckbox("Did you engage in any physical activity today?", physicalActivity, setPhysicalActivity)}
+                    {/* Did you have any naps during the day? */}
+                    {makeBooleanCheckbox("Did you have any naps during the day?", physicalActivity, setPhysicalActivity)}
+                    {/* TODO: add other booleans values here */}
+                    {/* Did you consume alcohol less than 6 hours before bedtime? */}
+                    {makeBooleanCheckbox("Did you consume caffeine less than 6 hours before bedtime?", physicalActivity, setPhysicalActivity)}
+                    {/* Did you consume caffeine less than 6 hours before bedtime? */}
+                    {/* Did you use electronics while in bed (phone, tablet, etc)? */}
+                    {/* Did you have any difficulty falling asleep? */}
+                    {/* Did you have any difficulty staying asleep? */}
+                    {/* Did you have any racing thoughts? */}
+                    {/* Did you have any dreams? If so, feel free to jot some notes -- empty string */}
+                </DialogContent>
+                }
+                <Pagination count={2} page={page} onChange={handlePageChange} />
             </Dialog>
 
         </Box>

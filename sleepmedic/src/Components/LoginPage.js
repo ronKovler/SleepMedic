@@ -168,7 +168,6 @@ function Login() {
             <Button onClick={(e) => handleForgotPassword(e)}>Recover Password</Button>
           </DialogActions>
         </Dialog>
-
       </form>
     </div>
   );

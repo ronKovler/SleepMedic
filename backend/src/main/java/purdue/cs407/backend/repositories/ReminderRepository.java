@@ -5,10 +5,12 @@ import org.springframework.stereotype.Repository;
 import purdue.cs407.backend.entities.Reminder;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReminderRepository extends JpaRepository<Reminder, Long> {
 
     //List<Reminder> findAll();
+    Optional<Reminder> findByReminderID(Long reminderID);
 
 }
