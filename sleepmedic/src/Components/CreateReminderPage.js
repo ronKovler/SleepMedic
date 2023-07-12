@@ -20,6 +20,7 @@ function CreateRem() {
     const [Carrier, setCarrier] = useState("No, email it");
     const [ReminderType, setRemType] = useState("None");
     const [ReminderTime, setRemTime] = useState('');
+    const [Timezone, setTimezone] = useState("Pacific");
     const daysOfWeek = [{day: "Sun"}, {day:"Mon"}, {day:"Tues"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}];
     const [checkedState, setCheckedState] = useState(
         new Array(daysOfWeek.length).fill(false)
@@ -57,6 +58,11 @@ function CreateRem() {
             setDaysErrMsg("");
         }
     };
+
+    //handleChange() method for Timezone
+        const handleOnChangeTimezone = (value) => {
+            setTimezone(value);
+        };
 
     const reminderTypeInputValidation = () => {
         if (ReminderType == "None") {
@@ -139,6 +145,19 @@ function CreateRem() {
             const formattedMinutes = minutes.padStart(2, '0'); // Pad minutes with leading zero if necessary
             const formattedReminderTime = `${formattedHours}:${formattedMinutes}:00`;
 
+            //grabbing the timezone selected by user
+            let chosenTimezone;
+            if (Timezone == "Pacific") {
+                chosenTimezone = 0;
+            }
+            else if (Timezone == "Mountain")    {
+                chosenTimezone = 1;
+            }
+            else if (Timezone == "Central")    {
+                chosenTimezone = 2;
+            }
+            else chosenTimezone = 3;
+
             //grabbing the days selected by user
             const selectedDays = checkedState
                 .map((isChecked, index) => (isChecked ? index : null))
@@ -151,6 +170,7 @@ function CreateRem() {
             var reminderInfo = {
                 //pass the carrier.
                 carrier: chosenCarrier,
+                timezone: chosenTimezone,
                 triggerTime: formattedReminderTime, //Time at which reminder emails will be triggered on the chosen days
                 triggerDays: selectedDays,          //a list of integers where 0 is Sun, 6 is Sat
                 message: reminderTypeInt,           //1 or 2; Bedtime or General Sleep Reminder
@@ -183,6 +203,7 @@ function CreateRem() {
                 <MenuItem value="No, email it">No, email it </MenuItem>
                 <MenuItem value="T-Mobile">T-Mobile</MenuItem>
                 <MenuItem value="AT&T">AT&T</MenuItem>
+                <MenuItem value="Google Fi Wireless">Google Fi Wireless</MenuItem>
                 <MenuItem value="Google Fi Wireless">Google Fi Wireless</MenuItem>
                 <MenuItem value="Xfinity Mobile">Xfinity Mobile</MenuItem>
                 <MenuItem value="Sprint">Sprint</MenuItem>
@@ -241,6 +262,20 @@ function CreateRem() {
              onChange={(e) => setRemTime(e.target.value)}
            />
          </div>
+         <label htmlFor="Timezone">Timezone:
+         <Select
+                         labelId="Timezone"
+                         id="Timezone"
+                         value={Timezone}
+                         label="Timezone"
+                         onChange={(e) => handleOnChangeTimezone(e.target.value)}
+                         style={{ width: "230px" }} >
+                         <MenuItem value="Pacific">Pacific</MenuItem>
+                         <MenuItem value="Mountain">Mountain</MenuItem>
+                         <MenuItem value="Central">Central</MenuItem>
+                         <MenuItem value="Eastern">Eastern</MenuItem>
+                    </Select>
+                    </label>
          <label htmlFor="reminder-time-err-msg">{timeErrMsg}</label>
          <div className="button-group">
             <Link to="/editgoal">
