@@ -49,8 +49,8 @@ const barTheme = createTheme({
 export default function Navbar() {
     const logOut = useSignOut();
     const navigate = useNavigate();
-    const handleLogout = (e) => {
-        logOut();
+    const handleLogout = async (e) => {
+        await logOut();
         navigate("/login");
     }
     return (

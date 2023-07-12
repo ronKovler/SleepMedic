@@ -86,6 +86,25 @@ function OpenProfilePage() {
         }
     }
 
+    //Delete Account
+
+    const deleteAccount = async (e) => {
+        try {
+            var cookies = getCookiesDict();
+            console.log(cookies._auth);
+            var headers = {
+                "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+                "Content-Type": 'application/json; charset=utf-8',
+                "Authorization":'Bearer ' + cookies._auth,
+            }
+            let res = await axios.delete("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/delete_account", {headers});
+            console.log(res.data.token);
+
+        } catch(err) {
+            return;
+        }
+    }
+
     
     return (
         <div className="sleep-medic-container">
@@ -153,6 +172,8 @@ function OpenProfilePage() {
                     </DialogActions>
                 </Dialog>
 
+
+                <Button onClick={(e)=>deleteAccount(e)}>Delete Account</Button>
             </div>
         </div>
     );
