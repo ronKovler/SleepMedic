@@ -174,8 +174,8 @@ export default function Home() {
     // Boolean
     const[physicalActivity, setPhysicalActivity] = React.useState(false);
     const[naps, setNaps] = React.useState(false);
-    const[caffineConsumption, setCaffineConsumption] = React.useState(false);
-    const[alcoholConsumption, setIllegalConsumption] = React.useState(false);
+    const[caffeineConsumption, setCaffeineConsumption] = React.useState(false);
+    const[alcoholConsumption, setAlcoholConsumption] = React.useState(false);
     const[electronics, setElectronics] = React.useState(false);
     const[difficultStayingAsleep, setDifficultStayingAsleep] = React.useState(false);
     const[difficultFallingAsleep, setDifficultFallingAsleep] = React.useState(false);
@@ -243,6 +243,8 @@ export default function Home() {
             fallTime: parseInt(fallTime),
             awakeTime: parseInt(awakeTime),
             upTime: f_upTime,
+            //sleep journal data below (qualitative)
+
         };
     }
 
@@ -545,16 +547,22 @@ export default function Home() {
                     {/* Did you engage in any physical activity today? */}
                     {makeBooleanCheckbox("Did you engage in any physical activity today?", physicalActivity, setPhysicalActivity)}
                     {/* Did you have any naps during the day? */}
-                    {makeBooleanCheckbox("Did you have any naps during the day?", physicalActivity, setPhysicalActivity)}
+                    {makeBooleanCheckbox("Did you have any naps during the day?", naps, setNaps)}
                     {/* TODO: add other booleans values here */}
                     {/* Did you consume alcohol less than 6 hours before bedtime? */}
-                    {makeBooleanCheckbox("Did you consume caffeine less than 6 hours before bedtime?", physicalActivity, setPhysicalActivity)}
+                    {makeBooleanCheckbox("Did you consume alcohol less than 6 hours before bedtime?", alcoholConsumption, setAlcoholConsumption)}
                     {/* Did you consume caffeine less than 6 hours before bedtime? */}
+                    {makeBooleanCheckbox("Did you consume caffeine less than 6 hours before bedtime?", caffeineConsumption, setCaffeineConsumption)}
                     {/* Did you use electronics while in bed (phone, tablet, etc)? */}
+                    {makeBooleanCheckbox("Did you use a phone, tablet, or similar device in bed?", electronics, setElectronics)}
                     {/* Did you have any difficulty falling asleep? */}
+                    {makeBooleanCheckbox("Did you have any difficulty falling asleep?", difficultFallingAsleep, setDifficultFallingAsleep)}
                     {/* Did you have any difficulty staying asleep? */}
+                    {makeBooleanCheckbox("Did you have any difficulty staying asleep?", difficultStayingAsleep, setDifficultStayingAsleep)}
                     {/* Did you have any racing thoughts? */}
+                    {makeBooleanCheckbox("Did you have any racing thoughts while in bed?", racingThoughts, setRacingThoughts)}
                     {/* Did you have any dreams? If so, feel free to jot some notes -- empty string */}
+                    {makeBooleanCheckbox("Did you have any dreams? If so, feel free to jot some notes.", dreams, setdreams)}
                 </DialogContent>
                 }
                 <Pagination count={2} page={page} onChange={handlePageChange} />
