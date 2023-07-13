@@ -184,7 +184,7 @@ public class HomeController {
         double efficiency = record.hoursSlept() / record.hoursInBed();
         record.setEfficiency(efficiency);
         user.addRecord(record);
-        recordRepository.save(record);
+        record = recordRepository.save(record);
 
         String response = analyzeData(record);
 
