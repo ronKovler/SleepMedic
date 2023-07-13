@@ -184,7 +184,7 @@ public class HomeController {
         double efficiency = record.hoursSlept() / record.hoursInBed();
         record.setEfficiency(efficiency);
         user.addRecord(record);
-        recordRepository.save(record);
+        record = recordRepository.save(record);
 
         String response = analyzeData(record);
 
@@ -248,16 +248,16 @@ public class HomeController {
         // Now we can update the record with the new data
         record.setDate(request.getDate());
         record.setSleepTime(request.getSleepTime());
-        record.setPhysicalActivity(request.isPhysicalActivity());
-        record.setNaps(request.isNaps());
-        record.setCaffeineConsumption(request.isCaffeineConsumption());
-        record.setAlcoholConsumption(request.isAlcoholConsumption());
-        record.setElectronics(request.isElectronics());
-        record.setDifficultStayingAsleep(request.isDifficultStayingAsleep());
-        record.setDifficultFallingAsleep(request.isDifficultFallingAsleep());
-        record.setRacingThoughts(request.isRacingThoughts());
-        record.setDreams(request.getDreams());
+        record.setWakeTime(request.getWakeTime());
+        record.setDownTime(request.getDownTime());
+        record.setUpTime(request.getUpTime());
+        record.setJournal(request);
+        record.setFallTime(request.getFallTime());
+        record.setAwakeTime(request.getAwakeTime());
+        record.setQuality(request.getQuality());
 
+        double efficiency = record.hoursSlept() / record.hoursInBed();
+        record.setEfficiency(efficiency);
         recordRepository.save(record);
 
         return ResponseEntity.ok("Record updated successfully");

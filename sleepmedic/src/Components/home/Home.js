@@ -216,6 +216,9 @@ export default function Home() {
     const[dreamsCB, setDreamsCB] = React.useState(false);
 
 
+    // Record update
+    const[monthRecords, setMonthRecords] = React.useState([]);
+
 
     const handleRestlessnessChange = (e, value) => {
         setQuality(value);
@@ -246,6 +249,9 @@ export default function Home() {
             if (Math.abs(res.data.efficiency * 100 - 90) < 3) {
                 setEffAdvice("Great work! Keep good sleep!");
             }
+
+            res = await axios.get("http://18.224.194.235:8080/api/home/month", {headers});
+            setMonthRecords(res.data);
         }
         catch (err) {
             console.log("Failed to retrieve data.");
@@ -483,7 +489,10 @@ export default function Home() {
                 <Grid item xs={1}>
                     <Paper elevation={3} sx={{width: '90%'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DateCalendar views={['day']}/>
+                            <DateCalendar views={['day']} onChange={(e) => {
+                                console.log('Selected date', e);
+                                console.log(monthRecords);
+                            }}/>
                         </LocalizationProvider>      
                     </Paper>      
                 </Grid>
@@ -593,13 +602,10 @@ export default function Home() {
                     {/* Submit/Cancel */}
                     <Grid container columns={2}>
                         <Grid item xs={1}>
-                            <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button>
+                            {/* <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button> */}
+                            <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>Cancel</Button>
                         </Grid>
-                        <Grid item xs={1}>
-                            <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
-                                <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>Cancel</Button>
-                            </Box>
-                        </Grid>
+                        
                     </Grid>
 
                 </DialogContent>
@@ -627,9 +633,25 @@ export default function Home() {
                     {/* pass in a handleDreams() function that checks the value of dreams, and then passes a dream string as null else box content */}
                     {makeBooleanCheckbox("Did you have any dreams?", dreamsCB, handleOnChangeDreamCB)}
                     {/*makeBooleanCheckbox("Did you have any dreams? If so, feel free to jot some notes.", dreams, setDreams)*/}
+
+                    <Grid container columns={2}>
+                        <Grid item xs={1}>
+                            {/* <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button> */}
+                            <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>Cancel</Button>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
+                                <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button>
+                            </Box>
+                        </Grid>
+                    </Grid>
                 </DialogContent>
                 }
-                <Pagination count={2} page={page} onChange={handlePageChange} />
+
+                <Box alignContent='center' justify="center" display="flex" marginBottom='10pt'>
+                    <Pagination count={2} page={page} onChange={handlePageChange} sx={{margin: 'auto'}}/>
+                </Box>
+                
             </Dialog>
 
         </Box>

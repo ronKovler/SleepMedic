@@ -83,36 +83,7 @@ public class SleepRecord extends RecordRequest {
         this.wakeTime = request.getWakeTime();
         this.awakeTime = request.getAwakeTime();
         this.quality = request.getQuality();
-        byte journal = 0;
-        if(request.isPhysicalActivity()) {
-            byte mask = 0b01000000;
-            journal = (byte) (journal | mask);
-        }
-        if (request.isNaps()) {
-            byte mask = 0b00100000;
-            journal = (byte) (journal | mask);
-        }
-        if (request.isAlcoholConsumption()) {
-            byte mask = 0b00010000;
-            journal = (byte) (journal | mask);
-        }
-        if (request.isCaffeineConsumption()) {
-            byte mask = 0b00001000;
-            journal = (byte) (journal | mask);
-        }
-        if(request.isElectronics()) {
-            byte mask = 0b00000100;
-            journal = (byte) (journal | mask);
-        }
-        if (request.isDifficultStayingAsleep()) {
-            byte mask = 0b00000010;
-            journal = (byte) (journal | mask);
-        }
-        if (request.isDifficultFallingAsleep()) {
-            byte mask = 0b00000001;
-            journal = (byte) (journal | mask);
-        }
-        this.journal = journal;
+        this.setJournal(request);
     }
 
     public SleepRecord() {
@@ -212,6 +183,39 @@ public class SleepRecord extends RecordRequest {
     }
 
     public void setJournal(byte journal) {
+        this.journal = journal;
+    }
+
+    public void setJournal(RecordRequest request) {
+        byte journal = 0;
+        if(request.isPhysicalActivity()) {
+            byte mask = 0b01000000;
+            journal = (byte) (journal | mask);
+        }
+        if (request.isNaps()) {
+            byte mask = 0b00100000;
+            journal = (byte) (journal | mask);
+        }
+        if (request.isAlcoholConsumption()) {
+            byte mask = 0b00010000;
+            journal = (byte) (journal | mask);
+        }
+        if (request.isCaffeineConsumption()) {
+            byte mask = 0b00001000;
+            journal = (byte) (journal | mask);
+        }
+        if(request.isElectronics()) {
+            byte mask = 0b00000100;
+            journal = (byte) (journal | mask);
+        }
+        if (request.isDifficultStayingAsleep()) {
+            byte mask = 0b00000010;
+            journal = (byte) (journal | mask);
+        }
+        if (request.isDifficultFallingAsleep()) {
+            byte mask = 0b00000001;
+            journal = (byte) (journal | mask);
+        }
         this.journal = journal;
     }
 
