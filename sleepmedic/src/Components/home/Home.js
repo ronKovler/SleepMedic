@@ -99,7 +99,7 @@ function getCookiesDict() {
 function getGetHeaders() {
     const cookies = getCookiesDict();
     const headers = {
-        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+        "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
         "Authorization":'Bearer ' + cookies._auth
     };
     return headers; 
@@ -108,7 +108,7 @@ function getGetHeaders() {
 function getPostHeaders() {
     const cookies = getCookiesDict();
     const headers = {
-        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+        "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
         "Content-Type": 'application/json; charset=utf-8',
         "Authorization":'Bearer ' + cookies._auth
     };
@@ -174,8 +174,8 @@ export default function Home() {
     // Boolean
     const[physicalActivity, setPhysicalActivity] = React.useState(false);
     const[naps, setNaps] = React.useState(false);
-    const[caffineConsumption, setCaffineConsumption] = React.useState(false);
-    const[alcoholConsumption, setIllegalConsumption] = React.useState(false);
+    const[caffeineConsumption, setCaffeineConsumption] = React.useState(false);
+    const[alcoholConsumption, setAlcoholConsumption] = React.useState(false);
     const[electronics, setElectronics] = React.useState(false);
     const[difficultStayingAsleep, setDifficultStayingAsleep] = React.useState(false);
     const[difficultFallingAsleep, setDifficultFallingAsleep] = React.useState(false);
@@ -192,12 +192,12 @@ export default function Home() {
         
         try {
             // Get user name
-            let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/info", {headers});
+            let res = await axios.get("http://18.224.194.235:8080/api/home/info", {headers});
             let name = res.data.firstName + ' ' + res.data.lastName;
             setUsername(name);
 
             // Get user average sleep data
-            res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/average", {headers});
+            res = await axios.get("http://18.224.194.235:8080/api/home/average", {headers});
             console.log(res.data);
             setAvgFallTime(res.data.fallTime);
             setAvgAwakeTime(res.data.awakeTime);
@@ -231,7 +231,6 @@ export default function Home() {
         const f_sleepTime = `${sleepTime.get('hour').toString().padStart(2, '0')}:${sleepTime.get('minute').toString().padStart(2, '0')}:00`;
         const f_wakeTime = `${wakeTime.get('hour').toString().padStart(2, '0')}:${wakeTime.get('minute').toString().padStart(2, '0')}:00`;
         const f_upTime = `${upTime.get('hour').toString().padStart(2, '0')}:${upTime.get('minute').toString().padStart(2, '0')}:00`;
-        
         console.log(f_downTime);
 
         return { 
@@ -243,6 +242,16 @@ export default function Home() {
             fallTime: parseInt(fallTime),
             awakeTime: parseInt(awakeTime),
             upTime: f_upTime,
+            //sleep journal data below (qualitative)
+            physicalActivity: physicalActivity,
+            naps: naps,
+            caffeineConsumption: caffeineConsumption,
+            alcoholConsumption: alcoholConsumption,
+            electronics: electronics,
+            difficultStayingAsleep: difficultStayingAsleep,
+            difficultFallingAsleep: difficultFallingAsleep,
+            racingThoughts: racingThoughts
+
         };
     }
 
@@ -258,7 +267,7 @@ export default function Home() {
 
         try {
             let record = formatRecord();
-            let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/home/create_record", record, {headers});
+            let res = await axios.post("http://18.224.194.235:8080/api/home/create_record", record, {headers});
         }
         catch (err) {
             alert("Already recorded!");
@@ -544,17 +553,24 @@ export default function Home() {
                     <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
                     {/* Did you engage in any physical activity today? */}
                     {makeBooleanCheckbox("Did you engage in any physical activity today?", physicalActivity, setPhysicalActivity)}
+                    console.log(physicalActivity);
                     {/* Did you have any naps during the day? */}
-                    {makeBooleanCheckbox("Did you have any naps during the day?", physicalActivity, setPhysicalActivity)}
+                    {makeBooleanCheckbox("Did you have any naps during the day?", naps, setNaps)}
                     {/* TODO: add other booleans values here */}
                     {/* Did you consume alcohol less than 6 hours before bedtime? */}
-                    {makeBooleanCheckbox("Did you consume caffeine less than 6 hours before bedtime?", physicalActivity, setPhysicalActivity)}
+                    {makeBooleanCheckbox("Did you consume alcohol less than 6 hours before bedtime?", alcoholConsumption, setAlcoholConsumption)}
                     {/* Did you consume caffeine less than 6 hours before bedtime? */}
+                    {makeBooleanCheckbox("Did you consume caffeine less than 6 hours before bedtime?", caffeineConsumption, setCaffeineConsumption)}
                     {/* Did you use electronics while in bed (phone, tablet, etc)? */}
+                    {makeBooleanCheckbox("Did you use a phone, tablet, or similar device in bed?", electronics, setElectronics)}
                     {/* Did you have any difficulty falling asleep? */}
+                    {makeBooleanCheckbox("Did you have any difficulty falling asleep?", difficultFallingAsleep, setDifficultFallingAsleep)}
                     {/* Did you have any difficulty staying asleep? */}
+                    {makeBooleanCheckbox("Did you have any difficulty staying asleep?", difficultStayingAsleep, setDifficultStayingAsleep)}
                     {/* Did you have any racing thoughts? */}
-                    {/* Did you have any dreams? If so, feel free to jot some notes -- empty string */}
+                    {makeBooleanCheckbox("Did you have any racing thoughts while in bed?", racingThoughts, setRacingThoughts)}
+                    {/* Did you have any dreams? If so, feel free to jot some notes -- empty string and pull up a textfield if checked. */}
+                    {makeBooleanCheckbox("Did you have any dreams? If so, feel free to jot some notes.", dreams, setdreams)}
                 </DialogContent>
                 }
                 <Pagination count={2} page={page} onChange={handlePageChange} />

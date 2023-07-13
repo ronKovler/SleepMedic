@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
 import { TextField }  from "@mui/material/";
 import { useSignIn } from 'react-auth-kit';
@@ -6,6 +6,8 @@ import axios from "axios";
 import "./LoginPage.css";
 import { Button, Alert, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { styled } from '@mui/system';
+import { useTranslation } from 'react-i18next';
+
 
 
 
@@ -15,8 +17,28 @@ function Login() {
   const signIn = useSignIn();
   const navigate = useNavigate();
   const [error, setError] = useState(false);
+  const [t, i18n] = useTranslation("global");
+
+  useEffect (() => {
+    i18n.changeLanguage(localStorage.getItem("i18nextLang"));
+    const cookies = getCookiesDict();
+    if (cookies._auth != null) {
+      navigate("/home")
+    }
+  }, []);
+
+  function getCookiesDict() {
+    let cookies = document.cookie.split("; ");
+    let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
+        acc[key] = val.join('=');
+        return acc;
+    }, {});
+    console.log(cookiesDict._auth);
+    return cookiesDict;
+  }
+
   var headers = {
-    "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+    "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
     "Content-Type": 'application/json; charset=utf-8',
   }
   const handleLogin = async (e) => {
@@ -27,7 +49,7 @@ function Login() {
         password: password,
     }
     try {
-      let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/login",  loginInfo , {headers});
+      let res = await axios.post("http://18.224.194.235:8080/api/account/auth/login",  loginInfo , {headers});
 
       if (Object.is(res.data.token,"-1")) {
         console.log("Login Failed");
@@ -64,7 +86,7 @@ function Login() {
         birthday: birth,
     }
     try {
-      let res = await axios.patch("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/reset_password", resetInfo, {headers});
+      let res = await axios.patch("http://18.224.194.235:8080/api/account/auth/reset_password", resetInfo, {headers});
 
       
     } catch (err) {

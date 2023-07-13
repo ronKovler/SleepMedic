@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TextField, Button, Select, Alert, AlertTitle } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import { useTranslation } from 'react-i18next';
 import MenuItem from '@mui/material/MenuItem';
 import { useSignIn } from 'react-auth-kit';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -20,8 +21,28 @@ function CreateAccount() {
     const [confirmError, setConfirmError] = useState(true);
     const [emailFree, setEmailFree] = useState(true);
     const [complexError, setComplexError] = useState(false);
+    const [t, i18n] = useTranslation("global");
     var headers = {
-        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+        "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
+    }
+
+
+    useEffect (() => {
+        i18n.changeLanguage(localStorage.getItem("i18nextLang"));
+        const cookies = getCookiesDict();
+        if (cookies._auth != null) {
+        navigate("/home")
+        }
+    }, []);
+
+    function getCookiesDict() {
+        let cookies = document.cookie.split("; ");
+        let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
+            acc[key] = val.join('=');
+            return acc;
+        }, {});
+        console.log(cookiesDict._auth);
+        return cookiesDict;
     }
 
     function checkvalidpassword(str) {
@@ -51,7 +72,7 @@ function CreateAccount() {
     }
 
     const checkEmail = async (e) => {
-        let res = await axios.get("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/check_email/" + email, headers)
+        let res = await axios.get("http://18.224.194.235:8080/api/account/auth/check_email/" + email, headers)
 
         setEmailFree(res.data);
     }
@@ -102,11 +123,11 @@ function CreateAccount() {
         var stringify = JSON.stringify(values);
         console.log(stringify);
         var headers = {
-            "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+            "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
             "Content-Type": 'application/json; charset=utf-8',
         }
         try {
-            let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/create_account", stringify, {headers})
+            let res = await axios.post("http://18.224.194.235:8080/api/account/auth/create_account", stringify, {headers})
 
 
             if(res){
@@ -118,7 +139,7 @@ function CreateAccount() {
                     password: password,
                 }
                 try {
-                  let res = await axios.post("http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/api/account/auth/login",  loginInfo , {headers});
+                  let res = await axios.post("http://18.224.194.235:8080/api/account/auth/login",  loginInfo , {headers});
             
             
                   if (Object.is(res.data.token,"-1")) {
@@ -251,7 +272,7 @@ function CreateAccount() {
                 style={{width: "70%", height: "4%"}}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="(XXX)-XXX-XXXX"
-                sx={{ input: {color: "white" }, fieldset: {borderColor: "white"}}}
+                sx={{ input: {color: "black" }, fieldset: {borderColor: "white"}}}
                 color="secondary"
                 required
                 />
