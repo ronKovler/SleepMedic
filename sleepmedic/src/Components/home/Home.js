@@ -250,8 +250,9 @@ export default function Home() {
                 setEffAdvice("Great work! Keep good sleep!");
             }
 
-            res = await axios.get("http://18.224.194.235:8080/api/home/month", {headers});
+            res = await axios.get("http://18.224.194.235:8080/api/home/calendar", {headers});
             setMonthRecords(res.data);
+            //console.log(res.data);
         }
         catch (err) {
             console.log("Failed to retrieve data.");
@@ -326,6 +327,8 @@ export default function Home() {
         //     return;
         // }
 
+        //add a flag/indicator for edit vs create new record.
+
         try {
             let record = formatRecord();
             let res = await axios.post("http://18.224.194.235:8080/api/home/create_record", record, {headers});
@@ -362,6 +365,32 @@ export default function Home() {
     const handleClose = () => {
         setRecordOpen(false);
         resetInput();
+    };
+
+
+
+    const handleOpenEditForm = async (dayClicked) => {
+        setRecordOpen(true);
+        console.log('Selected date', dayClicked);
+        console.log('Selected day', dayClicked.$d)
+        const formattedDate = dayjs(dayClicked.$d).format('YYYY-MM-DD');
+        console.log('Formatted date', formattedDate);
+        //var selectedDate = dayClicked.$y + "-" + dayClicked.
+        //use selected date, translate to date format from api/calendar, and use that translated date
+        //to call view_record(Date). Get the data back and populate the fields in the form.
+        const headers = getGetHeaders();
+        //console.log(res.data);
+        try {
+            let res = await axios.get("http://18.224.194.235:8080/api/home/view_record/" + formattedDate, {headers});
+            console.log(res.data);
+        }
+            catch (err) {
+            console.log("ERROR");
+        }
+        //let res = await axios.get("http://18.224.194.235:8080/api/home/view_record/" + formattedDate, {headers});
+        //console.log(res.data);
+        //const data = res.data;
+        //console.log(data.date);
     };
 
     function CircularProgressWithLabel(props) {
@@ -485,13 +514,15 @@ export default function Home() {
                 </Grid>
                 </Grid>
 
-                {/* RIGHT PANEL */}
+                {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs={1}>
                     <Paper elevation={3} sx={{width: '90%'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar views={['day']} onChange={(e) => {
-                                console.log('Selected date', e);
+                                //console.log('Selected date', e);
                                 console.log(monthRecords);
+                                //open the create-record form (the edit-rec form) but set date to read only
+                                handleOpenEditForm(e);
                             }}/>
                         </LocalizationProvider>      
                     </Paper>      
