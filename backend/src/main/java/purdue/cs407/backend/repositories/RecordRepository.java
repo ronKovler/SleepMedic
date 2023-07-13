@@ -11,6 +11,7 @@ import purdue.cs407.backend.entities.User;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
@@ -29,10 +30,14 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
     Collection<SleepRecord> getBetween(@Param("userID") Long userID, @Param("date1") String date1, @Param("date2")String date2);
 
 
-    SleepRecord findByUserAndDate(User user, Date date);
+//    SleepRecord findByUserAndDate(User user, Date date);
 
     SleepRecord findByRecordID(Long recordID);
 
+    Optional<SleepRecord> findByUserAndDate(User user, Date date);
+
+    @Query(value = "SELECT s.date FROM sleep_record s WHERE s.user_id = :userID AND s.date >= STR_TO_DATE(:start, '%Y-%m-%d') AND date <= STR_TO_DATE(:end, '%Y-%m-%d')", nativeQuery = true)
+    Collection<Date> getCalendarDates(@Param("userID")Long userID, @Param("start") String start, @Param("end") String end);
     Boolean existsByUserAndDate(User user, Date date);
 
     void deleteByUser(User user);

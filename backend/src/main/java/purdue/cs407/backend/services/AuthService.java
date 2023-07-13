@@ -49,7 +49,7 @@ public class AuthService {
         user.setPassword(encodedPass);
         // Save User to DB
         user = userRepository.save(user);
-        String jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(user, false);
 
         return new AuthResponse(jwtToken);
     }
@@ -66,10 +66,11 @@ public class AuthService {
                         request.getPassword()
                 )
         );
+
         // If we get here, user has been authenticated
         System.out.println("Authenticated User: " + request.getEmail());
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        String jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(user, request.isRememberMe());
 
         return new AuthResponse(jwtToken);
     }
@@ -101,7 +102,7 @@ public class AuthService {
         user.setPassword(encodedPass);
         user = userRepository.save(user);
 
-        String jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(user, false);
 
         return new AuthResponse(jwtToken);
     }

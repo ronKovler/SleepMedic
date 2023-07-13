@@ -114,7 +114,7 @@ public class HomeController {
      */
     @RequestMapping(value="month", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SleepRecord>> getCalendar() {
+    public ResponseEntity<List<SleepRecord>> getMonthOfRecords() {
         // Get the user
         User user = getCurrentUser();
 
@@ -130,6 +130,23 @@ public class HomeController {
 
         return ResponseEntity.ok(records.stream().toList());
 
+    }
+
+    @RequestMapping(value = "calendar", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Date>> getCalendar() {
+        User user = getCurrentUser();
+
+        LocalDate date = LocalDate.now();
+        LocalDate start = date.withDayOfMonth(1);
+        LocalDate end = date.withDayOfMonth(date.getMonth().length(date.isLeapYear()));
+
+        Date startDate = Date.valueOf(start);
+        Date endDate = Date.valueOf(end);
+
+        Collection<Date> dates = recordRepository.getCalendarDates(user.getUserID(), startDate.toString(), endDate.toString());
+
+        return ResponseEntity.ok(dates.stream().toList());
     }
 
     /**
@@ -150,18 +167,18 @@ public class HomeController {
      * @param recordID - ID of record to view
      * @return - record if found from user, notFound error else
      */
-    @RequestMapping(value="view_record/{recordID}", method = RequestMethod.GET,
+    @RequestMapping(value="view_record/{date}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SleepRecord> getRecord(@PathVariable long recordID) {
+    public ResponseEntity<SleepRecord> getRecord(@PathVariable Date date) {
         User user = getCurrentUser();
 
-        SleepRecord record = recordRepository.findByRecordID(recordID);
+        SleepRecord record = recordRepository.findByUserAndDate(user, date).orElse(null);
 
-        if (user.equals(record.getUser())) {
+        if (record != null) {
             return ResponseEntity.ok(record);
         }
 
-        // User requested someone else's sleep record, denied.
+        // User requested invalid record, denied.
         return ResponseEntity.notFound().build();
     }
 
