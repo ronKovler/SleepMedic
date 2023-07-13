@@ -33,6 +33,9 @@ import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress';
 import PropTypes from 'prop-types';
 import Pagination from '@mui/material/Pagination';
+//import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField'; // Add this line
+
 
 
 
@@ -157,6 +160,34 @@ export default function Home() {
     const[effAdvice, setEffAdvice] = React.useState('Your sleep efficiency is far from 90%, we recommend to keep your efficiency close to 90%.');
     const[avgHoursSlept, setAvgHoursSlept] = React.useState(0.0);
 
+    function makeBooleanCheckbox(title, value, onChangeFunction) {
+        return (
+            <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+                <Grid container columns={2} justify='flex-end' alignItems='center'>
+                    <Grid item xs={1}>
+                        <Box>
+                            {title}
+                        </Box>
+                    </Grid>
+                    <Grid item xs={1}>
+                    <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
+                        <Checkbox checked={value} onChange={(e)=>{onChangeFunction(e.target.checked)}}/>
+                    </Box>
+                    </Grid>
+                </Grid>
+                {value && title === "Did you have any dreams?" && (
+                    <TextField
+                      style={{ textAlign: 'left', marginTop: '10pt' }}
+                      label="If so, feel free to jot some notes"
+                      multiline
+                      rows={2}
+                      value={dreams}
+                      onChange={(e) => setDreams(e.target.value)}
+                    />
+                  )}
+            </FormControl>
+        )
+    }
 
     // New record data
     // Date
@@ -181,7 +212,10 @@ export default function Home() {
     const[difficultFallingAsleep, setDifficultFallingAsleep] = React.useState(false);
     const[racingThoughts, setRacingThoughts] = React.useState(false);
     // String: Dream & Description
-    const[dreams, setdreams] = React.useState("");
+    const[dreams, setDreams] = React.useState("");
+    const[dreamsCB, setDreamsCB] = React.useState(false);
+
+
 
     const handleRestlessnessChange = (e, value) => {
         setQuality(value);
@@ -250,10 +284,31 @@ export default function Home() {
             electronics: electronics,
             difficultStayingAsleep: difficultStayingAsleep,
             difficultFallingAsleep: difficultFallingAsleep,
-            racingThoughts: racingThoughts
-
+            racingThoughts: racingThoughts,
+            dreams: dreams
         };
     }
+
+    const DreamTextField = ({ value }) => {
+      return (
+        <TextField
+          style={{ textAlign: 'left' }}
+          label="Message Field" // Updated prop name
+          multiline
+          rows={2}
+          value={value}
+          onChange={(e) => {}}
+        />
+      );
+    };
+
+//handleOnChange function for dream checkbox. Render textfield based on box state.
+    const handleOnChangeDreamCB = (checked) => {
+        setDreamsCB(checked);
+        if (!checked) {
+            setDreams(""); // Clear the dreams text field content if the checkbox is unchecked
+        }
+    };
 
     const handleSubmit = async (e) => {
         const headers = getPostHeaders();
@@ -570,7 +625,9 @@ export default function Home() {
                     {/* Did you have any racing thoughts? */}
                     {makeBooleanCheckbox("Did you have any racing thoughts while in bed?", racingThoughts, setRacingThoughts)}
                     {/* Did you have any dreams? If so, feel free to jot some notes -- empty string and pull up a textfield if checked. */}
-                    {makeBooleanCheckbox("Did you have any dreams? If so, feel free to jot some notes.", dreams, setdreams)}
+                    {/* pass in a handleDreams() function that checks the value of dreams, and then passes a dream string as null else box content */}
+                    {makeBooleanCheckbox("Did you have any dreams?", dreamsCB, handleOnChangeDreamCB)}
+                    {/*makeBooleanCheckbox("Did you have any dreams? If so, feel free to jot some notes.", dreams, setDreams)*/}
                 </DialogContent>
                 }
                 <Pagination count={2} page={page} onChange={handlePageChange} />
