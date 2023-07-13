@@ -608,7 +608,6 @@ export default function Home() {
                     <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
                     {/* Did you engage in any physical activity today? */}
                     {makeBooleanCheckbox("Did you engage in any physical activity today?", physicalActivity, setPhysicalActivity)}
-                    console.log(physicalActivity);
                     {/* Did you have any naps during the day? */}
                     {makeBooleanCheckbox("Did you have any naps during the day?", naps, setNaps)}
                     {/* TODO: add other booleans values here */}
