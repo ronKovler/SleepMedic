@@ -38,7 +38,13 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
 
     @Query(value = "SELECT s.date FROM sleep_record s WHERE s.user_id = :userID AND s.date >= STR_TO_DATE(:start, '%Y-%m-%d') AND date <= STR_TO_DATE(:end, '%Y-%m-%d')", nativeQuery = true)
     Collection<Date> getCalendarDates(@Param("userID")Long userID, @Param("start") String start, @Param("end") String end);
+
+
+
     Boolean existsByUserAndDate(User user, Date date);
+
+
+    Boolean existsByUserAndDateAndRecordIDNot(User user, Date date, Long recordID);
 
     void deleteByUser(User user);
 }

@@ -258,7 +258,7 @@ public class HomeController {
             return ResponseEntity.status(403).build();
         }
 
-        if (recordRepository.existsByUserAndDate(currentUser, request.getDate())){
+        if (recordRepository.existsByUserAndDateAndRecordIDNot(currentUser, request.getDate(), recordId)){
             return ResponseEntity.status(409).build();
         }
 
@@ -272,6 +272,7 @@ public class HomeController {
         record.setFallTime(request.getFallTime());
         record.setAwakeTime(request.getAwakeTime());
         record.setQuality(request.getQuality());
+        record.setDreams(request.getDreams());
 
         double efficiency = record.hoursSlept() / record.hoursInBed();
         record.setEfficiency(efficiency);

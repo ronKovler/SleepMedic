@@ -60,6 +60,9 @@ public class SleepRecord extends RecordRequest {
     @Column(name="journal")
     private byte journal;
 
+    @Column(name="dreams")
+    private String dreams;
+
 
     public SleepRecord(Long recordID, User user, Date date, Time downTime, Time upTime, int fallTime, Time sleepTime,
                        Time wakeTime, int awakeTime, int quality, double efficiency, byte journal) {
@@ -88,6 +91,7 @@ public class SleepRecord extends RecordRequest {
         this.awakeTime = request.getAwakeTime();
         this.quality = request.getQuality();
         this.setJournal(request);
+        this.dreams = request.getDreams();
     }
 
     public SleepRecord() {
@@ -188,6 +192,16 @@ public class SleepRecord extends RecordRequest {
 
     public void setJournal(byte journal) {
         this.journal = journal;
+    }
+
+
+    public String getDreams() {
+        return dreams;
+    }
+
+
+    public void setDreams(String dreams) {
+        this.dreams = dreams;
     }
 
     public void setJournal(RecordRequest request) {

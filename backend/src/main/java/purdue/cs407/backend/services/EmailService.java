@@ -3,6 +3,7 @@ package purdue.cs407.backend.services;
 import jakarta.mail.*;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
+import jakarta.mail.search.FlagTerm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -89,7 +90,7 @@ public class EmailService {
             Folder inbox = store.getFolder("INBOX");
             inbox.open(Folder.READ_WRITE);
 
-            Message[] messages = inbox.getMessages();
+            Message[] messages = inbox.search(new FlagTerm(new Flags(Flags.Flag.SEEN), false));
             for (Message message : messages) {
                 String from = Arrays.toString(message.getFrom());
                 System.out.println("-----------------FROM: " + from);
@@ -111,7 +112,7 @@ public class EmailService {
                 }
                 System.out.println("------------BODY: " + body);
 
-
+                // This is a text cancellation request (supposedly), add to list and delete.
                 if (body.startsWith("CANCEL")) {
                     String ID = body.substring(7);
                     ID = ID.replaceAll("\\s","");
@@ -119,8 +120,11 @@ public class EmailService {
                     String temp = ID + " " + from;
                     System.out.println("----------------------------------------PRINT: " +temp);
                     cancelRequests.add(ID.replace("\n", "") + " " + from.replace("\n", ""));
+                    message.setFlag(Flags.Flag.DELETED, true); // Mark email for deletion after handling it.
+                } else {
+                    message.setFlag(Flags.Flag.SEEN, true); // Mark email as seen to prevent loading it again.
                 }
-                message.setFlag(Flags.Flag.DELETED, true);
+
             }
 
             inbox.expunge();
