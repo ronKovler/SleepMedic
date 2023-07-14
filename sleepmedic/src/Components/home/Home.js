@@ -339,10 +339,6 @@ export default function Home() {
             try {
                 let record = formatRecord();
                 let res = await axios.patch("http://18.224.194.235:8080/api/home/update_record/" + recordId, record, {headers});
-
-
-
-                //let res = await axios.get("http://18.224.194.235:8080/api/home/view_record/" + formattedDate, {headers});
             }
             catch (err2) {
                 console.log("Failed to update record.");
@@ -403,13 +399,9 @@ export default function Home() {
     const handleOpenEditForm = async (dayClicked) => {
         setRecordOpen(true);
         setEditMode(true);
-        //console.log('Selected date', dayClicked);
         console.log('Selected day', dayClicked.$d)
         const formattedDate = dayjs(dayClicked.$d).format('YYYY-MM-DD');
         console.log('Formatted date', formattedDate);
-        //var selectedDate = dayClicked.$y + "-" + dayClicked.
-        //use selected date, translate to date format from api/calendar, and use that translated date
-        //to call view_record(Date). Get the data back and populate the fields in the form.
         const headers = getGetHeaders();
         //console.log(res.data);
         try {
@@ -434,11 +426,11 @@ export default function Home() {
 
             //set the boolean fields - journal data
             setPhysicalActivity(res.data.physicalActivity);
-            console.log("Physical Activity", physicalActivity);
+
             setNaps(res.data.naps);
-            console.log("Naps", naps);
+
             setCaffeineConsumption(res.data.caffeineConsumption);
-            console.log("caffeine", caffeineConsumption);
+
             setAlcoholConsumption(res.data.alcoholConsumption);
             setElectronics(res.data.electronics);
             setDifficultStayingAsleep(res.data.difficultStayingAsleep);
@@ -446,11 +438,10 @@ export default function Home() {
             setRacingThoughts(res.data.racingThoughts);
 
             setDreams(res.data.dreams);
-            if (dreams == null) {
+            if ((dreams === null) || (dreams === undefined)) {
                 setDreamsCB(false);
             }
             else setDreamsCB(true);
-            //setDreams(res.data.dreams);
             console.log("dreams:", dreams);
         }
         catch (err) {
@@ -584,9 +575,7 @@ export default function Home() {
                     <Paper elevation={3} sx={{width: '90%'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar views={['day']} onChange={(e) => {
-                                //console.log('Selected date', e);
                                 console.log(monthRecords);
-                                //open the create-record form (the edit-rec form) but set date to read only
                                 handleOpenEditForm(e);
                             }}/>
                         </LocalizationProvider>      
@@ -708,27 +697,15 @@ export default function Home() {
                 :
                 <DialogContent>
                     <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
-                    {/* Did you engage in any physical activity today? */}
                     {makeBooleanCheckbox("Did you engage in any physical activity today?", physicalActivity, setPhysicalActivity)}
-                    {/* Did you have any naps during the day? */}
                     {makeBooleanCheckbox("Did you have any naps during the day?", naps, setNaps)}
-                    {/* TODO: add other booleans values here */}
-                    {/* Did you consume alcohol less than 6 hours before bedtime? */}
                     {makeBooleanCheckbox("Did you consume alcohol less than 6 hours before bedtime?", alcoholConsumption, setAlcoholConsumption)}
-                    {/* Did you consume caffeine less than 6 hours before bedtime? */}
                     {makeBooleanCheckbox("Did you consume caffeine less than 6 hours before bedtime?", caffeineConsumption, setCaffeineConsumption)}
-                    {/* Did you use electronics while in bed (phone, tablet, etc)? */}
                     {makeBooleanCheckbox("Did you use a phone, tablet, or similar device in bed?", electronics, setElectronics)}
-                    {/* Did you have any difficulty falling asleep? */}
                     {makeBooleanCheckbox("Did you have any difficulty falling asleep?", difficultFallingAsleep, setDifficultFallingAsleep)}
-                    {/* Did you have any difficulty staying asleep? */}
                     {makeBooleanCheckbox("Did you have any difficulty staying asleep?", difficultStayingAsleep, setDifficultStayingAsleep)}
-                    {/* Did you have any racing thoughts? */}
                     {makeBooleanCheckbox("Did you have any racing thoughts while in bed?", racingThoughts, setRacingThoughts)}
-                    {/* Did you have any dreams? If so, feel free to jot some notes -- empty string and pull up a textfield if checked. */}
-                    {/* pass in a handleDreams() function that checks the value of dreams, and then passes a dream string as null else box content */}
                     {makeBooleanCheckbox("Did you have any dreams?", dreamsCB, handleOnChangeDreamCB)}
-                    {/*makeBooleanCheckbox("Did you have any dreams? If so, feel free to jot some notes.", dreams, setDreams)*/}
 
                     <Grid container columns={2}>
                         <Grid item xs={1}>
