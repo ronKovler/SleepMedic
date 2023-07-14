@@ -31,6 +31,10 @@ public class HomeController {
         this.recordRepository = recordRepository;
     }
 
+    /**
+     * Helper method to view current user from session.
+     * @return - User of current session.
+     */
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (User) authentication.getPrincipal();
@@ -132,6 +136,10 @@ public class HomeController {
 
     }
 
+    /**
+     * Get the calendar dates for the current month that have records.
+     * @return - List of dates from current month for which a user has existing records.
+     */
     @RequestMapping(value = "calendar", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Date>> getCalendar() {
@@ -208,6 +216,11 @@ public class HomeController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Helper method to analyze data on creation for feedback TODO update and finish to use advice ID instead
+     * @param record - SleepRecord to analyze
+     * @return - List of advice IDs (int)
+     */
     private String analyzeData(SleepRecord record) {
         StringBuilder data = new StringBuilder();
         if (record.getEfficiency() >= 0.87) {

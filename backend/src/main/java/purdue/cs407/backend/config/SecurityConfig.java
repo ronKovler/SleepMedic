@@ -24,7 +24,6 @@ public class SecurityConfig {
         this.authenticationProvider = authenticationProvider;
     }
 
-
     /** Setup Filter Chain to restrict/allow endpoints */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,6 +43,5 @@ public class SecurityConfig {
         return http.build();
 
     }
-
 
 }

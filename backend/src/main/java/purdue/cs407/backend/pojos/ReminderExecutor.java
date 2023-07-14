@@ -22,7 +22,7 @@ public class ReminderExecutor implements Runnable {
     public void run() {
         System.out.println("SENDING NOTIFICATION");
 
-        String addr = "http://ec2-18-217-191-93.us-east-2.compute.amazonaws.com:8080/api/reminder/cr/";
+        String addr = "http://api.sleepmedic.me:8080/api/reminder/cancel_reminder/";
         Reminder reminder = reminderTask.getReminder();
         String template = emailService.getTemplate(reminder.getMessage());
         String hash = Base64.getUrlEncoder().encodeToString(reminder.getReminderID().toString().getBytes());

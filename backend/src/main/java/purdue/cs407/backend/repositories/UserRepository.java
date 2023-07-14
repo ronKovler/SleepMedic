@@ -12,14 +12,20 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByEmailEquals(String email);
-    //User findByEmail(String email);
+
+    /**
+     * Find a user based off their email address.
+     * @param email - String email to search for.
+     * @return - Optional<User> with user on success, null on failure.
+     */
     Optional<User> findByEmail(String email);
 
+    /**
+     * Check if a user exists with the given email
+     * @param email - String email to check repository.
+     * @return - Boolean True if found, false otherwise.
+     */
     Boolean existsByEmail(String email);
-
-
-
-
 
     User findByEmailEqualsAndPasswordEquals(String email, String password);
     User findByUserID(Long userID);
@@ -27,8 +33,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User getByUserID(Long userID);
 
     void deleteByUserID(Long userID);
-
-
-
 
 }

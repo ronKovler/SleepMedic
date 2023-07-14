@@ -11,6 +11,12 @@ import java.util.Optional;
 public interface ReminderRepository extends JpaRepository<Reminder, Long> {
 
     //List<Reminder> findAll();
+
+    /**
+     * Find a reminder by its ID
+     * @param reminderID - Long reminderID to search for.
+     * @return Optional<Reminder> with Reminder on success, null on failure.
+     */
     Optional<Reminder> findByReminderID(Long reminderID);
 
 }

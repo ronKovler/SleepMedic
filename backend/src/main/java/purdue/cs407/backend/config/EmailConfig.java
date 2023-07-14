@@ -11,6 +11,10 @@ import java.util.Properties;
 @Configuration
 public class EmailConfig {
 
+    /**
+     * Get the javamailsender for sending emails through Gmail SMTP.
+     * @return JavaMailSender instance with correct properties.
+     */
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -31,6 +35,10 @@ public class EmailConfig {
         return mailSender;
     }
 
+    /**
+     * Get the session object for connecting to IMAP for email reading
+     * @return - Session session with correct properties for gmail IMAP.
+     */
     @Bean
     public Session getMailReadSession() {
         Properties properties = new Properties();

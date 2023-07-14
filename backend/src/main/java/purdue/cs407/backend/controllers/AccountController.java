@@ -35,6 +35,10 @@ public class AccountController {
         this.emailService = emailService;
     }
 
+    /**
+     * Helper method to view current user from session.
+     * @return - User of current session.
+     */
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (User) authentication.getPrincipal();

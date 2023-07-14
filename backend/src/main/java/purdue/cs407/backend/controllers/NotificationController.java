@@ -1,13 +1,11 @@
 package purdue.cs407.backend.controllers;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import purdue.cs407.backend.dtos.ReminderRequest;
@@ -20,15 +18,9 @@ import purdue.cs407.backend.repositories.ReminderRepository;
 import purdue.cs407.backend.repositories.UserRepository;
 import purdue.cs407.backend.services.EmailService;
 import purdue.cs407.backend.services.SchedulingService;
-
 import java.sql.Time;
-import java.time.DayOfWeek;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.TextStyle;
 import java.util.*;
 
-import static java.util.Map.entry;
 
 @RestController
 @RequestMapping("/api/reminder/")
@@ -41,11 +33,8 @@ public class NotificationController {
     private final ReminderExecutor reminderExecutor;
     private final UserRepository userRepository;
 
-
-
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();;
         return (User) authentication.getPrincipal();
     }
 
@@ -60,6 +49,11 @@ public class NotificationController {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Get the appropriate String day of week representation of a day for CRON job building.
+     * @param day - byte day of week
+     * @return - String day representation or null if not valid.
+     */
     public String getCronDayName(byte day) {
         return switch (day) {
             case 0, 7 -> "SUN"; //redundant 0
@@ -73,6 +67,11 @@ public class NotificationController {
         };
     }
 
+    /**
+     * Get the Java timezone name for a given region timezone.
+     * @param zone - Int 0 - 4 : PST, MST, CST, EST
+     * @return Java timezone name or null if not supported.
+     */
     public String getZoneName(int zone) {
         return switch(zone) {
             case 0 -> "America/Los_Angeles";
@@ -92,8 +91,6 @@ public class NotificationController {
             consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createReminder(@RequestBody ReminderRequest request) {
         User user = getCurrentUser();
-
-        // TODO adjust for users timezone -- TESTING
 
         StringBuilder days = new StringBuilder();
         String prefix = "";
@@ -131,7 +128,6 @@ public class NotificationController {
         schedulingService.scheduleATask(reminder.getJobID(), reminderExecutor, cron, getZoneName(request.getTimezone()));
 
         user.addReminder(reminder);
-       // reminderRepository.save(reminder);
 
         return ResponseEntity.ok("Success");
     }
@@ -155,8 +151,7 @@ public class NotificationController {
      * @param hash - hashed jobID.
      * @return - Message on success/failure.
      */
-
-    @RequestMapping(value="cr/{hash}", method = RequestMethod.GET,
+    @RequestMapping(value="cancel_reminder/{hash}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> cancelReminder(@PathVariable String hash) {
         Base64.Decoder decoder = Base64.getUrlDecoder();
@@ -167,7 +162,6 @@ public class NotificationController {
             reminderID = Long.parseLong(decrypted);
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
-//            return ResponseEntity.ok("Error decoding went wrong.");
         }
 
 
@@ -179,11 +173,11 @@ public class NotificationController {
 
         return ResponseEntity.ok("Reminder Deleted Successfully.\n" +
                     "You can exit out of this tab.");
-
-
-
     }
 
+    /**
+     * Periodic scheudled function to check email inbox for sms cancellation requests
+     */
     @Transactional
     @Scheduled(fixedRate = 90000) // 60000 is 1.5m in ms
     public void checkTextCancel() {
@@ -195,6 +189,10 @@ public class NotificationController {
         }
     }
 
+    /**
+     * Helper method to cancel mobile reminders for checkTextCancel periodic function.
+     * @param request - String with record ID and phone number to validate and cancel request.
+     */
     @Transactional
     public void cancelMobileReminders(String request) {
         String[] req = request.split(" ");

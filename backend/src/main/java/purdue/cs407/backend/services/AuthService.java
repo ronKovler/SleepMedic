@@ -107,6 +107,10 @@ public class AuthService {
         return new AuthResponse(jwtToken);
     }
 
+    /**
+     * Generate a temporary password for a resetPassword request
+     * @return Random new password String.
+     */
     private String generateTemporaryPassword() {
         String charBank = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz!@#$%^&*()_?.";
         StringBuilder password = new StringBuilder();

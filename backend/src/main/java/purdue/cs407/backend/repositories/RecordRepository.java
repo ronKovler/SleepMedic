@@ -26,25 +26,59 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
 //            "WHERE r.date >= :date1 AND r.date <= :date2 " +
 //            "GROUP BY r.user " +
 //            "HAVING r.user = :user1 ")
+
+    /**
+     * Get all sleep records between certain dates by a given user
+     * @param userID - Long userID of user who created records
+     * @param date1 - String start date
+     * @param date2 - String end date
+     * @return Collection<SleepRecord> (can be empty).
+     */
     @Query(value = "SELECT * FROM sleep_record s WHERE s.user_id = :userID AND s.date >= STR_TO_DATE(:date1, '%Y-%m-%d') AND date <= STR_TO_DATE(:date2, '%Y-%m-%d')", nativeQuery = true)
     Collection<SleepRecord> getBetween(@Param("userID") Long userID, @Param("date1") String date1, @Param("date2")String date2);
 
-
-//    SleepRecord findByUserAndDate(User user, Date date);
-
     SleepRecord findByRecordID(Long recordID);
 
+    /**
+     * Find a record by a given Date and User
+     * @param user - User user who created the record.
+     * @param date - Date date record is for.
+     * @return - Optional<SleepRecord> with SleepRecord on success, null otherwise.
+     */
     Optional<SleepRecord> findByUserAndDate(User user, Date date);
 
+    /**
+     * Get all the existing record dates from the current month by a given user.
+     * @param userID - Long userID who created records.
+     * @param start - String start date of month.
+     * @param end - String end date of month.
+     * @return - Collection<Date> (can be empty).
+     */
     @Query(value = "SELECT s.date FROM sleep_record s WHERE s.user_id = :userID AND s.date >= STR_TO_DATE(:start, '%Y-%m-%d') AND date <= STR_TO_DATE(:end, '%Y-%m-%d')", nativeQuery = true)
     Collection<Date> getCalendarDates(@Param("userID")Long userID, @Param("start") String start, @Param("end") String end);
 
 
-
+    /**
+     * Check if a SleepRecord exists by a user with the given date.
+     * @param user - User user who is checking.
+     * @param date - Date date the user is checking against.
+     * @return - Boolean true if another record exists, false otherwise.
+     */
     Boolean existsByUserAndDate(User user, Date date);
 
-
+    /**
+     * Check if a SleepRecord exists aside from the given one with the same date.
+     * Used primarily by update record if they are changing the date.
+     * @param user - User user who is checking.
+     * @param date - Date date of record to check.
+     * @param recordID - Long recordID of current record that (might) have this date.
+     * @return - True if another record exists, false otherwise.
+     */
     Boolean existsByUserAndDateAndRecordIDNot(User user, Date date, Long recordID);
 
+    /**
+     * Delete all records by a user.
+     * @param user - User user to delete records.
+     */
     void deleteByUser(User user);
 }

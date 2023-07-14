@@ -17,6 +17,13 @@ public class SchedulingService {
         this.taskScheduler = taskScheduler;
     }
 
+    /**
+     * Schedule a task to run repetitively in the future until cancelled.
+     * @param jobId - JobID String to name job with.
+     * @param tasklet - Runnable object TaskExecutor instance
+     * @param cronExpression - String cron expression to use for scheduling.
+     * @param timeZone - String users timezone, should be result of getZoneName() from notificationController()
+     */
     public void scheduleATask(String jobId, Runnable tasklet, String cronExpression, String timeZone) {
         System.out.println("Scheduling task with job id: " + jobId + " and cron expression: " + cronExpression);
         // TODO change TimeZone.getTimeZone("UTC") to users timezone or adjust users time to UTC.
@@ -24,6 +31,9 @@ public class SchedulingService {
         jobsMap.put(jobId, scheduledTask);
     }
 
+    /** Cancel a currently scheduled task.
+     * @param jobId - String jobID of job to cancel.
+     */
     public void removeScheduledTask(String jobId) {
         ScheduledFuture<?> scheduledTask = jobsMap.get(jobId);
         if(scheduledTask != null) {
