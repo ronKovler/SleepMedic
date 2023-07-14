@@ -146,6 +146,7 @@ function makeBooleanCheckbox(title, value, onChangeFunction) {
 export default function Home() {
     // Control of popup sleep record window
     const[recordOpen, setRecordOpen] = React.useState(false);
+    const [isNewRecord, setIsNewRecord] = React.useState(true);
     const [page, setPage] = React.useState(1);
     const handlePageChange = (event, value) => {
         setPage(value);
@@ -376,6 +377,7 @@ export default function Home() {
     // Popup window handlers
     function resetInput() {
         // TODO: reset all booleans to default values (false), String to empty string
+        setPage(1);
         setRecordDate(today);
         setQuality(0);
         setFallTime(0);
@@ -386,6 +388,7 @@ export default function Home() {
         setUpTime(today.set('hour', 9).set('minute',  30).set('second', 0));
     }
     const handleClickOpen = () => {
+        setIsNewRecord(true);
         setRecordOpen(true);
     };
     const handleClose = () => {
@@ -576,6 +579,7 @@ export default function Home() {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar views={['day']} onChange={(e) => {
                                 console.log(monthRecords);
+                                setIsNewRecord(false);
                                 handleOpenEditForm(e);
                             }}/>
                         </LocalizationProvider>      
@@ -588,7 +592,9 @@ export default function Home() {
             <Dialog open={recordOpen} onClose={handleClose}>
                 <DialogTitle>
                     <Grid container columns={2} justify='flex-end' alignItems='center'>
-                        <Grid item xs={1}>New Record</Grid>
+                        <Grid item xs={1}>
+                            {isNewRecord ? "New Record" : "Edit Record"}
+                        </Grid>
                         <Grid item xs={1}>
                         <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
                             <Tooltip title={FIELDS_SPECIFICATION} arrow>
@@ -602,16 +608,16 @@ export default function Home() {
                 {
                     page === 1 ?
                     <DialogContent>
-                    <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
+                    <DialogContentText>{isNewRecord? "To record new sleep" : "To update sleep record"}, please enter your daily sleep data below.</DialogContentText>
 
                     {/* Date Picker */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker
-                                    label="Date"
-                                    value={recordDate}
-                                    onChange={(newDate) => setRecordDate(newDate)}
-                                />
+                                {isNewRecord ? 
+                                    <DatePicker label="Date" value={recordDate} onChange={(newDate) => setRecordDate(newDate)}/>
+                                    :
+                                    <DatePicker label="Date" value={recordDate} onChange={(newDate) => setRecordDate(newDate)} readOnly/>
+                                }
                         </LocalizationProvider>
                     </FormControl>
 
@@ -714,7 +720,9 @@ export default function Home() {
                         </Grid>
                         <Grid item xs={1}>
                             <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
-                                <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button>
+                                <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>
+                                    {isNewRecord ? "Submit" : "Update"}
+                                </Button>
                             </Box>
                         </Grid>
                     </Grid>
