@@ -427,12 +427,16 @@ export default function Home() {
 
 
     const handleOpenEditForm = async (dayClicked) => {
-        setRecordOpen(true);
-        setEditMode(true);
         console.log('Selected day', dayClicked.$d)
         const formattedDate = dayjs(dayClicked.$d).format('YYYY-MM-DD');
         console.log('Formatted date', formattedDate);
         const headers = getGetHeaders();
+        if (!monthRecords.includes(formattedDate)) {
+            alert('No record found for the date ' + formattedDate);
+            return;
+        }
+        setRecordOpen(true);
+        setEditMode(true);
         //console.log(res.data);
         try {
             let res = await axios.get("http://18.224.194.235:8080/api/home/view_record/" + formattedDate, {headers});
@@ -658,7 +662,7 @@ export default function Home() {
 
                     {/* Sleep Duration Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>Fall Time</InputLabel>
+                        <InputLabel>Time used falling asleep (minute)</InputLabel>
                         <OutlinedInput
                             value={fallTime}
                             label="fallTime"
@@ -670,7 +674,7 @@ export default function Home() {
 
                     {/* Awake Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>Awake Time</InputLabel>
+                        <InputLabel>How many times you wake up during the night?</InputLabel>
                         <OutlinedInput
                             value={awakeTime}
                             label="wokeUpCount"
@@ -683,28 +687,28 @@ export default function Home() {
                     {/* Down Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Down Time" value={downTime} onChange={(newTime) => setDownTime(newTime)}/>
+                            <TimePicker label="Get on bed time" value={downTime} onChange={(newTime) => setDownTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Sleep Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Sleep Time" value={sleepTime} onChange={(newTime) => setSleepTime(newTime)}/>
+                            <TimePicker label="Fall asleep Time" value={sleepTime} onChange={(newTime) => setSleepTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Wake Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Wake Time" value={wakeTime} onChange={(newTime) => setWakeTime(newTime)}/>
+                            <TimePicker label="Wake up time" value={wakeTime} onChange={(newTime) => setWakeTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Up Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Up Time" value={upTime} onChange={(newTime) => setUpTime(newTime)}/>
+                            <TimePicker label="Get out bed time" value={upTime} onChange={(newTime) => setUpTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
