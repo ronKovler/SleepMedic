@@ -178,7 +178,7 @@ export default function Home() {
                 {value && title === "Did you have any dreams?" && (
                     <TextField
                       style={{ textAlign: 'left', marginTop: '10pt' }}
-                      label="If so, feel free to jot some notes"
+                      //label="If so, feel free to jot some notes"
                       multiline
                       rows={2}
                       value={dreams}
@@ -218,7 +218,8 @@ export default function Home() {
 
     // Record update
     const[monthRecords, setMonthRecords] = React.useState([]);
-
+    const[editMode, setEditMode] = React.useState(false);
+    const[recordId, setRecordID] = React.useState(false);
 
     const handleRestlessnessChange = (e, value) => {
         setQuality(value);
@@ -328,16 +329,35 @@ export default function Home() {
         // }
 
         //add a flag/indicator for edit vs create new record.
-
-        try {
+        if (editMode) {
+            try {
+                let record = formatRecord();
+                let res = await axios.patch("http://18.224.194.235:8080/api/home/update_record", record, {headers});
+            }
+            catch (err2) {
+                console.log("Failed to update record.");
+            }
+        }
+        else {
+            try {
+                let record = formatRecord();
+                let res = await axios.post("http://18.224.194.235:8080/api/home/create_record", record, {headers});
+            }
+            catch (err) {
+                alert("Already recorded!");
+                console.log('Failed to create record.');
+            }
+        }
+        /*try {
             let record = formatRecord();
             let res = await axios.post("http://18.224.194.235:8080/api/home/create_record", record, {headers});
         }
         catch (err) {
             alert("Already recorded!");
             console.log('Failed to create record.');
-        }
+        }*/
         setRecordOpen(false);
+        setEditMode(false);
         resetInput();
     }
 
@@ -364,6 +384,7 @@ export default function Home() {
     };
     const handleClose = () => {
         setRecordOpen(false);
+        setEditMode(false);
         resetInput();
     };
 
@@ -371,7 +392,8 @@ export default function Home() {
 
     const handleOpenEditForm = async (dayClicked) => {
         setRecordOpen(true);
-        console.log('Selected date', dayClicked);
+        setEditMode(true);
+        //console.log('Selected date', dayClicked);
         console.log('Selected day', dayClicked.$d)
         const formattedDate = dayjs(dayClicked.$d).format('YYYY-MM-DD');
         console.log('Formatted date', formattedDate);
@@ -383,14 +405,46 @@ export default function Home() {
         try {
             let res = await axios.get("http://18.224.194.235:8080/api/home/view_record/" + formattedDate, {headers});
             console.log(res.data);
+
+            //set the calendar field
+            setRecordDate(dayClicked);
+
+            // Set the time fields
+            setFallTime(res.data.fallTime);
+            setAwakeTime(res.data.awakeTime);
+            //set time picker fields
+            setDownTime(dayjs(res.data.downTime, 'HH:mm'));
+            setSleepTime(dayjs(res.data.sleepTime, 'HH:mm'));
+            setWakeTime(dayjs(res.data.wakeTime, 'HH:mm'));
+            setUpTime(dayjs(res.data.upTime, 'HH:mm'));
+
+            //set the quality slider
+            setQuality(res.data.quality);
+
+            //set the boolean fields - journal data
+            setPhysicalActivity(res.data.physicalActivity);
+            console.log("Physical Activity", physicalActivity);
+            setNaps(res.data.naps);
+            console.log("Naps", naps);
+            setCaffeineConsumption(res.data.caffeineConsumption);
+            console.log("caffeine", caffeineConsumption);
+            setAlcoholConsumption(res.data.alcoholConsumption);
+            setElectronics(res.data.electronics);
+            setDifficultStayingAsleep(res.data.difficultStayingAsleep);
+            setDifficultFallingAsleep(res.data.difficultFallingAsleep);
+            setRacingThoughts(res.data.racingThoughts);
+
+            //setDreams(res.data.dreams);
+            if (dreams == null) {
+                setDreamsCB(false);
+            }
+            else setDreamsCB(true);
+            setDreams(res.data.dreams);
+            console.log("dreams", dreams);
         }
-            catch (err) {
+        catch (err) {
             console.log("ERROR");
         }
-        //let res = await axios.get("http://18.224.194.235:8080/api/home/view_record/" + formattedDate, {headers});
-        //console.log(res.data);
-        //const data = res.data;
-        //console.log(data.date);
     };
 
     function CircularProgressWithLabel(props) {
