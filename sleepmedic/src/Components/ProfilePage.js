@@ -5,7 +5,7 @@ import { useState } from 'react';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import {useCookies} from "react-cookie";
-import { useSignOut } from "react-auth-kit";
+import { useSignOut, useSignIn } from "react-auth-kit";
 
 import "./ProfilePage.css";
 
@@ -19,7 +19,8 @@ function OpenProfilePage() {
     const [openDel, setOpenDel] = useState(false);
     const [complexError, setComplexError] = useState(false);
     const [confirmError, setConfirmError] = useState(false);
-    const [cookies, setCookies, removeCookies] = useCookies("_auth");
+    const [changeFin, setChangeFin] = useState(false);
+    const signIn = useSignIn();
     const logOut = useSignOut();
     const navigate = useNavigate();
 
@@ -56,11 +57,23 @@ function OpenProfilePage() {
             console.log("hi");
             let res = await axios.patch("http://18.224.194.235:8080/api/account/update_password", password, {headers});
             console.log(res.data.token);
-            setCookies("_auth", res.data.token);
+            signIn({
+                token: res.data.token,
+                expiresIn: 240,
+                tokenType: "Bearer",
+                authState: {}
+            })
         } catch(err) {
             return;
         }
+        setChangeFin(true);
+    }
+
+    const closeChangeConfirm = (e) => {
         setOpen(false);
+        setConfirmNewPassword("");
+        setNewPassword("");
+        setChangeFin(false);
     }
 
     function checkvalidpassword(str) {
@@ -91,6 +104,7 @@ function OpenProfilePage() {
             return false;
         }
     }
+
 
     //Delete Account
 
@@ -135,7 +149,15 @@ function OpenProfilePage() {
                 {/* Change Password */}
                 <Button variant="contained" onClick={(e) => setOpen(true)}>Change Password</Button>
                 <Dialog open={open} onClose={() => setOpen(false)}>
-                    <DialogTitle>Change Password</DialogTitle>
+                    {changeFin ? <div><DialogTitle>Password Reset!</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Continue enjoying our app.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={(e) => closeChangeConfirm(e)}>Continue</Button>
+                    </DialogActions></div> : <div><DialogTitle>Change Password</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                         Please enter your new password.
@@ -146,6 +168,7 @@ function OpenProfilePage() {
                         id="new-password"
                         label="New Password"
                         type="password"
+                        onBlur={e => checkMatch(e)}
                         fullWidth
                         variant="standard"
                         value={newPassword}
@@ -174,6 +197,7 @@ function OpenProfilePage() {
                         variant="standard"
                         required
                         value={confirmNewPassword}
+                        onBlur={e => checkMatch(e)}
                         onChange={(e) => setConfirmNewPassword(e.target.value)}
                         helperText="Passwords do not Match!"
                         />
@@ -182,7 +206,7 @@ function OpenProfilePage() {
                     <DialogActions>
                         <Button onClick={() => setOpen(false)}>Cancel</Button>
                         <Button onClick={(e) => handlePasswordChange(e)}>Change Password</Button>
-                    </DialogActions>
+                    </DialogActions></div>}
                 </Dialog>
 
                 {/* Delete Account */}

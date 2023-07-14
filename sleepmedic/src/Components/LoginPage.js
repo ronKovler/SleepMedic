@@ -65,14 +65,14 @@ function Login() {
           token: res.data.token,
           expiresIn: 240,
           tokenType: "Bearer",
-          authState: {email: email}
+          authState: {}
         })
       } else {
         signIn({
           token: res.data.token,
           expiresIn: 10080,
           tokenType: "Bearer",
-          authState: {email: email}
+          authState: {}
         })
       }
       console.log(res.data);
@@ -100,15 +100,19 @@ function Login() {
     }
     try {
       let res = await axios.patch("http://18.224.194.235:8080/api/account/auth/reset_password", resetInfo, {headers});
-      setOpen(false);
-      setOpenFin(true);
       
     } catch (err) {
       console.log("Reset Password Failed");
       setOpen(false);
       setOpenFin(true);
+      setBirth("");
+      setREmail("");
       return;
     }
+    setOpen(false);
+    setOpenFin(true);
+    setBirth("");
+    setREmail("");
   }
 
   return (
