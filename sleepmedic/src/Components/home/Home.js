@@ -45,6 +45,7 @@ import { createTheme, styled } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useNavigate } from 'react-router-dom';
 
 const calendarTheme = createTheme({
     palette: {
@@ -146,6 +147,7 @@ dayjs.extend(customParseFormat);
 
 
 export default function Home() {
+    const navigate = useNavigate();
     // Control of popup sleep record window
     const[recordOpen, setRecordOpen] = React.useState(false);
     const [isNewRecord, setIsNewRecord] = React.useState(true);
@@ -397,6 +399,12 @@ export default function Home() {
 
     // Auto loading
     React.useEffect(() => {
+        //Check if not logged in and redirect.
+        const cookies = getCookiesDict();
+        if (cookies._auth == null) {
+            navigate("/")
+        }
+        //Get Data
         getData();
     }, []);
 
