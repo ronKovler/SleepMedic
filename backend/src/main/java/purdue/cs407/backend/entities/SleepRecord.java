@@ -6,6 +6,10 @@ import purdue.cs407.backend.dtos.RecordRequest;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "sleep_record")
@@ -189,34 +193,60 @@ public class SleepRecord extends RecordRequest {
     public void setJournal(RecordRequest request) {
         byte journal = 0;
         if(request.isPhysicalActivity()) {
-            byte mask = 0b01000000;
+            byte mask = (byte) 0b10000000;
             journal = (byte) (journal | mask);
         }
         if (request.isNaps()) {
-            byte mask = 0b00100000;
+            byte mask = 0b01000000;
             journal = (byte) (journal | mask);
         }
         if (request.isAlcoholConsumption()) {
-            byte mask = 0b00010000;
+            byte mask = 0b00100000;
             journal = (byte) (journal | mask);
         }
         if (request.isCaffeineConsumption()) {
-            byte mask = 0b00001000;
+            byte mask = 0b00010000;
             journal = (byte) (journal | mask);
         }
         if(request.isElectronics()) {
-            byte mask = 0b00000100;
+            byte mask = 0b00001000;
             journal = (byte) (journal | mask);
         }
         if (request.isDifficultStayingAsleep()) {
-            byte mask = 0b00000010;
+            byte mask = 0b00000100;
             journal = (byte) (journal | mask);
         }
         if (request.isDifficultFallingAsleep()) {
+            byte mask = 0b00000010;
+            journal = (byte) (journal | mask);
+        }
+        if (request.isRacingThoughts()) {
             byte mask = 0b00000001;
             journal = (byte) (journal | mask);
         }
         this.journal = journal;
+    }
+
+    public Map<String, Boolean> decodeJournal() {
+        Map<String, Boolean> decoded = new HashMap<>();
+        byte mask = (byte) 0b10000000;
+        decoded.put("physicalActivity", (mask & this.journal) != 0);
+        mask = 0b01000000;
+        decoded.put("naps", (mask & this.journal) != 0);
+        mask = 0b00100000;
+        decoded.put("alcoholConsumption", (mask & this.journal) != 0);
+        mask = 0b00010000;
+        decoded.put("caffeineConsumption", (mask & this.journal) != 0);
+        mask = 0b00001000;
+        decoded.put("electronics", (mask & this.journal) != 0);
+        mask = 0b00000100;
+        decoded.put("difficultStayingAsleep", (mask & this.journal) != 0);
+        mask = 0b00000010;
+        decoded.put("difficultFallingAsleep", (mask & this.journal) != 0);
+        mask = 0b00000001;
+        decoded.put("racingThoughts", (mask & this.journal) != 0);
+
+        return decoded;
     }
 
     public double hoursSlept() {

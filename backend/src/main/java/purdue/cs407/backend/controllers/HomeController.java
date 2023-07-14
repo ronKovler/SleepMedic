@@ -169,13 +169,13 @@ public class HomeController {
      */
     @RequestMapping(value="view_record/{date}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SleepRecord> getRecord(@PathVariable Date date) {
+    public ResponseEntity<ViewResponse> getRecord(@PathVariable Date date) {
         User user = getCurrentUser();
 
         SleepRecord record = recordRepository.findByUserAndDate(user, date).orElse(null);
 
         if (record != null) {
-            return ResponseEntity.ok(record);
+            return ResponseEntity.ok(new ViewResponse(record));
         }
 
         // User requested invalid record, denied.
