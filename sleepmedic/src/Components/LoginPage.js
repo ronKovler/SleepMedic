@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
-import { TextField }  from "@mui/material/";
+import { TextField, SimpleDialog }  from "@mui/material/";
 import { useSignIn } from 'react-auth-kit';
 import axios from "axios";
 import "./LoginPage.css";
-import { Button, Alert, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
+import { Button, Alert, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, Checkbox } from '@mui/material';
 import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 
@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const signIn = useSignIn();
   const navigate = useNavigate();
   const [error, setError] = useState(false);
@@ -41,13 +42,16 @@ function Login() {
     "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
     "Content-Type": 'application/json; charset=utf-8',
   }
+
   const handleLogin = async (e) => {
     e.preventDefault();
     // Handle login logic here
     var loginInfo = {
         email: email,
         password: password,
+        rememberMe: rememberMe,
     }
+    
     try {
       let res = await axios.post("http://18.224.194.235:8080/api/account/auth/login",  loginInfo , {headers});
 
@@ -56,13 +60,21 @@ function Login() {
         setError(true);
         return;
       }
-      signIn({
-        token: res.data.token,
-        expiresIn: 240,
-        tokenType: "Bearer",
-        authState: {email: email}
-      })
-      
+      if (rememberMe == false){
+        signIn({
+          token: res.data.token,
+          expiresIn: 240,
+          tokenType: "Bearer",
+          authState: {email: email}
+        })
+      } else {
+        signIn({
+          token: res.data.token,
+          expiresIn: 10080,
+          tokenType: "Bearer",
+          authState: {email: email}
+        })
+      }
       console.log(res.data);
       navigate("/home");
     } catch (err) {
@@ -77,6 +89,7 @@ function Login() {
 
   //Forgot Password
   const [open, setOpen] = useState(false);
+  const [openFin, setOpenFin] = useState(false);
   const [remail, setREmail] = useState('');
   const [birth, setBirth] = useState('');
 
@@ -87,10 +100,13 @@ function Login() {
     }
     try {
       let res = await axios.patch("http://18.224.194.235:8080/api/account/auth/reset_password", resetInfo, {headers});
-
+      setOpen(false);
+      setOpenFin(true);
       
     } catch (err) {
       console.log("Reset Password Failed");
+      setOpen(false);
+      setOpenFin(true);
       return;
     }
   }
@@ -128,9 +144,11 @@ function Login() {
           sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
           required
         />
-        <br/><br/>
-        <Button style={{color: "white"}} onClick={() => setOpen(true)}>Forgot Password</Button>
+        <br/>
+        <div>Remember me<Checkbox onClick={()=>setRememberMe(!rememberMe)}/> <br/>
         <Button variant="contained" color="primary" onClick={(e) => handleLogin(e)}>Login</Button>
+        </div>
+        <Button style={{color: "white"}} onClick={() => setOpen(true)}>Forgot Password</Button>
         <Link to="/createaccount" style={{color: "white"}}>Or create an account</Link>
         <Dialog open={open} onClose={() => setOpen(false)}>
           <DialogTitle>Forgot Password</DialogTitle>
@@ -166,6 +184,19 @@ function Login() {
           <DialogActions>
             <Button onClick={() => setOpen(false)}>Cancel</Button>
             <Button onClick={(e) => handleForgotPassword(e)}>Recover Password</Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={openFin}
+        >
+          <DialogTitle>Thank You</DialogTitle>
+          <DialogContent>
+              <DialogContentText>
+                You will receive an email shortly if an account exists with the provided email and DOB.
+              </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpenFin(false)}>Confirm</Button>
           </DialogActions>
         </Dialog>
       </form>
