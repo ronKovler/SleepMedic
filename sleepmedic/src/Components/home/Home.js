@@ -118,6 +118,12 @@ function getPostHeaders() {
     return headers;
 }
 
+var headers = {
+    "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
+    "Content-Type": 'application/json; charset=utf-8',
+}
+
+
 function makeBooleanCheckbox(title, value, onChangeFunction) {
     return (
         <FormControl sx={{width: '100%', marginTop: '20pt'}}>
@@ -178,7 +184,7 @@ export default function Home() {
                 {value && title === "Did you have any dreams?" && (
                     <TextField
                       style={{ textAlign: 'left', marginTop: '10pt' }}
-                      label="If so, feel free to jot some notes"
+                      //label="If so, feel free to jot some notes"
                       multiline
                       rows={2}
                       value={dreams}
@@ -218,7 +224,8 @@ export default function Home() {
 
     // Record update
     const[monthRecords, setMonthRecords] = React.useState([]);
-
+    const[editMode, setEditMode] = React.useState(false);
+    const[recordId, setRecordID] = React.useState(0);
 
     const handleRestlessnessChange = (e, value) => {
         setQuality(value);
@@ -250,8 +257,9 @@ export default function Home() {
                 setEffAdvice("Great work! Keep good sleep!");
             }
 
-            res = await axios.get("http://18.224.194.235:8080/api/home/month", {headers});
+            res = await axios.get("http://18.224.194.235:8080/api/home/calendar", {headers});
             setMonthRecords(res.data);
+            //console.log(res.data);
         }
         catch (err) {
             console.log("Failed to retrieve data.");
@@ -326,15 +334,36 @@ export default function Home() {
         //     return;
         // }
 
-        try {
+        //add a flag/indicator for edit vs create new record.
+        if (editMode) {
+            try {
+                let record = formatRecord();
+                let res = await axios.patch("http://18.224.194.235:8080/api/home/update_record/" + recordId, record, {headers});
+            }
+            catch (err2) {
+                console.log("Failed to update record.");
+            }
+        }
+        else {
+            try {
+                let record = formatRecord();
+                let res = await axios.post("http://18.224.194.235:8080/api/home/create_record", record, {headers});
+            }
+            catch (err) {
+                alert("Already recorded!");
+                console.log('Failed to create record.');
+            }
+        }
+        /*try {
             let record = formatRecord();
             let res = await axios.post("http://18.224.194.235:8080/api/home/create_record", record, {headers});
         }
         catch (err) {
             alert("Already recorded!");
             console.log('Failed to create record.');
-        }
+        }*/
         setRecordOpen(false);
+        setEditMode(false);
         resetInput();
     }
 
@@ -361,7 +390,63 @@ export default function Home() {
     };
     const handleClose = () => {
         setRecordOpen(false);
+        setEditMode(false);
         resetInput();
+    };
+
+
+
+    const handleOpenEditForm = async (dayClicked) => {
+        setRecordOpen(true);
+        setEditMode(true);
+        console.log('Selected day', dayClicked.$d)
+        const formattedDate = dayjs(dayClicked.$d).format('YYYY-MM-DD');
+        console.log('Formatted date', formattedDate);
+        const headers = getGetHeaders();
+        //console.log(res.data);
+        try {
+            let res = await axios.get("http://18.224.194.235:8080/api/home/view_record/" + formattedDate, {headers});
+            console.log(res.data);
+            setRecordID(res.data.recordID);
+
+            //set the calendar field
+            setRecordDate(dayClicked);
+
+            // Set the time fields
+            setFallTime(res.data.fallTime);
+            setAwakeTime(res.data.awakeTime);
+            //set time picker fields
+            setDownTime(dayjs(res.data.downTime, 'HH:mm'));
+            setSleepTime(dayjs(res.data.sleepTime, 'HH:mm'));
+            setWakeTime(dayjs(res.data.wakeTime, 'HH:mm'));
+            setUpTime(dayjs(res.data.upTime, 'HH:mm'));
+
+            //set the quality slider
+            setQuality(res.data.quality);
+
+            //set the boolean fields - journal data
+            setPhysicalActivity(res.data.physicalActivity);
+
+            setNaps(res.data.naps);
+
+            setCaffeineConsumption(res.data.caffeineConsumption);
+
+            setAlcoholConsumption(res.data.alcoholConsumption);
+            setElectronics(res.data.electronics);
+            setDifficultStayingAsleep(res.data.difficultStayingAsleep);
+            setDifficultFallingAsleep(res.data.difficultFallingAsleep);
+            setRacingThoughts(res.data.racingThoughts);
+
+            setDreams(res.data.dreams);
+            if ((dreams === null) || (dreams === undefined)) {
+                setDreamsCB(false);
+            }
+            else setDreamsCB(true);
+            console.log("dreams:", dreams);
+        }
+        catch (err) {
+            console.log("ERROR");
+        }
     };
 
     function CircularProgressWithLabel(props) {
@@ -485,13 +570,13 @@ export default function Home() {
                 </Grid>
                 </Grid>
 
-                {/* RIGHT PANEL */}
+                {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs={1}>
                     <Paper elevation={3} sx={{width: '90%'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar views={['day']} onChange={(e) => {
-                                console.log('Selected date', e);
                                 console.log(monthRecords);
+                                handleOpenEditForm(e);
                             }}/>
                         </LocalizationProvider>      
                     </Paper>      
@@ -612,28 +697,15 @@ export default function Home() {
                 :
                 <DialogContent>
                     <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
-                    {/* Did you engage in any physical activity today? */}
                     {makeBooleanCheckbox("Did you engage in any physical activity today?", physicalActivity, setPhysicalActivity)}
-                    console.log(physicalActivity);
-                    {/* Did you have any naps during the day? */}
                     {makeBooleanCheckbox("Did you have any naps during the day?", naps, setNaps)}
-                    {/* TODO: add other booleans values here */}
-                    {/* Did you consume alcohol less than 6 hours before bedtime? */}
                     {makeBooleanCheckbox("Did you consume alcohol less than 6 hours before bedtime?", alcoholConsumption, setAlcoholConsumption)}
-                    {/* Did you consume caffeine less than 6 hours before bedtime? */}
                     {makeBooleanCheckbox("Did you consume caffeine less than 6 hours before bedtime?", caffeineConsumption, setCaffeineConsumption)}
-                    {/* Did you use electronics while in bed (phone, tablet, etc)? */}
                     {makeBooleanCheckbox("Did you use a phone, tablet, or similar device in bed?", electronics, setElectronics)}
-                    {/* Did you have any difficulty falling asleep? */}
                     {makeBooleanCheckbox("Did you have any difficulty falling asleep?", difficultFallingAsleep, setDifficultFallingAsleep)}
-                    {/* Did you have any difficulty staying asleep? */}
                     {makeBooleanCheckbox("Did you have any difficulty staying asleep?", difficultStayingAsleep, setDifficultStayingAsleep)}
-                    {/* Did you have any racing thoughts? */}
                     {makeBooleanCheckbox("Did you have any racing thoughts while in bed?", racingThoughts, setRacingThoughts)}
-                    {/* Did you have any dreams? If so, feel free to jot some notes -- empty string and pull up a textfield if checked. */}
-                    {/* pass in a handleDreams() function that checks the value of dreams, and then passes a dream string as null else box content */}
                     {makeBooleanCheckbox("Did you have any dreams?", dreamsCB, handleOnChangeDreamCB)}
-                    {/*makeBooleanCheckbox("Did you have any dreams? If so, feel free to jot some notes.", dreams, setDreams)*/}
 
                     <Grid container columns={2}>
                         <Grid item xs={1}>
