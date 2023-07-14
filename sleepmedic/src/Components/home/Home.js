@@ -662,7 +662,7 @@ export default function Home() {
 
                     {/* Sleep Duration Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>Time used falling asleep (minute)</InputLabel>
+                        <InputLabel>How long did it take to fall asleep? (min)</InputLabel>
                         <OutlinedInput
                             value={fallTime}
                             label="fallTime"
@@ -674,7 +674,7 @@ export default function Home() {
 
                     {/* Awake Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>How many times you wake up during the night?</InputLabel>
+                        <InputLabel>Did you wake up in the night, if so for how long? (min)</InputLabel>
                         <OutlinedInput
                             value={awakeTime}
                             label="wokeUpCount"
@@ -687,28 +687,28 @@ export default function Home() {
                     {/* Down Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Get on bed time" value={downTime} onChange={(newTime) => setDownTime(newTime)}/>
+                            <TimePicker label="What time did you get into bed? " value={downTime} onChange={(newTime) => setDownTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Sleep Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Fall asleep Time" value={sleepTime} onChange={(newTime) => setSleepTime(newTime)}/>
+                            <TimePicker label="What time did you fall asleep?" value={sleepTime} onChange={(newTime) => setSleepTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Wake Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Wake up time" value={wakeTime} onChange={(newTime) => setWakeTime(newTime)}/>
+                            <TimePicker label="What time did you wake up?" value={wakeTime} onChange={(newTime) => setWakeTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Up Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Get out bed time" value={upTime} onChange={(newTime) => setUpTime(newTime)}/>
+                            <TimePicker label="What time did you get out of bed?" value={upTime} onChange={(newTime) => setUpTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
