@@ -118,6 +118,12 @@ function getPostHeaders() {
     return headers;
 }
 
+var headers = {
+    "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
+    "Content-Type": 'application/json; charset=utf-8',
+}
+
+
 function makeBooleanCheckbox(title, value, onChangeFunction) {
     return (
         <FormControl sx={{width: '100%', marginTop: '20pt'}}>
@@ -219,7 +225,7 @@ export default function Home() {
     // Record update
     const[monthRecords, setMonthRecords] = React.useState([]);
     const[editMode, setEditMode] = React.useState(false);
-    const[recordId, setRecordID] = React.useState(false);
+    const[recordId, setRecordID] = React.useState(0);
 
     const handleRestlessnessChange = (e, value) => {
         setQuality(value);
@@ -332,7 +338,11 @@ export default function Home() {
         if (editMode) {
             try {
                 let record = formatRecord();
-                let res = await axios.patch("http://18.224.194.235:8080/api/home/update_record", record, {headers});
+                let res = await axios.patch("http://18.224.194.235:8080/api/home/update_record/" + recordId, record, {headers});
+
+
+
+                //let res = await axios.get("http://18.224.194.235:8080/api/home/view_record/" + formattedDate, {headers});
             }
             catch (err2) {
                 console.log("Failed to update record.");
@@ -405,6 +415,7 @@ export default function Home() {
         try {
             let res = await axios.get("http://18.224.194.235:8080/api/home/view_record/" + formattedDate, {headers});
             console.log(res.data);
+            setRecordID(res.data.recordID);
 
             //set the calendar field
             setRecordDate(dayClicked);
@@ -434,13 +445,13 @@ export default function Home() {
             setDifficultFallingAsleep(res.data.difficultFallingAsleep);
             setRacingThoughts(res.data.racingThoughts);
 
-            //setDreams(res.data.dreams);
+            setDreams(res.data.dreams);
             if (dreams == null) {
                 setDreamsCB(false);
             }
             else setDreamsCB(true);
-            setDreams(res.data.dreams);
-            console.log("dreams", dreams);
+            //setDreams(res.data.dreams);
+            console.log("dreams:", dreams);
         }
         catch (err) {
             console.log("ERROR");
