@@ -69,12 +69,23 @@ public class HomeController {
         int qualityTotal = 0;
         double efficiencyTotal = 0;
 
+        Date noon = new Date(12 * 60 * 60 * 1000);
+
         for (SleepRecord record: records) {
             hoursSleptTotal += record.hoursSlept();
             fallTimeTotal += record.getFallTime();
             downTimeTotal += record.getDownTime().getTime();
+            if (record.getDownTime().before(noon)) {
+                downTimeTotal += noon.getTime();
+                // This accounts for times after midnight so their avg time isn't shifted forward accidentally.
+                // TODO similar update might be necessary for upTime and wakeTime, idts(no?) rn.
+            }
             upTimeTotal += record.getUpTime().getTime();
             sleepTimeTotal += record.getSleepTime().getTime();
+            if (record.getSleepTime().before(noon)) {
+                // This accounts for times after midnight so their avg time isn't shifted forward accidentally.
+                sleepTimeTotal += noon.getTime();
+            }
             wakeTimeTotal += record.getWakeTime().getTime();
             awakeTimeTotal += record.getAwakeTime();
             qualityTotal += record.getQuality();

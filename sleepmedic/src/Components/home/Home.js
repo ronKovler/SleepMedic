@@ -261,6 +261,9 @@ export default function Home() {
         setQuality(value);
     };
 
+    /*
+    * This is meant for getData() only rn, make sure you check what its taking in in getData()
+    */
     function getFormattedTime(time) {
         time = time.slice(0, 5);
         let hours = parseInt(time.slice(0, 2), 10);
