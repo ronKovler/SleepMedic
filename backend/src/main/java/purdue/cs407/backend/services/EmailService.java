@@ -83,7 +83,7 @@ public class EmailService {
             Folder inbox = store.getFolder("INBOX");
             inbox.open(Folder.READ_WRITE);
 
-            Message[] messages = inbox.search(new FlagTerm(new Flags(Flags.Flag.SEEN), false));
+            Message[] messages = inbox.getMessages();
             for (Message message : messages) {
                 String from = Arrays.toString(message.getFrom());
                 System.out.println("-----------------FROM: " + from);
@@ -110,8 +110,9 @@ public class EmailService {
                 if (body.startsWith("CANCEL")) {
                     String ID = body.substring(7);
                     ID = ID.replaceAll("\\s","");
-                    from = from.replace("\n", "").replace("[", "").replace("]","");
-
+                    from = from.replaceAll("\\s", "").replace("[", "").replace("]","");
+                    String temp = ID + " " + from;
+                    System.out.println(temp);
                     cancelRequests.add(ID.replace("\n", "") + " " + from.replace("\n", ""));
                     message.setFlag(Flags.Flag.DELETED, true); // Mark email for deletion after handling it.
                 } else {

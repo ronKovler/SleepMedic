@@ -1,6 +1,4 @@
 package purdue.cs407.backend.pojos;
-
-
 import purdue.cs407.backend.entities.Reminder;
 
 public class ReminderTask {
