@@ -177,7 +177,7 @@ function CreateRem() {
                 message: reminderTypeInt,           //1 or 2; Bedtime or General Sleep Reminder
             }
             try {
-                let res = await axios.post("https://api.sleepmedic.me:8443/api/reminder/create_reminder", reminderInfo, {headers});
+                let res = await axios.post("https://api.sleepmedic.me:8443/reminder/create_reminder", reminderInfo, {headers});
                 console.log(res);
                 navigate("/editgoal");
             }

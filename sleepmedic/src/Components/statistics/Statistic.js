@@ -56,7 +56,7 @@ export default function Statistics() {
     async function getRecords() {
         const headers = getGetHeaders();
         try {
-            let res = await axios.get("https://api.sleepmedic.me:8443/api/home/month", {headers});
+            let res = await axios.get("https://api.sleepmedic.me:8443/home/month", {headers});
             setMonthRecords(res.data);
             console.log(monthRecords);
         }

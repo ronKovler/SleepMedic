@@ -55,7 +55,7 @@ function OpenProfilePage() {
         }
         try {
             console.log("hi");
-            let res = await axios.patch("https://api.sleepmedic.me:8443/api/account/update_password", password, {headers});
+            let res = await axios.patch("https://api.sleepmedic.me:8443/account/update_password", password, {headers});
             console.log(res.data.token);
             signIn({
                 token: res.data.token,
@@ -117,7 +117,7 @@ function OpenProfilePage() {
                 "Content-Type": 'application/json; charset=utf-8',
                 "Authorization":'Bearer ' + cookies._auth,
             }
-            let res = await axios.delete("https://api.sleepmedic.me:8443/api/account/delete_account", {headers});
+            let res = await axios.delete("https://api.sleepmedic.me:8443/account/delete_account", {headers});
             console.log(res.data.token);
             setOpenDel(false);
 

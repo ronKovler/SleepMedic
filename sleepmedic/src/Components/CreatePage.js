@@ -72,7 +72,7 @@ function CreateAccount() {
     }
 
     const checkEmail = async (e) => {
-        let res = await axios.get("https://api.sleepmedic.me:8443/api/account/auth/check_email/" + email, headers)
+        let res = await axios.get("https://api.sleepmedic.me:8443/account/auth/check_email/" + email, headers)
 
         setEmailFree(res.data);
     }
@@ -127,7 +127,7 @@ function CreateAccount() {
             "Content-Type": 'application/json; charset=utf-8',
         }
         try {
-            let res = await axios.post("https://api.sleepmedic.me:8443/api/account/auth/create_account", stringify, {headers})
+            let res = await axios.post("https://api.sleepmedic.me:8443/account/auth/create_account", stringify, {headers})
 
 
             if(res){
@@ -139,7 +139,7 @@ function CreateAccount() {
                     password: password,
                 }
                 try {
-                  let res = await axios.post("https://api.sleepmedic.me:8443/api/account/auth/login",  loginInfo , {headers});
+                  let res = await axios.post("https://api.sleepmedic.me:8443/account/auth/login",  loginInfo , {headers});
             
             
                   if (Object.is(res.data.token,"-1")) {

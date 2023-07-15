@@ -53,7 +53,7 @@ function Login() {
     }
     
     try {
-      let res = await axios.post("https://api.sleepmedic.me:8443/api/account/auth/login",  loginInfo , {headers});
+      let res = await axios.post("https://api.sleepmedic.me:8443/account/auth/login",  loginInfo , {headers});
 
       if (Object.is(res.data.token,"-1")) {
         console.log("Login Failed");
@@ -99,7 +99,7 @@ function Login() {
         birthday: birth,
     }
     try {
-      let res = await axios.patch("https://api.sleepmedic.me:8443/api/account/auth/reset_password", resetInfo, {headers});
+      let res = await axios.patch("https://api.sleepmedic.me:8443/account/auth/reset_password", resetInfo, {headers});
       
     } catch (err) {
       console.log("Reset Password Failed");
