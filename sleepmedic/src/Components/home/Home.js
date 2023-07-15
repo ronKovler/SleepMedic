@@ -289,15 +289,15 @@ export default function Home() {
             // Get user average sleep data
             res = await axios.get("https://api.sleepmedic.me:8443/home/average", {headers});
             console.log(res.data);
-            setAvgFallTime(res.data.fallTime);
-            setAvgAwakeTime(res.data.awakeTime);
+            setAvgFallTime(res.data.fallTime + " min");
+            setAvgAwakeTime(res.data.awakeTime + " min");
             setAvgQuality(res.data.quality);
             setAvgDownTime(getFormattedTime(res.data.downTime));
             setAvgSleepTime(getFormattedTime(res.data.sleepTime));
             setAvgWakeTime(getFormattedTime(res.data.wakeTime));
             setAvgUpTime(getFormattedTime(res.data.upTime));
             setAvgEfficiency(res.data.efficiency);
-            setAvgHoursSlept(res.data.hoursSlept);
+            setAvgHoursSlept(res.data.hoursSlept + " hrs");
 
             if (Math.abs(res.data.efficiency * 100 - 90) < 3) {
                 setEffAdvice("Great work! Keep good sleep!");
@@ -570,13 +570,13 @@ export default function Home() {
                                 <Grid item xs={1}>
                                     <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
                                         Time spent falling asleep: <br/>
-                                        Time awake during the night: <br/>
+                                        Time spent awake in the night: <br/>
                                         Quality: <br/>
                                         Hours slept: <br/>
-                                        Time get into bed: <br/>
-                                        Time fell asleep: <br/>
-                                        Time wake up: <br/>
-                                        Time get out bed: <br/>
+                                        Got into bed at: <br/>
+                                        Fell asleep at: <br/>
+                                        Woke up at: <br/>
+                                        Got out of bed at: <br/>
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={1}>
