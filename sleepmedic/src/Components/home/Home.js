@@ -261,7 +261,6 @@ export default function Home() {
         setQuality(value);
     };
 
-    // Ron's lazy format method :) Current time (formatted :S) 03:01 AM I am writing this, 2023 7/15.
     function getFormattedTime(time) {
         time = time.slice(0, 5);
         let hours = parseInt(time.slice(0, 2), 10);
@@ -275,7 +274,7 @@ export default function Home() {
         } else if (hours > 9) {
             return hours + remainder + " AM";
         }
-        return "0" + hours + remainder + " AM";
+        return "0" +hours + remainder + " AM";
     }
 
     async function getData() {
@@ -287,22 +286,21 @@ export default function Home() {
             let name = res.data.firstName + ' ' + res.data.lastName;
             setUsername(name);
 
-            
             // Get user average sleep data
             res = await axios.get("https://api.sleepmedic.me:8443/home/average", {headers});
             console.log(res.data);
-            setAvgFallTime(res.data.fallTime + " min");
-            setAvgAwakeTime(res.data.awakeTime + " min");
+            setAvgFallTime(res.data.fallTime);
+            setAvgAwakeTime(res.data.awakeTime);
             setAvgQuality(res.data.quality);
             setAvgDownTime(getFormattedTime(res.data.downTime));
             setAvgSleepTime(getFormattedTime(res.data.sleepTime));
             setAvgWakeTime(getFormattedTime(res.data.wakeTime));
             setAvgUpTime(getFormattedTime(res.data.upTime));
             setAvgEfficiency(res.data.efficiency);
-            setAvgHoursSlept(res.data.hoursSlept + " hrs");
+            setAvgHoursSlept(res.data.hoursSlept);
 
             if (Math.abs(res.data.efficiency * 100 - 90) < 3) {
-                setEffAdvice("Great work! Keep up the good sleep!");
+                setEffAdvice("Great work! Keep good sleep!");
             }
             const date = new Date();
             let currentDate = date.toISOString().slice(0, 10);
@@ -572,13 +570,13 @@ export default function Home() {
                                 <Grid item xs={1}>
                                     <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
                                         Time spent falling asleep: <br/>
-                                        Time spent awake at night: <br/>
+                                        Time awake during the night: <br/>
                                         Quality: <br/>
                                         Hours slept: <br/>
-                                        Got into bed at: <br/>
-                                        Fell asleep at: <br/>
-                                        Woke up at: <br/>
-                                        Got out of bed at: <br/>
+                                        Time get into bed: <br/>
+                                        Time fell asleep: <br/>
+                                        Time wake up: <br/>
+                                        Time get out bed: <br/>
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={1}>
@@ -586,7 +584,7 @@ export default function Home() {
                                         {avgFallTime}<br/>
                                         {avgAwakeTime}<br/>
                                         {avgQuality}<br/>
-                                        {avgHoursSlept.toFixed(2)}<br />
+                                        {avgHoursSlept}<br />
                                         {avgDownTime}<br/>
                                         {avgSleepTime}<br/>
                                         {avgWakeTime}<br/>
