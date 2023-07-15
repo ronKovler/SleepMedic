@@ -23,7 +23,7 @@ function getCookiesDict() {
 function getGetHeaders() {
     const cookies = getCookiesDict();
     const headers = {
-        "Access-Control-Allow-Origin": "http://ec2-18-222-211-114.us-east-2.compute.amazonaws.com:8080/",
+        "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
         "Authorization":'Bearer ' + cookies._auth
     };
     return headers; 
@@ -56,7 +56,7 @@ export default function Statistics() {
     async function getRecords() {
         const headers = getGetHeaders();
         try {
-            let res = await axios.get("http://18.224.194.235:8080/api/home/month", {headers});
+            let res = await axios.get("https://api.sleepmedic.me:8443/api/home/month", {headers});
             setMonthRecords(res.data);
             console.log(monthRecords);
         }

@@ -46,7 +46,7 @@ function OpenProfilePage() {
         var cookies = getCookiesDict();
         console.log(cookies._auth);
         var headers = {
-            "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
+            "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
             "Content-Type": 'application/json; charset=utf-8',
             "Authorization":'Bearer ' + cookies._auth,
         }
@@ -55,7 +55,7 @@ function OpenProfilePage() {
         }
         try {
             console.log("hi");
-            let res = await axios.patch("http://18.224.194.235:8080/api/account/update_password", password, {headers});
+            let res = await axios.patch("https://api.sleepmedic.me:8443/api/account/update_password", password, {headers});
             console.log(res.data.token);
             signIn({
                 token: res.data.token,
@@ -113,11 +113,11 @@ function OpenProfilePage() {
             var cookies = getCookiesDict();
             console.log(cookies._auth);
             var headers = {
-                "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
+                "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
                 "Content-Type": 'application/json; charset=utf-8',
                 "Authorization":'Bearer ' + cookies._auth,
             }
-            let res = await axios.delete("http://18.224.194.235:8080/api/account/delete_account", {headers});
+            let res = await axios.delete("https://api.sleepmedic.me:8443/api/account/delete_account", {headers});
             console.log(res.data.token);
             setOpenDel(false);
 

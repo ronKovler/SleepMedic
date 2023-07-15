@@ -23,7 +23,7 @@ function CreateAccount() {
     const [complexError, setComplexError] = useState(false);
     const [t, i18n] = useTranslation("global");
     var headers = {
-        "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
+        "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
     }
 
 
@@ -72,7 +72,7 @@ function CreateAccount() {
     }
 
     const checkEmail = async (e) => {
-        let res = await axios.get("http://18.224.194.235:8080/api/account/auth/check_email/" + email, headers)
+        let res = await axios.get("https://api.sleepmedic.me:8443/api/account/auth/check_email/" + email, headers)
 
         setEmailFree(res.data);
     }
@@ -123,11 +123,11 @@ function CreateAccount() {
         var stringify = JSON.stringify(values);
         console.log(stringify);
         var headers = {
-            "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
+            "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
             "Content-Type": 'application/json; charset=utf-8',
         }
         try {
-            let res = await axios.post("http://18.224.194.235:8080/api/account/auth/create_account", stringify, {headers})
+            let res = await axios.post("https://api.sleepmedic.me:8443/api/account/auth/create_account", stringify, {headers})
 
 
             if(res){
@@ -139,7 +139,7 @@ function CreateAccount() {
                     password: password,
                 }
                 try {
-                  let res = await axios.post("http://18.224.194.235:8080/api/account/auth/login",  loginInfo , {headers});
+                  let res = await axios.post("https://api.sleepmedic.me:8443/api/account/auth/login",  loginInfo , {headers});
             
             
                   if (Object.is(res.data.token,"-1")) {

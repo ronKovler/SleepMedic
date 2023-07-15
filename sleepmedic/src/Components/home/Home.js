@@ -101,7 +101,7 @@ function getCookiesDict() {
 function getGetHeaders() {
     const cookies = getCookiesDict();
     const headers = {
-        "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
+        "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
         "Authorization":'Bearer ' + cookies._auth
     };
     return headers; 
@@ -110,7 +110,7 @@ function getGetHeaders() {
 function getPostHeaders() {
     const cookies = getCookiesDict();
     const headers = {
-        "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
+        "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
         "Content-Type": 'application/json; charset=utf-8',
         "Authorization":'Bearer ' + cookies._auth
     };
@@ -118,7 +118,7 @@ function getPostHeaders() {
 }
 
 var headers = {
-    "Access-Control-Allow-Origin": "http://18.224.194.235:8080/",
+    "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
     "Content-Type": 'application/json; charset=utf-8',
 }
 
@@ -266,12 +266,12 @@ export default function Home() {
         
         try {
             // Get user name
-            let res = await axios.get("http://18.224.194.235:8080/api/home/info", {headers});
+            let res = await axios.get("https://api.sleepmedic.me:8443/api/home/info", {headers});
             let name = res.data.firstName + ' ' + res.data.lastName;
             setUsername(name);
 
             // Get user average sleep data
-            res = await axios.get("http://18.224.194.235:8080/api/home/average", {headers});
+            res = await axios.get("https://api.sleepmedic.me:8443/api/home/average", {headers});
             console.log(res.data);
             setAvgFallTime(res.data.fallTime);
             setAvgAwakeTime(res.data.awakeTime);
@@ -287,7 +287,7 @@ export default function Home() {
                 setEffAdvice("Great work! Keep good sleep!");
             }
 
-            res = await axios.get("http://18.224.194.235:8080/api/home/calendar", {headers});
+            res = await axios.get("https://api.sleepmedic.me:8443/api/home/calendar", {headers});
             setMonthRecords(res.data);
             //console.log(res.data);
         }
@@ -368,7 +368,7 @@ export default function Home() {
         if (editMode) {
             try {
                 let record = formatRecord();
-                let res = await axios.patch("http://18.224.194.235:8080/api/home/update_record/" + recordId, record, {headers});
+                let res = await axios.patch("https://api.sleepmedic.me:8443/api/home/update_record/" + recordId, record, {headers});
             }
             catch (err2) {
                 console.log("Failed to update record.");
@@ -377,7 +377,7 @@ export default function Home() {
         else {
             try {
                 let record = formatRecord();
-                let res = await axios.post("http://18.224.194.235:8080/api/home/create_record", record, {headers});
+                let res = await axios.post("https://api.sleepmedic.me:8443/api/home/create_record", record, {headers});
             }
             catch (err) {
                 alert("Already recorded!");
@@ -386,7 +386,7 @@ export default function Home() {
         }
         /*try {
             let record = formatRecord();
-            let res = await axios.post("http://18.224.194.235:8080/api/home/create_record", record, {headers});
+            let res = await axios.post("https://api.sleepmedic.me:8443/api/home/create_record", record, {headers});
         }
         catch (err) {
             alert("Already recorded!");
@@ -447,7 +447,7 @@ export default function Home() {
         setEditMode(true);
         //console.log(res.data);
         try {
-            let res = await axios.get("http://18.224.194.235:8080/api/home/view_record/" + formattedDate, {headers});
+            let res = await axios.get("https://api.sleepmedic.me:8443/api/home/view_record/" + formattedDate, {headers});
             console.log(res.data);
             setRecordID(res.data.recordID);
 
