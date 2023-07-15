@@ -172,7 +172,7 @@ public class HomeController {
 
     /**
      * View an individual record
-     * @param recordID - ID of record to view
+     * @param date - date of record to view
      * @return - record if found from user, notFound error else
      */
     @RequestMapping(value="view_record/{date}", method = RequestMethod.GET,

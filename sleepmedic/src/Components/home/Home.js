@@ -397,6 +397,7 @@ export default function Home() {
         setRecordOpen(false);
         setEditMode(false);
         resetInput();
+        getData(); // Reload averages and calendar incase update/create changes them.
     }
 
     // Auto loading
