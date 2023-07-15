@@ -13,7 +13,7 @@ import purdue.cs407.backend.repositories.UserRepository;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.DayOfWeek;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -52,26 +52,10 @@ public class HomeController {
         // Get the user
         User user = getCurrentUser();
 
-        LocalDate date = LocalDate.now();
-        LocalDate start = date;
-        while (start.getDayOfWeek() != DayOfWeek.SUNDAY) {
-            start = start.minusDays(1);
-        }
+        Collection<SleepRecord> records = recordRepository.getLastSeven(user);
 
-        LocalDate end = date;
-        while (end.getDayOfWeek() != DayOfWeek.SATURDAY) {
-            end = end.plusDays(1);
-        }
-
-        Date startDate = Date.valueOf(start);
-        Date endDate = Date.valueOf(end);
-        System.out.println("Getting weekly averages for DATE: " + startDate.toString() + " USERID: " +
-                user.getUserID().toString());
-        Collection<SleepRecord> records = recordRepository.getBetween(user.getUserID(),
-                startDate.toString(), endDate.toString());
-
-        // No data for week available, return empty.
-        if (records.size() == 0) {
+        // Not enough data, return empty.
+        if (records.size() < 7) {
             return ResponseEntity.ok(new WeekAverageResponse());
         }
 
@@ -97,16 +81,22 @@ public class HomeController {
             efficiencyTotal += record.getEfficiency();
         }
 
+        DecimalFormat df = new DecimalFormat("#.##");
+
         int count = records.size();
         Time avgDownTime = new Time(downTimeTotal / count);
         Time avgUpTime = new Time(upTimeTotal / count);
         double avgHoursSlept = hoursSleptTotal / (double) count;
+        avgHoursSlept = Double.parseDouble(df.format(avgHoursSlept));
         int avgFallTime = fallTimeTotal / count;
         Time avgWakeTime = new Time(wakeTimeTotal / count);
         Time avgSleepTime = new Time(sleepTimeTotal / count);
         double avgQuality = (double) qualityTotal / count;
+        avgQuality = Double.parseDouble(df.format(avgQuality));
         int avgAwakeTime = awakeTimeTotal / count;
+        df = new DecimalFormat("#.#");
         double avgEfficiency = efficiencyTotal / count;
+        avgEfficiency = Double.parseDouble(df.format(avgEfficiency));
 
         return ResponseEntity.ok(new WeekAverageResponse(avgDownTime, avgUpTime, avgHoursSlept,
                 avgFallTime, avgWakeTime, avgSleepTime, avgQuality, avgAwakeTime, avgEfficiency));
@@ -133,7 +123,6 @@ public class HomeController {
         Collection<SleepRecord> records = recordRepository.getBetween(user.getUserID(), startDate.toString(), endDate.toString());
 
         return ResponseEntity.ok(records.stream().toList());
-
     }
 
     /**
@@ -167,7 +156,6 @@ public class HomeController {
         // Get the user
         User user = getCurrentUser();
         return ResponseEntity.ok(new InfoResponse(user.getFirstName(), user.getLastName()));
-
     }
 
     /**

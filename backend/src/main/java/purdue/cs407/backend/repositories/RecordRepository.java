@@ -57,6 +57,8 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
     @Query(value = "SELECT s.date FROM sleep_record s WHERE s.user_id = :userID AND s.date >= STR_TO_DATE(:start, '%Y-%m-%d') AND date <= STR_TO_DATE(:end, '%Y-%m-%d')", nativeQuery = true)
     Collection<Date> getCalendarDates(@Param("userID")Long userID, @Param("start") String start, @Param("end") String end);
 
+    @Query(value = "SELECT S FROM SleepRecord s WHERE s.user = :user ORDER BY s.date DESC LIMIT 7")
+    Collection<SleepRecord> getLastSeven(@Param("user") User user);
 
     /**
      * Check if a SleepRecord exists by a user with the given date.

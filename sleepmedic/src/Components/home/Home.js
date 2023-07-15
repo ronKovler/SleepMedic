@@ -162,10 +162,10 @@ export default function Home() {
     // AVG STATISTICS
     const[avgFallTime, setAvgFallTime] = React.useState('0');
     const[avgQuality, setAvgQuality] = React.useState('0');
-    const[avgWakeTime, setAvgWakeTime] = React.useState('00:00:00');
-    const[avgDownTime, setAvgDownTime] = React.useState('00:00:00');
-    const[avgUpTime, setAvgUpTime] = React.useState('00:00:00'); 
-    const[avgSleepTime, setAvgSleepTime] = React.useState('00:00:00');
+    const[avgWakeTime, setAvgWakeTime] = React.useState('00:00');
+    const[avgDownTime, setAvgDownTime] = React.useState('00:00');
+    const[avgUpTime, setAvgUpTime] = React.useState('00:00'); 
+    const[avgSleepTime, setAvgSleepTime] = React.useState('00:00');
     const[avgAwakeTime, setAvgAwakeTime] = React.useState('0');
     const[avgEfficiency, setAvgEfficiency] = React.useState('0');
     const[effAdvice, setEffAdvice] = React.useState('Your sleep efficiency is far from 90%, we recommend to keep your efficiency close to 90%.');
@@ -276,10 +276,10 @@ export default function Home() {
             setAvgFallTime(res.data.fallTime);
             setAvgAwakeTime(res.data.awakeTime);
             setAvgQuality(res.data.quality);
-            setAvgDownTime(res.data.downTime);
-            setAvgSleepTime(res.data.sleepTime);
-            setAvgWakeTime(res.data.wakeTime);
-            setAvgUpTime(res.data.upTime);
+            setAvgDownTime(res.data.downTime.slice(0, 5));
+            setAvgSleepTime(res.data.sleepTime.slice(0, 5));
+            setAvgWakeTime(res.data.wakeTime.slice(0, 5));
+            setAvgUpTime(res.data.upTime.slice(0, 5));
             setAvgEfficiency(res.data.efficiency);
             setAvgHoursSlept(res.data.hoursSlept);
 
