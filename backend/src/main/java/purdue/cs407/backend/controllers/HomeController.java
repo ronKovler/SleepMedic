@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/home/")
+@RequestMapping("/home/")
 @CrossOrigin(origins = "*")
 public class HomeController {
     private final UserRepository userRepository;
@@ -43,7 +43,7 @@ public class HomeController {
 
     /**
      * Give the user their weekly average statistics.
-     * /api/home/average
+     * /home/average
      * @return WeekAverageResponse (DTO) containing all averaged values
      */
     @RequestMapping(value="average", method = RequestMethod.GET,

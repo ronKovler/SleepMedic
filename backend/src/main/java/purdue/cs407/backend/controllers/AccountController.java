@@ -17,7 +17,7 @@ import purdue.cs407.backend.services.AuthService;
 import purdue.cs407.backend.services.EmailService;
 
 @RestController
-@RequestMapping("/api/account/")
+@RequestMapping("/account/")
 @CrossOrigin(origins = "*")
 public class AccountController {
 

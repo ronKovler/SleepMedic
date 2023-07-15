@@ -23,7 +23,7 @@ import java.util.*;
 
 
 @RestController
-@RequestMapping("/api/reminder/")
+@RequestMapping("/reminder/")
 @CrossOrigin(origins = "*")
 public class NotificationController {
 
