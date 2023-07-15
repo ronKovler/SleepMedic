@@ -94,9 +94,9 @@ public class HomeController {
         double avgQuality = (double) qualityTotal / count;
         avgQuality = Double.parseDouble(df.format(avgQuality));
         int avgAwakeTime = awakeTimeTotal / count;
-        df = new DecimalFormat("#.#");
+
         double avgEfficiency = efficiencyTotal / count;
-        avgEfficiency = Double.parseDouble(df.format(avgEfficiency));
+
 
         return ResponseEntity.ok(new WeekAverageResponse(avgDownTime, avgUpTime, avgHoursSlept,
                 avgFallTime, avgWakeTime, avgSleepTime, avgQuality, avgAwakeTime, avgEfficiency));
