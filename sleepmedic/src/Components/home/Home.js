@@ -265,11 +265,14 @@ export default function Home() {
         time = time.slice(0, 5);
         let hours = parseInt(time.slice(0, 2), 10);
         let remainder = time.slice(2);
-        if (hours > 12) {
-            hours -= 12
-            return hours.toString() + remainder + " PM";
+        if (hours > 22) {
+            hours -= 12;
+            return hours + remainder + " PM";
+        } else if (hours > 12) {
+            hours -= 12;
+            return "0" + hours + remainder + " PM";
         }
-        return hours.toString + remainder + " AM";
+        return hours + remainder + " AM";
     }
 
     async function getData() {
