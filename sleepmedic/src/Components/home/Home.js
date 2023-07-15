@@ -261,6 +261,17 @@ export default function Home() {
         setQuality(value);
     };
 
+    function getFormattedTime(time) {
+        time = time.slice(0, 5);
+        let hours = parseInt(time.slice(0, 3), 10);
+        let remainder = time.slice(3);
+        if (hours > 12) {
+            hours -= 12
+            return hours.toString() + remainder + " PM";
+        }
+        return hours.toString + remainder + " AM";
+    }
+
     async function getData() {
         const headers = getGetHeaders();
         
@@ -276,10 +287,10 @@ export default function Home() {
             setAvgFallTime(res.data.fallTime);
             setAvgAwakeTime(res.data.awakeTime);
             setAvgQuality(res.data.quality);
-            setAvgDownTime(res.data.downTime.slice(0, 5));
-            setAvgSleepTime(res.data.sleepTime.slice(0, 5));
-            setAvgWakeTime(res.data.wakeTime.slice(0, 5));
-            setAvgUpTime(res.data.upTime.slice(0, 5));
+            setAvgDownTime(getFormattedTime(res.data.downTime));
+            setAvgSleepTime(getFormattedTime(res.data.sleepTime));
+            setAvgWakeTime(getFormattedTime(res.data.wakeTime));
+            setAvgUpTime(getFormattedTime(res.data.upTime));
             setAvgEfficiency(res.data.efficiency);
             setAvgHoursSlept(res.data.hoursSlept);
 
