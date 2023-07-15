@@ -261,6 +261,7 @@ export default function Home() {
         setQuality(value);
     };
 
+    // Ron's lazy format method :) Current time (formatted :S) 03:01 AM I am writing this, 2023 7/15.
     function getFormattedTime(time) {
         time = time.slice(0, 5);
         let hours = parseInt(time.slice(0, 2), 10);
@@ -271,8 +272,10 @@ export default function Home() {
         } else if (hours > 12) {
             hours -= 12;
             return "0" + hours + remainder + " PM";
+        } else if (hours > 9) {
+            return hours + remainder + " AM";
         }
-        return hours + remainder + " AM";
+        return "0" + hours + remainder + " AM";
     }
 
     async function getData() {
@@ -284,21 +287,22 @@ export default function Home() {
             let name = res.data.firstName + ' ' + res.data.lastName;
             setUsername(name);
 
+            
             // Get user average sleep data
             res = await axios.get("https://api.sleepmedic.me:8443/home/average", {headers});
             console.log(res.data);
-            setAvgFallTime(res.data.fallTime);
-            setAvgAwakeTime(res.data.awakeTime);
+            setAvgFallTime(res.data.fallTime + " min");
+            setAvgAwakeTime(res.data.awakeTime + " min");
             setAvgQuality(res.data.quality);
             setAvgDownTime(getFormattedTime(res.data.downTime));
             setAvgSleepTime(getFormattedTime(res.data.sleepTime));
             setAvgWakeTime(getFormattedTime(res.data.wakeTime));
             setAvgUpTime(getFormattedTime(res.data.upTime));
             setAvgEfficiency(res.data.efficiency);
-            setAvgHoursSlept(res.data.hoursSlept);
+            setAvgHoursSlept(res.data.hoursSlept + " hrs");
 
             if (Math.abs(res.data.efficiency * 100 - 90) < 3) {
-                setEffAdvice("Great work! Keep good sleep!");
+                setEffAdvice("Great work! Keep up the good sleep!");
             }
             const date = new Date();
             let currentDate = date.toISOString().slice(0, 10);
