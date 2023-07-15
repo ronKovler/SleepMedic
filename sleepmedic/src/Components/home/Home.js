@@ -572,13 +572,13 @@ export default function Home() {
                                 <Grid item xs={1}>
                                     <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
                                         Time spent falling asleep: <br/>
-                                        Time awake during the night: <br/>
+                                        Time spent awake at night: <br/>
                                         Quality: <br/>
                                         Hours slept: <br/>
-                                        Time get into bed: <br/>
-                                        Time fell asleep: <br/>
-                                        Time wake up: <br/>
-                                        Time get out bed: <br/>
+                                        Got into bed at: <br/>
+                                        Fell asleep at: <br/>
+                                        Woke up at: <br/>
+                                        Got out of bed at: <br/>
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={1}>
