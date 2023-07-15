@@ -34,7 +34,7 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
      * @param date2 - String end date
      * @return Collection<SleepRecord> (can be empty).
      */
-    @Query(value = "SELECT * FROM sleep_record s WHERE s.user_id = :userID AND s.date >= STR_TO_DATE(:date1, '%Y-%m-%d') AND date <= STR_TO_DATE(:date2, '%Y-%m-%d')", nativeQuery = true)
+    @Query(value = "SELECT * FROM sleep_record s WHERE s.user_id = :userID AND s.date >= STR_TO_DATE(:date1, '%Y-%m-%d') AND date <= STR_TO_DATE(:date2, '%Y-%m-%d') ORDER BY s.date", nativeQuery = true)
     Collection<SleepRecord> getBetween(@Param("userID") Long userID, @Param("date1") String date1, @Param("date2")String date2);
 
     SleepRecord findByRecordID(Long recordID);

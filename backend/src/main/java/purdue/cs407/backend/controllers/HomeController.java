@@ -140,14 +140,14 @@ public class HomeController {
      * Get the calendar dates for the current month that have records.
      * @return - List of dates from current month for which a user has existing records.
      */
-    @RequestMapping(value = "calendar", method = RequestMethod.GET,
+    @RequestMapping(value = "calendar/{date}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Date>> getCalendar() {
+    public ResponseEntity<List<Date>> getCalendar(@PathVariable Date date) {
         User user = getCurrentUser();
 
-        LocalDate date = LocalDate.now();
-        LocalDate start = date.withDayOfMonth(1);
-        LocalDate end = date.withDayOfMonth(date.getMonth().length(date.isLeapYear()));
+        LocalDate now = date.toLocalDate();
+        LocalDate start = now.withDayOfMonth(1);
+        LocalDate end = now.withDayOfMonth(now.getMonth().length(now.isLeapYear()));
 
         Date startDate = Date.valueOf(start);
         Date endDate = Date.valueOf(end);

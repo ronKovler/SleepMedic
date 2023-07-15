@@ -286,8 +286,10 @@ export default function Home() {
             if (Math.abs(res.data.efficiency * 100 - 90) < 3) {
                 setEffAdvice("Great work! Keep good sleep!");
             }
-
-            res = await axios.get("https://api.sleepmedic.me:8443/home/calendar", {headers});
+            const date = new Date();
+            let currentDate = date.toISOString().slice(0, 10);
+            console.log(currentDate);
+            res = await axios.get("https://api.sleepmedic.me:8443/home/calendar/" + currentDate, {headers});
             setMonthRecords(res.data);
             //console.log(res.data);
         }
@@ -432,7 +434,14 @@ export default function Home() {
         resetInput();
     };
 
+    const handleNewCalendarDates = async (newMonthClicked) => {
+        console.log('Selected day', newMonthClicked.$d)
+        const formattedDate = dayjs(newMonthClicked.$d).format('YYYY-MM-DD');
+        const headers  = getGetHeaders();
 
+        let res = await axios.get("https://api.sleepmedic.me:8443/home/calendar/" + formattedDate, {headers});
+        setMonthRecords(res.data);
+    }
 
     const handleOpenEditForm = async (dayClicked) => {
         console.log('Selected day', dayClicked.$d)
@@ -627,6 +636,9 @@ export default function Home() {
                                     setIsNewRecord(false);
                                     handleOpenEditForm(e);
                                 }}
+                                onMonthChange={(e) => {
+                                    handleNewCalendarDates(e);
+                                }}
                                 slots={{day: RecordedDays,}}
                             />
                         </LocalizationProvider>      
@@ -682,7 +694,7 @@ export default function Home() {
 
                     {/* Awake Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>Did you wake up in the night, if so for how long? (min)</InputLabel>
+                        <InputLabel>Did you wake up in the night? If so, for how long? (min)</InputLabel>
                         <OutlinedInput
                             value={awakeTime}
                             label="wokeUpCount"
