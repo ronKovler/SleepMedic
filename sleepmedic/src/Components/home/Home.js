@@ -35,10 +35,8 @@ import PropTypes from 'prop-types';
 import Pagination from '@mui/material/Pagination';
 //import TextField from '@material-ui/core/TextField';
 import TextField from '@mui/material/TextField'; // Add this line
-
-
-
-
+import Badge from '@mui/material/Badge';
+import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -47,6 +45,7 @@ import { createTheme, styled } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useNavigate } from 'react-router-dom';
 
 const calendarTheme = createTheme({
     palette: {
@@ -143,9 +142,15 @@ function makeBooleanCheckbox(title, value, onChangeFunction) {
     )
 }
 
+const customParseFormat = require('dayjs/plugin/customParseFormat');
+dayjs.extend(customParseFormat);
+
+
 export default function Home() {
+    const navigate = useNavigate();
     // Control of popup sleep record window
     const[recordOpen, setRecordOpen] = React.useState(false);
+    const [isNewRecord, setIsNewRecord] = React.useState(true);
     const [page, setPage] = React.useState(1);
     const handlePageChange = (event, value) => {
         setPage(value);
@@ -226,6 +231,31 @@ export default function Home() {
     const[monthRecords, setMonthRecords] = React.useState([]);
     const[editMode, setEditMode] = React.useState(false);
     const[recordId, setRecordID] = React.useState(0);
+
+    function RecordedDays(props) {
+        const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
+      
+        let isSelected =
+          !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) >= 0;
+
+        var f_date = `${day.get('year')}-${(day.get('month') + 1).toString().padStart(2, '0')}-${day.get('date').toString().padStart(2, '0')}`;
+        if (monthRecords.includes(f_date)) {
+            isSelected = true;
+        }
+        else {
+            isSelected = false;
+        }
+      
+        return (
+          <Badge
+            key={props.day.toString()}
+            overlap="circular"
+            badgeContent={isSelected ? '😴' : undefined}
+          >
+            <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+          </Badge>
+        );
+    }
 
     const handleRestlessnessChange = (e, value) => {
         setQuality(value);
@@ -369,6 +399,12 @@ export default function Home() {
 
     // Auto loading
     React.useEffect(() => {
+        //Check if not logged in and redirect.
+        const cookies = getCookiesDict();
+        if (cookies._auth == null) {
+            navigate("/")
+        }
+        //Get Data
         getData();
     }, []);
 
@@ -376,6 +412,7 @@ export default function Home() {
     // Popup window handlers
     function resetInput() {
         // TODO: reset all booleans to default values (false), String to empty string
+        setPage(1);
         setRecordDate(today);
         setQuality(0);
         setFallTime(0);
@@ -386,6 +423,7 @@ export default function Home() {
         setUpTime(today.set('hour', 9).set('minute',  30).set('second', 0));
     }
     const handleClickOpen = () => {
+        setIsNewRecord(true);
         setRecordOpen(true);
     };
     const handleClose = () => {
@@ -397,12 +435,16 @@ export default function Home() {
 
 
     const handleOpenEditForm = async (dayClicked) => {
-        setRecordOpen(true);
-        setEditMode(true);
         console.log('Selected day', dayClicked.$d)
         const formattedDate = dayjs(dayClicked.$d).format('YYYY-MM-DD');
         console.log('Formatted date', formattedDate);
         const headers = getGetHeaders();
+        if (!monthRecords.includes(formattedDate)) {
+            alert('No record found for the date ' + formattedDate);
+            return;
+        }
+        setRecordOpen(true);
+        setEditMode(true);
         //console.log(res.data);
         try {
             let res = await axios.get("http://18.224.194.235:8080/api/home/view_record/" + formattedDate, {headers});
@@ -452,9 +494,9 @@ export default function Home() {
     function CircularProgressWithLabel(props) {
         return (
           <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-            <CircularProgress variant="determinate" {...props} size="8rem"/>
+            <CircularProgress variant="determinate" {...props} size="8rem" thickness={6}/>
             <Box sx={{top: 0,left: 0,bottom: 0,right: 0,position: 'absolute',display: 'flex',alignItems: 'center',justifyContent: 'center',}}>
-              <Typography variant="h6" component="div" color="text.secondary">
+              <Typography variant="h5" component="div" color="text.secondary" fontWeight='bold'>
                 {`${props.value.toFixed(1)}%`}
               </Typography>
             </Box>
@@ -493,14 +535,14 @@ export default function Home() {
                     <Grid item xs={1} sx={{marginTop: '20pt'}}>
                         <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
                             <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                Weekly Summary Statistics
+                                7-Day Averages
                             </Typography>
-                            <Typography variant='h6' component='div' textAlign='center'>
+                            {/* <Typography variant='h6' component='div' textAlign='center'>
                                 {getCurrentWeek()}
-                            </Typography>
+                            </Typography> */}
                             <Grid container columns={2}>
                                 <Grid item xs={1}>
-                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='#81899c' fontWeight='bold'>
+                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
                                         Time spent falling asleep: <br/>
                                         Time awake during the night: <br/>
                                         Quality: <br/>
@@ -512,7 +554,7 @@ export default function Home() {
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='#81899c' fontWeight='bold'>
+                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
                                         {avgFallTime}<br/>
                                         {avgAwakeTime}<br/>
                                         {avgQuality}<br/>
@@ -533,14 +575,14 @@ export default function Home() {
                     <Grid item xs={1} sx={{marginTop: '20pt'}}>
                         <Paper elevation={3} sx={{paddingBottom: '20pt', backgroundColor: '#D9D3E4'}}>
                             <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold' paddingBottom='10pt'>
-                                Weekly Efficiency
+                            7-Day Efficiency
                             </Typography>
                             <Grid container columns={3} alignItems="center">
                                 <Grid item xs={1} paddingLeft='10pt'>
                                     <CircularProgressWithLabel value={avgEfficiency * 100}/>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <Typography variant='body' component='div' textAlign='left' paddingBottom='10pt' color='#81899c' fontWeight='bold'>
+                                    <Typography variant='body' component='div' textAlign='left' paddingBottom='10pt' color='black' fontSize='16pt'>
                                         {effAdvice}
                                     </Typography>
                                 </Grid>
@@ -554,7 +596,7 @@ export default function Home() {
                             <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                 Weekly Advices
                             </Typography>
-                            <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' paddingBottom='10pt' color='#81899c' fontWeight='bold'>
+                            <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
                                 I already want to take a nap tomorrow.
                             </Typography>
                         </Paper>
@@ -565,6 +607,9 @@ export default function Home() {
                     <Grid item xs={1} justifyContent='center' display='flex' marginTop='20pt'>
                         {/* TODO: add event listener to create  */}
                         <Button variant='contained' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>New Record</Button>
+                        {/* <Button variant='contained' onClick={
+                            () => console.log(monthRecords)
+                        }>TEST</Button> */}
                     </Grid>
 
                 </Grid>
@@ -574,10 +619,16 @@ export default function Home() {
                 <Grid item xs={1}>
                     <Paper elevation={3} sx={{width: '90%'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DateCalendar views={['day']} onChange={(e) => {
-                                console.log(monthRecords);
-                                handleOpenEditForm(e);
-                            }}/>
+                            <DateCalendar 
+                                size='lg'
+                                views={['day']} 
+                                onChange={(e) => {
+                                    console.log(monthRecords);
+                                    setIsNewRecord(false);
+                                    handleOpenEditForm(e);
+                                }}
+                                slots={{day: RecordedDays,}}
+                            />
                         </LocalizationProvider>      
                     </Paper>      
                 </Grid>
@@ -588,7 +639,9 @@ export default function Home() {
             <Dialog open={recordOpen} onClose={handleClose}>
                 <DialogTitle>
                     <Grid container columns={2} justify='flex-end' alignItems='center'>
-                        <Grid item xs={1}>New Record</Grid>
+                        <Grid item xs={1}>
+                            {isNewRecord ? "New Record" : "Edit Record"}
+                        </Grid>
                         <Grid item xs={1}>
                         <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
                             <Tooltip title={FIELDS_SPECIFICATION} arrow>
@@ -602,22 +655,22 @@ export default function Home() {
                 {
                     page === 1 ?
                     <DialogContent>
-                    <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
+                    <DialogContentText>{isNewRecord? "To record new sleep" : "To update sleep record"}, please enter your daily sleep data below.</DialogContentText>
 
                     {/* Date Picker */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker
-                                    label="Date"
-                                    value={recordDate}
-                                    onChange={(newDate) => setRecordDate(newDate)}
-                                />
+                                {isNewRecord ? 
+                                    <DatePicker label="Date" value={recordDate} onChange={(newDate) => setRecordDate(newDate)}/>
+                                    :
+                                    <DatePicker label="Date" value={recordDate} onChange={(newDate) => setRecordDate(newDate)} readOnly/>
+                                }
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Sleep Duration Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>Fall Time</InputLabel>
+                        <InputLabel>How long did it take to fall asleep? (min)</InputLabel>
                         <OutlinedInput
                             value={fallTime}
                             label="fallTime"
@@ -629,7 +682,7 @@ export default function Home() {
 
                     {/* Awake Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>Awake Time</InputLabel>
+                        <InputLabel>Did you wake up in the night, if so for how long? (min)</InputLabel>
                         <OutlinedInput
                             value={awakeTime}
                             label="wokeUpCount"
@@ -642,28 +695,28 @@ export default function Home() {
                     {/* Down Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Down Time" value={downTime} onChange={(newTime) => setDownTime(newTime)}/>
+                            <TimePicker label="What time did you get into bed? " value={downTime} onChange={(newTime) => setDownTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Sleep Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Sleep Time" value={sleepTime} onChange={(newTime) => setSleepTime(newTime)}/>
+                            <TimePicker label="What time did you fall asleep?" value={sleepTime} onChange={(newTime) => setSleepTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Wake Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Wake Time" value={wakeTime} onChange={(newTime) => setWakeTime(newTime)}/>
+                            <TimePicker label="What time did you wake up?" value={wakeTime} onChange={(newTime) => setWakeTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Up Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="Up Time" value={upTime} onChange={(newTime) => setUpTime(newTime)}/>
+                            <TimePicker label="What time did you get out of bed?" value={upTime} onChange={(newTime) => setUpTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
@@ -714,7 +767,9 @@ export default function Home() {
                         </Grid>
                         <Grid item xs={1}>
                             <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
-                                <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button>
+                                <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>
+                                    {isNewRecord ? "Submit" : "Update"}
+                                </Button>
                             </Box>
                         </Grid>
                     </Grid>
