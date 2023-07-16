@@ -32,8 +32,8 @@ public class SecurityConfig {
                 .requiresChannel(channel ->
                         channel.anyRequest().requiresSecure())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/account/auth/**").permitAll() // Making these endpoints public
-                        .requestMatchers("/api/reminder/cr/**").permitAll()
+                        .requestMatchers("/account/auth/**").permitAll() // Making these endpoints public
+                        .requestMatchers("/reminder/cr/**").permitAll()
                         .requestMatchers("/").permitAll() // Think this is needed for CORS preflight?
                         .anyRequest().authenticated())     // Lock all other endpoints
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //No state

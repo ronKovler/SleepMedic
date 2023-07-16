@@ -443,6 +443,14 @@ export default function Home() {
         setSleepTime(today.set('hour', 23).set('minute',  30).set('second', 0));
         setWakeTime(today.set('hour', 8).set('minute',  30).set('second', 0));
         setUpTime(today.set('hour', 9).set('minute',  30).set('second', 0));
+        setDifficultFallingAsleep(false);
+        setDifficultStayingAsleep(false);
+        setPhysicalActivity(false);
+        setNaps(false);
+        setAlcoholConsumption(false);
+        setCaffeineConsumption(false);
+        setElectronics(false);
+        setRacingThoughts(false);
         setDreamsCB(false);
         setDreams("");
     }
