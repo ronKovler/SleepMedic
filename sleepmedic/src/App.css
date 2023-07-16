@@ -43,77 +43,28 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /*background-color: #0b5465;*/
-  /*background-color: #64B5F6;*/
-  /*background-color: #543c91; */       /* daphne purple    */
-  /*background-color: #5b6ff5;  */        /* purple-blue, with muted purple   */
-  /*background-color: #58aff5;  */      /* baby blue, used with water blue and darker baby blue (theme.main) */
-  /*background-color: #1d0370; */           /* purple-blue night*/
-  /*background-color: #0b046e;  */
-  /*background-color: #0c0482;    */
-  /*background-color: #1e1596;        */        /* another purple-blue night idk    */
+
   /*background-color: #58628F;    */            /*  neutral gray  for background  */
-  /*background-color: #57618E;            /* purplish night    <--- chosen background */
+  background-color: #57618E;            /* purplish night    <--- chosen background */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-  background: repeating-radial-gradient(circle at top left,
-  #57618E,
-  #3E4464,
-  #57618E,
-  #3E4464,
-  #57618E ,
-  #3E4464 );
-  animation: animazione 6s ease-in-out infinite alternate;
-  color: #ffffff; /* Gold text color */
+  background: repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% );
+  animation: animazione 8s ease-in-out infinite alternate ;
+  
+  
   text-align: center;
 }
 
 @keyframes animazione {
+  
   0% {
     background-size: 100%;
+    
   }
   100% {
-    background-size:400%;
+    background-size:200%;
   }
 }
 
-.wave-01 {
-  position: absolute;
-  background-size: contain;
-  width: 300%;
-  height: 300%;
-  left: -80%;
-  top: 120%;
-  background-color: rgba(0,190,255,0.4);
-  border-radius: 37%;
-  animation: rotate 20s linear infinite;
-}
-
-
-.wave-02 {
-  position: absolute;
-  width: 300%;
-  height: 300%;
-  left: -100%;
-  top: 50%;
-  background-color: rgba(0,70,110,0.4);
-  border-radius: 4%;
-  animation: rotate 17s linear infinite;
-}
-
-.wave-03 {
-  position: absolute;
-  width: 400%;
-  height: 200%;
-  left: -100%;
-  top: 70%;
-  background-color: rgba(0,90,110,0.4);
-  border-radius: 3%;
-  animation: rotate 15s linear infinite;
-}
-
-@keyframes rotate {
-  100% { transform: rotate(360deg);}
-}
 
 .btn {
   display: inline-block;

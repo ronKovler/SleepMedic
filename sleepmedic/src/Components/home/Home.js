@@ -550,10 +550,10 @@ export default function Home() {
 
     return (
         <Box sx={{
-            backgroundColor: "#57118E", 
-            background: 'repeating-radial-gradient(circle at top left,#57618E,#3E4464,#57618E,#3E4464,#57618E ,#3E4464 )',
-            animation: 'animazione 6s ease-in-out infinite alternate',
-            size: 'contain',
+            backgroundColor: "#57118E",           /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
+            background: 'repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% )',
+            animation: 'animazione 13s ease-in-out infinite alternate-reverse',
+        
             height: '200vh' 
             }}>
             <Navbar/>
