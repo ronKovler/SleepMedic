@@ -13,11 +13,15 @@ import EditGoal from './Components/EditGoalPage';
 import CreateRem from './Components/CreateReminderPage';
 import OpenNotificationsPage from "./Components/NotificationsPage";
 import React from 'react';
+import Wave from "react-wavify"
 import theme from './theme';
 
 function App() {
   return (
     <div>
+      {/* <div class="wave-01"></div> */}
+      {/* <div class="wave-02"></div>
+      <div class="wave-03"></div> */}
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<LoginPage/>} />

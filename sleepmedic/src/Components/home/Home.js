@@ -549,7 +549,13 @@ export default function Home() {
 
 
     return (
-        <Box sx={{backgroundColor: "#57618E", height: '200vh' }}>
+        <Box sx={{
+            backgroundColor: "#57118E", 
+            background: 'repeating-radial-gradient(circle at top left,#57618E,#3E4464,#57618E,#3E4464,#57618E ,#3E4464 )',
+            animation: 'animazione 6s ease-in-out infinite alternate',
+            size: 'contain',
+            height: '200vh' 
+            }}>
             <Navbar/>
             <Grid container spacing={2} columns={2} sx={{margin: 0}}>
                 {/* LEFT PANEL */}
