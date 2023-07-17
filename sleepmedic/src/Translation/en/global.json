@@ -1,8 +1,76 @@
 {
-    "header": {
-        "message": "Welcome to Sleep-Medic"
+    "welcome": {
+        "title": "Welcome to Sleep-Medic",
+        "subscript": "Achieve better sleep and improve your well-being with Sleep-Medic App.",
+        "language": "Select Language:",
+        "english": "English",
+        "spanish": "Spanish",
+        "next": "Get Started"
     }, 
     "home": {
-        "body": "Ayo Pause"
+        "7-day": {
+            "title": "7-Day Averages",
+            "time-spent-falling": "Time spent falling asleep:",
+            "time-spent-awake": "Time spent awake in the night:",
+            "quality": "Quality:",
+            "hours-slept": "Hours Slept:"
+        },
+        "effAdvice": {
+            "1": "Your sleep efficiency is far from 90%, we recommend to keep your efficiency close to 90%.",
+            "2": "Great work! Keep good sleep!"
+        },
+        "viewInsight": "View Insights",
+        "weekly-advices": {
+            "title": "Weekly Advices",
+            "1": "I already want to take a nap tomorrow."
+        },
+        "new-record": "New Record",
+        "input-prompt": {
+            "new-record": "To record new sleep, please enter your daily sleep data below.",
+            "edit-record": "To update a sleep record, alter your responses as necessary.",
+            "sleep-duration": "How long did it take to fall asleep? (min)",
+            "awake-time": "Did you wake up in the night? If so, for how long? (min)",
+            "down-time": "What time did you get into bed? ",
+            "sleep-time": "What time did you fall asleep?",
+            "wake-time": "What time did you wake up?",
+            "up-time": "What time did you get out of bed?",
+            "quality": "Quality"
+        },
+        "sleep-journal": {
+            "physical-activity": "Did you engage in any physical activity today?",
+            "naps": "Did you have any naps during the day?",
+            "alchol": "Did you consume alcohol less than 6 hours before bedtime?",
+            "caffine": "Did you consume caffeine less than 6 hours before bedtime?",
+            "electronics": "Did you use a phone, tablet, or watch television in bed?",
+            "difficulty-falling": "Did you have any difficulty falling asleep?",
+            "difficulty-staying": "Did you have any difficulty staying asleep?",
+            "racing-thoughts": "Did you have any racing thoughts while in bed?",
+            "dreams": "Did you have any dreams?"
+        },
+        "cancel": "Cancel",
+        "submit": "Submit",
+        "update": "Update"
+
+    },
+    "login": {
+        "title": "Log in to Sleep-Medic",
+        "email": "Email:",
+        "password": "Password:",
+        "remember-me": "Remember Me",
+        "forgot-password": {
+            "title": "Forgot Password",
+            "instructions": "Please enter the email and your birthday associated with your account to initiate the password recovery process.",
+            "email": "Email Address",
+            "dob": "Birthday",
+            "cancel": "Cancel",
+            "recover": "Recover Password",
+            "thank-you": "Thank You",
+            "final-message": "You will receive an email shortly if an account exists with the provided email and DOB.",
+            "confirm": "Confirm"
+        },
+        "or-create": "or create an account",
+        "login": "login"
+
     }
+
 }

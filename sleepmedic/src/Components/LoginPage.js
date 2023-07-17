@@ -118,9 +118,9 @@ function Login() {
   return (
     <div className="sleep-medic-container">
       <form className="login-form" onSubmit={handleLogin}>
-        <h1>Log in to Sleep-Medic</h1>
+        <h1>{t("login.title")}</h1>
         {error && <Alert severity="error" sx={{color: "red", fontSize: "0.85rem"}}><strong>Username/Password was Entered Incorrectly!</strong></Alert>}
-        <label style={{fontWeight: "bold"}} htmlFor="email">Email:</label>
+        <label style={{fontWeight: "bold"}} htmlFor="email">{t("login.email")}</label>
         <TextField
           type="email"
           id="email"
@@ -135,7 +135,7 @@ function Login() {
         />
         <br/>
         <br/>
-        <label style={{fontWeight: "bold"}} htmlFor="password">Password:</label>
+        <label style={{fontWeight: "bold"}} htmlFor="password">{t("login.password")}</label>
         <TextField
           type="password"
           id="password"
@@ -149,22 +149,22 @@ function Login() {
           required
         />
         <br/>
-        <div>Remember me<Checkbox onClick={()=>setRememberMe(!rememberMe)}/> <br/>
-        <Button variant="contained" color="primary" onClick={(e) => handleLogin(e)}>Login</Button>
+        <div>{t("login.remember-me")}<Checkbox onClick={()=>setRememberMe(!rememberMe)}/> <br/>
+        <Button type="submit" variant="contained" color="primary" onClick={(e) => handleLogin(e)}>{t("login.login")}</Button>
         </div>
-        <Button style={{color: "white"}} onClick={() => setOpen(true)}>Forgot Password</Button>
-        <Link to="/createaccount" style={{color: "white"}}>Or create an account</Link>
+        <Button style={{color: "white"}} onClick={() => setOpen(true)}>{t("login.forgot-password.title")}</Button>
+        <Link to="/createaccount" style={{color: "white"}}>{t("login.or-create")}</Link>
         <Dialog open={open} onClose={() => setOpen(false)}>
-          <DialogTitle>Forgot Password</DialogTitle>
+          <DialogTitle>{t("login.forgot-password.title")}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Please enter the email and your birthday associated with your account to initiate the password recovery process.
+            {t("login.forgot-password.instructions")}
             </DialogContentText>
             <TextField
               autoFocus
               margin="dense"
               id="email"
-              label="Email Address"
+              label={t("login.forgot-password.email")}
               type="email"
               value={remail}
               onChange={(e) => setREmail(e.target.value)}
@@ -174,7 +174,7 @@ function Login() {
             <TextField
               margin="dense"
               id="birthday"
-              label="Birthday"
+              label={t("login.forgot-password.dob")}
               type="date"
               fullWidth
               variant="standard"
@@ -186,21 +186,21 @@ function Login() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={(e) => handleForgotPassword(e)}>Recover Password</Button>
+            <Button onClick={() => setOpen(false)}>{t("login.forgot-password.cancel")}</Button>
+            <Button onClick={(e) => handleForgotPassword(e)}>{t("login.forgot-password.recover")}</Button>
           </DialogActions>
         </Dialog>
         <Dialog
           open={openFin}
         >
-          <DialogTitle>Thank You</DialogTitle>
+          <DialogTitle>{t("login.forgot-password.thank-you")}</DialogTitle>
           <DialogContent>
               <DialogContentText>
-                You will receive an email shortly if an account exists with the provided email and DOB.
+              {t("login.forgot-password.final-message")}
               </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setOpenFin(false)}>Confirm</Button>
+            <Button onClick={() => setOpenFin(false)}>{t("login.forgot-password.confirm")}</Button>
           </DialogActions>
         </Dialog>
       </form>

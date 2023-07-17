@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
-import {TextField, Button, Alert, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText  } from "@mui/material/";
+import {TextField, Button, Alert, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, Grid} from "@mui/material/";
 import axios from "axios";
 import { useState } from 'react';
 import React from 'react';
@@ -8,6 +8,7 @@ import {useCookies} from "react-cookie";
 import { useSignOut, useSignIn } from "react-auth-kit";
 
 import "./ProfilePage.css";
+import { Padding } from '@mui/icons-material';
 
 
 //Shaun
@@ -135,8 +136,16 @@ function OpenProfilePage() {
     
     return (
         <div className="sleep-medic-container">
+            
+            <Grid container spacing={2}>
+                <Grid item xs={0.5}></Grid>
+                <Grid item xs={7}>
+                <div className="profile-page-form">
+                    <h1>User Profile</h1>
+                </div>
+                </Grid>
+            </Grid>
             <div className="profile-page-form">
-                <h1>User Profile</h1>
                 
                 <Link to="/editgoal">
                     <Button variant="contained">Edit Your Goals</Button>

@@ -48,6 +48,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useNavigate } from 'react-router-dom';
 import { RadialBarChart, PolarAngleAxis, RadialBar, PieChart, Pie, Label } from 'recharts';
 import { Refresh } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 const calendarTheme = createTheme({
     palette: {
@@ -149,6 +150,7 @@ dayjs.extend(customParseFormat);
 
 
 export default function Home() {
+    const [t, i18n] = useTranslation("global");
     const navigate = useNavigate();
     // Control of popup sleep record window
     const[recordOpen, setRecordOpen] = React.useState(false);
@@ -170,7 +172,7 @@ export default function Home() {
     const[avgSleepTime, setAvgSleepTime] = React.useState('00:00');
     const[avgAwakeTime, setAvgAwakeTime] = React.useState('0');
     const[avgEfficiency, setAvgEfficiency] = React.useState('0');
-    const[effAdvice, setEffAdvice] = React.useState('Your sleep efficiency is far from 90%, we recommend to keep your efficiency close to 90%.');
+    const[effAdvice, setEffAdvice] = React.useState("1");
     const[avgHoursSlept, setAvgHoursSlept] = React.useState(0.0);
 
     function makeBooleanCheckbox(title, value, onChangeFunction) {
@@ -378,12 +380,22 @@ export default function Home() {
 
     async function getData() {
         const headers = getGetHeaders();
+        //console.log(headers);
         
         try {
             // Get user name
             let res = await axios.get("https://api.sleepmedic.me:8443/home/info", {headers});
             let name = res.data.firstName + ' ' + res.data.lastName;
             setUsername(name);
+
+            //Get Calendar
+            const date = new Date();
+            let currentDate = date.toISOString().slice(0, 10);
+            console.log(currentDate);
+            res = await axios.get("https://api.sleepmedic.me:8443/home/calendar/" + currentDate, {headers});
+            setMonthRecords(res.data);
+            console.log(res.data);
+
 
             // Get user average sleep data
             res = await axios.get("https://api.sleepmedic.me:8443/home/average", {headers});
@@ -400,14 +412,9 @@ export default function Home() {
             setAvgHoursSlept(res.data.hoursSlept + " hrs");
 
             if (Math.abs(res.data.efficiency * 100 - 90) < 3) {
-                setEffAdvice("Great work! Keep good sleep!");
+                setEffAdvice("2");
             }
-            const date = new Date();
-            let currentDate = date.toISOString().slice(0, 10);
-            console.log(currentDate);
-            res = await axios.get("https://api.sleepmedic.me:8443/home/calendar/" + currentDate, {headers});
-            setMonthRecords(res.data);
-            //console.log(res.data);
+
         }
         catch (err) {
             console.log("Failed to retrieve data.");
@@ -711,11 +718,11 @@ export default function Home() {
                     <Grid item xs={1} sx={{marginTop: '10pt'}}>
                         <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
                             <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                7-Day Averages
+                                {t("home.7-day.title")}
                             </Typography>
                             <AveragePieChart/>
                             <Typography variant='body' component='div' textAlign='center' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='14pt'>
-                                {effAdvice}
+                                {t("home.effAdvice."+effAdvice)}
                             </Typography>
                             {/* <Typography variant='h6' component='div' textAlign='center'>
                                 {getCurrentWeek()}
@@ -725,10 +732,10 @@ export default function Home() {
                                 <Grid item xs={1}>
                                     
                                     <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
-                                        Time spent falling asleep: <br/>
-                                        Time spent awake in the night: <br/>
-                                        Quality: <br/>
-                                        Hours slept: <br/>
+                                        {t("home.7-day.time-spent-falling")} <br/>
+                                        {t("home.7-day.time-spent-awake")} <br/>
+                                        {t("home.7-day.quality")} <br/>
+                                        {t("home.7-day.hours-slept")} <br/>
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={1}> 
@@ -776,10 +783,10 @@ export default function Home() {
                     <Grid item xs={1} sx={{marginTop: '20pt', width: '90%'}}>
                         <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
                             <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                Weekly Advices
+                                {t("home.weekly-advices.title")}
                             </Typography>
                             <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
-                                I already want to take a nap tomorrow.
+                                {t("home.weekly-advices.1")}
                             </Typography>
                         </Paper>
                     </Grid>
@@ -788,7 +795,7 @@ export default function Home() {
                     {/* Create New Record Button */}
                     <Grid item xs={1} justifyContent='center' display='flex' marginTop='20pt'>
                         {/* TODO: add event listener to create  */}
-                        <Button variant='contained' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>New Record</Button>
+                        <Button variant='contained' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>{t("home.new-record")}</Button>
                         {/* <Button variant='contained' onClick={
                             () => console.log(monthRecords)
                         }>TEST</Button> */}
@@ -817,7 +824,7 @@ export default function Home() {
                 {
                     page === 1 ?
                     <DialogContent>
-                    <DialogContentText>{isNewRecord? "To record new sleep, please enter your daily sleep data below." : "To update a sleep record, alter your responses as necessary."}</DialogContentText>
+                    <DialogContentText>{isNewRecord? t("home.input-prompt.new-record") : t("home.input-prompt.edit-record")}</DialogContentText>
 
                     {/* Date Picker */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
@@ -832,7 +839,7 @@ export default function Home() {
 
                     {/* Sleep Duration Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>How long did it take to fall asleep? (min)</InputLabel>
+                        <InputLabel>{t("home.input-prompt.sleep-duration")}</InputLabel>
                         <OutlinedInput
                             value={fallTime}
                             label="fallTime"
@@ -844,7 +851,7 @@ export default function Home() {
 
                     {/* Awake Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>Did you wake up in the night? If so, for how long? (min)</InputLabel>
+                        <InputLabel>{t("home.input-prompt.awake-time")}</InputLabel>
                         <OutlinedInput
                             value={awakeTime}
                             label="wokeUpCount"
@@ -857,28 +864,28 @@ export default function Home() {
                     {/* Down Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="What time did you get into bed? " value={downTime} onChange={(newTime) => setDownTime(newTime)}/>
+                            <TimePicker label={t("home.input-prompt.down-time")} value={downTime} onChange={(newTime) => setDownTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Sleep Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="What time did you fall asleep?" value={sleepTime} onChange={(newTime) => setSleepTime(newTime)}/>
+                            <TimePicker label={t("home.input-prompt.sleep-time")} value={sleepTime} onChange={(newTime) => setSleepTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Wake Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="What time did you wake up?" value={wakeTime} onChange={(newTime) => setWakeTime(newTime)}/>
+                            <TimePicker label={t("home.input-prompt.wake-time")} value={wakeTime} onChange={(newTime) => setWakeTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     {/* Up Time Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label="What time did you get out of bed?" value={upTime} onChange={(newTime) => setUpTime(newTime)}/>
+                            <TimePicker label={t("home.input-prompt.up-time")} value={upTime} onChange={(newTime) => setUpTime(newTime)}/>
                         </LocalizationProvider>
                     </FormControl>
 
@@ -887,7 +894,7 @@ export default function Home() {
                         <Grid container columns={2} justify='flex-end' alignItems='center'>
                             <Grid item xs={1}>
                                 <Box>
-                                    Quality
+                                    {t("home.input-prompt.quality")}
                                 </Box>
                             </Grid>
                             <Grid item xs={1}>
@@ -903,7 +910,7 @@ export default function Home() {
                     <Grid container columns={2}>
                         <Grid item xs={1}>
                             {/* <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button> */}
-                            <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>Cancel</Button>
+                            <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>{t("home.cancel")}</Button>
                         </Grid>
                         
                     </Grid>
@@ -911,26 +918,26 @@ export default function Home() {
                 </DialogContent>
                 :
                 <DialogContent>
-                    <DialogContentText>{isNewRecord? "To record new sleep, please enter your daily sleep data below." : "To update a sleep record, alter your responses as necessary."}</DialogContentText>
-                    {makeBooleanCheckbox("Did you engage in any physical activity today?", physicalActivity, setPhysicalActivity)}
-                    {makeBooleanCheckbox("Did you have any naps during the day?", naps, setNaps)}
-                    {makeBooleanCheckbox("Did you consume alcohol less than 6 hours before bedtime?", alcoholConsumption, setAlcoholConsumption)}
-                    {makeBooleanCheckbox("Did you consume caffeine less than 6 hours before bedtime?", caffeineConsumption, setCaffeineConsumption)}
-                    {makeBooleanCheckbox("Did you use a phone, tablet, or watch television in bed?", electronics, setElectronics)}
-                    {makeBooleanCheckbox("Did you have any difficulty falling asleep?", difficultFallingAsleep, setDifficultFallingAsleep)}
-                    {makeBooleanCheckbox("Did you have any difficulty staying asleep?", difficultStayingAsleep, setDifficultStayingAsleep)}
-                    {makeBooleanCheckbox("Did you have any racing thoughts while in bed?", racingThoughts, setRacingThoughts)}
-                    {makeBooleanCheckbox("Did you have any dreams?", dreamsCB, handleOnChangeDreamCB)}
+                    <DialogContentText>{isNewRecord? t("home.input-prompt.new-record") : t("home.input-prompt.edit-record")}</DialogContentText>
+                    {makeBooleanCheckbox(t("home.sleep-journal.physical-activity"), physicalActivity, setPhysicalActivity)}
+                    {makeBooleanCheckbox(t("home.sleep-journal.naps"), naps, setNaps)}
+                    {makeBooleanCheckbox(t("home.sleep-journal.alchol"), alcoholConsumption, setAlcoholConsumption)}
+                    {makeBooleanCheckbox(t("home.sleep-journal.caffine"), caffeineConsumption, setCaffeineConsumption)}
+                    {makeBooleanCheckbox(t("home.sleep-journal.electronics"), electronics, setElectronics)}
+                    {makeBooleanCheckbox(t("home.sleep-journal.difficulty-falling"), difficultFallingAsleep, setDifficultFallingAsleep)}
+                    {makeBooleanCheckbox(t("home.sleep-journal.difficulty-staying"), difficultStayingAsleep, setDifficultStayingAsleep)}
+                    {makeBooleanCheckbox(t("home.sleep-journal.racing-thoughts"), racingThoughts, setRacingThoughts)}
+                    {makeBooleanCheckbox(t("home.sleep-journal.dreams"), dreamsCB, handleOnChangeDreamCB)}
 
                     <Grid container columns={2}>
                         <Grid item xs={1}>
                             {/* <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button> */}
-                            <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>Cancel</Button>
+                            <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>{t("home.cancel")}</Button>
                         </Grid>
                         <Grid item xs={1}>
                             <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
                                 <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>
-                                    {isNewRecord ? "Submit" : "Update"}
+                                    {isNewRecord ? t("home.submit"): t("home.update")}
                                 </Button>
                             </Box>
                         </Grid>

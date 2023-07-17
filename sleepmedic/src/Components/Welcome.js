@@ -1,4 +1,4 @@
-import logo from '../logo.svg';
+import logo from '../sleepMedicLogo.svg';
 import "./Welcome.css";
 import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -74,23 +74,21 @@ function Welcome() {
       {/*Welcome Message - Getting Started*/}
       <Grid container spacing={0}>
         <Grid item xs={8}>
-          <div>
-            <h1>{t("header.message")}</h1>
+            <h1 style={{fontSize: "2rem"}}>{t("welcome.title")}</h1>
             <img src={logo} alt="Sleep-Medic Logo" className="logo" />
-            <p>Achieve better sleep and improve your well-being with Sleep-Medic App.</p>
-          </div>
+            <p style={{fontSize: "1.25rem"}}>{t("welcome.subscript")}</p>
         </Grid>
         <Grid item xs={2}>
           {/*Language Select*/}
             <div className="LanguageSelect-form">
               <div className="language-list">
-              <h2>Select Language:</h2>
+              <h2>{t("welcome.language")}</h2>
                 <div onClick={(e) => handleLanguageChange('en')}>
-                  {Object.is("English", selectedLanguage) ? "✅ English" : "English"}
+                  {Object.is("English", selectedLanguage) ? <>✅ {t("welcome.english")}</> : <>{t("welcome.english")}</>}
                 </div>
                 <br/>
                 <div onClick={(e) => handleLanguageChange('es')}>
-                  {Object.is("Spanish", selectedLanguage) ? "✅ Spanish" : "Spanish"}
+                  {Object.is("Spanish", selectedLanguage) ? <>✅ {t("welcome.spanish")}</> : <>{t("welcome.spanish")}</>}
                 </div>
                 <br/>
                 <div onClick={(e) => handleLanguageChange('French')}>
@@ -99,7 +97,7 @@ function Welcome() {
                 {/* Add more language options here */}
               </div>
               <br/>
-              <Button variant="contained" color="primary" onClick={(e) => navigate("/login")}>Get Started</Button>
+              <Button variant="contained" color="primary" onClick={(e) => navigate("/login")}>{t("welcome.next")}</Button>
             </div>
         </Grid>
       </Grid>

@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import {Routes, Route } from 'react-router-dom';
 import LoginPage from './Components/LoginPage';
-import CreateAccount from './Components/CreatePage';
+import CreateAccount from './Components/createAccount/CreatePage';
 
 import Welcome from './Components/Welcome';
 import Home from "./Components/home/Home"

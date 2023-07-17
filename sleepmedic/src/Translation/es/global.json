@@ -1,8 +1,32 @@
 {
-    "header": {
-        "message": "Bienvenido a Sleep-Medic"
+    "welcome": {
+        "title": "Bienvenido a Sleep-Medic",
+        "subscript": "Logre dormir mejor y mejore su bienestar con la aplicación Sleep-Medic.",
+        "language": "Seleccionar idioma:",
+        "english": "Inglés",
+        "spanish": "Español",
+        "next": "empezar"
     }, 
     "home": {
         "body": "Ayooo Pausooooo "
+    },
+    "login": {
+        "title": "Inicia sesión en Sleep-Medic",
+        "email": "Correo Electrónico",
+        "password": "Contraseña",
+        "remember-me": "Recuérdame",
+        "forgot-password": {
+            "title": "Olvidé contraseña",
+            "instructions": "Ingrese el correo electrónico y su fecha de nacimiento asociados con su cuenta para iniciar el proceso de recuperación de contraseña.",
+            "email": "Correo Electrónico",
+            "dob": "Cumpleaños",
+            "cancel": "Cancelar",
+            "recover": "Recuperar Contraseña",
+            "thank-you": "Gracias",
+            "final-message": "Recibirá un correo electrónico en breve si existe una cuenta con el correo electrónico y el cumpleaños proporcionados",
+            "confirm": "Confirmar"
+        },
+        "or-create": "o crea una cuenta",
+        "login": "login"
     }
 }

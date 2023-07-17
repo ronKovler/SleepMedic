@@ -21,3 +21,7 @@
   .language-list {
     cursor: pointer;
   }
+  .logo {
+    width: 18rem; /* Adjust the width to your desired size */
+    height: 16rem;
+  }
