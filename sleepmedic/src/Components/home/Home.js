@@ -519,11 +519,22 @@ export default function Home() {
             setRacingThoughts(res.data.racingThoughts);
 
             setDreams(res.data.dreams);
+            if (res.data.dreams != "") {
+                console.log("res.data.dreams: ", res.data.dreams);
+            }
+            else if (res.data.dreams === null) {
+                console.log("res.data.dreams came back as null");
+            }
+            else {
+                console.log("res.data.dreams is empty string");
+            }
+            //console.log("res.data.dreams: ", res.data.dreams);
+            console.log("dreams: ", dreams);
             if ((dreams === null) || (dreams === undefined)) {
                 setDreamsCB(false);
             }
             else setDreamsCB(true);
-            console.log("dreams:", dreams);
+            console.log("dreams: ", dreams);
         }
         catch (err) {
             console.log("ERROR");
@@ -703,7 +714,7 @@ export default function Home() {
                 {
                     page === 1 ?
                     <DialogContent>
-                    <DialogContentText>{isNewRecord? "To record new sleep" : "To update sleep record"}, please enter your daily sleep data below.</DialogContentText>
+                    <DialogContentText>{isNewRecord? "To record new sleep, please enter your daily sleep data below." : "To update a sleep record, alter your responses as necessary."}</DialogContentText>
 
                     {/* Date Picker */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
@@ -797,7 +808,7 @@ export default function Home() {
                 </DialogContent>
                 :
                 <DialogContent>
-                    <DialogContentText>To record new sleep, please enter your daily sleep data below.</DialogContentText>
+                    <DialogContentText>{isNewRecord? "To record new sleep, please enter your daily sleep data below." : "To update a sleep record, alter your responses as necessary."}</DialogContentText>
                     {makeBooleanCheckbox("Did you engage in any physical activity today?", physicalActivity, setPhysicalActivity)}
                     {makeBooleanCheckbox("Did you have any naps during the day?", naps, setNaps)}
                     {makeBooleanCheckbox("Did you consume alcohol less than 6 hours before bedtime?", alcoholConsumption, setAlcoholConsumption)}
