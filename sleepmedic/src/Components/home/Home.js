@@ -519,7 +519,7 @@ export default function Home() {
             setRacingThoughts(res.data.racingThoughts);
 
             setDreams(res.data.dreams);
-            if (res.data.dreams != "") {
+            /*if (res.data.dreams != "") {
                 console.log("res.data.dreams: ", res.data.dreams);
             }
             else if (res.data.dreams === null) {
@@ -528,13 +528,12 @@ export default function Home() {
             else {
                 console.log("res.data.dreams is empty string");
             }
-            //console.log("res.data.dreams: ", res.data.dreams);
-            console.log("dreams: ", dreams);
+            console.log("dreams: ", dreams);    */
             if ((dreams === null) || (dreams === undefined)) {
                 setDreamsCB(false);
             }
             else setDreamsCB(true);
-            console.log("dreams: ", dreams);
+            console.log("dreams: ", dreams);        //<--- why is this showing nothing when there is actually dreams text for that record?
         }
         catch (err) {
             console.log("ERROR");
