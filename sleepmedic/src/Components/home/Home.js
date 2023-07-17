@@ -46,6 +46,8 @@ import { IconButton } from '@mui/material';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useNavigate } from 'react-router-dom';
+import { RadialBarChart, PolarAngleAxis, RadialBar, PieChart, Pie, Label } from 'recharts';
+import { Refresh } from '@mui/icons-material';
 
 const calendarTheme = createTheme({
     palette: {
@@ -280,6 +282,100 @@ export default function Home() {
         return "0" +hours + remainder + " AM";
     }
 
+    function setPieData(res) {
+        let downTimeTemp = res.data.downTime.split(":");
+        downTimeTemp = {name: 'down', value: parseInt(downTimeTemp[0]) + (parseFloat(downTimeTemp[1]) / 60)};
+        let sleepTimeTemp = res.data.sleepTime.split(":");
+        sleepTimeTemp = {name: 'sleep', value: parseInt(sleepTimeTemp[0]) + (parseFloat(sleepTimeTemp[1]) / 60)};
+        let wakeTimeTemp = res.data.wakeTime.split(":");
+        wakeTimeTemp = {name: 'wake', value: parseInt(wakeTimeTemp[0]) + (parseFloat(wakeTimeTemp[1]) / 60)};
+        let upTimeTemp = res.data.upTime.split(":");
+        upTimeTemp = {name: 'up', value: parseInt(upTimeTemp[0]) + (parseFloat(upTimeTemp[1]) / 60)};
+        let times = [downTimeTemp, sleepTimeTemp, wakeTimeTemp, upTimeTemp].sort(function(a,b){return a.value - b.value});
+
+        let tempPM = [];
+        let tempAM = [];
+
+        times.forEach(element => {
+            if (element.value < 12) {
+                tempAM.push(element);
+            } else {
+                tempPM.push(element);
+            }
+        })
+        
+        // tempAM and tempPM should now be sorted.
+        let pm = [];
+        let am = [];
+        let count = 0;
+        tempPM.forEach(element => {
+            let elapsedTime = 0;
+            if (count === 0) {
+                elapsedTime = element.value - 12;
+            } else {
+                elapsedTime = element.value - tempPM[count - 1].value;
+            }
+
+            if (element.name === 'down') {
+                pm.push({name: 'Out of Bed', value: elapsedTime});
+            } else if (element.name === 'wake') {
+                pm.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
+            } else {
+                // Handles both sleep and up
+                pm.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
+            }
+
+            if (count === tempPM.length - 1) {
+                // This was the last one, extend to the end with what should follow
+                elapsedTime = 24 - element.value;
+                if (element.name === 'sleep'){
+                    pm.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
+                } else if (element.name === 'up') {
+                    pm.push({name: 'Out of Bed', value: elapsedTime})
+                } else {
+                    // Handles wake and down
+                    pm.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
+                } 
+            }
+            count += 1;
+        })
+        count = 0;
+        tempAM.forEach(element => {
+            let elapsedTime = 0;
+            if (count === 0) {
+                elapsedTime = element.value;
+            } else {
+                elapsedTime = element.value - tempAM[count - 1].value;
+            }
+
+            if (element.name === 'down') {
+                am.push({name: 'Out of Bed', value: elapsedTime});
+            } else if (element.name === 'wake') {
+                am.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
+            } else {
+                // Handles both sleep and up
+                am.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
+            }
+
+            if (count === tempAM.length - 1) {
+                // This was the last one, extend to the end with what should follow
+                elapsedTime = 12 - element.value;
+                if (element.name === 'sleep'){
+                    am.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
+                } else if (element.name === 'up') {
+                    am.push({name: 'Out of Bed', value: elapsedTime})
+                } else {
+                    // Handles wake and down
+                    am.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
+                } 
+            }
+            count += 1;
+        })
+        setPieAmData(am.reverse());
+        setPiePmData(pm.reverse());
+        setPieEffData([{name: '0', value: 1 - res.data.efficiency}, {name: '1', value: res.data.efficiency, fill: '#2f875d'}])
+    }
+
     async function getData() {
         const headers = getGetHeaders();
         
@@ -295,6 +391,7 @@ export default function Home() {
             setAvgFallTime(res.data.fallTime + " min");
             setAvgAwakeTime(res.data.awakeTime + " min");
             setAvgQuality(res.data.quality);
+            setPieData(res);
             setAvgDownTime(getFormattedTime(res.data.downTime));
             setAvgSleepTime(getFormattedTime(res.data.sleepTime));
             setAvgWakeTime(getFormattedTime(res.data.wakeTime));
@@ -530,23 +627,47 @@ export default function Home() {
         }
     };
 
-    function CircularProgressWithLabel(props) {
-        return (
-          <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-            <CircularProgress variant="determinate" {...props} size="8rem" thickness={6}/>
-            <Box sx={{top: 0,left: 0,bottom: 0,right: 0,position: 'absolute',display: 'flex',alignItems: 'center',justifyContent: 'center',}}>
-              <Typography variant="h5" component="div" color="text.secondary" fontWeight='bold'>
-                {`${props.value.toFixed(1)}%`}
-              </Typography>
-            </Box>
-          </Box>
-        );
+    // function CircularProgressWithLabel(props) {
+    //     return (
+    //       <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+    //         <CircularProgress variant="determinate" {...props} size="8rem" thickness={6}/>
+    //         <Box sx={{top: 0,left: 0,bottom: 0,right: 0,position: 'absolute',display: 'flex',alignItems: 'center',justifyContent: 'center',}}>
+    //           <Typography variant="h5" component="div" color="text.secondary" fontWeight='bold'>
+    //             {`${props.value.toFixed(1)}%`}
+    //           </Typography>
+    //         </Box>
+    //       </Box>
+    //     );
+    // }
+
+    // CircularProgressWithLabel.propTypes = {
+    //     value: PropTypes.number.isRequired,
+    // };
+
+    const[piePmData, setPiePmData] = React.useState([{name: 'Asleep', value: 2, fill: '#173e5c'},
+                                                     {name: 'In Bed', value: 1, fill: '#82ca9d'},
+                                                     {name: 'Out of Bed', value: 9}]);
+    const[pieAmData, setPieAmData] = React.useState([{name: 'Out of Bed', value: 6},
+                                                     {name: 'In Bed', value: 1, fill: '#82ca9d'},
+                                                     {name: 'Asleep', value: 5, fill: '#173e5c'},]);
+    const[pieEffData, setPieEffData] = React.useState([{name: 'Efficiency', value: 0.02},
+                                                        {name: 'Efficiency', value: 0.98, fill:'#2f875d'}]);
+    function pieOver(val) {
+
     }
 
-    CircularProgressWithLabel.propTypes = {
-        value: PropTypes.number.isRequired,
-    };
+    function pieExits(val) {
 
+    }
+
+    function AveragePieChart() {
+        return (
+        <PieChart width={730} height={250}>
+            <Pie onMouseOver={series => {series.fill= '#173e5c';}} title={"Efficiency"} startAngle={90} endAngle={360 +90}  data={pieEffData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={30} outerRadius={65} fill="#a19b8c"  />                
+            <Pie title={"AM"} startAngle={90} endAngle={360 +90}  data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={75} outerRadius={95} fill="#a19b8c"  />
+            <Pie title={"PM"} startAngle={90} endAngle={360 +90}  data={piePmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={100} outerRadius={120} fill="#a19b8c"  />                    
+        </PieChart>)
+    }
 
     return (
         <Box sx={{
@@ -577,37 +698,36 @@ export default function Home() {
                     </Grid>
 
                     {/* Weekly Summary Statistics */}
-                    <Grid item xs={1} sx={{marginTop: '20pt'}}>
+                    <Grid item xs={1} sx={{marginTop: '10pt'}}>
                         <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
                             <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                 7-Day Averages
+                            </Typography>
+                            <AveragePieChart/>
+                            <Typography variant='body' component='div' textAlign='center' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='14pt'>
+                                {effAdvice}
                             </Typography>
                             {/* <Typography variant='h6' component='div' textAlign='center'>
                                 {getCurrentWeek()}
                             </Typography> */}
                             <Grid container columns={2}>
+                                
                                 <Grid item xs={1}>
+                                    
                                     <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
                                         Time spent falling asleep: <br/>
                                         Time spent awake in the night: <br/>
                                         Quality: <br/>
                                         Hours slept: <br/>
-                                        Got into bed at: <br/>
-                                        Fell asleep at: <br/>
-                                        Woke up at: <br/>
-                                        Got out of bed at: <br/>
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={1}>
+                                <Grid item xs={1}> 
+                                   
                                     <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
                                         {avgFallTime}<br/>
                                         {avgAwakeTime}<br/>
                                         {avgQuality}<br/>
                                         {avgHoursSlept}<br />
-                                        {avgDownTime}<br/>
-                                        {avgSleepTime}<br/>
-                                        {avgWakeTime}<br/>
-                                        {avgUpTime}<br/>
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -617,45 +737,8 @@ export default function Home() {
                         </Paper>
                     </Grid>
 
-                    <Grid item xs={1} sx={{marginTop: '20pt'}}>
-                        <Paper elevation={3} sx={{paddingBottom: '20pt', backgroundColor: '#D9D3E4'}}>
-                            <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold' paddingBottom='10pt'>
-                            7-Day Efficiency
-                            </Typography>
-                            <Grid container columns={3} alignItems="center">
-                                <Grid item xs={1} paddingLeft='10pt'>
-                                    <CircularProgressWithLabel value={avgEfficiency * 100}/>
-                                </Grid>
-                                <Grid item xs={2}>
-                                    <Typography variant='body' component='div' textAlign='left' paddingBottom='10pt' color='black' fontSize='16pt'>
-                                        {effAdvice}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    </Grid>
 
-                    {/* Weekly Advices */}
-                    <Grid item xs={1} sx={{marginTop: '20pt'}}>
-                        <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
-                            <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                Weekly Advices
-                            </Typography>
-                            <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
-                                I already want to take a nap tomorrow.
-                            </Typography>
-                        </Paper>
-                    </Grid>
                     
-
-                    {/* Create New Record Button */}
-                    <Grid item xs={1} justifyContent='center' display='flex' marginTop='20pt'>
-                        {/* TODO: add event listener to create  */}
-                        <Button variant='contained' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>New Record</Button>
-                        {/* <Button variant='contained' onClick={
-                            () => console.log(monthRecords)
-                        }>TEST</Button> */}
-                    </Grid>
 
                 </Grid>
                 </Grid>
@@ -678,7 +761,28 @@ export default function Home() {
                                 slots={{day: RecordedDays,}}
                             />
                         </LocalizationProvider>      
-                    </Paper>      
+                    </Paper>   
+                    {/* Weekly Advices */}
+                    <Grid item xs={1} sx={{marginTop: '20pt', width: '90%'}}>
+                        <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
+                            <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
+                                Weekly Advices
+                            </Typography>
+                            <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
+                                I already want to take a nap tomorrow.
+                            </Typography>
+                        </Paper>
+                    </Grid>
+                    
+
+                    {/* Create New Record Button */}
+                    <Grid item xs={1} justifyContent='center' display='flex' marginTop='20pt'>
+                        {/* TODO: add event listener to create  */}
+                        <Button variant='contained' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>New Record</Button>
+                        {/* <Button variant='contained' onClick={
+                            () => console.log(monthRecords)
+                        }>TEST</Button> */}
+                    </Grid>   
                 </Grid>
 
             </Grid>
