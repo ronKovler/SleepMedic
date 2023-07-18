@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useSignIn } from 'react-auth-kit';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import "./CreatePage.css";
-
+import logo from '../../sleep_logo_purp.svg';
 
 function CreateAccount() {
     //First Part
@@ -263,7 +263,8 @@ function CreateAccount() {
         :
         <div className="sleep-medic-container">
             <form className="create-form" onSubmit={handleCreateAccount}>
-                <h1 style={{maxWidth: "22rem"}}>Create an Account on Sleep-Medic</h1>
+                <img src={logo} alt="Sleep-Medic Logo" className="logo" />
+                <h1 style={{maxWidth: "22rem"}}>Create an Account</h1>
                 <label style={{fontWeight: "bold"}} htmlFor="email">Phone #:</label>
                 <TextField 
                 type="tel" 

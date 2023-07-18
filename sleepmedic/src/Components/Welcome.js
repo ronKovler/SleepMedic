@@ -1,4 +1,4 @@
-import logo from '../sleepMedicLogo.svg';
+import logo from '../sleep_logo_purp.svg';
 import "./Welcome.css";
 import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import LoginPage from './LoginPage'
 import React from 'react';
 import theme from '../theme';
+import { height } from '@mui/system';
 
 
 
@@ -72,16 +73,16 @@ function Welcome() {
  
     <div className="sleep-medic-container">
       {/*Welcome Message - Getting Started*/}
-      <Grid container spacing={0}>
+      <Grid container spacing={0} justify='center' alignItems='center'>
         <Grid item xs={8}>
             <h1 style={{fontSize: "2rem"}}>{t("welcome.title")}</h1>
-            <img src={logo} alt="Sleep-Medic Logo" className="logo" />
+            <img src={logo} alt="Sleep-Medic Logo" className="logo" style={{height: 400, width:400}}/>
             <p style={{fontSize: "1.25rem"}}>{t("welcome.subscript")}</p>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={2} >
           {/*Language Select*/}
             <div className="LanguageSelect-form">
-              <div className="language-list">
+              <div className="language-list" >
               <h2>{t("welcome.language")}</h2>
                 <div onClick={(e) => handleLanguageChange('en')}>
                   {Object.is("English", selectedLanguage) ? <>✅ {t("welcome.english")}</> : <>{t("welcome.english")}</>}

@@ -7,7 +7,7 @@ import "./LoginPage.css";
 import { Button, Alert, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, Checkbox } from '@mui/material';
 import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';
-
+import logo from '../sleep_logo_purp.svg';
 
 
 
@@ -118,6 +118,7 @@ function Login() {
   return (
     <div className="sleep-medic-container">
       <form className="login-form" onSubmit={handleLogin}>
+        <img src={logo} alt="Sleep-Medic Logo" className="logo" />
         <h1>{t("login.title")}</h1>
         {error && <Alert severity="error" sx={{color: "red", fontSize: "0.85rem"}}><strong>Username/Password was Entered Incorrectly!</strong></Alert>}
         <label style={{fontWeight: "bold"}} htmlFor="email">{t("login.email")}</label>

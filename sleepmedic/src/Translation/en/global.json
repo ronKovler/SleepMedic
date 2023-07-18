@@ -53,7 +53,7 @@
 
     },
     "login": {
-        "title": "Log in to Sleep-Medic",
+        "title": "Login",
         "email": "Email:",
         "password": "Password:",
         "remember-me": "Remember Me",

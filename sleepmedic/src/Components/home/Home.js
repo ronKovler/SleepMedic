@@ -679,10 +679,10 @@ export default function Home() {
 
     function AveragePieChart() {
         return (
-        <PieChart width={730} height={250}>
-            <Pie animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450}  data={pieEffData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={30} outerRadius={65} fill="#a19b8c"  />                
-            <Pie animationDuration={450} title={"AM"} startAngle={90} endAngle={450}  data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={75} outerRadius={95} fill="#a19b8c"  />
-            <Pie animationDuration={500} title={"PM"} startAngle={90} endAngle={450}  data={piePmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={100} outerRadius={120} fill="#a19b8c"  />                    
+        <PieChart width={730} height={250} >
+            <Pie animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450}  data={pieEffData} dataKey="value" nameKey="name" cx="80%" cy="50%" innerRadius={60} outerRadius={95} fill="#a19b8c"  />                
+            <Pie animationDuration={450} title={"AM"} startAngle={90} endAngle={450}  data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={95} fill="#a19b8c"  />
+            <Pie animationDuration={500} title={"PM"} startAngle={90} endAngle={450}  data={piePmData} dataKey="value" nameKey="name" cx="20%" cy="50%" innerRadius={60} outerRadius={95} fill="#a19b8c"  />                    
         </PieChart>)
     }
 
