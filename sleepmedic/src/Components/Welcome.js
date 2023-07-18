@@ -75,9 +75,9 @@ function Welcome() {
       {/*Welcome Message - Getting Started*/}
       <Grid container spacing={0} justify='center' alignItems='center'>
         <Grid item xs={8}>
-            <h1 style={{fontSize: "2rem"}}>{t("welcome.title")}</h1>
+            <h1 style={{fontSize: "2.5rem", color: '#d8d3e3'}}>{t("welcome.title")}</h1>
             <img src={logo} alt="Sleep-Medic Logo" className="logo" style={{height: 400, width:400}}/>
-            <p style={{fontSize: "1.25rem"}}>{t("welcome.subscript")}</p>
+            <p style={{fontSize: "1.25rem", color: '#d8d3e3'}}>{t("welcome.subscript")}</p>
         </Grid>
         <Grid item xs={2} >
           {/*Language Select*/}
