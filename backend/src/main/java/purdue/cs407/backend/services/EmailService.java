@@ -100,7 +100,9 @@ public class EmailService {
                         BodyPart bodyPart = multipart.getBodyPart(i);
                         String partContent = bodyPart.getContentType();
                         if (partContent.contains("text/plain") || partContent.contains("text/html")) {
-                            temp.append((String) bodyPart.getContent());
+                            if (((String) bodyPart.getContent()).contains("CANCEL")) {
+                                temp.append(((String) bodyPart.getContent()).replaceAll("\\s", ""));
+                            }
                         }
                     }
                     body = temp.toString();
@@ -108,7 +110,7 @@ public class EmailService {
 
                 System.out.println("BODY: " + body);
                 // This is a text cancellation request (supposedly), add to list and delete.
-                if (body.contains("CANCEL")) {
+                if (body.startsWith("CANCEL-")) {
                     System.out.println("BODY STARTED WITH CANCEL");
                     String ID = body.substring(7).replaceAll("\\s","");
                     ID = ID.replaceAll("\\s","");

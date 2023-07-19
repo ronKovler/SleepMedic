@@ -505,7 +505,7 @@ export default function Home() {
                 let res = await axios.post("https://api.sleepmedic.me:8443/home/create_record", record, {headers});
             }
             catch (err) {
-                alert("Already recorded!");
+                alert("You already have a record for this date! Please modify the existing one instead.");
                 console.log('Failed to create record.');
             }
         }

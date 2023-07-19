@@ -11,7 +11,7 @@ public class ReminderExecutor implements Runnable {
 
     private ReminderTask reminderTask;
 
-    private EmailService emailService;
+    private final EmailService emailService;
 
     public ReminderExecutor(ReminderTask reminderTask, EmailService emailService) {
         this.reminderTask = reminderTask;
@@ -38,7 +38,7 @@ public class ReminderExecutor implements Runnable {
             String recipient = reminder.getUser().getPhone() + emailService.getCarrierGateway(reminder.getCarrier());
             EmailDetails details1 = new EmailDetails(recipient, "", "SM 1/2 " + firstMessage, null);
             emailService.sendSimpleMail(details1);
-            EmailDetails details2 = new EmailDetails(recipient, "", "SM 2/2 " + "To cancel, reply: CANCEL " + reminder.getReminderID(), null);
+            EmailDetails details2 = new EmailDetails(recipient, "", "SM 2/2 " + "To cancel, reply: CANCEL-" + reminder.getReminderID(), null);
             emailService.sendSimpleMail(details2);
             return;
         }
