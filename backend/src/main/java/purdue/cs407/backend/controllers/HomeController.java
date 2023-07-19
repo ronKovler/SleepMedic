@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/home/")
@@ -119,7 +120,7 @@ public class HomeController {
      */
     @RequestMapping(value="month", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SleepRecord>> getMonthOfRecords() {
+    public ResponseEntity<List<RecordResponse>> getMonthOfRecords() {
         // Get the user
         User user = getCurrentUser();
 
@@ -133,7 +134,7 @@ public class HomeController {
 
         Collection<SleepRecord> records = recordRepository.getBetween(user.getUserID(), startDate.toString(), endDate.toString());
 
-        return ResponseEntity.ok(records.stream().toList());
+        return ResponseEntity.ok(records.stream().map(RecordResponse::new).collect(Collectors.toList()));
     }
 
     /**
