@@ -1,0 +1,13 @@
+.table-of-contents {
+    display: flex;
+    position: relative;
+    font-size: 3.30rem;
+    text-align: center;
+    font-family: ui-sans-serif;
+    /*background-color: rgb(104, 104, 104);     */  /*  <-- original    */
+    background-color: #D9D3E4;        /* <--- chosen foreground   */
+    /*color: #8a909e; */           /* <-- chosen gray text color against the foreground    */
+    color: #000000;               /* <-- slightly darker than gray above against the foreground   */
+    /*color: #ffd700;   */ /* Gold text color */
+    border-radius: 1rem;
+}

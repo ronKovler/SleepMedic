@@ -2,6 +2,7 @@ import './App.css';
 import {Routes, Route } from 'react-router-dom';
 import LoginPage from './Components/LoginPage';
 import CreateAccount from './Components/createAccount/CreatePage';
+import EducationPage from './Components/Education';
 
 import Welcome from './Components/Welcome';
 import Home from "./Components/home/Home"
@@ -27,6 +28,7 @@ function App() {
         <Route path="/createreminder" element={<CreateRem/>} />
         <Route path="/notificationspage" element={<OpenNotificationsPage/>} />
         <Route path="/statistics" element={<Statistics/>} />
+        <Route path="/education" element={<EducationPage/>} />
       </Routes>
     </div>
   );
