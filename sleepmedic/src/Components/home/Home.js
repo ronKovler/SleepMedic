@@ -294,7 +294,6 @@ export default function Home() {
         let upTimeTemp = res.data.upTime.split(":");
         upTimeTemp = {name: 'up', value: parseInt(upTimeTemp[0]) + (parseFloat(upTimeTemp[1]) / 60)};
         let times = [downTimeTemp, sleepTimeTemp, wakeTimeTemp, upTimeTemp].sort(function(a,b){return a.value - b.value});
-
         let tempPM = [];
         let tempAM = [];
 
