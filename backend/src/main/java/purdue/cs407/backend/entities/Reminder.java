@@ -28,7 +28,7 @@ public class Reminder {
     @Column(name="trigger_days")
     private byte triggerDays;
 
-    @Column(name = "cron", length = 20)
+    @Column(name = "cron", length = 50)
     private String cron;
 
     @Column(name = "job_ID", length = 196)

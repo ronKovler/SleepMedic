@@ -21,6 +21,11 @@
       "src": "purple4.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "browser_icon.png",
+      "type": "image/png",
+      "sizes": "512x512" 
     }
   ],
   "start_url": ".",

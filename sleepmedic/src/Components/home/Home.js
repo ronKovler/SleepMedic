@@ -698,66 +698,66 @@ export default function Home() {
             <Grid container spacing={2} columns={2} sx={{margin: 0}}>
                 {/* LEFT PANEL */}
                 <Grid item xs={1}>
-                <Grid container space={2} columns={1}>
-                    {/* Username Display */}
-                    <Grid item xs={1}>
-                        <Paper elevation={3} sx={{backgroundColor: '#7293A0'}}>
-                            <Typography variant="h4" component="div"
-                                        sx={{flexGrow: 1,
-                                            fontWeight: 'bold',
-                                            color: 'black', 
-                                            paddingTop: '10px',
-                                            paddingBottom: '10px',
-                                            textAlign: 'center', color: 'white'}}>
-                                {username} 
-                            </Typography>
-                        </Paper>
-                    </Grid>
+                    <Grid container space={2} columns={1}>
+                        {/* Username Display */}
+                        <Grid item xs={1}>
+                            <Paper elevation={3} sx={{backgroundColor: '#7293A0'}}>
+                                <Typography variant="h4" component="div"
+                                            sx={{flexGrow: 1,
+                                                fontWeight: 'bold',
+                                                color: 'black', 
+                                                paddingTop: '10px',
+                                                paddingBottom: '10px',
+                                                textAlign: 'center', color: 'white'}}>
+                                    {username} 
+                                </Typography>
+                            </Paper>
+                        </Grid>
 
-                    {/* Weekly Summary Statistics */}
-                    <Grid item xs={1} sx={{marginTop: '10pt'}}>
-                        <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
-                            <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                {t("home.7-day.title")}
-                            </Typography>
-                            <AveragePieChart/>
-                            <Typography variant='body' component='div' textAlign='center' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='14pt'>
-                                {t("home.effAdvice."+effAdvice)}
-                            </Typography>
-                            {/* <Typography variant='h6' component='div' textAlign='center'>
-                                {getCurrentWeek()}
-                            </Typography> */}
-                            <Grid container columns={2}>
-                                
-                                <Grid item xs={1}>
+                        {/* Weekly Summary Statistics */}
+                        <Grid item xs={1} sx={{marginTop: '10pt'}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
+                                <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
+                                    {t("home.7-day.title")}
+                                </Typography>
+                                <AveragePieChart/>
+                                <Typography variant='body' component='div' textAlign='center' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='14pt'>
+                                    {t("home.effAdvice."+effAdvice)}
+                                </Typography>
+                                {/* <Typography variant='h6' component='div' textAlign='center'>
+                                    {getCurrentWeek()}
+                                </Typography> */}
+                                <Grid container columns={2}>
                                     
-                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
-                                        {t("home.7-day.time-spent-falling")} <br/>
-                                        {t("home.7-day.time-spent-awake")} <br/>
-                                        {t("home.7-day.quality")} <br/>
-                                        {t("home.7-day.hours-slept")} <br/>
-                                    </Typography>
+                                    <Grid item xs={1}>
+                                        
+                                        <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
+                                            {t("home.7-day.time-spent-falling")} <br/>
+                                            {t("home.7-day.time-spent-awake")} <br/>
+                                            {t("home.7-day.quality")} <br/>
+                                            {t("home.7-day.hours-slept")} <br/>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={1}> 
+                                    
+                                        <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
+                                            {avgFallTime}<br/>
+                                            {avgAwakeTime}<br/>
+                                            {avgQuality}<br/>
+                                            {avgHoursSlept}<br />
+                                        </Typography>
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={1}> 
-                                   
-                                    <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
-                                        {avgFallTime}<br/>
-                                        {avgAwakeTime}<br/>
-                                        {avgQuality}<br/>
-                                        {avgHoursSlept}<br />
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                <Button href="/statistics" endIcon={<LegendToggleIcon/>} variant='contained'>View Insights</Button>
-                            </Box>
-                        </Paper>
+                                <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
+                                    <Button href="/statistics" endIcon={<LegendToggleIcon/>} variant='contained'>View Insights</Button>
+                                </Box>
+                            </Paper>
+                        </Grid>
+
+
+                        
+
                     </Grid>
-
-
-                    
-
-                </Grid>
                 </Grid>
 
                 {/* RIGHT PANEL CALENDAR */}

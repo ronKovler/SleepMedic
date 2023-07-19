@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "sleep_record")
-public class SleepRecord extends RecordRequest {
+public class SleepRecord  {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "record_ID")

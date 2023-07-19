@@ -30,7 +30,6 @@ public class NotificationController {
     private final ReminderRepository reminderRepository;
     private final EmailService emailService;
     private final SchedulingService schedulingService;
-    private final ReminderExecutor reminderExecutor;
     private final UserRepository userRepository;
 
     private User getCurrentUser() {
@@ -40,12 +39,11 @@ public class NotificationController {
 
     public NotificationController(ReminderRepository reminderRepository,
                                   EmailService emailService,
-                                  SchedulingService schedulingService, ReminderExecutor reminderExecutor,
+                                  SchedulingService schedulingService,
                                   UserRepository userRepository) {
         this.reminderRepository = reminderRepository;
         this.emailService = emailService;
         this.schedulingService = schedulingService;
-        this.reminderExecutor = reminderExecutor;
         this.userRepository = userRepository;
     }
 
@@ -117,6 +115,7 @@ public class NotificationController {
         int minutes = Integer.parseInt(time[1]); // Need to remove leading 0s
 
         String cron = "0 " + /* 0 seconds */ minutes + " " + hours + " ? * "/* Month day of month*/ + days;
+
         String jobID = "reminder_job:" + user.getEmail() + ":";
 
         Reminder reminder = reminderRepository.save(new Reminder(user, request, reminderDaysOfWeek, cron, jobID));
@@ -124,7 +123,7 @@ public class NotificationController {
         reminder = reminderRepository.save(reminder); // Persist the reminder to get a reminderID
         ReminderTask reminderTask = new ReminderTask(cron, reminder);
 
-        reminderExecutor.setReminderTask(reminderTask);
+        ReminderExecutor reminderExecutor = new ReminderExecutor(reminderTask, emailService);
         schedulingService.scheduleATask(reminder.getJobID(), reminderExecutor, cron, getZoneName(request.getTimezone()));
 
         user.addReminder(reminder);
@@ -239,7 +238,7 @@ public class NotificationController {
             String cron = reminder.getCron();
 
             ReminderTask reminderTask = new ReminderTask(cron, reminder);
-            reminderExecutor.setReminderTask(reminderTask);
+            ReminderExecutor reminderExecutor = new ReminderExecutor(reminderTask, emailService);
             schedulingService.scheduleATask(jobID, reminderExecutor, cron, getZoneName(reminder.getTimezone()));
         }
     }

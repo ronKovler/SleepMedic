@@ -7,20 +7,22 @@ import purdue.cs407.backend.entities.Reminder;
 import purdue.cs407.backend.services.EmailService;
 import java.util.Base64;
 
-@Service
-@Scope("prototype") // Essentially makes this service a "class"
 public class ReminderExecutor implements Runnable {
 
     private ReminderTask reminderTask;
 
-    @Autowired
-    EmailService emailService;
+    private EmailService emailService;
+
+    public ReminderExecutor(ReminderTask reminderTask, EmailService emailService) {
+        this.reminderTask = reminderTask;
+        this.emailService = emailService;
+    }
 
     @Override
     public void run() {
         System.out.println("SENDING NOTIFICATION");
 
-        String addr = "http://api.sleepmedic.me:8080/api/reminder/cancel_reminder/";
+        String addr = "https://api.sleepmedic.me:8443/reminder/cancel_reminder/";
         Reminder reminder = reminderTask.getReminder();
         String template = emailService.getTemplate(reminder.getMessage());
         String hash = Base64.getUrlEncoder().encodeToString(reminder.getReminderID().toString().getBytes());
