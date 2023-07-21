@@ -572,7 +572,7 @@ export default function Home() {
         //Get Data
         console.log("USED effect");
         getData();
-    }, []);
+    }, [avgDownTime, avgSleepTime, avgWakeTime, avgUpTime, avgEfficiency]);
 
     
     // Popup window handlers
