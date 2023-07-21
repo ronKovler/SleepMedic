@@ -825,53 +825,84 @@ export default function Home() {
 
                 {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs={1}>
-                    {/* Weekly Advices */}
-                    <Grid item xs={3} sx={{marginTop: '0pt', width: '90%'}}>
-                        <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px'}}>
-                            <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                {t("home.weekly-advices.title")}
-                            </Typography>
-                            <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
-                                {t("home.weekly-advices.1")}
-                            </Typography>
-                        </Paper>
-                    </Grid>
-                    
-
-                     
-                    <Paper elevation={3} sx={{width: '90%', height:'65%', backgroundColor: '#D9D3E4'}}>
-                        <Grid container spacing={2} columns={3} sx={{margin: '10pt'}}> 
-                            <Grid item >
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DateCalendar showDaysOutsideCurrentMonth
-                                fixedWeekNumber={6}
-                                    //sx={{scale: '150%', paddingTop:'50px'}}
-                                    sx={{scale: '100%'}}
-                                
-                                    views={['day']} 
-                                    onChange={(e) => {
-                                        console.log(monthRecords);
-                                        setIsNewRecord(false);
-                                        handleOpenEditForm(e);
-                                    }}
-                                    onMonthChange={(e) => {
-                                        handleNewCalendarDates(e);
-                                    }}
-                                    slots={{day: RecordedDays,}}
-                                />
-                            </LocalizationProvider>   
-                            {/* Create New Record Button */}
-                    
-                        {/* TODO: add event listener to create  */}
-                        <Button variant='contained' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>{t("home.new-record")}</Button>
-                        {/* <Button variant='contained' onClick={
-                            () => console.log(monthRecords)
-                        }>TEST</Button> */}
-                    
-                            </Grid> 
+                    <Grid container columns={3} sx={{width: '90%'}} spacing={1}>
+                        <Grid item xs={3}>
+                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px'}}>
+                                <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
+                                    {t("home.weekly-advices.title")}
+                                </Typography>
+                                <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' color='black' fontSize='16pt'>
+                                    {t("home.weekly-advices.1")}
+                                </Typography>
+                            </Paper>
                         </Grid>
-                    </Paper>   
-                     
+
+                        <Grid item xs={1.3}>
+                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
+                                <Grid container columns={1}>
+                                    <Grid item xs={1}>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <DateCalendar showDaysOutsideCurrentMonth
+                                            fixedWeekNumber={6}
+                                                //sx={{scale: '150%', paddingTop:'50px'}}
+                                                sx={{scale: '95%'}}
+                                            
+                                                views={['day']} 
+                                                onChange={(e) => {
+                                                    console.log(monthRecords);
+                                                    setIsNewRecord(false);
+                                                    handleOpenEditForm(e);
+                                                }}
+                                                onMonthChange={(e) => {
+                                                    handleNewCalendarDates(e);
+                                                }}
+                                                slots={{day: RecordedDays,}}
+                                            />
+                                        </LocalizationProvider>
+                                    </Grid>
+                                    <Grid item xs={1}>
+                                        <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
+                                            <Button variant='contained' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>
+                                                {t("home.new-record")}
+                                            </Button>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid>
+
+                        <Grid item xs={1.7}>
+                            <Grid container columns={1} spacing={1}>
+                                <Grid item xs={1}>
+                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
+                                        <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
+                                            {"Education Plan"}
+                                        </Typography>
+                                        Some buttons and progress bar
+                                    </Paper>
+                                </Grid>
+
+                                <Grid item xs={1}>
+                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
+                                        <Grid container columns={1}>
+                                            <Grid item xs={1}>
+                                                <Typography variant='body' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
+                                                    You can gain insights to your sleep patterbs through visualizing your habbits. Explore them on
+                                                    the insight page.
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={1} sx={{paddingTop: '10px'}}>
+                                                <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
+                                                    <Button href="/statistics" endIcon={<LegendToggleIcon/>} variant='contained'>View Insights</Button>
+                                                </Box>
+                                            </Grid>
+                                        </Grid>
+                                   </Paper>
+                                </Grid>
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Grid>
 
             </Grid>
