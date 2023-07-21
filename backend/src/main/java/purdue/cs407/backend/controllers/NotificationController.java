@@ -30,7 +30,6 @@ public class NotificationController {
     private final ReminderRepository reminderRepository;
     private final EmailService emailService;
     private final SchedulingService schedulingService;
-    private final UserRepository userRepository;
 
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -39,12 +38,10 @@ public class NotificationController {
 
     public NotificationController(ReminderRepository reminderRepository,
                                   EmailService emailService,
-                                  SchedulingService schedulingService,
-                                  UserRepository userRepository) {
+                                  SchedulingService schedulingService) {
         this.reminderRepository = reminderRepository;
         this.emailService = emailService;
         this.schedulingService = schedulingService;
-        this.userRepository = userRepository;
     }
 
     /**

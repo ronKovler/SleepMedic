@@ -715,12 +715,15 @@ export default function Home() {
                         </Grid>
 
                         {/* Weekly Summary Statistics */}
-                        <Grid item xs={1} sx={{marginTop: '10pt'}}>
+                        <Grid  item xs={1} sx={{marginTop: '10pt'}}>
                             <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
                                 <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                     {t("home.7-day.title")}
                                 </Typography>
-                                <AveragePieChart/>
+                                <Box display="flex" justifyContent="center" alignItems="center">
+                                    <AveragePieChart/>
+                                </Box>
+                                
                                 <Typography variant='body' component='div' textAlign='center' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='14pt'>
                                     {t("home.effAdvice."+effAdvice)}
                                 </Typography>
@@ -762,9 +765,11 @@ export default function Home() {
 
                 {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs={1}>
-                    <Paper elevation={3} sx={{width: '90%'}}>
+                    <Paper elevation={3} sx={{width: '90%', height:'80%'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar 
+                                // sx={{scale: '200%', paddingTop:'10%'}}
+                                sx={{scale: '150%', paddingTop:'50px'}}
                                 size='lg'
                                 views={['day']} 
                                 onChange={(e) => {

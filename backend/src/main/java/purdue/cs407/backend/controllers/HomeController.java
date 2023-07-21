@@ -10,7 +10,6 @@ import purdue.cs407.backend.entities.SleepRecord;
 import purdue.cs407.backend.entities.User;
 import purdue.cs407.backend.repositories.RecordRepository;
 import purdue.cs407.backend.repositories.UserRepository;
-
 import java.sql.Date;
 import java.sql.Time;
 import java.text.DecimalFormat;
@@ -24,11 +23,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/home/")
 @CrossOrigin(origins = "*")
 public class HomeController {
-    private final UserRepository userRepository;
     private final RecordRepository recordRepository;
 
     public HomeController(UserRepository userRepository, RecordRepository recordRepository ) {
-        this.userRepository = userRepository;
         this.recordRepository = recordRepository;
     }
 

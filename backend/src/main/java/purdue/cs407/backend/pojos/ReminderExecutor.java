@@ -1,15 +1,12 @@
 package purdue.cs407.backend.pojos;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import purdue.cs407.backend.entities.Reminder;
 import purdue.cs407.backend.services.EmailService;
 import java.util.Base64;
 
 public class ReminderExecutor implements Runnable {
 
-    private ReminderTask reminderTask;
+    private final ReminderTask reminderTask;
 
     private final EmailService emailService;
 
@@ -51,10 +48,5 @@ public class ReminderExecutor implements Runnable {
         EmailDetails details = new EmailDetails(reminder.getUser().getEmail(), message, "SleepMedic Notification", null);
         emailService.sendSimpleMail(details);
     }
-
-    public void setReminderTask(ReminderTask reminderTask) {
-        this.reminderTask = reminderTask;
-    }
-
 
 }

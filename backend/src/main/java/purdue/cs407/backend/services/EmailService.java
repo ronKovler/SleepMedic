@@ -52,7 +52,7 @@ public class EmailService {
      * @param details user and msg to send.
      * @return String on success/failure (not used currently)
      */
-    public String sendSimpleMail(EmailDetails details) {
+    public void sendSimpleMail(EmailDetails details) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             message.setSubject(details.getSubject());
@@ -63,9 +63,9 @@ public class EmailService {
 
             javaMailSender.send(message);
 
-            return "Success";
+
         } catch (Exception e) {
-            return "Failed to send message";
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -170,8 +170,8 @@ public class EmailService {
     }
 
     //TODO do we want to send attachments?
-    public String sendMailWithAttachment(EmailDetails details) {
-        return null;
-    }
+//    public String sendMailWithAttachment(EmailDetails details) {
+//        return null;
+//    }
 
 }

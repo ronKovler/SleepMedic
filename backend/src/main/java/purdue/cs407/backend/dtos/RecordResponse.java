@@ -48,6 +48,7 @@ public class RecordResponse {
                           double upTime, int quality, boolean physicalActivity, boolean naps, boolean caffeineConsumption,
                           boolean alcoholConsumption, boolean electronics, boolean difficultStayingAsleep,
                           boolean difficultFallingAsleep, boolean racingThoughts, String dreams, double efficiency) {
+        this.recordID = recordID;
         this.date = date;
         this.downTime = downTime;
         this.fallTime = fallTime;
