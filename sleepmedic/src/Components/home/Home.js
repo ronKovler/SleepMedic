@@ -750,7 +750,9 @@ export default function Home() {
             background: 'repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% )',
             animation: 'animazione 13s ease-in-out infinite alternate-reverse',
         
-            height: '200vh' 
+            height: '100vh' ,
+            width: '100vw'
+            
             }}>
             <Navbar/>
             <Grid container spacing={2} columns={2} sx={{margin: 0}}>
@@ -823,30 +825,9 @@ export default function Home() {
 
                 {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs={1}>
-                    <Paper elevation={3} sx={{width: '90%', height:'80%', backgroundColor: '#D9D3E4'}}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DateCalendar showDaysOutsideCurrentMonth
-                            fixedWeekNumber={6}
-                                //sx={{scale: '150%', paddingTop:'50px'}}
-                                sx={{scale: '150%', paddingTop:'50px'}}
-                               
-                                views={['day']} 
-                                onChange={(e) => {
-                                    console.log(monthRecords);
-                                    setIsNewRecord(false);
-                                    handleOpenEditForm(e);
-                                }}
-                                onMonthChange={(e) => {
-                                    handleNewCalendarDates(e);
-                                }}
-                                slots={{day: RecordedDays,}}
-                            />
-                        </LocalizationProvider>    
-                        
-                    </Paper>   
                     {/* Weekly Advices */}
-                    <Grid item xs={1} sx={{marginTop: '20pt', width: '90%'}}>
-                        <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
+                    <Grid item xs={3} sx={{marginTop: '0pt', width: '90%'}}>
+                        <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px'}}>
                             <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                 {t("home.weekly-advices.title")}
                             </Typography>
@@ -857,14 +838,40 @@ export default function Home() {
                     </Grid>
                     
 
-                    {/* Create New Record Button */}
-                    <Grid item xs={1} justifyContent='center' display='flex' marginTop='20pt'>
+                     
+                    <Paper elevation={3} sx={{width: '90%', height:'65%', backgroundColor: '#D9D3E4'}}>
+                        <Grid container spacing={2} columns={3} sx={{margin: '10pt'}}> 
+                            <Grid item >
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DateCalendar showDaysOutsideCurrentMonth
+                                fixedWeekNumber={6}
+                                    //sx={{scale: '150%', paddingTop:'50px'}}
+                                    sx={{scale: '100%'}}
+                                
+                                    views={['day']} 
+                                    onChange={(e) => {
+                                        console.log(monthRecords);
+                                        setIsNewRecord(false);
+                                        handleOpenEditForm(e);
+                                    }}
+                                    onMonthChange={(e) => {
+                                        handleNewCalendarDates(e);
+                                    }}
+                                    slots={{day: RecordedDays,}}
+                                />
+                            </LocalizationProvider>   
+                            {/* Create New Record Button */}
+                    
                         {/* TODO: add event listener to create  */}
                         <Button variant='contained' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>{t("home.new-record")}</Button>
                         {/* <Button variant='contained' onClick={
                             () => console.log(monthRecords)
                         }>TEST</Button> */}
-                    </Grid>   
+                    
+                            </Grid> 
+                        </Grid>
+                    </Paper>   
+                     
                 </Grid>
 
             </Grid>
@@ -1015,7 +1022,9 @@ export default function Home() {
                 </Box>
                 
             </Dialog>
-
+            <Typography  variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
+                                    SLEEP MEDIC ALPHA 0.3.0
+                                </Typography>
         </Box>
     )
 }
