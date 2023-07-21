@@ -764,12 +764,13 @@ export default function Home() {
 
                 {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs={1}>
-                    <Paper elevation={3} sx={{width: '90%', height:'80%'}}>
+                    <Paper elevation={3} sx={{width: '90%', height:'80%', backgroundColor: '#D9D3E4'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DateCalendar 
-                                // sx={{scale: '200%', paddingTop:'10%'}}
+                            <DateCalendar showDaysOutsideCurrentMonth
+                            fixedWeekNumber={6}
+                                //sx={{scale: '150%', paddingTop:'50px'}}
                                 sx={{scale: '150%', paddingTop:'50px'}}
-                                size='lg'
+                               
                                 views={['day']} 
                                 onChange={(e) => {
                                     console.log(monthRecords);
@@ -781,7 +782,8 @@ export default function Home() {
                                 }}
                                 slots={{day: RecordedDays,}}
                             />
-                        </LocalizationProvider>      
+                        </LocalizationProvider>    
+                        
                     </Paper>   
                     {/* Weekly Advices */}
                     <Grid item xs={1} sx={{marginTop: '20pt', width: '90%'}}>

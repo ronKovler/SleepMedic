@@ -5,9 +5,9 @@ public class EmailDetails {
     private String recipient;
     private String msgBody;
     private String subject;
-    private String attachment;
+    private byte[] attachment;
 
-    public EmailDetails(String recipient, String msgBody, String subject, String attachment) {
+    public EmailDetails(String recipient, String msgBody, String subject, byte[] attachment) {
         this.recipient = recipient;
         this.msgBody = msgBody;
         this.subject = subject;
@@ -42,11 +42,11 @@ public class EmailDetails {
         this.subject = subject;
     }
 
-    public String getAttachment() {
+    public byte[] getAttachment() {
         return attachment;
     }
 
-    public void setAttachment(String attachment) {
+    public void setAttachment(byte[] attachment) {
         this.attachment = attachment;
     }
 }

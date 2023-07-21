@@ -4,6 +4,7 @@ import jakarta.mail.*;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 import jakarta.mail.search.FlagTerm;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -57,7 +58,7 @@ public class EmailService {
             MimeMessage message = javaMailSender.createMimeMessage();
             message.setSubject(details.getSubject());
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom("SleepMedic");
+            helper.setFrom("Sleep-Medic");
             helper.setTo(details.getRecipient());
             helper.setText(details.getMsgBody(), true);
 
@@ -170,8 +171,24 @@ public class EmailService {
     }
 
     //TODO do we want to send attachments?
-//    public String sendMailWithAttachment(EmailDetails details) {
-//        return null;
-//    }
+    public String sendMailWithAttachment(EmailDetails details, String attachmentName) throws MessagingException {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom("Sleep-Medic");
+            helper.setTo(details.getRecipient());
+            helper.setSubject(details.getSubject());
+            helper.setText(details.getMsgBody());
+            ByteArrayResource resource = new ByteArrayResource(details.getAttachment());
+            helper.addAttachment(attachmentName, resource);
+            javaMailSender.send(message);
+
+
+        } catch (Exception e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
+            return "Failed";
+        }
+        return "Success";
+    }
 
 }

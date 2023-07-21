@@ -1,6 +1,8 @@
 package purdue.cs407.backend.controllers;
 
 
+import jakarta.mail.MessagingException;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -9,12 +11,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import purdue.cs407.backend.dtos.*;
+import purdue.cs407.backend.entities.SleepRecord;
 import purdue.cs407.backend.entities.User;
 import purdue.cs407.backend.pojos.EmailDetails;
 import purdue.cs407.backend.repositories.RecordRepository;
 import purdue.cs407.backend.repositories.UserRepository;
 import purdue.cs407.backend.services.AuthService;
 import purdue.cs407.backend.services.EmailService;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/account/")
@@ -128,6 +137,25 @@ public class AccountController {
         return ResponseEntity.ok(authService.updatePassword(user, request.getPassword()));
     }
 
+    @RequestMapping(value = "export_data", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> exportData() throws FileNotFoundException, MessagingException {
+        User user = getCurrentUser();
+        Collection<SleepRecord> records = recordRepository.findAllByUserOrderByDateAsc(user);
+        if (records.size() == 0) {
+            return ResponseEntity.notFound().build();
+        }
+        String fName = user.getUserID() + ".csv";
+
+        StringBuilder builder = new StringBuilder("Date,Got into bed,Fell asleep,Woke up,Got out of bed,Time to fall (m),Woke up for (m),Quality(1-5),Exercised?,Napped?,Consumed Caffeine?,Consumed Alcohol?,Used Electronics?,Difficult Staying Asleep?,Difficult Falling Asleep?,Had racing thoughts?,Dreams\n");
+        records.forEach(e ->  builder.append(e.toString()));
+
+        byte[] out = builder.toString().getBytes();
+        EmailDetails details = new EmailDetails(user.getEmail(), "Attached is your exported data.", "SleepMedic Data Export", out);
+        emailService.sendMailWithAttachment(details, fName);
+
+        return ResponseEntity.ok(records.size());
+    }
 
     /**
      * Delete User Account

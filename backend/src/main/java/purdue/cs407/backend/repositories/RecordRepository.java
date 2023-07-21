@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
 
-    List<SleepRecord> findAllByUser(User user);
+    Collection<SleepRecord> findAllByUserOrderByDateAsc(User user);
 
     @Query("select s from SleepRecord s where s.user = ?1 and s.date >= ?2 and s.date <= ?3")
     List<SleepRecord> findAllByUserAndDateGreaterThanEqualAndDateLessThanEqual(User user, Date date, Date date2);

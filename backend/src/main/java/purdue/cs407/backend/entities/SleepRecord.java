@@ -317,5 +317,15 @@ public class SleepRecord  {
         return time.toString();
     }
 
+    @Override
+    public String toString() {
+        Map<String, Boolean> j = this.decodeJournal();
+        return this.date + ", " + this.downTime + ", " + this.sleepTime + ", " + this.wakeTime + ", " +
+                this.upTime + ", " + this.fallTime + ", " + this.awakeTime + ", " + this.quality + ", " +
+                j.get("physicalActivity") + ", " + j.get("naps") + ", " + j.get("caffeineConsumption") + ", " +
+                j.get("alcoholConsumption") + ", " + j.get("electronics") + ", " + j.get("difficultStayingAsleep") +
+                ", " + j.get("difficultFallingAsleep") + ", " + j.get("racingThoughts") + ", " + dreams + "\n";
+    }
+
 
 }
