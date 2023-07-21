@@ -46,7 +46,7 @@ import { IconButton } from '@mui/material';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useNavigate } from 'react-router-dom';
-import { RadialBarChart, PolarAngleAxis, RadialBar, PieChart, Pie, Label } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Label } from 'recharts';
 import { Refresh } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
@@ -58,6 +58,8 @@ const calendarTheme = createTheme({
         },
     }
 });
+
+
 
 
 const MARKS = [
@@ -175,6 +177,17 @@ export default function Home() {
     const[effAdvice, setEffAdvice] = React.useState("1");
     const[avgHoursSlept, setAvgHoursSlept] = React.useState(0.0);
 
+    const [width, setWidth]   = React.useState(window.innerWidth);
+    const [height, setHeight] = React.useState(window.innerHeight);
+    const updateDimensions = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+    }
+    React.useEffect(() => {
+        window.addEventListener("resize", updateDimensions);
+        return () => window.removeEventListener("resize", updateDimensions);
+    }, []);
+
     function makeBooleanCheckbox(title, value, onChangeFunction) {
         return (
             <FormControl sx={{width: '100%', marginTop: '20pt'}}>
@@ -269,22 +282,28 @@ export default function Home() {
     * This is meant for getData() only rn, make sure you check what its taking in in getData()
     */
     function getFormattedTime(time) {
+        console.log("got time: " + time)
         time = time.slice(0, 5);
         let hours = parseInt(time.slice(0, 2), 10);
         let remainder = time.slice(2);
-        if (hours > 22) {
+        if (hours > 21) {
             hours -= 12;
-            return hours + remainder + " PM";
+            return hours + remainder;
         } else if (hours > 12) {
             hours -= 12;
-            return "0" + hours + remainder + " PM";
+            return "0" + hours + remainder;
         } else if (hours > 9) {
-            return hours + remainder + " AM";
+            return hours + remainder;
         }
-        return "0" +hours + remainder + " AM";
+        return "0" + hours + remainder;
     }
 
     function setPieData(res) {
+        setAvgDownTime(getFormattedTime(res.data.downTime));
+        setAvgSleepTime(getFormattedTime(res.data.sleepTime));
+        console.log(avgSleepTime)
+        setAvgWakeTime(getFormattedTime(res.data.wakeTime));
+        setAvgUpTime(getFormattedTime(res.data.upTime));
         let downTimeTemp = res.data.downTime.split(":");
         downTimeTemp = {name: 'down', value: parseInt(downTimeTemp[0]) + (parseFloat(downTimeTemp[1]) / 60)};
         let sleepTimeTemp = res.data.sleepTime.split(":");
@@ -309,21 +328,30 @@ export default function Home() {
         let pm = [];
         let am = [];
         let count = 0;
+        let tempLabel = "PM\n";
         tempPM.forEach(element => {
             let elapsedTime = 0;
             if (count === 0) {
                 elapsedTime = element.value - 12;
             } else {
                 elapsedTime = element.value - tempPM[count - 1].value;
+                tempLabel += '\n';
             }
 
             if (element.name === 'down') {
                 pm.push({name: 'Out of Bed', value: elapsedTime});
+                tempLabel += '🔽@' + avgDownTime;
             } else if (element.name === 'wake') {
                 pm.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
+                tempLabel += '⏰@' + avgWakeTime;
             } else {
                 // Handles both sleep and up
                 pm.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
+                if (element.name === 'sleep') {
+                    tempLabel += '💤@' + avgSleepTime;
+                } else {
+                    tempLabel += '🔼@' + avgUpTime;
+                }
             }
 
             if (count === tempPM.length - 1) {
@@ -341,21 +369,31 @@ export default function Home() {
             count += 1;
         })
         count = 0;
+        setPiePmLabel(tempLabel);
+        tempLabel = "AM\n";
         tempAM.forEach(element => {
             let elapsedTime = 0;
             if (count === 0) {
                 elapsedTime = element.value;
             } else {
                 elapsedTime = element.value - tempAM[count - 1].value;
+                tempLabel += '\n';
             }
 
             if (element.name === 'down') {
                 am.push({name: 'Out of Bed', value: elapsedTime});
+                tempLabel += '🔽 : ' + avgDownTime;
             } else if (element.name === 'wake') {
                 am.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
+                tempLabel += '⏰@' + avgWakeTime;
             } else {
                 // Handles both sleep and up
                 am.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
+                if (element.name === 'sleep') {
+                    tempLabel += '💤@' + avgSleepTime;
+                } else {
+                    tempLabel += '🔼@' + avgUpTime;
+                }
             }
 
             if (count === tempAM.length - 1) {
@@ -372,8 +410,12 @@ export default function Home() {
             }
             count += 1;
         })
+        setPieAmLabel(tempLabel);
         setPieAmData(am.reverse());
         setPiePmData(pm.reverse());
+        
+        
+        setPieEffLabel('🔋' + (res.data.efficiency * 100).toFixed(1) + '%');
         setPieEffData([{name: '0', value: 1 - res.data.efficiency}, {name: '1', value: res.data.efficiency, fill: '#2f875d'}])
     }
 
@@ -402,11 +444,9 @@ export default function Home() {
             setAvgFallTime(res.data.fallTime + " min");
             setAvgAwakeTime(res.data.awakeTime + " min");
             setAvgQuality(res.data.quality);
+            
+            
             setPieData(res);
-            setAvgDownTime(getFormattedTime(res.data.downTime));
-            setAvgSleepTime(getFormattedTime(res.data.sleepTime));
-            setAvgWakeTime(getFormattedTime(res.data.wakeTime));
-            setAvgUpTime(getFormattedTime(res.data.upTime));
             setAvgEfficiency(res.data.efficiency);
             setAvgHoursSlept(res.data.hoursSlept + " hrs");
 
@@ -530,6 +570,7 @@ export default function Home() {
             navigate("/")
         }
         //Get Data
+        console.log("USED effect");
         getData();
     }, []);
 
@@ -667,7 +708,10 @@ export default function Home() {
                                                      {name: 'In Bed', value: 1, fill: '#82ca9d'},
                                                      {name: 'Asleep', value: 5, fill: '#173e5c'},]);
     const[pieEffData, setPieEffData] = React.useState([{name: 'Efficiency', value: 0.02},
-                                                        {name: 'Efficiency', value: 0.98, fill:'#2f875d'}]);
+                                                       {name: 'Efficiency', value: 0.98, fill:'#2f875d'}]);
+    const[pieAmLabel, setPieAmLabel] = React.useState("");
+    const[piePmLabel, setPiePmLabel] = React.useState("");
+    const[pieEffLabel, setPieEffLabel] = React.useState("");
     function pieOver(val) {
 
     }
@@ -678,11 +722,26 @@ export default function Home() {
 
     function AveragePieChart() {
         return (
-        <PieChart width={730} height={250} >
-            <Pie animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450}  data={pieEffData} dataKey="value" nameKey="name" cx="80%" cy="50%" innerRadius={60} outerRadius={95} fill="#a19b8c"  />                
-            <Pie animationDuration={450} title={"AM"} startAngle={90} endAngle={450}  data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={95} fill="#a19b8c"  />
-            <Pie animationDuration={500} title={"PM"} startAngle={90} endAngle={450}  data={piePmData} dataKey="value" nameKey="name" cx="20%" cy="50%" innerRadius={60} outerRadius={95} fill="#a19b8c"  />                    
-        </PieChart>)
+        <ResponsiveContainer width="100%" height={height / 3} ani>
+            <PieChart >
+                <Pie animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450}  data={pieEffData} dataKey="value" nameKey="name" cx="80%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c"> 
+                    <Label width={30} position="center" fontSize={'1.9rem'} fontWeight={'bold'}>
+                        { `${pieEffLabel}` }
+                    </Label>
+                </Pie>                 
+                <Pie animationDuration={450} title={"AM"} startAngle={90} endAngle={450}  data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c">
+                    <Label width={30} position="center" fontSize={'1.2rem'} fontWeight={'bold'} >
+                        { `${pieAmLabel}` }
+                    </Label>
+                </Pie>
+                <Pie animationDuration={500} title={"PM"} startAngle={90} endAngle={450}  data={piePmData} dataKey="value" nameKey="name" cx="20%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c">
+                    <Label width={30} position="center" fontSize={'1.2rem'} fontWeight={'bold'}>
+                        { `${piePmLabel}` }
+                    </Label>
+                </Pie>                     
+            </PieChart>
+        </ResponsiveContainer>
+        )
     }
 
     return (
