@@ -722,13 +722,13 @@ export default function Home() {
 
     function AveragePieChart() {
         return (
-        <ResponsiveContainer width="100%" height={height / 3} ani>
+        <ResponsiveContainer aspect={3}>
             <PieChart >
                 <Pie animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450}  data={pieEffData} dataKey="value" nameKey="name" cx="80%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c"> 
                     <Label width={30} position="center" fontSize={'1.9rem'} fontWeight={'bold'}>
                         { `${pieEffLabel}` }
                     </Label>
-                </Pie>                 
+                </Pie>                
                 <Pie animationDuration={450} title={"AM"} startAngle={90} endAngle={450}  data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c">
                     <Label width={30} position="center" fontSize={'1.2rem'} fontWeight={'bold'} >
                         { `${pieAmLabel}` }

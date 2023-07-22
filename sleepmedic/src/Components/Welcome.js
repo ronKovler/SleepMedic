@@ -71,7 +71,7 @@ function Welcome() {
 
   return (
  
-    <div className="sleep-medic-container">
+    <div className="welcome-page-container">
       {/*Welcome Message - Getting Started*/}
       <Grid container spacing={0} justify='center' alignItems='center'>
         <Grid item xs={8}>

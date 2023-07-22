@@ -38,7 +38,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: auto;
 
   /*background-color: #58628F;    */            /*  neutral gray  for background  */
   background-color: #57618E;            /* purplish night    <--- chosen background */

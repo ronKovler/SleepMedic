@@ -261,9 +261,9 @@ function CreateAccount() {
             </div>
         </div>
         :
-        <div className="sleep-medic-container">
+        <div className="container">
             <form className="create-form" onSubmit={handleCreateAccount}>
-                <img src={logo} alt="Sleep-Medic Logo" className="logo" />
+                <img src={logo} alt="Sleep-Medic Logo" className="logo" style={{height: "9.5rem", width: "auto"}}/>
                 <h1 style={{maxWidth: "22rem"}}>Create an Account</h1>
                 <label style={{fontWeight: "bold"}} htmlFor="email">Phone #:</label>
                 <TextField 

@@ -1,32 +1,74 @@
 {
     "welcome": {
-        "title": "Bienvenido a Sleep-Medic",
-        "subscript": "Logre dormir mejor y mejore su bienestar con la aplicación Sleep-Medic.",
-        "language": "Seleccionar idioma:",
-        "english": "Inglés",
-        "spanish": "Español",
-        "next": "empezar"
-    }, 
+      "title": "Bienvenido a Sleep-Medic",
+      "subscript": "Logre una mejor noche de sueño y mejore su bienestar con la aplicación Sleep-Medic.",
+      "language": "Seleccione el idioma:",
+      "english": "Inglés",
+      "spanish": "Español",
+      "next": "Comenzar"
+    },
     "home": {
-        "body": "Ayooo Pausooooo "
+      "7-day": {
+        "title": "Promedios de 7 días",
+        "time-spent-falling": "Tiempo de conciliación del sueño:",
+        "time-spent-awake": "Tiempo despierto durante la noche:",
+        "quality": "Calidad:",
+        "hours-slept": "Horas dormidas:"
+      },
+      "effAdvice": {
+        "1": "Su eficiencia del sueño está muy lejos del 90%. Recomendamos mantener su eficiencia cerca del 90%.",
+        "2": "¡Buen trabajo! ¡Mantenga un buen sueño!"
+      },
+      "viewInsight": "Ver información",
+      "weekly-advices": {
+        "title": "Consejos semanales",
+        "1": "Ya quiero tomar una siesta mañana."
+      },
+      "new-record": "Nuevo registro",
+      "input-prompt": {
+        "new-record": "Para registrar un nuevo sueño, ingrese los datos de su sueño diario a continuación.",
+        "edit-record": "Para actualizar un registro de sueño, modifique sus respuestas según sea necesario.",
+        "sleep-duration": "¿Cuánto tiempo le tomó conciliar el sueño? (min)",
+        "awake-time": "¿Se despertó durante la noche? En caso afirmativo, ¿por cuánto tiempo? (min)",
+        "down-time": "¿A qué hora se acostó?",
+        "sleep-time": "¿A qué hora se durmió?",
+        "wake-time": "¿A qué hora se despertó?",
+        "up-time": "¿A qué hora se levantó?",
+        "quality": "Calidad"
+      },
+      "sleep-journal": {
+        "physical-activity": "¿Participó en alguna actividad física hoy?",
+        "naps": "¿Tomó alguna siesta durante el día?",
+        "alcohol": "¿Consumió alcohol menos de 6 horas antes de acostarse?",
+        "caffeine": "¿Consumió cafeína menos de 6 horas antes de acostarse?",
+        "electronics": "¿Usó el teléfono, la tableta o miró televisión en la cama?",
+        "difficulty-falling": "¿Tuvo dificultades para conciliar el sueño?",
+        "difficulty-staying": "¿Tuvo dificultades para mantenerse dormido?",
+        "racing-thoughts": "¿Tuvo pensamientos acelerados mientras estaba en la cama?",
+        "dreams": "¿Tuvo algún sueño?"
+      },
+      "cancel": "Cancelar",
+      "submit": "Enviar",
+      "update": "Actualizar"
     },
     "login": {
-        "title": "Inicia sesión en Sleep-Medic",
-        "email": "Correo Electrónico",
-        "password": "Contraseña",
-        "remember-me": "Recuérdame",
-        "forgot-password": {
-            "title": "Olvidé contraseña",
-            "instructions": "Ingrese el correo electrónico y su fecha de nacimiento asociados con su cuenta para iniciar el proceso de recuperación de contraseña.",
-            "email": "Correo Electrónico",
-            "dob": "Cumpleaños",
-            "cancel": "Cancelar",
-            "recover": "Recuperar Contraseña",
-            "thank-you": "Gracias",
-            "final-message": "Recibirá un correo electrónico en breve si existe una cuenta con el correo electrónico y el cumpleaños proporcionados",
-            "confirm": "Confirmar"
-        },
-        "or-create": "o crea una cuenta",
-        "login": "login"
+      "title": "Iniciar sesión",
+      "email": "Correo electrónico:",
+      "password": "Contraseña:",
+      "remember-me": "Recordarme",
+      "forgot-password": {
+        "title": "Olvidó su contraseña",
+        "instructions": "Ingrese el correo electrónico y su fecha de nacimiento asociada con su cuenta para iniciar el proceso de recuperación de contraseña.",
+        "email": "Dirección de correo electrónico",
+        "dob": "Fecha de nacimiento",
+        "cancel": "Cancelar",
+        "recover": "Recuperar contraseña",
+        "thank-you": "Gracias",
+        "final-message": "Recibirá un correo electrónico en breve si existe una cuenta con el correo electrónico y fecha de nacimiento proporcionados.",
+        "confirm": "Confirmar"
+      },
+      "or-create": "o crear una cuenta",
+      "login": "Iniciar sesión"
     }
-}
+  }
+  
