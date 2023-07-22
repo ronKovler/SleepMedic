@@ -116,9 +116,9 @@ function Login() {
   }
 
   return (
-    <div className="sleep-medic-container">
+    <div className="container">
       <form className="login-form" onSubmit={handleLogin}>
-        <img src={logo} alt="Sleep-Medic Logo" className="logo" />
+        <img src={logo} alt="Sleep-Medic Logo" style={{height: "8rem", width: "auto"}}/>
         <h1>{t("login.title")}</h1>
         {error && <Alert severity="error" sx={{color: "red", fontSize: "0.85rem"}}><strong>Username/Password was Entered Incorrectly!</strong></Alert>}
         <label style={{fontWeight: "bold"}} htmlFor="email">{t("login.email")}</label>

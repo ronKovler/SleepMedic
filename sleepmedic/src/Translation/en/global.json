@@ -70,6 +70,66 @@
         },
         "or-create": "or create an account",
         "login": "login"
+    },
+    "education": {
+        "table-of-contents": "Table of Contents",
+        "dashboard": "Dashboard",
+        "week1": {
+            "title": "Week 1",
+            "day1": {
+                "title": "Day 1",
+                "lesson1": {
+                    "title": "Lesson 1",
+                    "reading": "Lesson 1 Reading"
+                },
+                "lesson2": {
+                    "title": "Lesson 2",
+                    "reading": "Lesson 2 Reading"
+                },
+                "lesson3": {
+                    "title": "Lesson 3",
+                    "reading": "Lesson 3 Reading"
+                }
+            },
+            "day2": {
+                "title": "Day 2",
+                "lesson4": {
+                    "title": "Lesson 4",
+                    "reading": "Lesson 4 Reading"
+                },
+                "lesson5": {
+                    "title": "Lesson 5",
+                    "reading": "Lesson 5 Reading"
+                },
+                "lesson6": {
+                    "title": "Lesson 6",
+                    "reading": "Lesson 6 Reading"
+                }
+            },
+            "day3": {
+                "title": "Day 3",
+                "lesson7": {
+                    "title": "Lesson 7",
+                    "reading": "Lesson 7 Reading"
+                },
+                "lesson8": {
+                    "title": "Lesson 8",
+                    "reading": "Lesson 8 Reading"
+                },"lesson9": {
+                    "title": "Lesson 9",
+                    "reading": "Lesson 9 Reading"
+                }
+            }
+        },
+        "week2": {
+            "title": "Week 2",
+            "day8": {
+                "title": "Day 8",
+                "lesson22": "lesson 22",
+                "lesson23": "lesson 23",
+                "lesson24": "lesson 24"
+            }
+        }
     }
 
 }

@@ -22,6 +22,23 @@
   padding: 1rem;
   justify-content: space-between;
   }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  
+    /*background-color: #58628F;    */            /*  neutral gray  for background  */
+    background-color: #57618E;            /* purplish night    <--- chosen background */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    background: repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% );
+    animation: animazione 8s ease-in-out infinite alternate ;
+    
+    
+    text-align: center;
+  }
   
   
   
