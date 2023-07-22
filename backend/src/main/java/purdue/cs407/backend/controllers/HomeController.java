@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class HomeController {
     private final RecordRepository recordRepository;
 
-    public HomeController(UserRepository userRepository, RecordRepository recordRepository ) {
+    public HomeController( RecordRepository recordRepository ) {
         this.recordRepository = recordRepository;
     }
 
@@ -157,14 +157,17 @@ public class HomeController {
 
     /**
      * Get the users info (name)
-     * @return - First and last names.
+     * @return - First / last names and education progress.
      */
     @RequestMapping(value="info", method = {RequestMethod.OPTIONS, RequestMethod.GET},
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InfoResponse> getInfo() {
         // Get the user
         User user = getCurrentUser();
-        return ResponseEntity.ok(new InfoResponse(user.getFirstName(), user.getLastName()));
+        int week = (user.getEducationProgress() >> 4) & 0b00001111;
+        int day = user.getEducationProgress() & 0b00001111;
+        double progress = ((7.0 * week + day) / (7.0 * 6));
+        return ResponseEntity.ok(new InfoResponse(user.getFirstName(), user.getLastName(), progress));
     }
 
     /**

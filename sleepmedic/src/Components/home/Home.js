@@ -12,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import SchoolIcon from '@mui/icons-material/School';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -29,8 +30,8 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import LinearProgress from '@mui/material/LinearProgress';
-import CircularProgress from '@mui/material/CircularProgress';
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+
 import PropTypes from 'prop-types';
 import Pagination from '@mui/material/Pagination';
 //import TextField from '@material-ui/core/TextField';
@@ -49,7 +50,7 @@ import { useNavigate } from 'react-router-dom';
 import { ResponsiveContainer, PieChart, Pie, Label } from 'recharts';
 import { Refresh } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-
+import Stack from '@mui/material/Stack';
 const calendarTheme = createTheme({
     palette: {
         text: {
@@ -153,6 +154,7 @@ dayjs.extend(customParseFormat);
 
 export default function Home() {
     const [t, i18n] = useTranslation("global");
+    const [isLoading, setIsLoading] = React.useState(false);
     const navigate = useNavigate();
     // Control of popup sleep record window
     const[recordOpen, setRecordOpen] = React.useState(false);
@@ -425,9 +427,12 @@ export default function Home() {
         
         try {
             // Get user name
+            setIsLoading(true);
             let res = await axios.get("https://api.sleepmedic.me:8443/home/info", {headers});
             let name = res.data.firstName + ' ' + res.data.lastName;
             setUsername(name);
+            setEduBarLabel((res.data.progress * 100).toFixed(1) + "%");
+            setEduBarValue(res.data.progress * 100);
 
             //Get Calendar
             const date = new Date();
@@ -453,11 +458,12 @@ export default function Home() {
             if (Math.abs(res.data.efficiency * 100 - 90) < 3) {
                 setEffAdvice("2");
             }
-
+            
         }
         catch (err) {
             console.log("Failed to retrieve data.");
         }
+        setIsLoading(false);
     }
 
     function formateDate(day) {
@@ -720,6 +726,8 @@ export default function Home() {
 
     }
 
+    
+
     function AveragePieChart() {
         return (
         <ResponsiveContainer aspect={3}>
@@ -744,16 +752,38 @@ export default function Home() {
         )
     }
 
+
+    const[eduBarValue, setEduBarValue] = React.useState(0);
+    const[eduBarLabel, setEduBarLabel] = React.useState("0%");
+    function EducationProgressBar() {
+        return(
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} padding={'5% 5% 5% 0%'}>
+            <Box width="100%" display="flex" alignItems="center" justifyContent="center">
+                {/* <Stack alignItems="center"> */}
+                    <LinearProgress sx={{ height: 20, width: '95%' }} value={eduBarValue} variant="determinate"  />
+                {/* </Stack> */}
+              
+            </Box>
+            <Box >
+                <Typography variant="body2" color="text.secondary">{`${eduBarLabel}`}
+                </Typography>
+            </Box>
+        </Box>
+        )
+    }
+
     return (
-        <Box sx={{
+        <Box  sx={{
             backgroundColor: "#57118E",           /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
             background: 'repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% )',
             animation: 'animazione 13s ease-in-out infinite alternate-reverse',
         
             height: '100vh' ,
-            width: '100vw'
+            width: '100vw',
+            overflow: 'hidden',
+            overflowY: 'scroll'
             
-            }}>
+        }}>
             <Navbar/>
             <Grid container spacing={2} columns={2} sx={{margin: 0}}>
                 {/* LEFT PANEL */}
@@ -825,7 +855,7 @@ export default function Home() {
 
                 {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs={1}>
-                    <Grid container columns={3} sx={{width: '90%'}} spacing={1}>
+                    <Grid container columns={3} sx={{width: '98%'}} spacing={1}>
                         <Grid item xs={3}>
                             <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px'}}>
                                 <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
@@ -876,9 +906,12 @@ export default function Home() {
                                 <Grid item xs={1}>
                                     <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
                                         <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                            {"Education Plan"}
+                                            {"Education Progress"}
                                         </Typography>
-                                        Some buttons and progress bar
+                                        <EducationProgressBar/>
+                                        <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
+                                                    <Button href="/education" endIcon={<SchoolIcon/>} variant='contained'>View Lessons</Button>
+                                        </Box>
                                     </Paper>
                                 </Grid>
 
@@ -887,8 +920,7 @@ export default function Home() {
                                         <Grid container columns={1}>
                                             <Grid item xs={1}>
                                                 <Typography variant='body' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                                    You can gain insights to your sleep patterbs through visualizing your habbits. Explore them on
-                                                    the insight page.
+                                                Gain valuable insights into your sleep patterns by visualizing your habits. Explore them on the Insights page.
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={1} sx={{paddingTop: '10px'}}>

@@ -45,6 +45,12 @@ public class User implements UserDetails {
     @Column(name="sex", length=1)
     private String sex;
 
+    /**
+     * Byte representing week and day number. First 4 bits week number, second 4 bits day number
+     */
+    @Column(name="education_progress")
+    private byte educationProgress;
+
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
@@ -55,16 +61,19 @@ public class User implements UserDetails {
     private Set<Reminder> reminders = new HashSet<>();
 
 
-    public User(String firstName, String lastName, String email, String password, Date birthday, String sex) {
+    public User(String firstName, String lastName, String email, String password, Date birthday, String sex,
+                byte educationProgress) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.birthday = birthday;
         this.sex = sex;
+        this.educationProgress = educationProgress;
     }
 
-    public User(Long userID, String firstName, String lastName, String email, String password, Date birthday, String sex) {
+    public User(Long userID, String firstName, String lastName, String email, String password, Date birthday,
+                String sex, byte educationProgress) {
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -72,6 +81,7 @@ public class User implements UserDetails {
         this.password = password;
         this.birthday = birthday;
         this.sex = sex;
+        this.educationProgress = educationProgress;
     }
 
     public User(RegisterRequest request) {
@@ -82,6 +92,7 @@ public class User implements UserDetails {
         this.password = request.getPassword();
         this.birthday = request.getBirthday();
         this.sex = request.getSex();
+        this.educationProgress = 0b00000000;
     }
 
     public User() {
@@ -187,6 +198,14 @@ public class User implements UserDetails {
         this.phone = phone;
     }
 
+    public byte getEducationProgress() {
+        return educationProgress;
+    }
+
+    public void setEducationProgress(byte educationProgress) {
+        this.educationProgress = educationProgress;
+    }
+
     public Set<SleepRecord> getRecords() {
         return records;
     }
@@ -229,7 +248,6 @@ public class User implements UserDetails {
         }
 
         return u.getUserID().equals(this.getUserID());
-
     }
 
 }
