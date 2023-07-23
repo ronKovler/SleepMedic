@@ -135,7 +135,7 @@ function OpenProfilePage() {
 
     
     return (
-        <div className="sleep-medic-container">
+        <div className="profile-page-container" >
             
             <Grid container spacing={2}>
                 <Grid item xs={0.5}></Grid>

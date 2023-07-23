@@ -52,11 +52,14 @@ import { Refresh } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import Stack from '@mui/material/Stack';
 const calendarTheme = createTheme({
-    palette: {
-        text: {
-            primary: '#ffffff',
-            secondary: '#ffffff',
-        },
+    components: {
+        MuiDateCalendar: {
+            styleOverrides: {
+                root: {
+                    aspect: 3
+                }
+            }
+        }
     }
 });
 
@@ -296,6 +299,8 @@ export default function Home() {
             return "0" + hours + remainder;
         } else if (hours > 9) {
             return hours + remainder;
+        } else if (hours === 0) {
+            return '12' + remainder;
         }
         return "0" + hours + remainder;
     }
@@ -785,13 +790,13 @@ export default function Home() {
             
         }}>
             <Navbar/>
-            <Grid container spacing={2} columns={2} sx={{margin: 0}}>
+            <Grid container spacing={2} columns={2} sx={{margin: 0, paddingRight: 4}}>
                 {/* LEFT PANEL */}
-                <Grid item xs={1}>
-                    <Grid container space={2} columns={1}>
+                <Grid item xs={1} sx={{minWidth: 320}}>
+                    <Grid container space={2} columns={1} sx={{minWidth: 320}}>
                         {/* Username Display */}
                         <Grid item xs={1}>
-                            <Paper elevation={3} sx={{backgroundColor: '#7293A0'}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#7293A0', minWidth: 320}}>
                                 <Typography variant="h4" component="div"
                                             sx={{flexGrow: 1,
                                                 fontWeight: 'bold',
@@ -852,12 +857,12 @@ export default function Home() {
 
                     </Grid>
                 </Grid>
-
+               
                 {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs={1}>
-                    <Grid container columns={3} sx={{width: '98%'}} spacing={1}>
-                        <Grid item xs={3}>
-                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px'}}>
+                    <Grid container columns={3}  spacing={1}>
+                        <Grid item xs={3} sx={{minWidth: 320}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px', minWidth: 320}}>
                                 <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                     {t("home.weekly-advices.title")}
                                 </Typography>
@@ -867,16 +872,19 @@ export default function Home() {
                             </Paper>
                         </Grid>
 
-                        <Grid item xs={1.3}>
-                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
-                                <Grid container columns={1}>
-                                    <Grid item xs={1}>
-                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <DateCalendar showDaysOutsideCurrentMonth
+                        <Grid item xs sx={{minWidth: 320}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: 320}}>
+                                <Grid container columns={1} >
+                                    <Grid item  xs={12} md={6} lg={4} sx={{ minWidth: 320 }}>
+                                        <LocalizationProvider  dateAdapter={AdapterDayjs}>
+                                        <Box sx={{ minWidth: 320 }}>
+                                            <DateCalendar
+                                            // theme={calendarTheme} 
+                                            showDaysOutsideCurrentMonth
                                             fixedWeekNumber={6}
                                                 //sx={{scale: '150%', paddingTop:'50px'}}
-                                                sx={{scale: '95%'}}
-                                            
+                                                // sx={{scale: '95%'}}
+                                                sx={{ flexGrow: 1, height: '100%', width: '100%', minWidth: 320 }}
                                                 views={['day']} 
                                                 onChange={(e) => {
                                                     console.log(monthRecords);
@@ -888,6 +896,7 @@ export default function Home() {
                                                 }}
                                                 slots={{day: RecordedDays,}}
                                             />
+                                           </Box>
                                         </LocalizationProvider>
                                     </Grid>
                                     <Grid item xs={1}>
@@ -901,10 +910,10 @@ export default function Home() {
                             </Paper>
                         </Grid>
 
-                        <Grid item xs={1.7}>
+                        <Grid item xs sx={{minWidth: 320}}>
                             <Grid container columns={1} spacing={1}>
                                 <Grid item xs={1}>
-                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
+                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: 320}}>
                                         <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                             {"Education Progress"}
                                         </Typography>
@@ -916,11 +925,12 @@ export default function Home() {
                                 </Grid>
 
                                 <Grid item xs={1}>
-                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
+                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: 320}}>
                                         <Grid container columns={1}>
                                             <Grid item xs={1}>
-                                                <Typography variant='body' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                                Gain valuable insights into your sleep patterns by visualizing your habits. Explore them on the Insights page.
+                                            
+                                                <Typography variant='h6' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
+                                                Gain valuable insights into your sleep patterns by visualizing your habits.<br/>Explore them on the Insights page.
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={1} sx={{paddingTop: '10px'}}>
