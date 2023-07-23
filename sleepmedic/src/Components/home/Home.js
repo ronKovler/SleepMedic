@@ -738,7 +738,7 @@ export default function Home() {
         <ResponsiveContainer aspect={3}>
             <PieChart >
                 <Pie animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450}  data={pieEffData} dataKey="value" nameKey="name" cx="80%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c"> 
-                    <Label width={30} position="center" fontSize={'1.9rem'} fontWeight={'bold'}>
+                    <Label  width={30} position="center" fontSize={'1.9rem'} fontWeight={'bold'}>
                         { `${pieEffLabel}` }
                     </Label>
                 </Pie>                
@@ -792,7 +792,7 @@ export default function Home() {
             <Navbar/>
             <Grid container spacing={2} columns={2} sx={{margin: 0, paddingRight: 4}}>
                 {/* LEFT PANEL */}
-                <Grid item xs={1} sx={{minWidth: 320}}>
+                <Grid item xs sx={{minWidth: 320}}>
                     <Grid container space={2} columns={1} sx={{minWidth: 320}}>
                         {/* Username Display */}
                         <Grid item xs={1}>
@@ -859,7 +859,7 @@ export default function Home() {
                 </Grid>
                
                 {/* RIGHT PANEL CALENDAR */}
-                <Grid item xs={1}>
+                <Grid item xs>
                     <Grid container columns={3}  spacing={1}>
                         <Grid item xs={3} sx={{minWidth: 320}}>
                             <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px', minWidth: 320}}>
@@ -929,8 +929,8 @@ export default function Home() {
                                         <Grid container columns={1}>
                                             <Grid item xs={1}>
                                             
-                                                <Typography variant='h6' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                                Gain valuable insights into your sleep patterns by visualizing your habits.<br/>Explore them on the Insights page.
+                                                <Typography variant='h6' component='div' textAlign='center' paddingTop='10pt' paddingBottom={'5%'} fontWeight='bold'>
+                                                Gain valuable insights into your sleep patterns by visualizing your habits. Explore them on the Insights page.
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={1} sx={{paddingTop: '10px'}}>
