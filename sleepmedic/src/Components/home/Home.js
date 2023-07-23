@@ -156,8 +156,10 @@ dayjs.extend(customParseFormat);
 
 
 export default function Home() {
+    const initialLoad = React.useRef(false);
     const [t, i18n] = useTranslation("global");
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [pieAnimate, setPieAnimate] = React.useState(true);
     const navigate = useNavigate();
     // Control of popup sleep record window
     const[recordOpen, setRecordOpen] = React.useState(false);
@@ -166,6 +168,18 @@ export default function Home() {
     const handlePageChange = (event, value) => {
         setPage(value);
     };
+
+    const[piePmData, setPiePmData] = React.useState([{name: 'Asleep', value: 2, fill: '#173e5c'},
+                                                     {name: 'In Bed', value: 1, fill: '#82ca9d'},
+                                                     {name: 'Out of Bed', value: 9}]);
+    const[pieAmData, setPieAmData] = React.useState([{name: 'Out of Bed', value: 6},
+                                                     {name: 'In Bed', value: 1, fill: '#82ca9d'},
+                                                     {name: 'Asleep', value: 5, fill: '#173e5c'},]);
+    const[pieEffData, setPieEffData] = React.useState([{name: 'Efficiency', value: 0.02},
+                                                       {name: 'Efficiency', value: 0.98, fill:'#2f875d'}]);
+    const[pieAmLabel, setPieAmLabel] = React.useState("");
+    const[piePmLabel, setPiePmLabel] = React.useState("");
+    const[pieEffLabel, setPieEffLabel] = React.useState("");
     
     // User data
     // INFO
@@ -182,16 +196,6 @@ export default function Home() {
     const[effAdvice, setEffAdvice] = React.useState("1");
     const[avgHoursSlept, setAvgHoursSlept] = React.useState(0.0);
 
-    const [width, setWidth]   = React.useState(window.innerWidth);
-    const [height, setHeight] = React.useState(window.innerHeight);
-    const updateDimensions = () => {
-        setWidth(window.innerWidth);
-        setHeight(window.innerHeight);
-    }
-    React.useEffect(() => {
-        window.addEventListener("resize", updateDimensions);
-        return () => window.removeEventListener("resize", updateDimensions);
-    }, []);
 
     function makeBooleanCheckbox(title, value, onChangeFunction) {
         return (
@@ -306,11 +310,15 @@ export default function Home() {
     }
 
     function setPieData(res) {
-        setAvgDownTime(getFormattedTime(res.data.downTime));
-        setAvgSleepTime(getFormattedTime(res.data.sleepTime));
-        console.log(avgSleepTime)
-        setAvgWakeTime(getFormattedTime(res.data.wakeTime));
-        setAvgUpTime(getFormattedTime(res.data.upTime));
+        let avgDown = getFormattedTime(res.data.downTime);
+        let avgSleep = getFormattedTime(res.data.sleepTime)
+        let avgWake = getFormattedTime(res.data.wakeTime);
+        let avgUp = getFormattedTime(res.data.upTime);
+        setAvgDownTime(avgDown);
+        setAvgSleepTime(avgSleep);
+        // console.log(avgSleepTime)
+        setAvgWakeTime(avgWake);
+        setAvgUpTime(avgUp);
         let downTimeTemp = res.data.downTime.split(":");
         downTimeTemp = {name: 'down', value: parseInt(downTimeTemp[0]) + (parseFloat(downTimeTemp[1]) / 60)};
         let sleepTimeTemp = res.data.sleepTime.split(":");
@@ -322,7 +330,7 @@ export default function Home() {
         let times = [downTimeTemp, sleepTimeTemp, wakeTimeTemp, upTimeTemp].sort(function(a,b){return a.value - b.value});
         let tempPM = [];
         let tempAM = [];
-
+        console.log('times unsorted ' + times);
         times.forEach(element => {
             if (element.value < 12) {
                 tempAM.push(element);
@@ -330,6 +338,7 @@ export default function Home() {
                 tempPM.push(element);
             }
         })
+        console.log('times sorted ' + times);
         
         // tempAM and tempPM should now be sorted.
         let pm = [];
@@ -347,17 +356,17 @@ export default function Home() {
 
             if (element.name === 'down') {
                 pm.push({name: 'Out of Bed', value: elapsedTime});
-                tempLabel += '🔽@' + avgDownTime;
+                tempLabel += '🔽@' + avgDown;
             } else if (element.name === 'wake') {
                 pm.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
-                tempLabel += '⏰@' + avgWakeTime;
+                tempLabel += '⏰@' + avgWake;
             } else {
                 // Handles both sleep and up
                 pm.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
                 if (element.name === 'sleep') {
-                    tempLabel += '💤@' + avgSleepTime;
+                    tempLabel += '💤@' + avgSleep;
                 } else {
-                    tempLabel += '🔼@' + avgUpTime;
+                    tempLabel += '🔼@' + avgUp;
                 }
             }
 
@@ -389,17 +398,17 @@ export default function Home() {
 
             if (element.name === 'down') {
                 am.push({name: 'Out of Bed', value: elapsedTime});
-                tempLabel += '🔽 : ' + avgDownTime;
+                tempLabel += '🔽 : ' + avgDown;
             } else if (element.name === 'wake') {
                 am.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
-                tempLabel += '⏰@' + avgWakeTime;
+                tempLabel += '⏰@' + avgWake;
             } else {
                 // Handles both sleep and up
                 am.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
                 if (element.name === 'sleep') {
-                    tempLabel += '💤@' + avgSleepTime;
+                    tempLabel += '💤@' + avgSleep;
                 } else {
-                    tempLabel += '🔼@' + avgUpTime;
+                    tempLabel += '🔼@' + avgUp;
                 }
             }
 
@@ -417,6 +426,7 @@ export default function Home() {
             }
             count += 1;
         })
+        console.log("label: " + tempLabel);
         setPieAmLabel(tempLabel);
         setPieAmData(am.reverse());
         setPiePmData(pm.reverse());
@@ -427,6 +437,7 @@ export default function Home() {
     }
 
     async function getData() {
+        
         const headers = getGetHeaders();
         //console.log(headers);
         
@@ -443,32 +454,32 @@ export default function Home() {
             const date = new Date();
             let currentDate = date.toISOString().slice(0, 10);
             console.log(currentDate);
-            res = await axios.get("https://api.sleepmedic.me:8443/home/calendar/" + currentDate, {headers});
-            setMonthRecords(res.data);
-            console.log(res.data);
+            let res1 = await axios.get("https://api.sleepmedic.me:8443/home/calendar/" + currentDate, {headers});
+            setMonthRecords(res1.data);
+            console.log(res1.data);
 
 
             // Get user average sleep data
-            res = await axios.get("https://api.sleepmedic.me:8443/home/average", {headers});
-            console.log(res.data);
-            setAvgFallTime(res.data.fallTime + " min");
-            setAvgAwakeTime(res.data.awakeTime + " min");
-            setAvgQuality(res.data.quality);
+            let res2 = await axios.get("https://api.sleepmedic.me:8443/home/average", {headers});
+            console.log('average');
+            console.log( res2.data)
+            setAvgFallTime(res2.data.fallTime + " min");
+            setAvgAwakeTime(res2.data.awakeTime + " min");
+            setAvgQuality(res2.data.quality);
             
             
-            setPieData(res);
-            setAvgEfficiency(res.data.efficiency);
-            setAvgHoursSlept(res.data.hoursSlept + " hrs");
+            setPieData(res2);
+        
+            setAvgHoursSlept(res2.data.hoursSlept + " hrs");
 
-            if (Math.abs(res.data.efficiency * 100 - 90) < 3) {
-                setEffAdvice("2");
-            }
             
         }
         catch (err) {
             console.log("Failed to retrieve data.");
         }
+        
         setIsLoading(false);
+        
     }
 
     function formateDate(day) {
@@ -575,15 +586,22 @@ export default function Home() {
 
     // Auto loading
     React.useEffect(() => {
+        if (initialLoad.current) return;
+        
         //Check if not logged in and redirect.
         const cookies = getCookiesDict();
         if (cookies._auth == null) {
             navigate("/")
         }
+        getData();
+        initialLoad.current = true;
+        setPieAnimate(false);
+        
         //Get Data
         console.log("USED effect");
-        getData();
-    }, [avgDownTime, avgSleepTime, avgWakeTime, avgUpTime, avgEfficiency]);
+        
+        
+    }, []);
 
     
     // Popup window handlers
@@ -712,17 +730,7 @@ export default function Home() {
     //     value: PropTypes.number.isRequired,
     // };
 
-    const[piePmData, setPiePmData] = React.useState([{name: 'Asleep', value: 2, fill: '#173e5c'},
-                                                     {name: 'In Bed', value: 1, fill: '#82ca9d'},
-                                                     {name: 'Out of Bed', value: 9}]);
-    const[pieAmData, setPieAmData] = React.useState([{name: 'Out of Bed', value: 6},
-                                                     {name: 'In Bed', value: 1, fill: '#82ca9d'},
-                                                     {name: 'Asleep', value: 5, fill: '#173e5c'},]);
-    const[pieEffData, setPieEffData] = React.useState([{name: 'Efficiency', value: 0.02},
-                                                       {name: 'Efficiency', value: 0.98, fill:'#2f875d'}]);
-    const[pieAmLabel, setPieAmLabel] = React.useState("");
-    const[piePmLabel, setPiePmLabel] = React.useState("");
-    const[pieEffLabel, setPieEffLabel] = React.useState("");
+    
     function pieOver(val) {
 
     }
@@ -734,20 +742,24 @@ export default function Home() {
     
 
     function AveragePieChart() {
-        return (
+        return isLoading ? (
+            <Box sx={{ width: '90%', padding: '15%'}}>
+                <LinearProgress sx={{height:20}} />
+            </Box>
+        ) : (
         <ResponsiveContainer aspect={3}>
             <PieChart >
-                <Pie animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450}  data={pieEffData} dataKey="value" nameKey="name" cx="80%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c"> 
+                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450}  data={pieEffData} dataKey="value" nameKey="name" cx="80%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c"> 
                     <Label  width={30} position="center" fontSize={'1.9rem'} fontWeight={'bold'}>
                         { `${pieEffLabel}` }
                     </Label>
                 </Pie>                
-                <Pie animationDuration={450} title={"AM"} startAngle={90} endAngle={450}  data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c">
+                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"AM"} startAngle={90} endAngle={450}  data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c">
                     <Label width={30} position="center" fontSize={'1.2rem'} fontWeight={'bold'} >
                         { `${pieAmLabel}` }
                     </Label>
                 </Pie>
-                <Pie animationDuration={500} title={"PM"} startAngle={90} endAngle={450}  data={piePmData} dataKey="value" nameKey="name" cx="20%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c">
+                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"PM"} startAngle={90} endAngle={450}  data={piePmData} dataKey="value" nameKey="name" cx="20%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c">
                     <Label width={30} position="center" fontSize={'1.2rem'} fontWeight={'bold'}>
                         { `${piePmLabel}` }
                     </Label>
@@ -765,7 +777,7 @@ export default function Home() {
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} padding={'5% 5% 5% 0%'}>
             <Box width="100%" display="flex" alignItems="center" justifyContent="center">
                 {/* <Stack alignItems="center"> */}
-                    <LinearProgress sx={{ height: 20, width: '95%' }} value={eduBarValue} variant="determinate"  />
+                    <LinearProgress sx={{ height: 20, width: '95%' }}  value={eduBarValue} variant={ isLoading ? "indeterminate" : "determinate"}  />
                 {/* </Stack> */}
               
             </Box>
@@ -792,11 +804,11 @@ export default function Home() {
             <Navbar/>
             <Grid container spacing={2} columns={2} sx={{margin: 0, paddingRight: 4}}>
                 {/* LEFT PANEL */}
-                <Grid item xs sx={{minWidth: isMobile ? 1000 : 320}}>
-                    <Grid container space={2} columns={1} sx={{minWidth: isMobile ? 1000 : 320}}>
+                <Grid item xs sx={{minWidth: isMobile ? 640 : 320}}>
+                    <Grid container space={2} columns={1} sx={{minWidth: isMobile ? 640 : 320}}>
                         {/* Username Display */}
                         <Grid item xs={1}>
-                            <Paper elevation={3} sx={{backgroundColor: '#7293A0', minWidth: isMobile ? 1000 : 320}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#7293A0', minWidth: isMobile ? 640 : 320}}>
                                 <Typography variant="h4" component="div"
                                             sx={{flexGrow: 1,
                                                 fontWeight: 'bold',
@@ -861,8 +873,8 @@ export default function Home() {
                 {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs>
                     <Grid container columns={3}  spacing={1}>
-                        <Grid item xs={3} sx={{minWidth: isMobile ? 1000 : 320}}>
-                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px', minWidth: isMobile ? 1000 : 320}}>
+                        <Grid item xs={3} sx={{minWidth: isMobile ? 640 : 320}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px', minWidth: isMobile ? 640 : 320}}>
                                 <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                     {t("home.weekly-advices.title")}
                                 </Typography>
@@ -872,19 +884,19 @@ export default function Home() {
                             </Paper>
                         </Grid>
 
-                        <Grid item xs sx={{minWidth: isMobile ? 1000 : 320}}>
-                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 1000 : 320}}>
+                        <Grid item xs sx={{minWidth: isMobile ? 640 : 320}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 640 : 320}}>
                                 <Grid container columns={1} >
-                                    <Grid item  xs={12} md={6} lg={4} sx={{ minWidth: isMobile ? 1000 : 320 }}>
+                                    <Grid item  xs={12} md={6} lg={4} sx={{ minWidth: isMobile ? 640 : 320 }}>
                                         <LocalizationProvider  dateAdapter={AdapterDayjs}>
-                                        <Box sx={{ minWidth: isMobile ? 1000 : 320 }}>
+                                        <Box sx={{ minWidth: isMobile ? 640 : 320 }}>
                                             <DateCalendar
                                             // theme={calendarTheme} 
                                             showDaysOutsideCurrentMonth
                                             fixedWeekNumber={6}
                                                 //sx={{scale: '150%', paddingTop:'50px'}}
                                                 // sx={{scale: '95%'}}
-                                                sx={{ flexGrow: 1, height: '100%', width: '100%', minWidth: isMobile ? 1000 : 320 }}
+                                                sx={{ flexGrow: 1, minWidth: isMobile ? 640 : 320 }}
                                                 views={['day']} 
                                                 onChange={(e) => {
                                                     console.log(monthRecords);
@@ -910,10 +922,10 @@ export default function Home() {
                             </Paper>
                         </Grid>
 
-                        <Grid item xs sx={{minWidth: isMobile ? 1000 : 320}}>
+                        <Grid item xs sx={{minWidth: isMobile ? 640 : 320}}>
                             <Grid container columns={1} spacing={1}>
                                 <Grid item xs={1}>
-                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 1000 : 320}}>
+                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 640 : 320}}>
                                         <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                             {"Education Progress"}
                                         </Typography>
@@ -925,7 +937,7 @@ export default function Home() {
                                 </Grid>
 
                                 <Grid item xs={1}>
-                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 1000 : 320}}>
+                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 640 : 320}}>
                                         <Grid container columns={1}>
                                             <Grid item xs={1}>
                                             
