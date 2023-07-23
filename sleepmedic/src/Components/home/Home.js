@@ -749,18 +749,18 @@ export default function Home() {
         ) : (
         <ResponsiveContainer aspect={3}>
             <PieChart >
-                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450}  data={pieEffData} dataKey="value" nameKey="name" cx="80%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c"> 
-                    <Label  width={30} position="center" fontSize={'1.9rem'} fontWeight={'bold'}>
+                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450}  data={pieEffData} dataKey="value" nameKey="name" cx={isMobile ? "83%" : "80%"} cy="50%" innerRadius={isMobile ? '68%' : '50%'} outerRadius={isMobile ? '98%' : '80%'} fill="#a19b8c"> 
+                    <Label  width={30} position="center" fontSize={isMobile ? '1.2rem' : '1.9rem'} fontWeight={'bold'}>
                         { `${pieEffLabel}` }
                     </Label>
                 </Pie>                
-                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"AM"} startAngle={90} endAngle={450}  data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c">
-                    <Label width={30} position="center" fontSize={'1.2rem'} fontWeight={'bold'} >
+                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"AM"} startAngle={90} endAngle={450}  data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={isMobile ? '68%' : '50%'} outerRadius={isMobile ? '98%' : '80%'} fill="#a19b8c">
+                    <Label width={30} position="center" fontSize={isMobile ? '0.8rem' : '1.2rem'} fontWeight={'bold'} >
                         { `${pieAmLabel}` }
                     </Label>
                 </Pie>
-                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"PM"} startAngle={90} endAngle={450}  data={piePmData} dataKey="value" nameKey="name" cx="20%" cy="50%" innerRadius={'50%'} outerRadius={'80%'} fill="#a19b8c">
-                    <Label width={30} position="center" fontSize={'1.2rem'} fontWeight={'bold'}>
+                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"PM"} startAngle={90} endAngle={450}  data={piePmData} dataKey="value" nameKey="name" cx={isMobile ? "17%" : "20%"} cy="50%" innerRadius={isMobile ? '68%' : '50%'} outerRadius={isMobile ? '98%' : '80%'} fill="#a19b8c">
+                    <Label width={30} position="center" fontSize={isMobile ? '0.8rem' : '1.2rem'} fontWeight={'bold'}>
                         { `${piePmLabel}` }
                     </Label>
                 </Pie>                     
@@ -804,11 +804,11 @@ export default function Home() {
             <Navbar/>
             <Grid container spacing={2} columns={2} sx={{margin: 0, paddingRight: 4}}>
                 {/* LEFT PANEL */}
-                <Grid item xs sx={{minWidth: isMobile ? 640 : 320}}>
-                    <Grid container space={2} columns={1} sx={{minWidth: isMobile ? 640 : 320}}>
+                <Grid item xs sx={{minWidth: isMobile ? 300 : 320}}>
+                    <Grid container space={2} columns={1} sx={{minWidth: isMobile ? 300 : 320}}>
                         {/* Username Display */}
                         <Grid item xs={1}>
-                            <Paper elevation={3} sx={{backgroundColor: '#7293A0', minWidth: isMobile ? 640 : 320}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#7293A0', minWidth: isMobile ? 300 : 320}}>
                                 <Typography variant="h4" component="div"
                                             sx={{flexGrow: 1,
                                                 fontWeight: 'bold',
@@ -831,7 +831,7 @@ export default function Home() {
                                     <AveragePieChart/>
                                 </Box>
                                 
-                                <Typography variant='body' component='div' textAlign='center' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='14pt'>
+                                <Typography variant='body' component='div' textAlign='center' paddingLeft='2%' paddingRight='2%' paddingBottom='10pt' color='black' fontSize='14pt'>
                                     {t("home.effAdvice."+effAdvice)}
                                 </Typography>
                                 {/* <Typography variant='h6' component='div' textAlign='center'>
@@ -873,8 +873,8 @@ export default function Home() {
                 {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs>
                     <Grid container columns={3}  spacing={1}>
-                        <Grid item xs={3} sx={{minWidth: isMobile ? 640 : 320}}>
-                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px', minWidth: isMobile ? 640 : 320}}>
+                        <Grid item xs={3} sx={{minWidth: isMobile ? 300 : 320}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px', minWidth: isMobile ? 300 : 320}}>
                                 <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                     {t("home.weekly-advices.title")}
                                 </Typography>
@@ -884,19 +884,19 @@ export default function Home() {
                             </Paper>
                         </Grid>
 
-                        <Grid item xs sx={{minWidth: isMobile ? 640 : 320}}>
-                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 640 : 320}}>
+                        <Grid item xs sx={{minWidth: isMobile ? 300 : 320}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320}}>
                                 <Grid container columns={1} >
-                                    <Grid item  xs={12} md={6} lg={4} sx={{ minWidth: isMobile ? 640 : 320 }}>
+                                    <Grid item  xs={12} md={6} lg={4} sx={{ minWidth: isMobile ? 300 : 320 }}>
                                         <LocalizationProvider  dateAdapter={AdapterDayjs}>
-                                        <Box sx={{ minWidth: isMobile ? 640 : 320 }}>
+                                        <Box sx={{ minWidth: isMobile ? 300 : 320 }}>
                                             <DateCalendar
                                             // theme={calendarTheme} 
                                             showDaysOutsideCurrentMonth
                                             fixedWeekNumber={6}
                                                 //sx={{scale: '150%', paddingTop:'50px'}}
                                                 // sx={{scale: '95%'}}
-                                                sx={{ flexGrow: 1, minWidth: isMobile ? 640 : 320 }}
+                                                sx={{ flexGrow: 1, minWidth: isMobile ? 300 : 320 }}
                                                 views={['day']} 
                                                 onChange={(e) => {
                                                     console.log(monthRecords);
@@ -922,10 +922,10 @@ export default function Home() {
                             </Paper>
                         </Grid>
 
-                        <Grid item xs sx={{minWidth: isMobile ? 640 : 320}}>
+                        <Grid item xs sx={{minWidth: isMobile ? 300 : 320}}>
                             <Grid container columns={1} spacing={1}>
                                 <Grid item xs={1}>
-                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 640 : 320}}>
+                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320}}>
                                         <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                             {"Education Progress"}
                                         </Typography>
@@ -937,7 +937,7 @@ export default function Home() {
                                 </Grid>
 
                                 <Grid item xs={1}>
-                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 640 : 320}}>
+                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320}}>
                                         <Grid container columns={1}>
                                             <Grid item xs={1}>
                                             

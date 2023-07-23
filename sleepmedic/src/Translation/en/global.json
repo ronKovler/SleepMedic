@@ -10,8 +10,8 @@
     "home": {
         "7-day": {
             "title": "7-Day Averages",
-            "time-spent-falling": "Time spent falling asleep:",
-            "time-spent-awake": "Time spent awake in the night:",
+            "time-spent-falling": "Fell asleep in:",
+            "time-spent-awake": "Was awake for:",
             "quality": "Quality:",
             "hours-slept": "Hours Slept:"
         },
