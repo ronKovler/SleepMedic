@@ -31,7 +31,7 @@ import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfi
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-
+import {isMobile} from 'react-device-detect';
 import PropTypes from 'prop-types';
 import Pagination from '@mui/material/Pagination';
 //import TextField from '@material-ui/core/TextField';
@@ -792,11 +792,11 @@ export default function Home() {
             <Navbar/>
             <Grid container spacing={2} columns={2} sx={{margin: 0, paddingRight: 4}}>
                 {/* LEFT PANEL */}
-                <Grid item xs sx={{minWidth: 320}}>
-                    <Grid container space={2} columns={1} sx={{minWidth: 320}}>
+                <Grid item xs sx={{minWidth: isMobile ? 1000 : 320}}>
+                    <Grid container space={2} columns={1} sx={{minWidth: isMobile ? 1000 : 320}}>
                         {/* Username Display */}
                         <Grid item xs={1}>
-                            <Paper elevation={3} sx={{backgroundColor: '#7293A0', minWidth: 320}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#7293A0', minWidth: isMobile ? 1000 : 320}}>
                                 <Typography variant="h4" component="div"
                                             sx={{flexGrow: 1,
                                                 fontWeight: 'bold',
@@ -861,8 +861,8 @@ export default function Home() {
                 {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs>
                     <Grid container columns={3}  spacing={1}>
-                        <Grid item xs={3} sx={{minWidth: 320}}>
-                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px', minWidth: 320}}>
+                        <Grid item xs={3} sx={{minWidth: isMobile ? 1000 : 320}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px', minWidth: isMobile ? 1000 : 320}}>
                                 <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                     {t("home.weekly-advices.title")}
                                 </Typography>
@@ -872,19 +872,19 @@ export default function Home() {
                             </Paper>
                         </Grid>
 
-                        <Grid item xs sx={{minWidth: 320}}>
-                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: 320}}>
+                        <Grid item xs sx={{minWidth: isMobile ? 1000 : 320}}>
+                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 1000 : 320}}>
                                 <Grid container columns={1} >
-                                    <Grid item  xs={12} md={6} lg={4} sx={{ minWidth: 320 }}>
+                                    <Grid item  xs={12} md={6} lg={4} sx={{ minWidth: isMobile ? 1000 : 320 }}>
                                         <LocalizationProvider  dateAdapter={AdapterDayjs}>
-                                        <Box sx={{ minWidth: 320 }}>
+                                        <Box sx={{ minWidth: isMobile ? 1000 : 320 }}>
                                             <DateCalendar
                                             // theme={calendarTheme} 
                                             showDaysOutsideCurrentMonth
                                             fixedWeekNumber={6}
                                                 //sx={{scale: '150%', paddingTop:'50px'}}
                                                 // sx={{scale: '95%'}}
-                                                sx={{ flexGrow: 1, height: '100%', width: '100%', minWidth: 320 }}
+                                                sx={{ flexGrow: 1, height: '100%', width: '100%', minWidth: isMobile ? 1000 : 320 }}
                                                 views={['day']} 
                                                 onChange={(e) => {
                                                     console.log(monthRecords);
@@ -910,10 +910,10 @@ export default function Home() {
                             </Paper>
                         </Grid>
 
-                        <Grid item xs sx={{minWidth: 320}}>
+                        <Grid item xs sx={{minWidth: isMobile ? 1000 : 320}}>
                             <Grid container columns={1} spacing={1}>
                                 <Grid item xs={1}>
-                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: 320}}>
+                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 1000 : 320}}>
                                         <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                             {"Education Progress"}
                                         </Typography>
@@ -925,7 +925,7 @@ export default function Home() {
                                 </Grid>
 
                                 <Grid item xs={1}>
-                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: 320}}>
+                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 1000 : 320}}>
                                         <Grid container columns={1}>
                                             <Grid item xs={1}>
                                             
@@ -1095,9 +1095,12 @@ export default function Home() {
                 </Box>
                 
             </Dialog>
-            <Typography  variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
+            <Grid item xs >
+                <Typography  marginBottom={'10px'} variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                     SLEEP MEDIC ALPHA 0.3.0
-                                </Typography>
+                </Typography>
+            </Grid>
+            
         </Box>
     )
 }
