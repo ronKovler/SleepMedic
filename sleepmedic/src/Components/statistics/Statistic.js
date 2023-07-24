@@ -148,12 +148,15 @@ export default function Statistics() {
                     {/* {makeLineGraph(monthRecords, "date", 'quality', 'Monthly Quality', [0,5], 6)} */}
                     <Box sx={{ width: '100%' }}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                            <Tab label="Monthly Quality" {...a11yProps(0)} />
-                            <Tab label="Monthly Efficiency" {...a11yProps(1)} />
-                            <Tab label="Monthly Falling Asleep Time" {...a11yProps(2)} />
-                            <Tab label="Times" {...a11yProps(3)} />
-                            </Tabs>
+                            <Paper sx={{ width: '100%', backgroundColor: '#D9D3E4'}}>
+                                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                                <Tab label="Monthly Quality" {...a11yProps(0)} />
+                                <Tab label="Monthly Efficiency" {...a11yProps(1)} />
+                                <Tab label="Monthly Falling Asleep Time" {...a11yProps(2)} />
+                                <Tab label="Times" {...a11yProps(3)} />
+                                </Tabs>
+                            </Paper>
+                            
                         </Box>
                         <CustomTabPanel value={value} index={0}>
                             {makeLineGraph(monthRecords, "date", 'quality', [0,5], 6, showAvg, allAvgs.quality)}
