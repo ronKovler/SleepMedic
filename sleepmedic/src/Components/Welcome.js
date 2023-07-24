@@ -88,7 +88,7 @@ function Welcome() {
      
       {/*Welcome Message - Getting Started*/}
       <Grid container columns={1}  direction="column" alignItems="center">
-        <Grid item xs paddingBottom={isMobile? 1 : 8}>
+        <Grid item xs paddingBottom={isMobile? 1 : '5%'}>
           <Typography variant="h4" component="div"
             sx={{flexGrow: 1,
                 fontWeight: 'bold',
@@ -109,13 +109,13 @@ function Welcome() {
               </Box>
             </Grid>
         
-          <Grid item xs textAlign={'center'} paddingBottom={isMobile? 1 : 5}>
+          <Grid item xs textAlign={'center'} paddingBottom={isMobile? 1 : '2%'}>
             <Box display='flex' justifyContent="center" alignItems="center">
               <Paper sx={{backgroundColor: '#D9D3E4',  minWidth: isMobile ? '90%' : 250, padding: 2}} square={false} elevation={3} style={{textAlign: 'center'}}>  
               
                 <Typography variant="h5" component="div"
                   sx={{flexGrow: 1,
-                  color: 'black', 
+                  color: '#81899c', 
                   fontWeight: 'bold',
                   paddingTop: '10px',
                   paddingBottom: '0px',
@@ -126,6 +126,8 @@ function Welcome() {
                 <Button sx={{
                   textTransform: 'none', 
                   width:'60%', 
+                  color: Object.is("English", selectedLanguage) ? 'black' : '#81899c',
+                  fontSize: '1.2rem',
                   fontWeight: Object.is("English", selectedLanguage) ? 'bold' : 'regular'
                   }} 
                   variant={'uncontained'} 
@@ -136,6 +138,8 @@ function Welcome() {
                 <Button sx={{
                   textTransform: 'none', 
                   width:'60%', 
+                  color: Object.is("Spanish", selectedLanguage) ? 'black' : '#81899c',
+                  fontSize: '1.2rem',
                   fontWeight: Object.is("Spanish", selectedLanguage) ? 'bold' : 'regular'
                   }} 
                   variant={'uncontained'} 
@@ -146,6 +150,8 @@ function Welcome() {
                 <Button sx={{
                   textTransform: 'none', 
                   width:'60%', 
+                  color: Object.is("French", selectedLanguage) ? 'black' : '#81899c',
+                  fontSize: '1.2rem',
                   fontWeight: Object.is("French", selectedLanguage) ? 'bold' : 'regular'
                   }} 
                   variant={'uncontained'} onClick={() => handleLanguageChange('French')} >

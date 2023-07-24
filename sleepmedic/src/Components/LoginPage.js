@@ -18,6 +18,7 @@ function Login() {
   const signIn = useSignIn();
   const navigate = useNavigate();
   const [error, setError] = useState(false);
+  const [logoSize, setLogoSize] = useState('100%');
   const [t, i18n] = useTranslation("global");
 
   useEffect (() => {
@@ -118,7 +119,7 @@ function Login() {
   return (
     <div className="container">
       <form className="login-form" onSubmit={handleLogin}>
-        <img src={logo} alt="Sleep-Medic Logo" style={{height: "8rem", width: "auto"}}/>
+        <img onMouseOut={() => setLogoSize('100%')} onMouseOver={() => {setLogoSize('120%')}} onClick={() => navigate('/')} src={logo} title='Back to Language Select' alt="Sleep-Medic Logo" style={{height: "8rem", width: "auto", scale: logoSize}}/>
         <h1>{t("login.title")}</h1>
         {error && <Alert severity="error" sx={{color: "red", fontSize: "0.85rem"}}><strong>Username/Password was Entered Incorrectly!</strong></Alert>}
         <label style={{fontWeight: "bold"}} htmlFor="email">{t("login.email")}</label>
