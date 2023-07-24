@@ -3,12 +3,13 @@ import "./Welcome.css";
 import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, Paper, Box, Typography} from '@mui/material';
 import { useEffect, useState } from 'react';
 import LoginPage from './LoginPage'
 import React from 'react';
 import theme from '../theme';
 import { height } from '@mui/system';
+import { isMobile } from 'react-device-detect';
 
 
 
@@ -70,39 +71,111 @@ function Welcome() {
   };
 
   return (
- 
-    <div className="welcome-page-container">
+      <Box  sx={{
+                   /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
+        background: 'repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% )',
+        animation: 'animazione 13s ease-in-out infinite alternate-reverse',
+    
+        height: '100vh' ,
+        width: '100vw',
+        overflowX: 'hidden',
+       
+        display: 'flex', // Enable flexbox layout
+        justifyContent: 'center', // Horizontally center the content
+        alignItems: 'center', // Vertically center the content
+        
+      }}>
+     
       {/*Welcome Message - Getting Started*/}
-      <Grid container spacing={0} justify='center' alignItems='center'>
-        <Grid item xs={8}>
-            <h1 style={{fontSize: "2.5rem", color: '#d8d3e3'}}>{t("welcome.title")}</h1>
-            <img src={logo} alt="Sleep-Medic Logo" className="logo" style={{height: 400, width:400}}/>
-            <p style={{fontSize: "1.25rem", color: '#d8d3e3'}}>{t("welcome.subscript")}</p>
+      <Grid container columns={1}  direction="column" alignItems="center">
+        <Grid item xs paddingBottom={isMobile? 1 : 8}>
+          <Typography variant="h4" component="div"
+            sx={{flexGrow: 1,
+                fontWeight: 'bold',
+                color: '#d8d3e3', 
+                paddingTop: '10px',
+                paddingBottom: '10px',
+                textAlign: 'center'}}>
+              {t("welcome.title")} 
+          </Typography>
+          
         </Grid>
-        <Grid item xs={2} >
-          {/*Language Select*/}
-            <div className="LanguageSelect-form">
-              <div className="language-list" >
-              <h2>{t("welcome.language")}</h2>
-                <div onClick={(e) => handleLanguageChange('en')}>
-                  {Object.is("English", selectedLanguage) ? <>✅ {t("welcome.english")}</> : <>{t("welcome.english")}</>}
-                </div>
-                <br/>
-                <div onClick={(e) => handleLanguageChange('es')}>
-                  {Object.is("Spanish", selectedLanguage) ? <>✅ {t("welcome.spanish")}</> : <>{t("welcome.spanish")}</>}
-                </div>
-                <br/>
-                <div onClick={(e) => handleLanguageChange('French')}>
-                  {Object.is("French", selectedLanguage) ? "✅ French" : "French"}
-                </div>
-                {/* Add more language options here */}
-              </div>
-              <br/>
-              <Button variant="contained" color="primary" onClick={(e) => navigate("/login")}>{t("welcome.next")}</Button>
-            </div>
+        
+        <Grid container columnSpacing={isMobile ? 2 : -50} rowSpacing={2} direction={isMobile ? 'column' : 'row'} justifyContent="center" alignItems="center">
+          
+            <Grid item xs textAlign={'center'} >
+              <Box display='flex' justifyContent="center" alignItems="center" >
+                <img src={logo} alt="Sleep-Medic Logo" style={{ minWidth: isMobile? 200 : 320, height: "auto"}}/>
+              </Box>
+            </Grid>
+        
+          <Grid item xs textAlign={'center'} paddingBottom={isMobile? 1 : 5}>
+            <Box display='flex' justifyContent="center" alignItems="center">
+              <Paper sx={{backgroundColor: '#D9D3E4',  minWidth: isMobile ? '90%' : 250, padding: 2}} square={false} elevation={3} style={{textAlign: 'center'}}>  
+              
+                <Typography variant="h5" component="div"
+                  sx={{flexGrow: 1,
+                  color: 'black', 
+                  fontWeight: 'bold',
+                  paddingTop: '10px',
+                  paddingBottom: '10px',
+                  textAlign: 'center'}}>
+                  {t("welcome.language")} 
+                </Typography>
+                
+                <Button sx={{
+                  textTransform: 'none', 
+                  width:'60%', 
+                  fontWeight: Object.is("English", selectedLanguage) ? 'bold' : 'regular'
+                  }} 
+                  variant={'uncontained'} 
+                  onClick={() => handleLanguageChange('en')} >
+                  {t("welcome.english")}
+                </Button><br/>
+
+                <Button sx={{
+                  textTransform: 'none', 
+                  width:'60%', 
+                  fontWeight: Object.is("Spanish", selectedLanguage) ? 'bold' : 'regular'
+                  }} 
+                  variant={'uncontained'} 
+                  onClick={() => handleLanguageChange('es')} >
+                  {t("welcome.spanish")}
+                </Button><br/>
+
+                <Button sx={{
+                  textTransform: 'none', 
+                  width:'60%', 
+                  fontWeight: Object.is("French", selectedLanguage) ? 'bold' : 'regular'
+                  }} 
+                  variant={'uncontained'} onClick={() => handleLanguageChange('French')} >
+                  {"French"} {/* Add more language options here */}
+                </Button><br/>
+
+                <Button sx={{width: '55%'}} variant="contained" color="primary" onClick={(e) => navigate("/login")}>
+                  {t("welcome.next")}
+                </Button>
+              </Paper>
+            </Box>
+          </Grid>
+          
+        </Grid>
+    
+        
+        <Grid item xs >
+          <Box display='flex' justifyContent="center" alignItems="center" >
+          <Typography variant="h6" component="div" width={'95%'}
+            sx={{flexGrow: 1,
+                color: '#d8d3e3', 
+                
+                textAlign: 'center'}}>
+              {t("welcome.subscript")} 
+          </Typography>
+          </Box>
+      
         </Grid>
       </Grid>
-    </div>
+     </Box>
   );
 }
 
