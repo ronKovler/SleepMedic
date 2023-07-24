@@ -12,7 +12,17 @@ import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine, Legend, BarChart, Bar, ResponsiveContainer } from 'recharts';
+import { LineChart,
+         Line,
+         CartesianGrid, 
+         XAxis, YAxis, 
+         Tooltip, 
+         ReferenceLine, 
+         Legend, 
+         BarChart, Bar, 
+         ResponsiveContainer,
+         ScatterChart, Scatter
+        } from 'recharts';
 
 
 function getCookiesDict() {
@@ -175,18 +185,20 @@ export default function Statistics() {
                                     <Grid item xs={1}>
                                         <Box display="flex" justifyContent="center" alignItems="center">
                                             <ResponsiveContainer aspect={2.8}>
-                                                <LineChart data={monthRecords} margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
+                                                
+                                                <ScatterChart margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
                                                     <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-                                                    <XAxis stroke={'white'} dataKey={"date"}/>
-                                                    <YAxis stroke={'white'} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
-                                                    <Tooltip />
-                                                    <Legend />
-                                                    <Line type="monotone" dataKey={"upTime"} stroke="#F3C98B" strokeWidth={3}/>
-                                                    <Line type="monotone" dataKey={"wakeTime"} stroke="#8884d8" strokeWidth={3}/>
-                                                    <Line type="monotone" dataKey={"downTime"} stroke="#0F084B" strokeWidth={3}/>
-                                                    <Line type="monotone" dataKey={"sleepTime"} stroke="#869D96" strokeWidth={3}/>
-                                                    {/* #525B76, #869D96 */}
-                                                </LineChart>
+                                                    <XAxis stroke={'white'} type="category" dataKey={"date"} allowDuplicatedCategory={false}/>
+                                                    <YAxis yAxisId='upT' stroke={'white'} type="number" dataKey={"upTime"} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <YAxis hide={true} yAxisId='downT' stroke={'white'} type="number" dataKey={"downTime"} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <YAxis hide={true} yAxisId='wakeT' stroke={'white'} type="number" dataKey={"wakeTime"} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <YAxis hide={true} yAxisId='sleepT' stroke={'white'} type="number" dataKey={"sleepTime"} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <Tooltip/>
+                                                    <Scatter yAxisId='upT' name="Up Time" data={monthRecords} fill="#F3C98B"/>
+                                                    <Scatter yAxisId='downT' name="Down Time" data={monthRecords} fill="#0F084B"/>
+                                                    <Scatter yAxisId='wakeT' name="Wake Time" data={monthRecords} fill="#8884d8"/>
+                                                    <Scatter yAxisId='sleepT' name="Sleep Time" data={monthRecords} fill="#8884d8"/>
+                                                </ScatterChart>
                                             </ResponsiveContainer>
                                             
                                         </Box>
