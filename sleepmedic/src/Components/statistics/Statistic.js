@@ -12,7 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine, Legend, BarChart, Bar } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceLine, Legend, BarChart, Bar, ResponsiveContainer } from 'recharts';
 
 
 function getCookiesDict() {
@@ -35,20 +35,26 @@ function getGetHeaders() {
 
 function makeLineGraph(data, x, y, scale=[0,10], ytick, isRefLine, avg) {
     return (
-        <Paper sx={{width: '80%'}} elevation={0}>
-            <Grid container spacing={2} columns={1} margin={0} >
-                <Grid item xs={1}>
-                    <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                        <Line type="monotone" dataKey={y} stroke="#8884d8" />
-                        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                        <XAxis dataKey={x}/>
-                        <YAxis domain={scale} interval="preserveStartEnd" tickCount={ytick}/>
-                        <Tooltip />
-                        {isRefLine ? <ReferenceLine y={avg} stroke="red"/> : undefined}
-                    </LineChart>
+        <Box display="flex" justifyContent="center" alignItems="center">
+            <Paper sx={{width: '100%'}} style={{color:'white', background: 'linear-gradient(to top, #3E4464, #222740)'}} elevation={3}> 
+                <Grid container spacing={2} columns={1} >
+                    <Grid item xs={1}>
+                        <ResponsiveContainer aspect={2.9}>
+                        <LineChart data={data} margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
+                                <Line type="monotone" dataKey={y} stroke="#c4c1f7" strokeWidth={3} />
+                                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                                <XAxis stroke={'white'} dataKey={x}/>
+                                <YAxis stroke={'white'} domain={scale} interval="preserveStartEnd" tickCount={ytick}/>
+                                <Tooltip />
+                                {isRefLine ? <ReferenceLine y={avg} stroke="red"/> : undefined}
+                            </LineChart> 
+                        </ResponsiveContainer>
+                        
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Paper>
+            </Paper>
+        </Box>
+        
     );
 }
 
@@ -125,9 +131,19 @@ export default function Statistics() {
 
     if (monthRecords === []) return (<div>HI</div>)
     else return (
-        <Box>
+        <Box  sx={{
+            backgroundColor: "#57118E",           /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
+            background: 'repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% )',
+            animation: 'animazione 13s ease-in-out infinite alternate-reverse',
+        
+            height: '100vh' ,
+            width: '100vw',
+            overflow: 'hidden',
+            overflowY: 'scroll'
+            
+        }}>
             <Navbar/>
-            <Grid container spacing={2} columns={3} sx={{margin: 0}}>
+            <Grid container spacing={2} columns={3} sx={{margin: 0, paddingRight: 4}}>
                 <Grid item xs={3}>
                     {/* {makeLineGraph(monthRecords, "date", 'quality', 'Monthly Quality', [0,5], 6)} */}
                     <Box sx={{ width: '100%' }}>
@@ -150,21 +166,27 @@ export default function Statistics() {
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={3}>
                             {/* {makeLineGraph(monthRecords, "date", 'upTime', [0,24], 4, showAvg)} */}
-                            <Paper sx={{width: '80%'}} elevation={0}>
-                                <Grid container spacing={2} columns={1} margin={0} >
+                            <Paper sx={{ width: '100%'}} style={{color:'white', background: 'linear-gradient(to top, #3E4464, #222740)'}} elevation={3} >
+                                <Grid container spacing={2} columns={1}  >
                                     <Grid item xs={1}>
-                                        <LineChart width={1000} height={400} data={monthRecords} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                                            <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-                                            <XAxis dataKey={"date"}/>
-                                            <YAxis domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
-                                            <Tooltip />
-                                            <Legend />
-                                            <Line type="monotone" dataKey={"upTime"} stroke="#F3C98B" />
-                                            <Line type="monotone" dataKey={"wakeTime"} stroke="#8884d8" />
-                                            <Line type="monotone" dataKey={"downTime"} stroke="#0F084B" />
-                                            <Line type="monotone" dataKey={"sleepTime"} stroke="#869D96" />
-                                            {/* #525B76, #869D96 */}
-                                        </LineChart>
+                                        <Box display="flex" justifyContent="center" alignItems="center">
+                                            <ResponsiveContainer aspect={2.8}>
+                                                <LineChart data={monthRecords} margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
+                                                    <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+                                                    <XAxis stroke={'white'} dataKey={"date"}/>
+                                                    <YAxis stroke={'white'} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <Tooltip />
+                                                    <Legend />
+                                                    <Line type="monotone" dataKey={"upTime"} stroke="#F3C98B" strokeWidth={3}/>
+                                                    <Line type="monotone" dataKey={"wakeTime"} stroke="#8884d8" strokeWidth={3}/>
+                                                    <Line type="monotone" dataKey={"downTime"} stroke="#0F084B" strokeWidth={3}/>
+                                                    <Line type="monotone" dataKey={"sleepTime"} stroke="#869D96" strokeWidth={3}/>
+                                                    {/* #525B76, #869D96 */}
+                                                </LineChart>
+                                            </ResponsiveContainer>
+                                            
+                                        </Box>
+                                        
                                     </Grid>
                                 </Grid>
                             </Paper>

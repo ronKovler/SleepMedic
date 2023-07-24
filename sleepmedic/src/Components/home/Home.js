@@ -599,8 +599,6 @@ export default function Home() {
         
         //Get Data
         console.log("USED effect");
-        
-        
     }, []);
 
     
