@@ -20,6 +20,7 @@
             "2": "Nice job, keep good up the good work!"
         },
         "viewInsight": "View Insights",
+        "insightMessage": "Gain valuable insights into your sleep patterns by visualizing your habits. Explore them on the Insights page.",
         "weekly-advices": {
             "title": "Weekly Advices",
             "1": "I already want to take a nap tomorrow."
@@ -47,6 +48,8 @@
             "racing-thoughts": "Did you have any racing thoughts while in bed?",
             "dreams": "Did you have any dreams?"
         },
+        "viewLessons": "View Lessons",
+        "education-progress": "Education Progress",
         "cancel": "Cancel",
         "submit": "Submit",
         "update": "Update"
@@ -74,62 +77,293 @@
     "education": {
         "table-of-contents": "Table of Contents",
         "dashboard": "Dashboard",
-        "week1": {
-            "title": "Week 1",
-            "day1": {
+            "week1": {
+              "title": "Week 1",
+              "day1": {
                 "title": "Day 1",
                 "lesson1": {
-                    "title": "Lesson 1",
-                    "reading": "Lesson 1 Reading"
+                  "title": "Lesson 1",
+                  "reading": "Lesson 1 Reading"
                 },
                 "lesson2": {
-                    "title": "Lesson 2",
-                    "reading": "Lesson 2 Reading"
+                  "title": "Lesson 2",
+                  "reading": "Lesson 2 Reading"
                 },
                 "lesson3": {
-                    "title": "Lesson 3",
-                    "reading": "Lesson 3 Reading"
+                  "title": "Lesson 3",
+                  "reading": "Lesson 3 Reading"
                 }
-            },
-            "day2": {
+              },
+              "day2": {
                 "title": "Day 2",
                 "lesson4": {
-                    "title": "Lesson 4",
-                    "reading": "Lesson 4 Reading"
+                  "title": "Lesson 4",
+                  "reading": "Lesson 4 Reading"
                 },
                 "lesson5": {
-                    "title": "Lesson 5",
-                    "reading": "Lesson 5 Reading"
+                  "title": "Lesson 5",
+                  "reading": "Lesson 5 Reading"
                 },
                 "lesson6": {
-                    "title": "Lesson 6",
-                    "reading": "Lesson 6 Reading"
+                  "title": "Lesson 6",
+                  "reading": "Lesson 6 Reading"
                 }
-            },
-            "day3": {
+              },
+              "day3": {
                 "title": "Day 3",
                 "lesson7": {
-                    "title": "Lesson 7",
-                    "reading": "Lesson 7 Reading"
+                  "title": "Lesson 7",
+                  "reading": "Lesson 7 Reading"
                 },
                 "lesson8": {
-                    "title": "Lesson 8",
-                    "reading": "Lesson 8 Reading"
-                },"lesson9": {
-                    "title": "Lesson 9",
-                    "reading": "Lesson 9 Reading"
+                  "title": "Lesson 8",
+                  "reading": "Lesson 8 Reading"
+                },
+                "lesson9": {
+                  "title": "Lesson 9",
+                  "reading": "Lesson 9 Reading"
                 }
-            }
-        },
-        "week2": {
-            "title": "Week 2",
-            "day8": {
+              }
+            },
+            "week2": {
+              "title": "Week 2",
+              "day4": {
+                "title": "Day 4",
+                "lesson10": {
+                  "title": "Lesson 10",
+                  "reading": "Lesson 10 Reading"
+                },
+                "lesson11": {
+                  "title": "Lesson 11",
+                  "reading": "Lesson 11 Reading"
+                },
+                "lesson12": {
+                  "title": "Lesson 12",
+                  "reading": "Lesson 12 Reading"
+                }
+              },
+              "day5": {
+                "title": "Day 5",
+                "lesson13": {
+                  "title": "Lesson 13",
+                  "reading": "Lesson 13 Reading"
+                },
+                "lesson14": {
+                  "title": "Lesson 14",
+                  "reading": "Lesson 14 Reading"
+                },
+                "lesson15": {
+                  "title": "Lesson 15",
+                  "reading": "Lesson 15 Reading"
+                }
+              },
+              "day6": {
+                "title": "Day 6",
+                "lesson16": {
+                  "title": "Lesson 16",
+                  "reading": "Lesson 16 Reading"
+                },
+                "lesson17": {
+                  "title": "Lesson 17",
+                  "reading": "Lesson 17 Reading"
+                },
+                "lesson18": {
+                  "title": "Lesson 18",
+                  "reading": "Lesson 18 Reading"
+                }
+              }
+            },
+            "week3": {
+              "title": "Week 3",
+              "day7": {
+                "title": "Day 7",
+                "lesson19": {
+                  "title": "Lesson 19",
+                  "reading": "Lesson 19 Reading"
+                },
+                "lesson20": {
+                  "title": "Lesson 20",
+                  "reading": "Lesson 20 Reading"
+                },
+                "lesson21": {
+                  "title": "Lesson 21",
+                  "reading": "Lesson 21 Reading"
+                }
+              },
+              "day8": {
                 "title": "Day 8",
-                "lesson22": "lesson 22",
-                "lesson23": "lesson 23",
-                "lesson24": "lesson 24"
-            }
-        }
+                "lesson22": {
+                  "title": "Lesson 22",
+                  "reading": "Lesson 22 Reading"
+                },
+                "lesson23": {
+                  "title": "Lesson 23",
+                  "reading": "Lesson 23 Reading"
+                },
+                "lesson24": {
+                  "title": "Lesson 24",
+                  "reading": "Lesson 24 Reading"
+                }
+              },
+              "day9": {
+                "title": "Day 9",
+                "lesson25": {
+                  "title": "Lesson 25",
+                  "reading": "Lesson 25 Reading"
+                },
+                "lesson26": {
+                  "title": "Lesson 26",
+                  "reading": "Lesson 26 Reading"
+                },
+                "lesson27": {
+                  "title": "Lesson 27",
+                  "reading": "Lesson 27 Reading"
+                }
+              }
+            },
+            "week4": {
+              "title": "Week 4",
+              "day10": {
+                "title": "Day 10",
+                "lesson28": {
+                  "title": "Lesson 28",
+                  "reading": "Lesson 28 Reading"
+                },
+                "lesson29": {
+                  "title": "Lesson 29",
+                  "reading": "Lesson 29 Reading"
+                },
+                "lesson30": {
+                  "title": "Lesson 30",
+                  "reading": "Lesson 30 Reading"
+                }
+              },
+              "day11": {
+                "title": "Day 11",
+                "lesson31": {
+                  "title": "Lesson 31",
+                  "reading": "Lesson 31 Reading"
+                },
+                "lesson32": {
+                  "title": "Lesson 32",
+                  "reading": "Lesson 32 Reading"
+                },
+                "lesson33": {
+                  "title": "Lesson 33",
+                  "reading": "Lesson 33 Reading"
+                }
+              },
+              "day12": {
+                "title": "Day 12",
+                "lesson34": {
+                  "title": "Lesson 34",
+                  "reading": "Lesson 34 Reading"
+                },
+                "lesson35": {
+                  "title": "Lesson 35",
+                  "reading": "Lesson 35 Reading"
+                },
+                "lesson36": {
+                  "title": "Lesson 36",
+                  "reading": "Lesson 36 Reading"
+                }
+              }
+            },
+            "week5": {
+              "title": "Week 5",
+              "day13": {
+                "title": "Day 13",
+                "lesson37": {
+                  "title": "Lesson 37",
+                  "reading": "Lesson 37 Reading"
+                },
+                "lesson38": {
+                  "title": "Lesson 38",
+                  "reading": "Lesson 38 Reading"
+                },
+                "lesson39": {
+                  "title": "Lesson 39",
+                  "reading": "Lesson 39 Reading"
+                }
+              },
+              "day14": {
+                "title": "Day 14",
+                "lesson40": {
+                  "title": "Lesson 40",
+                  "reading": "Lesson 40 Reading"
+                },
+                "lesson41": {
+                  "title": "Lesson 41",
+                  "reading": "Lesson 41 Reading"
+                },
+                "lesson42": {
+                  "title": "Lesson 42",
+                  "reading": "Lesson 42 Reading"
+                }
+              },
+              "day15": {
+                "title": "Day 15",
+                "lesson43": {
+                  "title": "Lesson 43",
+                  "reading": "Lesson 43 Reading"
+                },
+                "lesson44": {
+                  "title": "Lesson 44",
+                  "reading": "Lesson 44 Reading"
+                },
+                "lesson45": {
+                  "title": "Lesson 45",
+                  "reading": "Lesson 45 Reading"
+                }
+              }
+            },
+            "week6": {
+              "title": "Week 6",
+              "day16": {
+                "title": "Day 16",
+                "lesson46": {
+                  "title": "Lesson 46",
+                  "reading": "Lesson 46 Reading"
+                },
+                "lesson47": {
+                  "title": "Lesson 47",
+                  "reading": "Lesson 47 Reading"
+                },
+                "lesson48": {
+                  "title": "Lesson 48",
+                  "reading": "Lesson 48 Reading"
+                }
+              },
+              "day17": {
+                "title": "Day 17",
+                "lesson49": {
+                  "title": "Lesson 49",
+                  "reading": "Lesson 49 Reading"
+                },
+                "lesson50": {
+                  "title": "Lesson 50",
+                  "reading": "Lesson 50 Reading"
+                },
+                "lesson51": {
+                  "title": "Lesson 51",
+                  "reading": "Lesson 51 Reading"
+                }
+              },
+              "day18": {
+                "title": "Day 18",
+                "lesson52": {
+                  "title": "Lesson 52",
+                  "reading": "Lesson 52 Reading"
+                },
+                "lesson53": {
+                  "title": "Lesson 53",
+                  "reading": "Lesson 53 Reading"
+                },
+                "lesson54": {
+                  "title": "Lesson 54",
+                  "reading": "Lesson 54 Reading"
+                }
+              }
+          }    
     }
-
 }
