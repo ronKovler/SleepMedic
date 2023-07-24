@@ -140,6 +140,31 @@ export default function Statistics() {
         getRecords();
     }, []);
 
+    const SleepShape = (props) => {
+        const { cx, cy, payload } = props;
+        const emoji = '💤'
+        const offset = 7;
+        return (<g> <text x={cx} y={cy + offset} textAnchor="middle" fontSize={16} fill="#666">{emoji}</text> </g>);
+    }
+    const WakeShape = (props) => {
+        const { cx, cy, payload } = props;
+        const emoji = '⏰'
+        const offset = 7;
+        return (<g> <text x={cx} y={cy + offset} textAnchor="middle" fontSize={16} fill="#666">{emoji}</text> </g>);
+    }
+    const DownShape = (props) => {
+        const { cx, cy, payload } = props;
+        const emoji = '🔽'
+        const offset = 7;
+        return (<g> <text x={cx} y={cy + offset} textAnchor="middle" fontSize={16} fill="#666">{emoji}</text> </g>);
+    }
+    const UpShape = (props) => {
+        const { cx, cy, payload } = props;
+        const emoji = '🔼'
+        const offset = 7;
+        return (<g> <text x={cx} y={cy + offset} textAnchor="middle" fontSize={16} fill="#666">{emoji}</text> </g>);
+    }
+
     if (monthRecords === []) return (<div>HI</div>)
     else return (
         <Box  sx={{
@@ -194,10 +219,10 @@ export default function Statistics() {
                                                     <YAxis hide={true} yAxisId='wakeT' stroke={'white'} type="number" dataKey={"wakeTime"} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
                                                     <YAxis hide={true} yAxisId='sleepT' stroke={'white'} type="number" dataKey={"sleepTime"} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
                                                     <Tooltip/>
-                                                    <Scatter yAxisId='upT' name="Up Time" data={monthRecords} fill="#F3C98B"/>
-                                                    <Scatter yAxisId='downT' name="Down Time" data={monthRecords} fill="#0F084B"/>
-                                                    <Scatter yAxisId='wakeT' name="Wake Time" data={monthRecords} fill="#8884d8"/>
-                                                    <Scatter yAxisId='sleepT' name="Sleep Time" data={monthRecords} fill="#8884d8"/>
+                                                    <Scatter yAxisId='upT' name="Up Time" data={monthRecords} shape={<UpShape />}/>
+                                                    <Scatter yAxisId='downT' name="Down Time" data={monthRecords} shape={<DownShape />}/>
+                                                    <Scatter yAxisId='wakeT' name="Wake Time" data={monthRecords} shape={<WakeShape />}/>
+                                                    <Scatter yAxisId='sleepT' name="Sleep Time" data={monthRecords} shape={<SleepShape />}/>
                                                 </ScatterChart>
                                             </ResponsiveContainer>
                                             

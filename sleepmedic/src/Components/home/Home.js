@@ -886,9 +886,9 @@ export default function Home() {
                             <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320}}>
                                 <Grid container columns={1} >
                                     <Grid item  xs={12} md={6} lg={4} sx={{ minWidth: isMobile ? 300 : 320 }}>
-                                        <LocalizationProvider  dateAdapter={AdapterDayjs}>
+                                        <LocalizationProvider adapterLocale={i18n.language} dateAdapter={AdapterDayjs}>
                                         <Box sx={{ minWidth: isMobile ? 300 : 320 }}>
-                                            <DateCalendar
+                                            <DateCalendar 
                                             // theme={calendarTheme} 
                                             showDaysOutsideCurrentMonth
                                             fixedWeekNumber={6}
