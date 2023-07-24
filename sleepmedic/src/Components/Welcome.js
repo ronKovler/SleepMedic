@@ -118,7 +118,7 @@ function Welcome() {
                   color: 'black', 
                   fontWeight: 'bold',
                   paddingTop: '10px',
-                  paddingBottom: '10px',
+                  paddingBottom: '0px',
                   textAlign: 'center'}}>
                   {t("welcome.language")} 
                 </Typography>
