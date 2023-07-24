@@ -889,6 +889,7 @@ export default function Home() {
                                         <LocalizationProvider adapterLocale={i18n.language} dateAdapter={AdapterDayjs}>
                                         <Box sx={{ minWidth: isMobile ? 300 : 320 }}>
                                             <DateCalendar 
+                                            reduceAnimations={true}
                                             // theme={calendarTheme} 
                                             showDaysOutsideCurrentMonth
                                             fixedWeekNumber={6}

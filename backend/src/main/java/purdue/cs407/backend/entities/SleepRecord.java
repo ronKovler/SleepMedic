@@ -84,6 +84,18 @@ public class SleepRecord  {
         this.user = user;
         this.date = request.getDate();
         this.downTime = request.getDownTime();
+
+        /* TODO THIS NEEDS TO BE FINISHED */
+        if (request.getSleepTime().before(request.getDownTime())) {
+            this.sleepTime = new Time(request.getSleepTime().getTime() + 24*60*60*1000);
+        }
+        if (request.getWakeTime().before(request.getSleepTime())) {
+            this.wakeTime = new Time(request.getWakeTime().getTime() + 24*60*60*1000);
+        }
+        if (request.getUpTime().before(request.getWakeTime())) {
+            this.upTime = new Time(request.getUpTime().getTime() + 24*60*60*1000);
+        }
+
         this.upTime = request.getUpTime();
         this.fallTime = request.getFallTime();
         this.sleepTime = request.getSleepTime();

@@ -68,13 +68,15 @@ public class HomeController {
         double efficiencyTotal = 0;
 
         Date noon = new Date(12 * 60 * 60 * 1000);
+        Date day = new Date(24 * 60 * 60 * 1000);
 
+        //TODO idk whats right anymroe come back and fix this
         for (SleepRecord record: records) {
             hoursSleptTotal += record.hoursSlept();
             fallTimeTotal += record.getFallTime();
             downTimeTotal += record.getDownTime().getTime();
             if (record.getDownTime().before(noon)) {
-                downTimeTotal += noon.getTime();
+                downTimeTotal += day.getTime();
                 // This accounts for times after midnight so their avg time isn't shifted forward accidentally.
                 // TODO similar update might be necessary for upTime and wakeTime, idts(no?) rn.
             }
@@ -82,7 +84,7 @@ public class HomeController {
             sleepTimeTotal += record.getSleepTime().getTime();
             if (record.getSleepTime().before(noon)) {
                 // This accounts for times after midnight so their avg time isn't shifted forward accidentally.
-                sleepTimeTotal += noon.getTime();
+                sleepTimeTotal += day.getTime();
             }
             wakeTimeTotal += record.getWakeTime().getTime();
             awakeTimeTotal += record.getAwakeTime();

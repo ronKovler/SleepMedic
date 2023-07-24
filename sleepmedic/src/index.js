@@ -30,7 +30,7 @@ i18next.init({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeProvider theme={theme}>
-    <React.StrictMode>
+    
       <AuthProvider
         authType={"cookie"}
         authName={"_auth"}
@@ -43,7 +43,7 @@ root.render(
           </I18nextProvider>
         </BrowserRouter>
       </AuthProvider>
-    </React.StrictMode>
+    
   </ThemeProvider>
 );
 
