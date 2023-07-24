@@ -18,6 +18,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { yellow } from "@mui/material/colors";
 import { createTheme } from '@mui/material/styles';
 import { useSignOut } from "react-auth-kit";
+import navLogo from '../../logo_text_white.svg'
 
 
 import styles from './Navbar.module.css';
@@ -61,7 +62,9 @@ export default function Navbar() {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold', color: 'white'}}>
-                    <Link to="/home" className={styles['noDecorTitles']}>Sleep Medic</Link>
+                    <Link to="/home" className={styles['noDecorTitles']}>
+                        <img src={navLogo} alt="Sleep-Medic Logo" className="logo" style={{height: "3rem", width: "auto", paddingTop: '10px'}}/>
+                    </Link>
                 </Typography>
                 
                 {/* When more buttons added, probably use ButtonGroup for better UI */}
