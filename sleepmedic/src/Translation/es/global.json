@@ -1,74 +1,369 @@
 {
     "welcome": {
       "title": "Bienvenido a Sleep-Medic",
-      "subscript": "Logre una mejor noche de sueño y mejore su bienestar con la aplicación Sleep-Medic.",
-      "language": "Seleccione el idioma:",
+      "subscript": "Logra un mejor descanso nocturno y mejora tu bienestar con la aplicación Sleep-Medic.",
+      "language": "Selecciona el idioma:",
       "english": "Inglés",
       "spanish": "Español",
-      "next": "Comenzar"
+      "next": "Empezar"
     },
     "home": {
       "7-day": {
         "title": "Promedios de 7 días",
-        "time-spent-falling": "Tiempo de conciliación del sueño:",
+        "time-spent-falling": "Tiempo para conciliar el sueño:",
         "time-spent-awake": "Tiempo despierto durante la noche:",
         "quality": "Calidad:",
         "hours-slept": "Horas dormidas:"
       },
       "effAdvice": {
-        "1": "Su eficiencia del sueño está muy lejos del 90%. Recomendamos mantener su eficiencia cerca del 90%.",
-        "2": "¡Buen trabajo! ¡Mantenga un buen sueño!"
+        "1": "Tu eficiencia del sueño está lejos del 90%, te recomendamos mantenerla cerca del 90%.",
+        "2": "¡Buen trabajo, sigue así!"
       },
-      "viewInsight": "Ver información",
+      "viewInsight": "Ver Información",
+      "insightMessage": "Obtén información valiosa sobre tus patrones de sueño visualizando tus hábitos. Explóralos en la página de Información.",
       "weekly-advices": {
-        "title": "Consejos semanales",
+        "title": "Consejos Semanales",
         "1": "Ya quiero tomar una siesta mañana."
       },
-      "new-record": "Nuevo registro",
+      "new-record": "Nuevo Registro",
       "input-prompt": {
-        "new-record": "Para registrar un nuevo sueño, ingrese los datos de su sueño diario a continuación.",
-        "edit-record": "Para actualizar un registro de sueño, modifique sus respuestas según sea necesario.",
-        "sleep-duration": "¿Cuánto tiempo le tomó conciliar el sueño? (min)",
-        "awake-time": "¿Se despertó durante la noche? En caso afirmativo, ¿por cuánto tiempo? (min)",
-        "down-time": "¿A qué hora se acostó?",
-        "sleep-time": "¿A qué hora se durmió?",
-        "wake-time": "¿A qué hora se despertó?",
-        "up-time": "¿A qué hora se levantó?",
+        "new-record": "Para registrar un nuevo sueño, ingresa tus datos diarios de sueño a continuación.",
+        "edit-record": "Para actualizar un registro de sueño, modifica tus respuestas según sea necesario.",
+        "sleep-duration": "¿Cuánto tiempo tardaste en conciliar el sueño? (min)",
+        "awake-time": "¿Te despertaste durante la noche? En caso afirmativo, ¿por cuánto tiempo? (min)",
+        "down-time": "¿A qué hora te acostaste?",
+        "sleep-time": "¿A qué hora te dormiste?",
+        "wake-time": "¿A qué hora te despertaste?",
+        "up-time": "¿A qué hora te levantaste?",
         "quality": "Calidad"
       },
       "sleep-journal": {
-        "physical-activity": "¿Participó en alguna actividad física hoy?",
-        "naps": "¿Tomó alguna siesta durante el día?",
-        "alcohol": "¿Consumió alcohol menos de 6 horas antes de acostarse?",
-        "caffeine": "¿Consumió cafeína menos de 6 horas antes de acostarse?",
-        "electronics": "¿Usó el teléfono, la tableta o miró televisión en la cama?",
-        "difficulty-falling": "¿Tuvo dificultades para conciliar el sueño?",
-        "difficulty-staying": "¿Tuvo dificultades para mantenerse dormido?",
-        "racing-thoughts": "¿Tuvo pensamientos acelerados mientras estaba en la cama?",
-        "dreams": "¿Tuvo algún sueño?"
+        "physical-activity": "¿Realizaste alguna actividad física hoy?",
+        "naps": "¿Tomaste siestas durante el día?",
+        "alcohol": "¿Consumiste alcohol menos de 6 horas antes de dormir?",
+        "caffeine": "¿Consumiste cafeína menos de 6 horas antes de dormir?",
+        "electronics": "¿Usaste el teléfono, la tableta o miraste televisión en la cama?",
+        "difficulty-falling": "¿Tuviste dificultades para conciliar el sueño?",
+        "difficulty-staying": "¿Tuviste dificultades para permanecer dormido?",
+        "racing-thoughts": "¿Tuviste pensamientos acelerados mientras estabas en la cama?",
+        "dreams": "¿Tuviste algún sueño?"
       },
+      "viewLessons": "Ver Lecciones",
+      "education-progress": "Progreso en la Educación",
       "cancel": "Cancelar",
       "submit": "Enviar",
       "update": "Actualizar"
     },
     "login": {
-      "title": "Iniciar sesión",
+      "title": "Iniciar Sesión",
       "email": "Correo electrónico:",
       "password": "Contraseña:",
       "remember-me": "Recordarme",
       "forgot-password": {
-        "title": "Olvidó su contraseña",
-        "instructions": "Ingrese el correo electrónico y su fecha de nacimiento asociada con su cuenta para iniciar el proceso de recuperación de contraseña.",
-        "email": "Dirección de correo electrónico",
-        "dob": "Fecha de nacimiento",
+        "title": "Olvidé mi Contraseña",
+        "instructions": "Por favor, ingresa el correo electrónico y tu fecha de nacimiento asociada a tu cuenta para iniciar el proceso de recuperación de contraseña.",
+        "email": "Dirección de Correo Electrónico",
+        "dob": "Fecha de Nacimiento",
         "cancel": "Cancelar",
-        "recover": "Recuperar contraseña",
+        "recover": "Recuperar Contraseña",
         "thank-you": "Gracias",
-        "final-message": "Recibirá un correo electrónico en breve si existe una cuenta con el correo electrónico y fecha de nacimiento proporcionados.",
+        "final-message": "Recibirás un correo electrónico pronto si existe una cuenta con el correo electrónico y la fecha de nacimiento proporcionados.",
         "confirm": "Confirmar"
       },
       "or-create": "o crear una cuenta",
-      "login": "Iniciar sesión"
+      "login": "Iniciar Sesión"
+    },
+    "education": {
+      "table-of-contents": "Tabla de Contenidos",
+      "dashboard": "Tablero de Control",
+      "week1": {
+        "title": "Semana 1",
+        "day1": {
+          "title": "Día 1",
+          "lesson1": {
+            "title": "Lección 1",
+            "reading": "Lectura Lección 1"
+          },
+          "lesson2": {
+            "title": "Lección 2",
+            "reading": "Lectura Lección 2"
+          },
+          "lesson3": {
+            "title": "Lección 3",
+            "reading": "Lectura Lección 3"
+          }
+        },
+        "day2": {
+          "title": "Día 2",
+          "lesson4": {
+            "title": "Lección 4",
+            "reading": "Lectura Lección 4"
+          },
+          "lesson5": {
+            "title": "Lección 5",
+            "reading": "Lectura Lección 5"
+          },
+          "lesson6": {
+            "title": "Lección 6",
+            "reading": "Lectura Lección 6"
+          }
+        },
+        "day3": {
+          "title": "Día 3",
+          "lesson7": {
+            "title": "Lección 7",
+            "reading": "Lectura Lección 7"
+          },
+          "lesson8": {
+            "title": "Lección 8",
+            "reading": "Lectura Lección 8"
+          },
+          "lesson9": {
+            "title": "Lección 9",
+            "reading": "Lectura Lección 9"
+          }
+        }
+      },
+      "week2": {
+        "title": "Semana 2",
+        "day4": {
+          "title": "Día 4",
+          "lesson10": {
+            "title": "Lección 10",
+            "reading": "Lectura Lección 10"
+          },
+          "lesson11": {
+            "title": "Lección 11",
+            "reading": "Lectura Lección 11"
+          },
+          "lesson12": {
+            "title": "Lección 12",
+            "reading": "Lectura Lección 12"
+          }
+        },
+        "day5": {
+          "title": "Día 5",
+          "lesson13": {
+            "title": "Lección 13",
+            "reading": "Lectura Lección 13"
+          },
+          "lesson14": {
+            "title": "Lección 14",
+            "reading": "Lectura Lección 14"
+          },
+          "lesson15": {
+            "title": "Lección 15",
+            "reading": "Lectura Lección 15"
+          }
+        },
+        "day6": {
+          "title": "Día 6",
+          "lesson16": {
+            "title": "Lección 16",
+            "reading": "Lectura Lección 16"
+          },
+          "lesson17": {
+            "title": "Lección 17",
+            "reading": "Lectura Lección 17"
+          },
+          "lesson18": {
+            "title": "Lección 18",
+            "reading": "Lectura Lección 18"
+          }
+        }
+      },
+      "week3": {
+        "title": "Semana 3",
+        "day7": {
+          "title": "Día 7",
+          "lesson19": {
+            "title": "Lección 19",
+            "reading": "Lectura Lección 19"
+          },
+          "lesson20": {
+            "title": "Lección 20",
+            "reading": "Lectura Lección 20"
+          },
+          "lesson21": {
+            "title": "Lección 21",
+            "reading": "Lectura Lección 21"
+          }
+        },
+        "day8": {
+          "title": "Día 8",
+          "lesson22": {
+            "title": "Lección 22",
+            "reading": "Lectura Lección 22"
+          },
+          "lesson23": {
+            "title": "Lección 23",
+            "reading": "Lectura Lección 23"
+          },
+          "lesson24": {
+            "title": "Lección 24",
+            "reading": "Lectura Lección 24"
+          }
+        },
+        "day9": {
+          "title": "Día 9",
+          "lesson25": {
+            "title": "Lección 25",
+            "reading": "Lectura Lección 25"
+          },
+          "lesson26": {
+            "title": "Lección 26",
+            "reading": "Lectura Lección 26"
+          },
+          "lesson27": {
+            "title": "Lección 27",
+            "reading": "Lectura Lección 27"
+          }
+        }
+      },
+      "week4": {
+        "title": "Semana 4",
+        "day10": {
+          "title": "Día 10",
+          "lesson28": {
+            "title": "Lección 28",
+            "reading": "Lectura Lección 28"
+          },
+          "lesson29": {
+            "title": "Lección 29",
+            "reading": "Lectura Lección 29"
+          },
+          "lesson30": {
+            "title": "Lección 30",
+            "reading": "Lectura Lección 30"
+          }
+        },
+        "day11": {
+          "title": "Día 11",
+          "lesson31": {
+            "title": "Lección 31",
+            "reading": "Lectura Lección 31"
+          },
+          "lesson32": {
+            "title": "Lección 32",
+            "reading": "Lectura Lección 32"
+          },
+          "lesson33": {
+            "title": "Lección 33",
+            "reading": "Lectura Lección 33"
+          }
+        },
+        "day12": {
+          "title": "Día 12",
+          "lesson34": {
+            "title": "Lección 34",
+            "reading": "Lectura Lección 34"
+          },
+          "lesson35": {
+            "title": "Lección 35",
+            "reading": "Lectura Lección 35"
+          },
+          "lesson36": {
+            "title": "Lección 36",
+            "reading": "Lectura Lección 36"
+          }
+        }
+      },
+      "week5": {
+        "title": "Semana 5",
+        "day13": {
+          "title": "Día 13",
+          "lesson37": {
+            "title": "Lección 37",
+            "reading": "Lectura Lección 37"
+          },
+          "lesson38": {
+            "title": "Lección 38",
+            "reading": "Lectura Lección 38"
+          },
+          "lesson39": {
+            "title": "Lección 39",
+            "reading": "Lectura Lección 39"
+          }
+        },
+        "day14": {
+          "title": "Día 14",
+          "lesson40": {
+            "title": "Lección 40",
+            "reading": "Lectura Lección 40"
+          },
+          "lesson41": {
+            "title": "Lección 41",
+            "reading": "Lectura Lección 41"
+          },
+          "lesson42": {
+            "title": "Lección 42",
+            "reading": "Lectura Lección 42"
+          }
+        },
+        "day15": {
+          "title": "Día 15",
+          "lesson43": {
+            "title": "Lección 43",
+            "reading": "Lectura Lección 43"
+          },
+          "lesson44": {
+            "title": "Lección 44",
+            "reading": "Lectura Lección 44"
+          },
+          "lesson45": {
+            "title": "Lección 45",
+            "reading": "Lectura Lección 45"
+          }
+        }
+      },
+      "week6": {
+        "title": "Semana 6",
+        "day16": {
+          "title": "Día 16",
+          "lesson46": {
+            "title": "Lección 46",
+            "reading": "Lectura Lección 46"
+          },
+          "lesson47": {
+            "title": "Lección 47",
+            "reading": "Lectura Lección 47"
+          },
+          "lesson48": {
+            "title": "Lección 48",
+            "reading": "Lectura Lección 48"
+          }
+        },
+        "day17": {
+          "title": "Día 17",
+          "lesson49": {
+            "title": "Lección 49",
+            "reading": "Lectura Lección 49"
+          },
+          "lesson50": {
+            "title": "Lección 50",
+            "reading": "Lectura Lección 50"
+          },
+          "lesson51": {
+            "title": "Lección 51",
+            "reading": "Lectura Lección 51"
+          }
+        },
+        "day18": {
+          "title": "Día 18",
+          "lesson52": {
+            "title": "Lección 52",
+            "reading": "Lectura Lección 52"
+          },
+          "lesson53": {
+            "title": "Lección 53",
+            "reading": "Lectura Lección 53"
+          },
+          "lesson54": {
+            "title": "Lección 54",
+            "reading": "Lectura Lección 54"
+          }
+        }
+      }
     }
   }
   

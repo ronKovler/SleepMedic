@@ -22,7 +22,6 @@ function Login() {
   const [t, i18n] = useTranslation("global");
 
   useEffect (() => {
-    i18n.changeLanguage(localStorage.getItem("i18nextLang"));
     const cookies = getCookiesDict();
     if (cookies._auth != null) {
       navigate("/home")

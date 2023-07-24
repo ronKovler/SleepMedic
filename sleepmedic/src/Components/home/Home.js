@@ -857,7 +857,7 @@ export default function Home() {
                                     </Grid>
                                 </Grid>
                                 <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                    <Button href="/statistics" endIcon={<LegendToggleIcon/>} variant='contained'>View Insights</Button>
+                                    <Button href="/statistics" endIcon={<LegendToggleIcon/>} variant='contained'>{t("home.viewInsight")}</Button>
                                 </Box>
                             </Paper>
                         </Grid>
@@ -926,11 +926,11 @@ export default function Home() {
                                 <Grid item xs={1}>
                                     <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320}}>
                                         <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                            {"Education Progress"}
+                                            {t("home.education-progress")}
                                         </Typography>
                                         <EducationProgressBar/>
                                         <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                                    <Button href="/education" endIcon={<SchoolIcon/>} variant='contained'>View Lessons</Button>
+                                                    <Button href="/education" endIcon={<SchoolIcon/>} variant='contained'>{t("home.viewLessons")}</Button>
                                         </Box>
                                     </Paper>
                                 </Grid>
@@ -941,12 +941,12 @@ export default function Home() {
                                             <Grid item xs={1}>
                                             
                                                 <Typography variant='h6' component='div' textAlign='center' paddingTop='10pt' paddingBottom={'5%'} fontWeight='bold'>
-                                                Gain valuable insights into your sleep patterns by visualizing your habits. Explore them on the Insights page.
+                                                    {t("home.insightMessage")}
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={1} sx={{paddingTop: '10px'}}>
                                                 <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                                    <Button href="/statistics" endIcon={<LegendToggleIcon/>} variant='contained'>View Insights</Button>
+                                                    <Button href="/statistics" endIcon={<LegendToggleIcon/>} variant='contained'>{t("home.viewInsight")}</Button>
                                                 </Box>
                                             </Grid>
                                         </Grid>
