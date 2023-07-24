@@ -115,7 +115,7 @@ function Welcome() {
               
                 <Typography variant="h5" component="div"
                   sx={{flexGrow: 1,
-                  color: '#81899c', 
+                  color: '#677085', 
                   fontWeight: 'bold',
                   paddingTop: '10px',
                   paddingBottom: '0px',
