@@ -35,12 +35,13 @@ function getGetHeaders() {
 
 function makeLineGraph(data, x, y, scale=[0,10], ytick, isRefLine, avg) {
     return (
-        <Box display="flex" justifyContent="center" alignItems="center">
+        
             <Paper sx={{width: '100%'}} style={{color:'white', background: 'linear-gradient(to top, #3E4464, #222740)'}} elevation={3}> 
                 <Grid container spacing={2} columns={1} >
                     <Grid item xs={1}>
-                        <ResponsiveContainer aspect={2.9}>
-                        <LineChart data={data} margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
+                    <Box display="flex" justifyContent="center" alignItems="center">
+                        <ResponsiveContainer aspect={2.8}>
+                            <LineChart data={data} margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
                                 <Line type="monotone" dataKey={y} stroke="#c4c1f7" strokeWidth={3} />
                                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                                 <XAxis stroke={'white'} dataKey={x}/>
@@ -49,11 +50,11 @@ function makeLineGraph(data, x, y, scale=[0,10], ytick, isRefLine, avg) {
                                 {isRefLine ? <ReferenceLine y={avg} stroke="red"/> : undefined}
                             </LineChart> 
                         </ResponsiveContainer>
-                        
+                        </Box>
                     </Grid>
                 </Grid>
             </Paper>
-        </Box>
+        
         
     );
 }
