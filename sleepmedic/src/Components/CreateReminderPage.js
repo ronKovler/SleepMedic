@@ -1,6 +1,12 @@
 import "./CreateReminderPage.css";
 import { BrowserRouter as Router, Routes, Link, Route, useNavigate } from 'react-router-dom';
 import {TextField, Select, MenuItem, Button } from "@mui/material/";
+import FormControl from '@mui/material/FormControl';
+import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import axios from "axios";
 import { valueToPercent } from '@mui/base';
 import React, { useState } from 'react';
@@ -17,9 +23,11 @@ function getCookiesDict() {
 
 //Shaun
 function CreateRem() {
+    const today = dayjs();
     const [Carrier, setCarrier] = useState("No, email it");
     const [ReminderType, setRemType] = useState("None");
-    const [ReminderTime, setRemTime] = useState('');
+    //const [ReminderTime, setRemTime] = useState('');
+    const[ReminderTime, setRemTime] = React.useState(today.set('hour', 22).set('minute',  30).set('second', 0));
     const [Timezone, setTimezone] = useState("Pacific");
     const daysOfWeek = [{day: "Sun"}, {day:"Mon"}, {day:"Tues"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}];
     const [checkedState, setCheckedState] = useState(
@@ -255,6 +263,14 @@ function CreateRem() {
             })}
          </div>
          <label htmlFor="days-input-err-msg">{daysInputErrMsg}</label>
+
+         {/* Down Time Input */}
+         <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <TimePicker label="rem-time-input" value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
+            </LocalizationProvider>
+         </FormControl>
+
          <div className="form-group">
            <label htmlFor="reminder-time">Reminder Time:</label>
            <input
