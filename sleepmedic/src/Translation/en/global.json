@@ -29,7 +29,7 @@
         "input-prompt": {
             "new-record": "To record new sleep, please enter your daily sleep data below.",
             "edit-record": "To update a sleep record, alter your responses as necessary.",
-            "sleep-duration": "How long did it take to fall asleep? (min)",
+            "fall-time": "How long did it take to fall asleep? (min)",
             "awake-time": "Did you wake up in the night? If so, for how long? (min)",
             "down-time": "What time did you get into bed? ",
             "sleep-time": "What time did you fall asleep?",

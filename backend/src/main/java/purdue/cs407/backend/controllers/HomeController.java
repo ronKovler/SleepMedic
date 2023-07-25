@@ -9,11 +9,12 @@ import purdue.cs407.backend.dtos.*;
 import purdue.cs407.backend.entities.SleepRecord;
 import purdue.cs407.backend.entities.User;
 import purdue.cs407.backend.repositories.RecordRepository;
-import purdue.cs407.backend.repositories.UserRepository;
+
 import java.sql.Date;
 import java.sql.Time;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -42,21 +43,24 @@ public class HomeController {
     /**
      * Give the user their weekly average statistics.
      * /home/average
-     * @return WeekAverageResponse (DTO) containing all averaged values
+     * @return AverageResponse (DTO) containing all averaged values
      */
     @RequestMapping(value="average", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WeekAverageResponse> getWeeklyAverages() {
+    public ResponseEntity<AverageResponse> getWeeklyAverages() {
         // Get the user
         User user = getCurrentUser();
 
         Collection<SleepRecord> records = recordRepository.getLastSeven(user);
-
         // Not enough data, return empty.
-        if (records.size() < 7) {
-            return ResponseEntity.ok(new WeekAverageResponse());
+        if (records.size() < 1) {
+            return ResponseEntity.ok(new AverageResponse());
         }
 
+        return ResponseEntity.ok(getAveragedData(records.stream().toList()));
+    }
+
+    public AverageResponse getAveragedData(List<SleepRecord> records) {
         double hoursSleptTotal = 0;
         int fallTimeTotal = 0;
         long downTimeTotal = 0;
@@ -109,8 +113,8 @@ public class HomeController {
         double avgEfficiency = efficiencyTotal / count;
 
 
-        return ResponseEntity.ok(new WeekAverageResponse(avgDownTime, avgUpTime, avgHoursSlept,
-                avgFallTime, avgWakeTime, avgSleepTime, avgQuality, avgAwakeTime, avgEfficiency));
+        return new AverageResponse(avgDownTime, avgUpTime, avgHoursSlept,
+                avgFallTime, avgWakeTime, avgSleepTime, avgQuality, avgAwakeTime, avgEfficiency);
     }
 
     /**
@@ -199,7 +203,7 @@ public class HomeController {
      */
     @RequestMapping(value="create_record", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createRecord(@RequestBody RecordRequest request) {
+    public ResponseEntity<List<AdviceResponse>> createRecord(@RequestBody RecordRequest request) {
         User user = getCurrentUser();
 
         if (recordRepository.existsByUserAndDate(user, request.getDate())) {
@@ -211,44 +215,102 @@ public class HomeController {
         double efficiency = record.hoursSlept() / record.hoursInBed();
         record.setEfficiency(efficiency);
         user.addRecord(record);
+        ArrayList<AdviceResponse> response = analyzeData(record);
         record = recordRepository.save(record);
-
-        String response = analyzeData(record);
 
         return ResponseEntity.ok(response);
     }
 
     /**
      * Helper method to analyze data on creation for feedback TODO update and finish to use advice ID instead
-     * @param record - SleepRecord to analyze
+     *
      * @return - List of advice IDs (int)
      */
-    private String analyzeData(SleepRecord record) {
-        StringBuilder data = new StringBuilder();
-        if (record.getEfficiency() >= 0.87) {
-            data.append(String.format("You achieved %.2f sleep efficiency, nice job!\n", record.getEfficiency()));
-        } else {
-            data.append(String.format("Your sleep efficiency was %.2f, try to minimize the time spent in bed when you're not sleeping!\n", record.getEfficiency()));
+    /*
+    *
+    * Want hours slept to be >= 7 and <= 8
+    * Efficieny > 85%, < 90%
+    * Check journal - any negative field > 50% we dont want, any positive field < 50% we don't want
+    * BEFORE ANY OF THIS, we need a baseline of 2 weeks of data
+    * Avg up time, avg hoursSlept,
+    * */
+    private ArrayList<AdviceResponse> analyzeData(SleepRecord record) {
+        Collection<SleepRecord> records = recordRepository.getLastTwoWeeks(record.getUser());
+        ArrayList<AdviceResponse> data = new ArrayList<>();
+        if (records.size() < 13) {
+            data.add(new AdviceResponse(-1, null)); // Base case not enough data, -1 corresponds to this on frontend
+            return data;
         }
+        int[] averageJ = new int[8];
+        records.forEach(rec -> {
+            byte j = rec.getJournal();
+            if ((j & 0b10000000) != 0) averageJ[0] += 1;
+            if ((j & 0b01000000) != 0) averageJ[1] += 1;
+            if ((j & 0b00100000) != 0) averageJ[2] += 1;
+            if ((j & 0b00010000) != 0) averageJ[3] += 1;
+            if ((j & 0b00001000) != 0) averageJ[4] += 1;
+            if ((j & 0b00000100) != 0) averageJ[5] += 1;
+            if ((j & 0b00000010) != 0) averageJ[6] += 1;
+            if ((j & 0b00000001) != 0) averageJ[7] += 1;
+        });
 
+        //Calculate baseline from 2 weeks of data
+        AverageResponse averages = getAveragedData(records.stream().toList());
         long fifteenMin = 15 /*minutes*/ * 60 /*seconds*/ * 1000 /*ms*/;
-        if (record.hoursSlept() < 7.0) {
-            data.append("It looks like you should try to get more sleep, most people need around 7-8 hours each night.\n");
-        } else if (record.hoursSlept() > 8.0) {
-            data.append("Be careful about sleeping too much in one night, it can affect your other nights sleep. Shoot for 7-8 hours.\n");
-        } else if (record.getEfficiency() <= 0.87 || record.getEfficiency() >= 0.95){
-            // User is getting good amount of sleep, check if time in bed before sleep greater than time in bed after sleep
-            long morningTime = record.getUpTime().getTime() - record.getWakeTime().getTime();
-            long eveningTime = record.getSleepTime().getTime() - record.getDownTime().getTime();
-            if (eveningTime > fifteenMin && morningTime > eveningTime) {
-                Time newTime = new Time(record.getUpTime().getTime() - fifteenMin);
-                data.append("Try to get out of bed around ").append(newTime).append(" next time. It's important to only spend time in bed when you are actively sleeping.\n");
-            } else if (morningTime > fifteenMin && eveningTime > morningTime) {
-                Time newTime = new Time(record.getDownTime().getTime() + fifteenMin);
-                data.append("Try to get into bed later around ").append(newTime).append(" next time. This helps your body associate bed time with sleep time.");
+        long avgMorningTime = averages.getUpTime().getTime() - averages.getWakeTime().getTime();
+        long avgEveningTime = averages.getSleepTime().getTime() - averages.getDownTime().getTime();
+
+        //Firstly, check the hours slept from averaged data
+        //Provide compression / expansion advice if sleep too much/little
+        if (averages.getHoursSlept() < 7.0){
+            data.add(new AdviceResponse(10, null)); // Sleeping not enough!
+            if (avgMorningTime > fifteenMin) {
+                Time newTime = new Time(averages.getWakeTime().getTime() + fifteenMin);
+                data.add(new AdviceResponse(12, newTime.toString())); // adviceID 12, 'Try waking up later like around <<VAR>>'
+            } else {
+                Time newTime = new Time(averages.getSleepTime().getTime() - fifteenMin);
+                data.add(new AdviceResponse(13, newTime.toString())); // adviceID 12, 'Try going to sleep earlier like around <<VAR>>'
+            }
+
+        } else if (averages.getHoursSlept() > 8) {
+            Time newTime = new Time(averages.getSleepTime().getTime() + fifteenMin);
+            data.add(new AdviceResponse(11, null)); // Sleeping too much, try going to bed later around <<VAR>>'
+        } else {
+            // If getting good amount of sleep, alter the efficiency.
+            if (record.getEfficiency() > 0.90) {
+                data.add(new AdviceResponse(0, null)); // EFFICIENCY TOO HIGH lower it
+
+            } else if (record.getEfficiency() < 0.85) {
+                data.add(new AdviceResponse(1, null)); // EFFICIENCY IS too low, raise it
+                if (avgEveningTime > avgMorningTime && avgEveningTime > fifteenMin) {
+                    Time newTime = new Time(averages.getDownTime().getTime() + fifteenMin);
+                    data.add(new AdviceResponse(2, newTime.toString())); // You're spending too much time in bed, try getting in at <<VAR>>'
+                } else if (avgMorningTime > fifteenMin) {
+                    Time newTime = new Time(averages.getUpTime().getTime() - fifteenMin);
+                    data.add(new AdviceResponse(3, newTime.toString())); // You're Spending too much time in bed, try getting out at <<VAR>>
+                }
             }
         }
-        return data.toString();
+
+        // Lastly analyze journal data
+        if (((double) averageJ[0] / records.size()) < 0.5) {
+            // physical activity less than 50%
+            data.add(new AdviceResponse(30, null));
+        }
+        if (((double) averageJ[4] / records.size()) > 0.5) {
+            // electronics activity more than 50%
+            data.add(new AdviceResponse(31, null));
+        }
+        if (((double) averageJ[3] / records.size()) > 0.5) {
+            // caffine activity more than 50%
+            data.add(new AdviceResponse(32, null));
+        }
+        if (((double) averageJ[2] / records.size()) > 0.5) {
+            // alcahol activity more than 50%
+            data.add(new AdviceResponse(33, null));
+        }
+        return data;
+
     }
 
     /**

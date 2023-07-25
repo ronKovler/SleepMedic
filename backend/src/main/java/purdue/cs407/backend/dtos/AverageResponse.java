@@ -2,7 +2,7 @@ package purdue.cs407.backend.dtos;
 
 import java.sql.Time;
 
-public class WeekAverageResponse {
+public class AverageResponse {
 
     // Avg time user gets into bed
     private Time downTime;
@@ -23,7 +23,7 @@ public class WeekAverageResponse {
     // Avg efficiency of sleep
     private double efficiency;
 
-    public WeekAverageResponse() {
+    public AverageResponse() {
         this.fallTime = -1;
         this.sleepTime = null;
         this.wakeTime = null;
@@ -35,8 +35,8 @@ public class WeekAverageResponse {
         this.efficiency = -1;
     }
 
-    public WeekAverageResponse(Time downTime, Time upTime, double hoursSlept, int fallTime,
-                               Time wakeTime, Time sleepTime, double quality, int awakeTime, double efficiency) {
+    public AverageResponse(Time downTime, Time upTime, double hoursSlept, int fallTime,
+                           Time wakeTime, Time sleepTime, double quality, int awakeTime, double efficiency) {
         this.downTime = downTime;
         this.upTime = upTime;
         this.hoursSlept = hoursSlept;

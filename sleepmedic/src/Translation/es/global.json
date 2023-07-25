@@ -29,7 +29,7 @@
       "input-prompt": {
         "new-record": "Para registrar un nuevo sueño, ingresa tus datos diarios de sueño a continuación.",
         "edit-record": "Para actualizar un registro de sueño, modifica tus respuestas según sea necesario.",
-        "sleep-duration": "¿Cuánto tiempo tardaste en conciliar el sueño? (min)",
+        "fall-time": "¿Cuánto tiempo tardaste en conciliar el sueño? (min)",
         "awake-time": "¿Te despertaste durante la noche? En caso afirmativo, ¿por cuánto tiempo? (min)",
         "down-time": "¿A qué hora te acostaste?",
         "sleep-time": "¿A qué hora te dormiste?",
