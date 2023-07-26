@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { TextField, Button, Select, Alert, AlertTitle } from '@mui/material';
+import { TextField, Button, Select, Alert, AlertTitle, Paper } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
@@ -168,20 +168,20 @@ function CreateAccount() {
     }
     return (
         <div> {next ?
-        <div className="sleep-medic-container">
-            <div className='account-details-box'>
+        <div className="container">
+            <Paper className='account-details-box'>
                 <h1>Account Details</h1>
                 <div className='account-details'>
 
                     &nbsp;
-                    <TextField sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }} variant="outlined" required color="secondary" type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)} placeholder='First Name'/>
+                    <TextField sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }} variant="outlined" required color="secondary" type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)} placeholder='First Name'/>
                     &nbsp;
-                    <TextField sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }} required color="secondary" type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder='Last Name'/>
+                    <TextField sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }} required color="secondary" type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder='Last Name'/>
                     &nbsp;
-                    <TextField sx={{ input: { color: 'white' }, fieldset: { borderColor: "white" }  }} required color="secondary" type="date" value={birth} onChange={(e) => setBirth(e.target.value)} placeholder='Birthdate'/>
+                    <TextField sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }} required color="secondary" type="date" value={birth} onChange={(e) => setBirth(e.target.value)} placeholder='Birthdate'/>
                     &nbsp;
                     <FormControl required sx={{m: 0, minWidth: 100 }}>
-                    <InputLabel sx={{ color: 'white'}} color="secondary" id="sex-label">Sex</InputLabel>
+                    <InputLabel sx={{ color: 'black'}} color="secondary" id="sex-label">Sex</InputLabel>
                     <Select
                         labelId="Sex"
                         required
@@ -190,7 +190,7 @@ function CreateAccount() {
                         label="Sex"
                         onChange={(e) => setSex(e.target.value)}
                         color="secondary"
-                        sx={{ color: 'white', fieldset: { borderColor: "white" } }}
+                        sx={{ color: 'black', fieldset: { borderColor: "white" } }}
                         >
                         <MenuItem value="">
                             <em>None</em>
@@ -258,7 +258,7 @@ function CreateAccount() {
                     <Button variant="contained" onClick={(e) => handleConfirmData(e)}>Submit</Button>
                 </div>
                 <br/>
-            </div>
+            </Paper>
         </div>
         :
         <div className="container">
