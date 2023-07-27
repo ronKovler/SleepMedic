@@ -40,8 +40,8 @@
         "sleep-journal": {
             "physical-activity": "Did you engage in any physical activity today?",
             "naps": "Did you have any naps during the day?",
-            "alchol": "Did you consume alcohol less than 6 hours before bedtime?",
-            "caffine": "Did you consume caffeine less than 6 hours before bedtime?",
+            "alcohol": "Did you consume alcohol less than 6 hours before bedtime?",
+            "caffeine": "Did you consume caffeine less than 6 hours before bedtime?",
             "electronics": "Did you use a phone, tablet, or watch television in bed?",
             "difficulty-falling": "Did you have any difficulty falling asleep?",
             "difficulty-staying": "Did you have any difficulty staying asleep?",
