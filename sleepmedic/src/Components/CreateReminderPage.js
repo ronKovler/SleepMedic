@@ -68,9 +68,9 @@ function CreateRem() {
     };
 
     //handleChange() method for Timezone
-        const handleOnChangeTimezone = (value) => {
-            setTimezone(value);
-        };
+    const handleOnChangeTimezone = (value) => {
+        setTimezone(value);
+    };
 
     const reminderTypeInputValidation = () => {
         if (ReminderType == "None") {
@@ -163,7 +163,7 @@ function CreateRem() {
             try {
                 let res = await axios.post("https://api.sleepmedic.me:8443/reminder/create_reminder", reminderInfo, {headers});
                 console.log(res);
-                navigate("/editgoal");
+                navigate("/profilepage");
             }
             catch (err) {
                 console.log("Failed to send CreateReminder data.");
@@ -263,7 +263,7 @@ function CreateRem() {
                     </label>
          <label htmlFor="reminder-time-err-msg">{timeErrMsg}</label>
          <div className="button-group">
-            <Link to="/editgoal">
+            <Link to="/profilepage">
             <Button variant="contained">Cancel</Button>
             </Link>
             <Button variant="contained" onClick={handleCreateReminder}>Create</Button>
