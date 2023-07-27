@@ -146,11 +146,6 @@ function OpenProfilePage() {
                 </Grid>
             </Grid>
             <div className="profile-page-form">
-                
-                <Link to="/editgoal">
-                    <Button variant="contained">Edit Your Goals</Button>
-                </Link>
-
                 <Link to="/home">
                     <Button variant="contained">Home</Button>
                 </Link>
