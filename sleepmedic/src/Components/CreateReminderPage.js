@@ -96,14 +96,16 @@ function CreateRem() {
     };
 
     const timeInputValidation = () => {
-        if (ReminderTime === "") {
-            setRemTimeErrMsg(emptyTimeInputMsg);
-            return false;
+        if (ReminderTime === "") {      //this logic has to change
+            return true;
+            //setRemTimeErrMsg(emptyTimeInputMsg);
+            //return false;
         }
-        const timePattern = /^(1[0-2]|0?[1-9]):[0-5][0-9](AM|PM)$/;
+        const timePattern = /^(1[0-2]|0?[1-9]):[0-5][0-9](AM|PM)$/;     //probably won't be needing this stuff anymore.
         if (!timePattern.test(ReminderTime)) {
-            setRemTimeErrMsg(badTimeInputFormat);
-            return false;
+            return true;
+            //setRemTimeErrMsg(badTimeInputFormat);
+            //return false;
         }
         setRemTimeErrMsg("");
         return true;
@@ -140,8 +142,15 @@ function CreateRem() {
                 reminderTypeInt = 0;
             }
 
+
+            console.log("ReminderTime is: " + ReminderTime)
             //grab ReminderTime and convert to the required format (hr:min:sec) (military)
-            const [time, clock] = ReminderTime.split(/(?<=[0-9]{2})(?=[AP]M)/);
+            //const militaryFormat = ReminderTime.toISOString().slice(11, 19);
+            const militaryFormat = dayjs(ReminderTime).format('HH:mm:ss');
+            console.log("military format of ReminderTime is: " + militaryFormat)
+
+            //grab ReminderTime and convert to the required format (hr:min:sec) (military)
+            /*const [time, clock] = ReminderTime.split(/(?<=[0-9]{2})(?=[AP]M)/);
             const [hours, minutes] = time.split(":");
             let formattedHours = parseInt(hours, 10); // Parse hours as integer
             if (clock === "PM") {
@@ -152,7 +161,7 @@ function CreateRem() {
                 formattedHours = 0; // Convert 12 AM to 0 hours
             }
             const formattedMinutes = minutes.padStart(2, '0'); // Pad minutes with leading zero if necessary
-            const formattedReminderTime = `${formattedHours}:${formattedMinutes}:00`;
+            const formattedReminderTime = `${formattedHours}:${formattedMinutes}:00`;   */
 
             //grabbing the timezone selected by user
             let chosenTimezone;
@@ -180,7 +189,8 @@ function CreateRem() {
                 //pass the carrier.
                 carrier: chosenCarrier,
                 timezone: chosenTimezone,
-                triggerTime: formattedReminderTime, //Time at which reminder emails will be triggered on the chosen days
+                triggerTime: militaryFormat, //Time at which reminder emails will be triggered on the chosen days
+                //triggerTime: formattedReminderTime, //Time at which reminder emails will be triggered on the chosen days
                 triggerDays: selectedDays,          //a list of integers where 0 is Sun, 6 is Sat
                 message: reminderTypeInt,           //1 or 2; Bedtime or General Sleep Reminder
             }
@@ -264,21 +274,21 @@ function CreateRem() {
          </div>
          <label htmlFor="days-input-err-msg">{daysInputErrMsg}</label>
 
-         {/* Down Time Input */}
-         <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+         {/* Time Input */}
+         <FormControl sx={{width: '30%', marginTop: '20pt'}}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <TimePicker label="rem-time-input" value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
+                <TimePicker label="Reminder Time" value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
             </LocalizationProvider>
          </FormControl>
 
-         <div className="form-group">
+         {/*<div className="form-group">
            <label htmlFor="reminder-time">Reminder Time:</label>
            <input
              id="reminder-time"
              value={ReminderTime}
              onChange={(e) => setRemTime(e.target.value)}
            />
-         </div>
+         </div> */}
          <label htmlFor="Timezone">Timezone:
          <Select
                          labelId="Timezone"
