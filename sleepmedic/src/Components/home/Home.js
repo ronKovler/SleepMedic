@@ -1086,8 +1086,8 @@ export default function Home() {
                     <DialogContentText>{isNewRecord? t("home.input-prompt.new-record") : t("home.input-prompt.edit-record")}</DialogContentText>
                     {makeBooleanCheckbox(t("home.sleep-journal.physical-activity"), physicalActivity, setPhysicalActivity)}
                     {makeBooleanCheckbox(t("home.sleep-journal.naps"), naps, setNaps)}
-                    {makeBooleanCheckbox(t("home.sleep-journal.alchol"), alcoholConsumption, setAlcoholConsumption)}
-                    {makeBooleanCheckbox(t("home.sleep-journal.caffine"), caffeineConsumption, setCaffeineConsumption)}
+                    {makeBooleanCheckbox(t("home.sleep-journal.alcohol"), alcoholConsumption, setAlcoholConsumption)}
+                    {makeBooleanCheckbox(t("home.sleep-journal.caffeine"), caffeineConsumption, setCaffeineConsumption)}
                     {makeBooleanCheckbox(t("home.sleep-journal.electronics"), electronics, setElectronics)}
                     {makeBooleanCheckbox(t("home.sleep-journal.difficulty-falling"), difficultFallingAsleep, setDifficultFallingAsleep)}
                     {makeBooleanCheckbox(t("home.sleep-journal.difficulty-staying"), difficultStayingAsleep, setDifficultStayingAsleep)}
