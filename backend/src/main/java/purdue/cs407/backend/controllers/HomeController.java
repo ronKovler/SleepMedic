@@ -183,7 +183,6 @@ public class HomeController {
         // Collect and average data (check if we have enough too before wasting cpu)
         Collection<SleepRecord> records = recordRepository.getLastTwoWeeks(record.getUser());
         if (records.size() < 13) {
-
             data.add(new AdviceResponse(-1, null)); // Base case not enough data, -1 corresponds to this on frontend
             return data;
         }
