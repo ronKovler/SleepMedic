@@ -202,6 +202,66 @@ function EducationPage() {
               {
                 title: t("education.week2.day3.lesson3.title"),
                 reading: t("education.week2.day3.lesson3.reading")
+              },
+              {
+                title: t("education.week2.day3.lesson4.title"),
+                reading: t("education.week2.day3.lesson4.reading")
+              }
+            ]
+          },
+          {
+            day: t("education.week2.day4.title"),
+            lessons: [
+              {
+                title: t("education.week2.day4.lesson1.title"),
+                reading: t("education.week2.day4.lesson1.reading")
+              },
+              {
+                title: t("education.week2.day4.lesson2.title"),
+                reading: t("education.week2.day4.lesson2.reading")
+              }
+            ]
+          },
+          {
+            day: t("education.week2.day5.title"),
+            lessons: [
+              {
+                title: t("education.week2.day5.lesson1.title"),
+                reading: t("education.week2.day5.lesson1.reading")
+              },
+              {
+                title: t("education.week2.day5.lesson2.title"),
+                reading: t("education.week2.day5.lesson2.reading")
+              },
+              {
+                title: t("education.week2.day5.lesson3.title"),
+                reading: t("education.week2.day5.lesson3.reading")
+              },
+              {
+                title: t("education.week2.day5.lesson4.title"),
+                reading: t("education.week2.day5.lesson4.reading")
+              },
+              {
+                title: t("education.week2.day5.lesson5.title"),
+                reading: t("education.week2.day5.lesson5.reading")
+              }
+            ]
+          },
+          {
+            day: t("education.week2.day6.title"),
+            lessons: [
+              {
+                title: t("education.week2.day6.lesson1.title"),
+                reading: t("education.week2.day6.lesson1.reading")
+              }
+            ]
+          },
+          {
+            day: t("education.week2.day7.title"),
+            lessons: [
+              {
+                title: t("education.week2.day7.lesson1.title"),
+                reading: t("education.week2.day7.lesson1.reading")
               }
             ]
           },
@@ -221,7 +281,7 @@ function EducationPage() {
               {
                 title: t("education.week3.day1.lesson2.title"),
                 reading: t("education.week3.day1.lesson2.reading")
-              }
+              },
               // Add more lessons for Week 3, Day 1 if needed
             ]
           },
@@ -235,16 +295,81 @@ function EducationPage() {
               {
                 title: t("education.week3.day2.lesson2.title"),
                 reading: t("education.week3.day2.lesson2.reading")
-              }
+              },
               // Add more lessons for Week 3, Day 2 if needed
             ]
           },
           // Continue adding days and lessons for Week 3
+    
+          // Day 3
+          {
+            day: t("education.week3.day3.title"),
+            lessons: [
+              {
+                title: t("education.week3.day3.lesson1.title"),
+                reading: t("education.week3.day3.lesson1.reading")
+              }
+              // Add more lessons for Week 3, Day 3 if needed
+            ]
+          },
+    
+          // Day 4
+          {
+            day: t("education.week3.day4.title"),
+            lessons: [
+              {
+                title: t("education.week3.day4.lesson1.title"),
+                reading: t("education.week3.day4.lesson1.reading")
+              },
+              {
+                title: t("education.week3.day4.lesson2.title"),
+                reading: t("education.week3.day4.lesson2.reading")
+              },
+              // Add more lessons for Week 3, Day 4 if needed
+            ]
+          },
+    
+          // Day 5
+          {
+            day: t("education.week3.day5.title"),
+            lessons: [
+              {
+                title: t("education.week3.day5.lesson1.title"),
+                reading: t("education.week3.day5.lesson1.reading")
+              }
+              // Add more lessons for Week 3, Day 5 if needed
+            ]
+          },
+    
+          // Day 6
+          {
+            day: t("education.week3.day6.title"),
+            lessons: [
+              {
+                title: t("education.week3.day6.lesson1.title"),
+                reading: t("education.week3.day6.lesson1.reading")
+              }
+              // Add more lessons for Week 3, Day 6 if needed
+            ]
+          },
+    
+          // Day 7
+          {
+            day: t("education.week3.day7.title"),
+            lessons: [
+              {
+                title: t("education.week3.day7.lesson1.title"),
+                reading: t("education.week3.day7.lesson1.reading")
+              }
+              // Add more lessons for Week 3, Day 7 if needed
+            ]
+          },
         ]
       },
       {
         week: t("education.week4.title"),
         days: [
+          // Day 1
           {
             day: t("education.week4.day1.title"),
             lessons: [
@@ -259,6 +384,8 @@ function EducationPage() {
               // Add more lessons for Week 4, Day 1 if needed
             ]
           },
+    
+          // Day 2
           {
             day: t("education.week4.day2.title"),
             lessons: [
@@ -273,12 +400,72 @@ function EducationPage() {
               // Add more lessons for Week 4, Day 2 if needed
             ]
           },
-          // Continue adding days and lessons for Week 4
+    
+          // Day 3
+          {
+            day: t("education.week4.day3.title"),
+            lessons: [
+              {
+                title: t("education.week4.day3.lesson1.title"),
+                reading: t("education.week4.day3.lesson1.reading")
+              }
+              // Add more lessons for Week 4, Day 3 if needed
+            ]
+          },
+    
+          // Day 4
+          {
+            day: t("education.week4.day4.title"),
+            lessons: [
+              {
+                title: t("education.week4.day4.lesson1.title"),
+                reading: t("education.week4.day4.lesson1.reading")
+              }
+              // Add more lessons for Week 4, Day 4 if needed
+            ]
+          },
+    
+          // Day 5
+          {
+            day: t("education.week4.day5.title"),
+            lessons: [
+              {
+                title: t("education.week4.day5.lesson1.title"),
+                reading: t("education.week4.day5.lesson1.reading")
+              }
+              // Add more lessons for Week 4, Day 5 if needed
+            ]
+          },
+    
+          // Day 6
+          {
+            day: t("education.week4.day6.title"),
+            lessons: [
+              {
+                title: t("education.week4.day6.lesson1.title"),
+                reading: t("education.week4.day6.lesson1.reading")
+              }
+              // Add more lessons for Week 4, Day 6 if needed
+            ]
+          },
+    
+          // Day 7
+          {
+            day: t("education.week4.day7.title"),
+            lessons: [
+              {
+                title: t("education.week4.day7.lesson1.title"),
+                reading: t("education.week4.day7.lesson1.reading")
+              }
+              // Add more lessons for Week 4, Day 7 if needed
+            ]
+          },
         ]
       },
       {
         week: t("education.week5.title"),
         days: [
+          // Day 1
           {
             day: t("education.week5.day1.title"),
             lessons: [
@@ -293,6 +480,8 @@ function EducationPage() {
               // Add more lessons for Week 5, Day 1 if needed
             ]
           },
+    
+          // Day 2
           {
             day: t("education.week5.day2.title"),
             lessons: [
@@ -307,12 +496,72 @@ function EducationPage() {
               // Add more lessons for Week 5, Day 2 if needed
             ]
           },
-          // Continue adding days and lessons for Week 5
+    
+          // Day 3
+          {
+            day: t("education.week5.day3.title"),
+            lessons: [
+              {
+                title: t("education.week5.day3.lesson1.title"),
+                reading: t("education.week5.day3.lesson1.reading")
+              }
+              // Add more lessons for Week 5, Day 3 if needed
+            ]
+          },
+    
+          // Day 4
+          {
+            day: t("education.week5.day4.title"),
+            lessons: [
+              {
+                title: t("education.week5.day4.lesson1.title"),
+                reading: t("education.week5.day4.lesson1.reading")
+              }
+              // Add more lessons for Week 5, Day 4 if needed
+            ]
+          },
+    
+          // Day 5
+          {
+            day: t("education.week5.day5.title"),
+            lessons: [
+              {
+                title: t("education.week5.day5.lesson1.title"),
+                reading: t("education.week5.day5.lesson1.reading")
+              }
+              // Add more lessons for Week 5, Day 5 if needed
+            ]
+          },
+    
+          // Day 6
+          {
+            day: t("education.week5.day6.title"),
+            lessons: [
+              {
+                title: t("education.week5.day6.lesson1.title"),
+                reading: t("education.week5.day6.lesson1.reading")
+              }
+              // Add more lessons for Week 5, Day 6 if needed
+            ]
+          },
+    
+          // Day 7
+          {
+            day: t("education.week5.day7.title"),
+            lessons: [
+              {
+                title: t("education.week5.day7.lesson1.title"),
+                reading: t("education.week5.day7.lesson1.reading")
+              }
+              // Add more lessons for Week 5, Day 7 if needed
+            ]
+          },
         ]
       },
       {
         week: t("education.week6.title"),
         days: [
+          // Day 1
           {
             day: t("education.week6.day1.title"),
             lessons: [
@@ -327,6 +576,8 @@ function EducationPage() {
               // Add more lessons for Week 6, Day 1 if needed
             ]
           },
+    
+          // Day 2
           {
             day: t("education.week6.day2.title"),
             lessons: [
@@ -341,7 +592,78 @@ function EducationPage() {
               // Add more lessons for Week 6, Day 2 if needed
             ]
           },
-          // Continue adding days and lessons for Week 6
+    
+          // Day 3
+          {
+            day: t("education.week6.day3.title"),
+            lessons: [
+              {
+                title: t("education.week6.day3.lesson1.title"),
+                reading: t("education.week6.day3.lesson1.reading")
+              },
+              {
+                title: t("education.week6.day3.lesson2.title"),
+                reading: t("education.week6.day3.lesson2.reading")
+              }
+              // Add more lessons for Week 6, Day 3 if needed
+            ]
+          },
+    
+          // Day 4
+          {
+            day: t("education.week6.day4.title"),
+            lessons: [
+              {
+                title: t("education.week6.day4.lesson1.title"),
+                reading: t("education.week6.day4.lesson1.reading")
+              }
+              // Add more lessons for Week 6, Day 4 if needed
+            ]
+          },
+    
+          // Day 5
+          {
+            day: t("education.week6.day5.title"),
+            lessons: [
+              {
+                title: t("education.week6.day5.lesson1.title"),
+                reading: t("education.week6.day5.lesson1.reading")
+              },
+              {
+                title: t("education.week6.day5.lesson2.title"),
+                reading: t("education.week6.day5.lesson2.reading")
+              }
+              // Add more lessons for Week 6, Day 5 if needed
+            ]
+          },
+    
+          // Day 6
+          {
+            day: t("education.week6.day6.title"),
+            lessons: [
+              {
+                title: t("education.week6.day6.lesson1.title"),
+                reading: t("education.week6.day6.lesson1.reading")
+              },
+              {
+                title: t("education.week6.day6.lesson2.title"),
+                reading: t("education.week6.day6.lesson2.reading")
+              }
+              // Add more lessons for Week 6, Day 6 if needed
+            ]
+          },
+    
+          // Day 7
+          {
+            day: t("education.week6.day7.title"),
+            lessons: [
+              {
+                title: t("education.week6.day7.lesson1.title"),
+                reading: t("education.week6.day7.lesson1.reading")
+              }
+              // Add more lessons for Week 6, Day 7 if needed
+            ]
+          },
         ]
       }
     ];
