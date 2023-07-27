@@ -1,8 +1,10 @@
 package purdue.cs407.backend.dtos;
 
+import purdue.cs407.backend.pojos.AverageRecord;
+
 import java.sql.Time;
 
-public class WeekAverageResponse {
+public class AverageResponse {
 
     // Avg time user gets into bed
     private Time downTime;
@@ -23,7 +25,7 @@ public class WeekAverageResponse {
     // Avg efficiency of sleep
     private double efficiency;
 
-    public WeekAverageResponse() {
+    public AverageResponse() {
         this.fallTime = -1;
         this.sleepTime = null;
         this.wakeTime = null;
@@ -35,8 +37,8 @@ public class WeekAverageResponse {
         this.efficiency = -1;
     }
 
-    public WeekAverageResponse(Time downTime, Time upTime, double hoursSlept, int fallTime,
-                               Time wakeTime, Time sleepTime, double quality, int awakeTime, double efficiency) {
+    public AverageResponse(Time downTime, Time upTime, double hoursSlept, int fallTime,
+                           Time wakeTime, Time sleepTime, double quality, int awakeTime, double efficiency) {
         this.downTime = downTime;
         this.upTime = upTime;
         this.hoursSlept = hoursSlept;
@@ -46,6 +48,18 @@ public class WeekAverageResponse {
         this.quality = quality;
         this.awakeTime = awakeTime;
         this.efficiency = efficiency;
+    }
+
+    public AverageResponse(AverageRecord averageRecord) {
+        this.downTime = new Time(averageRecord.getDownTime());
+        this.upTime = new Time(averageRecord.getUpTime());
+        this.hoursSlept = averageRecord.getHoursSlept();
+        this.fallTime = averageRecord.getFallTime();
+        this.wakeTime =  new Time(averageRecord.getWakeTime());
+        this.sleepTime =  new Time(averageRecord.getSleepTime());
+        this.quality = averageRecord.getQuality();
+        this.awakeTime = averageRecord.getAwakeTime();
+        this.efficiency = averageRecord.getEfficiency();
     }
 
     public Time getDownTime() {

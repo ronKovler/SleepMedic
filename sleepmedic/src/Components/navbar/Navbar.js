@@ -19,6 +19,7 @@ import { yellow } from "@mui/material/colors";
 import { createTheme } from '@mui/material/styles';
 import { useSignOut } from "react-auth-kit";
 import navLogo from '../../logo_text_white.svg'
+import LanguageSelector from "./LanguageSelector";
 
 
 import styles from './Navbar.module.css';
@@ -66,7 +67,7 @@ export default function Navbar() {
                         <img src={navLogo} alt="Sleep-Medic Logo" className="logo" style={{height: "3rem", width: "auto", paddingTop: '10px'}}/>
                     </Link>
                 </Typography>
-                
+                <LanguageSelector/>
                 {/* When more buttons added, probably use ButtonGroup for better UI */}
                 <IconButton href="/statistics" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
                     <LegendToggleIcon />

@@ -29,7 +29,7 @@
         "input-prompt": {
             "new-record": "To record new sleep, please enter your daily sleep data below.",
             "edit-record": "To update a sleep record, alter your responses as necessary.",
-            "sleep-duration": "How long did it take to fall asleep? (min)",
+            "fall-time": "How long did it take to fall asleep? (min)",
             "awake-time": "Did you wake up in the night? If so, for how long? (min)",
             "down-time": "What time did you get into bed? ",
             "sleep-time": "What time did you fall asleep?",
@@ -40,8 +40,8 @@
         "sleep-journal": {
             "physical-activity": "Did you engage in any physical activity today?",
             "naps": "Did you have any naps during the day?",
-            "alchol": "Did you consume alcohol less than 6 hours before bedtime?",
-            "caffine": "Did you consume caffeine less than 6 hours before bedtime?",
+            "alcohol": "Did you consume alcohol less than 6 hours before bedtime?",
+            "caffeine": "Did you consume caffeine less than 6 hours before bedtime?",
             "electronics": "Did you use a phone, tablet, or watch television in bed?",
             "difficulty-falling": "Did you have any difficulty falling asleep?",
             "difficulty-staying": "Did you have any difficulty staying asleep?",
@@ -53,7 +53,6 @@
         "cancel": "Cancel",
         "submit": "Submit",
         "update": "Update"
-
     },
     "login": {
         "title": "Login",
@@ -77,293 +76,473 @@
     "education": {
         "table-of-contents": "Table of Contents",
         "dashboard": "Dashboard",
-            "week1": {
-              "title": "Week 1",
-              "day1": {
-                "title": "Day 1",
-                "lesson1": {
-                  "title": "Lesson 1",
-                  "reading": "Lesson 1 Reading"
-                },
-                "lesson2": {
-                  "title": "Lesson 2",
-                  "reading": "Lesson 2 Reading"
-                },
-                "lesson3": {
-                  "title": "Lesson 3",
-                  "reading": "Lesson 3 Reading"
-                }
+          "week1": {
+            "title": "Week 1",
+            "day1": {
+              "title": "Day #1: Introduction",
+              "lesson1": {
+                "title": "Purpose of the program and structure of plan",
+                "reading": "Introduce the purpose of the program and the structure of the education plan. Explain that the program aims to improve sleep patterns and address insomnia through Cognitive Behavioral Therapy for Insomnia (CBT-I)."
               },
-              "day2": {
-                "title": "Day 2",
-                "lesson4": {
-                  "title": "Lesson 4",
-                  "reading": "Lesson 4 Reading"
-                },
-                "lesson5": {
-                  "title": "Lesson 5",
-                  "reading": "Lesson 5 Reading"
-                },
-                "lesson6": {
-                  "title": "Lesson 6",
-                  "reading": "Lesson 6 Reading"
-                }
+              "lesson2": {
+                "title": "Baseline PSQI & ISI",
+                "reading": "Explain the use of the PSQI (Pittsburgh Sleep Quality Index) and ISI (Insomnia Severity Index) sleep questionnaires for baseline assessment. These will help evaluate the severity of insomnia and sleep quality at the beginning of the program."
               },
-              "day3": {
-                "title": "Day 3",
-                "lesson7": {
-                  "title": "Lesson 7",
-                  "reading": "Lesson 7 Reading"
-                },
-                "lesson8": {
-                  "title": "Lesson 8",
-                  "reading": "Lesson 8 Reading"
-                },
-                "lesson9": {
-                  "title": "Lesson 9",
-                  "reading": "Lesson 9 Reading"
-                }
+              "lesson3": {
+                "title": "Introduce sleep log",
+                "reading": "Introduce the concept of a sleep log and its importance. Explain that patients will be required to maintain a sleep log to track their sleep patterns, bedtime routines, and sleep-related behaviors throughout the program."
               }
             },
-            "week2": {
-              "title": "Week 2",
-              "day4": {
-                "title": "Day 4",
-                "lesson10": {
-                  "title": "Lesson 10",
-                  "reading": "Lesson 10 Reading"
-                },
-                "lesson11": {
-                  "title": "Lesson 11",
-                  "reading": "Lesson 11 Reading"
-                },
-                "lesson12": {
-                  "title": "Lesson 12",
-                  "reading": "Lesson 12 Reading"
-                }
+            "day2": {
+              "title": "Day #2: Impact of Sleep",
+              "lesson1": {
+                "title": "How much sleep is needed?",
+                "reading": "Educate patients on the recommended amount of sleep needed for different age groups. Discuss the importance of individual sleep needs and variations."
               },
-              "day5": {
-                "title": "Day 5",
-                "lesson13": {
-                  "title": "Lesson 13",
-                  "reading": "Lesson 13 Reading"
-                },
-                "lesson14": {
-                  "title": "Lesson 14",
-                  "reading": "Lesson 14 Reading"
-                },
-                "lesson15": {
-                  "title": "Lesson 15",
-                  "reading": "Lesson 15 Reading"
-                }
+              "lesson2": {
+                "title": "Benefits of sleep",
+                "reading": "Explain the numerous benefits of quality sleep, including improved cognitive function, emotional well-being, and physical health."
               },
-              "day6": {
-                "title": "Day 6",
-                "lesson16": {
-                  "title": "Lesson 16",
-                  "reading": "Lesson 16 Reading"
-                },
-                "lesson17": {
-                  "title": "Lesson 17",
-                  "reading": "Lesson 17 Reading"
-                },
-                "lesson18": {
-                  "title": "Lesson 18",
-                  "reading": "Lesson 18 Reading"
-                }
+              "lesson3": {
+                "title": "Health impact of insufficient sleep",
+                "reading": "Discuss the negative health consequences associated with insufficient sleep, such as increased risk of chronic conditions, mental health issues, and impaired immune function."
+              },
+              "lesson4": {
+                "title": "Economic impact of insufficient sleep",
+                "reading": "Explore the economic implications of inadequate sleep, including reduced productivity, workplace accidents, and increased healthcare costs."
+              },
+              "lesson5": {
+                "title": "Survey patient; GAD-7",
+                "reading": "Survey patients using the Generalized Anxiety Disorder 7 (GAD-7) questionnaire to assess their anxiety levels. Anxiety can be both a cause and a consequence of insomnia."
               }
             },
-            "week3": {
-              "title": "Week 3",
-              "day7": {
-                "title": "Day 7",
-                "lesson19": {
-                  "title": "Lesson 19",
-                  "reading": "Lesson 19 Reading"
-                },
-                "lesson20": {
-                  "title": "Lesson 20",
-                  "reading": "Lesson 20 Reading"
-                },
-                "lesson21": {
-                  "title": "Lesson 21",
-                  "reading": "Lesson 21 Reading"
-                }
+            "day3": {
+              "title": "Day #3: Sleep Stages",
+              "lesson1": {
+                "title": "Education regarding different stages of sleep",
+                "reading": "Explain the different stages of sleep, including NREM (Non-Rapid Eye Movement) stages and REM (Rapid Eye Movement) sleep. Describe the characteristics of each stage and their importance in the sleep cycle."
               },
-              "day8": {
-                "title": "Day 8",
-                "lesson22": {
-                  "title": "Lesson 22",
-                  "reading": "Lesson 22 Reading"
-                },
-                "lesson23": {
-                  "title": "Lesson 23",
-                  "reading": "Lesson 23 Reading"
-                },
-                "lesson24": {
-                  "title": "Lesson 24",
-                  "reading": "Lesson 24 Reading"
-                }
-              },
-              "day9": {
-                "title": "Day 9",
-                "lesson25": {
-                  "title": "Lesson 25",
-                  "reading": "Lesson 25 Reading"
-                },
-                "lesson26": {
-                  "title": "Lesson 26",
-                  "reading": "Lesson 26 Reading"
-                },
-                "lesson27": {
-                  "title": "Lesson 27",
-                  "reading": "Lesson 27 Reading"
-                }
+              "lesson2": {
+                "title": "Education on how different stages of sleep change based on gender and age",
+                "reading": "Discuss how sleep patterns and stages can vary based on gender and age. Address the changes that occur during childhood, adolescence, adulthood, and older adulthood."
               }
             },
-            "week4": {
-              "title": "Week 4",
-              "day10": {
-                "title": "Day 10",
-                "lesson28": {
-                  "title": "Lesson 28",
-                  "reading": "Lesson 28 Reading"
-                },
-                "lesson29": {
-                  "title": "Lesson 29",
-                  "reading": "Lesson 29 Reading"
-                },
-                "lesson30": {
-                  "title": "Lesson 30",
-                  "reading": "Lesson 30 Reading"
-                }
+            "day4": {
+              "title": "Day #4: Sleep physiology and the desire to sleep",
+              "lesson1": {
+                "title": "Process C",
+                "reading": "Explain Process C, which regulates the circadian rhythm and influences the timing of sleep and wakefulness. Discuss how external factors like light exposure and daily routines can affect Process C."
               },
-              "day11": {
-                "title": "Day 11",
-                "lesson31": {
-                  "title": "Lesson 31",
-                  "reading": "Lesson 31 Reading"
-                },
-                "lesson32": {
-                  "title": "Lesson 32",
-                  "reading": "Lesson 32 Reading"
-                },
-                "lesson33": {
-                  "title": "Lesson 33",
-                  "reading": "Lesson 33 Reading"
-                }
+              "lesson2": {
+                "title": "Process S",
+                "reading": "Explain Process S, the homeostatic sleep drive that accumulates sleep pressure over the day. Discuss the interaction between Process C and Process S in regulating sleep-wake cycles."
               },
-              "day12": {
-                "title": "Day 12",
-                "lesson34": {
-                  "title": "Lesson 34",
-                  "reading": "Lesson 34 Reading"
-                },
-                "lesson35": {
-                  "title": "Lesson 35",
-                  "reading": "Lesson 35 Reading"
-                },
-                "lesson36": {
-                  "title": "Lesson 36",
-                  "reading": "Lesson 36 Reading"
-                }
+              "lesson3": {
+                "title": "Epworth sleepiness evaluation",
+                "reading": "Introduce the Epworth Sleepiness Scale, a self-report questionnaire used to assess daytime sleepiness. Explain how excessive daytime sleepiness can indicate underlying sleep disorders."
               }
             },
-            "week5": {
-              "title": "Week 5",
-              "day13": {
-                "title": "Day 13",
-                "lesson37": {
-                  "title": "Lesson 37",
-                  "reading": "Lesson 37 Reading"
-                },
-                "lesson38": {
-                  "title": "Lesson 38",
-                  "reading": "Lesson 38 Reading"
-                },
-                "lesson39": {
-                  "title": "Lesson 39",
-                  "reading": "Lesson 39 Reading"
-                }
+            "day5": {
+              "title": "Day #5: Insomnia & its causes",
+              "lesson1": {
+                "title": "What is insomnia",
+                "reading": "Define insomnia and its key characteristics, including difficulty falling asleep, staying asleep, and waking up too early. Explain the impact of insomnia on daily functioning and quality of life."
               },
-              "day14": {
-                "title": "Day 14",
-                "lesson40": {
-                  "title": "Lesson 40",
-                  "reading": "Lesson 40 Reading"
-                },
-                "lesson41": {
-                  "title": "Lesson 41",
-                  "reading": "Lesson 41 Reading"
-                },
-                "lesson42": {
-                  "title": "Lesson 42",
-                  "reading": "Lesson 42 Reading"
-                }
+              "lesson2": {
+                "title": "Causes of insomnia",
+                "reading": "Explore the various causes of insomnia, including psychological factors like stress and anxiety, medications, underlying medical conditions, and substance use (alcohol, tobacco, illicit drugs)."
               },
-              "day15": {
-                "title": "Day 15",
-                "lesson43": {
-                  "title": "Lesson 43",
-                  "reading": "Lesson 43 Reading"
-                },
-                "lesson44": {
-                  "title": "Lesson 44",
-                  "reading": "Lesson 44 Reading"
-                },
-                "lesson45": {
-                  "title": "Lesson 45",
-                  "reading": "Lesson 45 Reading"
-                }
+              "lesson3": {
+                "title": "The 3 P's",
+                "reading": "Discuss the three common factors known as the '3 P's' that can contribute to insomnia: predisposing, precipitating, and perpetuating factors. Address how identifying these factors can help in developing a personalized treatment plan."
               }
             },
-            "week6": {
-              "title": "Week 6",
-              "day16": {
-                "title": "Day 16",
-                "lesson46": {
-                  "title": "Lesson 46",
-                  "reading": "Lesson 46 Reading"
-                },
-                "lesson47": {
-                  "title": "Lesson 47",
-                  "reading": "Lesson 47 Reading"
-                },
-                "lesson48": {
-                  "title": "Lesson 48",
-                  "reading": "Lesson 48 Reading"
-                }
+            "day6": {
+              "title": "Day #6: Sleeping Pills",
+              "lesson1": {
+                "title": "Evaluation for RLS",
+                "reading": "Discuss Restless Legs Syndrome (RLS) and its association with sleep disturbances. Explain the importance of evaluating for RLS in patients with insomnia."
               },
-              "day17": {
-                "title": "Day 17",
-                "lesson49": {
-                  "title": "Lesson 49",
-                  "reading": "Lesson 49 Reading"
-                },
-                "lesson50": {
-                  "title": "Lesson 50",
-                  "reading": "Lesson 50 Reading"
-                },
-                "lesson51": {
-                  "title": "Lesson 51",
-                  "reading": "Lesson 51 Reading"
-                }
+              "lesson2": {
+                "title": "Types of pills",
+                "reading": "Introduce different types of sleeping pills commonly used to treat insomnia. Discuss the classification, mechanisms of action, and potential side effects of these medications."
               },
-              "day18": {
-                "title": "Day 18",
-                "lesson52": {
-                  "title": "Lesson 52",
-                  "reading": "Lesson 52 Reading"
-                },
-                "lesson53": {
-                  "title": "Lesson 53",
-                  "reading": "Lesson 53 Reading"
-                },
-                "lesson54": {
-                  "title": "Lesson 54",
-                  "reading": "Lesson 54 Reading"
-                }
+              "lesson3": {
+                "title": "Efficacy/Failure of pills",
+                "reading": "Explore the effectiveness of sleeping pills in treating insomnia and factors that can contribute to treatment failure. Highlight the importance of using sleeping pills as a short-term solution and combining them with CBT-I for long-term benefits."
+              },
+              "lesson4": {
+                "title": "Evaluate for OSA",
+                "reading": "Discuss Obstructive Sleep Apnea (OSA) and its potential impact on sleep quality. Explain the importance of evaluating patients for OSA and distinguishing it from primary insomnia."
               }
-          }    
+            },
+            "day7": {
+              "title": "Day #7: CBT-I",
+              "lesson1": {
+                "title": "5 parts of CBT-I",
+                "reading": "Introduce the five components of Cognitive Behavioral Therapy for Insomnia (CBT-I): Sleep hygiene, Stimulus Control, Sleep Restriction, Relaxation Techniques, and Cognitive Restructuring. Explain how each component contributes to improving sleep patterns."
+              },
+              "lesson2": {
+                "title": "Dysfunctional Beliefs & Attitude About Sleep Questionnaire (DBAS-16)",
+                "reading": "Explain the use of the DBAS-16 questionnaire to assess dysfunctional beliefs and attitudes about sleep. Discuss how identifying and addressing these beliefs are crucial in CBT-I."
+              }
+            }
+          },
+          "week2": {
+            "title": "Week 2",
+            "day1": {
+              "title": "Day #1: Sleep Hygiene, the bare minimum",
+              "lesson1": {
+                "title": "Electronics",
+                "reading": "Educate patients on the impact of electronics on sleep quality. Discuss the importance of limiting electronic device use before bedtime."
+              },
+              "lesson2": {
+                "title": "Exercise",
+                "reading": "Explain the relationship between regular exercise and improved sleep. Discuss the ideal timing for exercise to promote better sleep quality."
+              },
+              "lesson3": {
+                "title": "Environment - Nighttime",
+                "reading": "Discuss the importance of creating a conducive sleep environment, including factors like lighting, noise, and temperature."
+              },
+              "lesson4": {
+                "title": "Environment - Sunlight at rising",
+                "reading": "Explain the benefits of exposure to natural sunlight upon waking. Discuss how natural light helps regulate the sleep-wake cycle."
+              }
+            },
+            "day2": {
+              "title": "Day #2: Stimulus Control #1",
+              "lesson1": {
+                "title": "Associating the bed with sleep",
+                "reading": "Explain the concept of stimulus control and how it involves establishing a strong association between the bed and sleep. Discuss strategies to create a sleep-conducive environment."
+              },
+              "lesson2": {
+                "title": "The 3'S of bed use: Sleep, Sickness, and Sex",
+                "reading": "Discuss the three activities that should be associated with the bed: Sleep, Sickness (when ill), and Sex. Advise against engaging in non-sleep-related activities in bed to improve sleep efficiency."
+              }
+            },
+            "day3": {
+              "title": "Day #3: Sleep Restriction #1",
+              "lesson1": {
+                "title": "What is sleep efficiency, Time in Bed vs. Sleep Time",
+                "reading": "Explain the concept of sleep efficiency, which is the percentage of time spent sleeping while in bed. Discuss the difference between total time in bed and actual sleep time."
+              },
+              "lesson2": {
+                "title": "Ideal sleep efficiency",
+                "reading": "Discuss the recommended sleep efficiency targets for optimal sleep quality. Explain how increasing sleep efficiency can help consolidate sleep and reduce awakenings."
+              },
+              "lesson3": {
+                "title": "Wake up at the same time every day",
+                "reading": "Highlight the importance of maintaining a consistent wake-up time every day, even on weekends. Regular wake-up times help regulate the circadian rhythm and improve sleep patterns."
+              },
+              "lesson4": {
+                "title": "Survey patient: necessary/desired wake up time",
+                "reading": "Work with patients to determine their ideal wake-up time and align it with their daily schedule and commitments."
+              }
+            },
+            "day4": {
+              "title": "Day #4: Relaxation Technique #1",
+              "lesson1": {
+                "title": "Don't force sleep",
+                "reading": "Explain the concept of not forcing sleep and avoiding excessive effort to fall asleep. Encourage patients to adopt a relaxed attitude towards sleep."
+              },
+              "lesson2": {
+                "title": "Diaphragmatic Breathing",
+                "reading": "Teach patients diaphragmatic breathing techniques as a relaxation exercise to reduce stress and anxiety before bedtime. Explain how controlled breathing can promote a calm state conducive to sleep."
+              }
+            },
+            "day5": {
+              "title": "Day #5: Cognitive Restructuring #1",
+              "lesson1": {
+                "title": "Focus is to address worrying about sleep",
+                "reading": "Explain that cognitive restructuring aims to address negative thought patterns and worries related to sleep. Discuss the impact of rumination and anxiety on sleep quality."
+              },
+              "lesson2": {
+                "title": "Calculate how long the patient has had insomnia in days",
+                "reading": "Work with patients to determine the duration of their insomnia in days. Understanding the chronicity of insomnia can help set realistic expectations for improvement."
+              },
+              "lesson3": {
+                "title": "Logical extremes of catastrophe",
+                "reading": "Guide patients to challenge catastrophic thinking about the consequences of poor sleep. Encourage them to assess the actual likelihood of worst-case scenarios happening due to lack of sleep."
+              },
+              "lesson4": {
+                "title": "Actual vs. anticipated risk",
+                "reading": "Discuss the discrepancy between actual risks associated with insomnia and the perceived risks. Highlight the tendency to overestimate negative consequences and the importance of realistic appraisal."
+              },
+              "lesson5": {
+                "title": "Destress with 'unlikely thought'",
+                "reading": "Introduce the concept of using a 'destressing thought' to counteract anxious thoughts about sleep. Encourage patients to imagine a positive and unlikely scenario to reduce anxiety about sleep."
+              }
+            },
+            "day6": {
+              "title": "Day #6: Review of the week",
+              "lesson1": {
+                "title": "Encourage patients to focus on what they have learned and accomplished so far",
+                "reading": "Review the key concepts covered during the week and encourage patients to reflect on their progress. Emphasize the importance of persistence and consistent effort in improving sleep habits."
+              }
+            },
+            "day7": {
+              "title": "Day #7: Sleep Titration #1",
+              "lesson1": {
+                "title": "Adjust total time in bed/bedtime and wake up time",
+                "reading": "Guide patients in making adjustments to their total time in bed and bedtime based on their sleep efficiency and individual sleep needs. Discuss the importance of maintaining a consistent wake-up time."
+              }
+            }
+          },
+          "week3": {
+            "title": "Week 3",
+            "day1": {
+              "title": "Day #1: Sleep Hygiene #2",
+              "lesson1": {
+                "title": "Detailed electronic use case and winding down",
+                "reading": "Provide specific guidelines on managing electronic device use, especially in the hours leading up to bedtime. Discuss relaxation techniques to wind down before sleep."
+              },
+              "lesson2": {
+                "title": "Detailed environment case - daytime light and nighttime",
+                "reading": "Explain the importance of exposure to natural light during the day and minimizing exposure to bright artificial light at night. Discuss strategies for managing light exposure to improve sleep quality."
+              }
+            },
+            "day2": {
+              "title": "Day #2: Stimulus Control #2",
+              "lesson1": {
+                "title": "Getting out of bed time limit",
+                "reading": "Set a specific time limit for patients to stay out of bed if they are unable to fall asleep. Discuss strategies to manage nocturnal awakenings and reduce time spent awake in bed."
+              },
+              "lesson2": {
+                "title": "Relaxing/mindless activities",
+                "reading": "Encourage patients to engage in relaxing and mindless activities when unable to sleep. Provide suggestions for calming activities to avoid increased arousal and anxiety about sleep."
+              }
+            },
+            "day3": {
+              "title": "Day #3: Sleep Restriction #2",
+              "lesson1": {
+                "title": "Adjusting Time in Bed (TIB)",
+                "reading": "Work with patients to further adjust their total time in bed based on sleep efficiency improvements. Discuss the gradual increase in time in bed as sleep efficiency improves."
+              }
+            },
+            "day4": {
+              "title": "Day #4: Relaxation Technique #2",
+              "lesson1": {
+                "title": "Importance of relaxation",
+                "reading": "Emphasize the role of relaxation techniques in managing anxiety and improving sleep quality. Discuss the benefits of incorporating relaxation exercises into the bedtime routine."
+              },
+              "lesson2": {
+                "title": "Progressive Muscle Relaxation",
+                "reading": "Teach patients progressive muscle relaxation techniques to reduce muscle tension and promote physical relaxation before sleep."
+              }
+            },
+            "day5": {
+              "title": "Day #5: Cognitive Restructuring #2",
+              "lesson1": {
+                "title": "Worry Journal",
+                "reading": "Introduce the concept of a worry journal for patients to record and challenge anxious thoughts about sleep. Discuss how journaling can help identify thought patterns and cognitive distortions."
+              }
+            },
+            "day6": {
+              "title": "Day #6: Review of the week",
+              "lesson1": {
+                "title": "Encourage patients to focus on what they have learned this week and accomplished so far",
+                "reading": "Review the key concepts covered during the week and encourage patients to reflect on their progress. Emphasize the importance of continued practice to solidify newly learned habits."
+              }
+            },
+            "day7": {
+              "title": "Day #7: Sleep Titration #2",
+              "lesson1": {
+                "title": "Adjust total time in bed/bedtime and wake up time",
+                "reading": "Guide patients in making further adjustments to their total time in bed and bedtime based on their sleep efficiency and individual sleep needs. Emphasize the gradual increase in time in bed as sleep efficiency improves."
+              }
+            }
+          },
+          "week4": {
+            "title": "Week 4",
+            "day1": {
+              "title": "Day #1: Sleep Hygiene #3",
+              "lesson1": {
+                "title": "Detailed caffeine use case and limiting time",
+                "reading": "Educate patients on the effects of caffeine on sleep and the importance of moderating its intake, especially in the afternoon and evening."
+              },
+              "lesson2": {
+                "title": "Detailed alcohol use case",
+                "reading": "Discuss the impact of alcohol on sleep quality. Explain the need for moderation and avoiding alcohol consumption close to bedtime."
+              }
+            },
+            "day2": {
+              "title": "Day #2: Stimulus Control #3",
+              "lesson1": {
+                "title": "Avoiding excessive naps",
+                "reading": "Discuss the potential impact of daytime napping on nighttime sleep. Provide guidelines for managing naps to avoid interference with sleep quality."
+              },
+              "lesson2": {
+                "title": "Relaxing/mindless activities",
+                "reading": "Encourage patients to engage in relaxing and mindless activities during the evening to promote a state of relaxation before bedtime."
+              }
+            },
+            "day3": {
+              "title": "Day #3: Sleep Restriction #3",
+              "lesson1": {
+                "title": "Sleep Compression as an alternative",
+                "reading": "Introduce the concept of sleep compression as an alternative approach to sleep restriction. Discuss how sleep compression can be adapted based on individual sleep patterns."
+              }
+            },
+            "day4": {
+              "title": "Day #4: Relaxation Technique #3",
+              "lesson1": {
+                "title": "Guided Imagery",
+                "reading": "Teach patients guided imagery techniques to create calming and positive mental images before sleep. Discuss how guided imagery can promote relaxation and improve sleep quality."
+              }
+            },
+            "day5": {
+              "title": "Day #5: Cognitive Restructuring #3",
+              "lesson1": {
+                "title": "Acceptance & commitment Therapy - Cognitive defusion",
+                "reading": "Introduce concepts from Acceptance and Commitment Therapy (ACT) related to cognitive defusion. Discuss how ACT techniques can help patients observe and distance themselves from negative thoughts about sleep."
+              }
+            },
+            "day6": {
+              "title": "Day #6: Review of the week",
+              "lesson1": {
+                "title": "Encourage patients to focus on what they have learned this week and accomplished so far",
+                "reading": "Review the key concepts covered during the week and encourage patients to reflect on their progress. Emphasize the importance of consistency and flexibility in applying various techniques."
+              }
+            },
+            "day7": {
+              "title": "Day #7: Sleep Titration #3",
+              "lesson1": {
+                "title": "Adjust total time in bed/bedtime and wake up time",
+                "reading": "Guide patients in making further adjustments to their total time in bed and bedtime based on their sleep efficiency and individual sleep needs. Continue to reinforce the importance of maintaining a consistent wake-up time."
+              }
+            }
+          },
+          "week5": {
+            "title": "Week 5",
+            "day1": {
+              "title": "Day #1: Sleep Hygiene #4",
+              "lesson1": {
+                "title": "Detailed exercise case and winding down",
+                "reading": "Discuss the benefits of regular exercise on sleep quality. Provide guidelines on incorporating exercise into daily routines and the importance of relaxation techniques before sleep."
+              },
+              "lesson2": {
+                "title": "Detailed diet case and healthy snacking",
+                "reading": "Educate patients on the impact of diet on sleep. Discuss healthy snacking options and how certain foods can either promote or disrupt sleep."
+              }
+            },
+            "day2": {
+              "title": "Day #2: Stimulus Control #4",
+              "lesson1": {
+                "title": "Maintaining a consistent wake-up time",
+                "reading": "Discuss the importance of maintaining a consistent wake-up time to reinforce the circadian rhythm. Explain how regular wake-up times contribute to improved sleep quality."
+              },
+              "lesson2": {
+                "title": "Relaxing/mindless activities",
+                "reading": "Encourage patients to engage in calming and relaxing activities during the evening to prepare for sleep. Discuss the importance of avoiding stimulating activities before bedtime."
+              }
+            },
+            "day3": {
+              "title": "Day #3: Sleep Restriction #4",
+              "lesson1": {
+                "title": "Further adjustments to Time in Bed (TIB)",
+                "reading": "Work with patients to make further adjustments to their total time in bed based on sleep efficiency improvements and individual sleep needs."
+              }
+            },
+            "day4": {
+              "title": "Day #4: Relaxation Technique #4",
+              "lesson1": {
+                "title": "Autogenic Relaxation",
+                "reading": "Teach patients autogenic relaxation techniques to promote physical and mental relaxation before bedtime. Discuss how autogenic relaxation can reduce anxiety and improve sleep quality."
+              }
+            },
+            "day5": {
+              "title": "Day #5: Cognitive Restructuring #4",
+              "lesson1": {
+                "title": "Worry Journal",
+                "reading": "Reinforce the use of the worry journal to track and challenge anxious thoughts about sleep. Discuss how the worry journal can be a valuable tool in CBT-I."
+              }
+            },
+            "day6": {
+              "title": "Day #6",
+              "lesson1": {
+                "title": "Encourage patients to focus on what they have learned this week and accomplished so far",
+                "reading": "Review the key concepts covered during the week and encourage patients to reflect on their progress. Discuss how to continue applying the learned techniques beyond the program."
+              }
+            },
+            "day7": {
+              "title": "Day #7: Sleep Titration #4",
+              "lesson1": {
+                "title": "Adjust total time in bed/bedtime and wake up time",
+                "reading": "Guide patients in making final adjustments to their total time in bed and bedtime based on their sleep efficiency and individual sleep needs. Reinforce the importance of maintaining a consistent wake-up time."
+              }
+            }
+          },
+          "week6": {
+            "title": "Week 6",
+            "day1": {
+              "title": "Day #1: Review of all sleep hygiene",
+              "lesson1": {
+                "title": "Review all techniques and strategies",
+                "reading": "Recap all sleep hygiene recommendations covered during the program. Emphasize the importance of maintaining good sleep hygiene beyond the program."
+              },
+              "lesson2": {
+                "title": "Develop a plan to maintain good sleep habits",
+                "reading": "Work with patients to create a personalized plan to sustain the positive changes made during the program. Discuss strategies to prevent relapse and promote long-term sleep health."
+              }
+            },
+            "day2": {
+              "title": "Day #2: Review of all stimulus control",
+              "lesson1": {
+                "title": "Review all techniques and strategies",
+                "reading": "Recap all stimulus control recommendations covered during the program. Emphasize the importance of maintaining stimulus control practices to reinforce the association between the bed and sleep."
+              },
+              "lesson2": {
+                "title": "Develop a plan to maintain stimulus control",
+                "reading": "Assist patients in creating a plan to sustain stimulus control practices and address potential challenges. Discuss coping strategies for managing disruptive factors."
+              }
+            },
+            "day3": {
+              "title": "Day #3: Review of all Sleep Restriction",
+              "lesson1": {
+                "title": "Review all techniques and strategies",
+                "reading": "Recap all sleep restriction recommendations covered during the program. Emphasize the benefits of sleep restriction in consolidating sleep and improving sleep efficiency."
+              },
+              "lesson2": {
+                "title": "Review sleep log and maintaining a sleep log",
+                "reading": "Review patients' sleep logs and discuss the importance of maintaining a sleep log in the long term. Encourage patients to use the sleep log as a tool for ongoing self-assessment."
+              }
+            },
+            "day4": {
+              "title": "Day #4: Review of all relaxation techniques and cognitive restructuring",
+              "lesson1": {
+                "title": "Review all techniques and strategies",
+                "reading": "Recap all relaxation techniques and cognitive restructuring exercises covered during the program. Emphasize their role in managing stress and anxiety for better sleep."
+              }
+            },
+            "day5": {
+              "title": "Day #5: Obstacles and Future",
+              "lesson1": {
+                "title": "Final review of obstacles and strategies for overcoming them",
+                "reading": "Discuss potential obstacles that patients may encounter after the program and explore strategies to overcome them. Address common challenges in maintaining good sleep habits."
+              },
+              "lesson2": {
+                "title": "Discussion of future sleep goals",
+                "reading": "Encourage patients to set realistic sleep goals for the future. Discuss the importance of continuous improvement and ongoing efforts to prioritize sleep health."
+              }
+            },
+            "day6": {
+              "title": "Day #6: Program Review",
+              "lesson1": {
+                "title": "Get patient review and feedback",
+                "reading": "Solicit feedback from patients regarding their experience with the program. Assess the effectiveness of the education plan and address any concerns or questions."
+              },
+              "lesson2": {
+                "title": "Suggestions for ongoing support and resources",
+                "reading": "Provide patients with information about additional resources and support available for maintaining good sleep habits. Offer recommendations for further reading and support groups if available."
+              }
+            },
+            "day7": {
+              "title": "Day #7: Finish",
+              "lesson1": {
+                "title": "Final congratulations and encouragement for continuing progress and success",
+                "reading": "Congratulate patients on completing the program and acknowledge their efforts. Encourage them to continue applying the learned techniques to achieve sustainable improvements in sleep."
+              }
+            }
+        }         
     }
 }

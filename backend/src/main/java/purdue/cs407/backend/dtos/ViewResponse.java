@@ -68,12 +68,12 @@ public class ViewResponse {
     public ViewResponse(SleepRecord record) {
         this.recordID = record.getRecordID();
         this.date = record.getDate();
-        this.downTime = record.getDownTime();
+        this.downTime = record.getDownTimeTime();
         this.fallTime = record.getFallTime();
-        this.sleepTime = record.getSleepTime();
-        this.wakeTime = record.getWakeTime();
+        this.sleepTime = record.getSleepTimeTime();
+        this.wakeTime = record.getWakeTimeTime();
         this.awakeTime = record.getAwakeTime();
-        this.upTime = record.getUpTime();
+        this.upTime = record.getUpTimeTime();
         this.quality = record.getQuality();
 
         Map<String, Boolean> journalMap = record.decodeJournal();
