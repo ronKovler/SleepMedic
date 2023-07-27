@@ -95,25 +95,9 @@ function CreateRem() {
         return false;
     };
 
-    const timeInputValidation = () => {
-        if (ReminderTime === "") {      //this logic has to change
-            return true;
-            //setRemTimeErrMsg(emptyTimeInputMsg);
-            //return false;
-        }
-        const timePattern = /^(1[0-2]|0?[1-9]):[0-5][0-9](AM|PM)$/;     //probably won't be needing this stuff anymore.
-        if (!timePattern.test(ReminderTime)) {
-            return true;
-            //setRemTimeErrMsg(badTimeInputFormat);
-            //return false;
-        }
-        setRemTimeErrMsg("");
-        return true;
-    };
-
     //Main input validation function. Calls other specific inputValidation functions.
     const validate = () => {
-        if (reminderTypeInputValidation() && daysInputValidation() && timeInputValidation()) {
+        if (reminderTypeInputValidation() && daysInputValidation()) {
             return true;
         }
         return false;
@@ -142,26 +126,10 @@ function CreateRem() {
                 reminderTypeInt = 0;
             }
 
-
             console.log("ReminderTime is: " + ReminderTime)
             //grab ReminderTime and convert to the required format (hr:min:sec) (military)
-            //const militaryFormat = ReminderTime.toISOString().slice(11, 19);
             const militaryFormat = dayjs(ReminderTime).format('HH:mm:ss');
             console.log("military format of ReminderTime is: " + militaryFormat)
-
-            //grab ReminderTime and convert to the required format (hr:min:sec) (military)
-            /*const [time, clock] = ReminderTime.split(/(?<=[0-9]{2})(?=[AP]M)/);
-            const [hours, minutes] = time.split(":");
-            let formattedHours = parseInt(hours, 10); // Parse hours as integer
-            if (clock === "PM") {
-                if (formattedHours !== 12) {
-                    formattedHours += 12; // Add 12 hours for PM format (except when it's 12PM)
-                }
-            } else if (formattedHours === 12) {
-                formattedHours = 0; // Convert 12 AM to 0 hours
-            }
-            const formattedMinutes = minutes.padStart(2, '0'); // Pad minutes with leading zero if necessary
-            const formattedReminderTime = `${formattedHours}:${formattedMinutes}:00`;   */
 
             //grabbing the timezone selected by user
             let chosenTimezone;
@@ -174,7 +142,7 @@ function CreateRem() {
             else if (Timezone == "Central")    {
                 chosenTimezone = 2;
             }
-            else chosenTimezone = 3;
+            else chosenTimezone = 3;    //Eastern
 
             //grabbing the days selected by user
             const selectedDays = checkedState
@@ -186,11 +154,9 @@ function CreateRem() {
                 "Authorization":'Bearer ' + tok
             }
             var reminderInfo = {
-                //pass the carrier.
                 carrier: chosenCarrier,
                 timezone: chosenTimezone,
-                triggerTime: militaryFormat, //Time at which reminder emails will be triggered on the chosen days
-                //triggerTime: formattedReminderTime, //Time at which reminder emails will be triggered on the chosen days
+                triggerTime: militaryFormat,        //Time at which reminder emails will be triggered on the chosen days
                 triggerDays: selectedDays,          //a list of integers where 0 is Sun, 6 is Sat
                 message: reminderTypeInt,           //1 or 2; Bedtime or General Sleep Reminder
             }
@@ -281,14 +247,6 @@ function CreateRem() {
             </LocalizationProvider>
          </FormControl>
 
-         {/*<div className="form-group">
-           <label htmlFor="reminder-time">Reminder Time:</label>
-           <input
-             id="reminder-time"
-             value={ReminderTime}
-             onChange={(e) => setRemTime(e.target.value)}
-           />
-         </div> */}
          <label htmlFor="Timezone">Timezone:
          <Select
                          labelId="Timezone"
