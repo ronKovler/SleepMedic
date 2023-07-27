@@ -398,7 +398,7 @@ export default function Home() {
 
             if (element.name === 'down') {
                 am.push({name: 'Out of Bed', value: elapsedTime});
-                tempLabel += '🔽 : ' + avgDown;
+                tempLabel += '🔽@' + avgDown;
             } else if (element.name === 'wake') {
                 am.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
                 tempLabel += '⏰@' + avgWake;
@@ -428,12 +428,21 @@ export default function Home() {
         })
         console.log("label: " + tempLabel);
         setPieAmLabel(tempLabel);
-        setPieAmData(am.reverse());
-        setPiePmData(pm.reverse());
+        if (am.length > 0) {
+            setPieAmData(am.reverse());
+        } else {
+            setPieAmData([{name: 'Out of Bed', value: 12}])
+        }
+        
+        if (pm.length > 0) {
+            setPiePmData(pm.reverse());
+        } else {
+            setPiePmData([{name: 'Out of Bed', value: 12}])
+        }
         
         
-        setPieEffLabel('🔋' + (res.data.efficiency * 100).toFixed(1) + '%');
-        setPieEffData([{name: '0', value: 1 - res.data.efficiency}, {name: '1', value: res.data.efficiency, fill: '#2f875d'}])
+        setPieEffLabel('🔋' + (res.data.efficiency).toFixed(1) + '%');
+        setPieEffData([{name: '0', value: 100 - res.data.efficiency}, {name: '1', value: res.data.efficiency, fill: '#2f875d'}])
     }
 
     async function getData() {
@@ -465,12 +474,12 @@ export default function Home() {
             console.log( res2.data)
             setAvgFallTime(res2.data.fallTime + " min");
             setAvgAwakeTime(res2.data.awakeTime + " min");
-            setAvgQuality(res2.data.quality);
+            setAvgQuality((res2.data.quality).toFixed(1));
             
             
             setPieData(res2);
         
-            setAvgHoursSlept(res2.data.hoursSlept + " hrs");
+            setAvgHoursSlept((res2.data.hoursSlept).toFixed(1) + " hrs");
 
             
         }
@@ -995,10 +1004,10 @@ export default function Home() {
 
                     {/* Sleep Duration Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>{t("home.input-prompt.sleep-duration")}</InputLabel>
+                        <InputLabel>{t("home.input-prompt.fall-time")}</InputLabel>
                         <OutlinedInput
                             value={fallTime}
-                            label="fallTime"
+                            label={t("home.input-prompt.fall-time")}
                             onChange = {(e)=>
                                 setFallTime(e.target.value)}
                             type="text"
@@ -1010,7 +1019,7 @@ export default function Home() {
                         <InputLabel>{t("home.input-prompt.awake-time")}</InputLabel>
                         <OutlinedInput
                             value={awakeTime}
-                            label="wokeUpCount"
+                            label={t("home.input-prompt.awake-time")}
                             onChange = {(e)=>
                                 setAwakeTime(e.target.value)}
                             type="text"

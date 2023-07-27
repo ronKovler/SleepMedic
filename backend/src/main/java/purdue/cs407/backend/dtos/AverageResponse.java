@@ -1,5 +1,7 @@
 package purdue.cs407.backend.dtos;
 
+import purdue.cs407.backend.pojos.AverageRecord;
+
 import java.sql.Time;
 
 public class AverageResponse {
@@ -46,6 +48,18 @@ public class AverageResponse {
         this.quality = quality;
         this.awakeTime = awakeTime;
         this.efficiency = efficiency;
+    }
+
+    public AverageResponse(AverageRecord averageRecord) {
+        this.downTime = new Time(averageRecord.getDownTime());
+        this.upTime = new Time(averageRecord.getUpTime());
+        this.hoursSlept = averageRecord.getHoursSlept();
+        this.fallTime = averageRecord.getFallTime();
+        this.wakeTime =  new Time(averageRecord.getWakeTime());
+        this.sleepTime =  new Time(averageRecord.getSleepTime());
+        this.quality = averageRecord.getQuality();
+        this.awakeTime = averageRecord.getAwakeTime();
+        this.efficiency = averageRecord.getEfficiency();
     }
 
     public Time getDownTime() {
