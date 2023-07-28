@@ -177,7 +177,17 @@ function CreateRem() {
         }
     };
     return (
-     <div className="create-rem-container">
+    <Box  sx={{
+                /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
+            background: 'repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% )',
+            animation: 'animazione 13s ease-in-out infinite alternate-reverse',
+
+            height: '100vh' ,
+            width: '100vw',
+            overflowX: 'hidden'
+
+
+    }}>
         <Navbar />
         <Grid container justifyContent="center" alignItems="center" sx={{ height: '90vh' }}>
             <Grid item xs={12} sm={8} md={6} lg={4}>
@@ -296,7 +306,7 @@ function CreateRem() {
                 </Box>
             </Grid>
         </Grid>
-     </div>
+    </Box>
     );
 }
 
