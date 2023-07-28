@@ -4,9 +4,10 @@ import {TextField, Select, MenuItem, Button } from "@mui/material/";
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-//import Navbar from './/navbar/Navbar';
 import Navbar from './navbar/Navbar';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import {isMobile} from 'react-device-detect';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -178,7 +179,21 @@ function CreateRem() {
     return (
      <div className="create-rem-container">
      <Navbar />
-
+     <Grid container justifyContent="center" alignItems="center" sx={{ height: '100vh' }}>
+             <Grid item xs={12} sm={8} md={6} lg={4}>
+               {/* Use xs, sm, md, lg breakpoints to adjust the size of the Paper */}
+               <Box textAlign="center">
+                 <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', padding: '20px' }}>
+                    <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
+                        {"Create a Reminder"}
+                   </Typography>
+                   <Typography variant="body" component="div" color="black" fontSize="14pt">
+                                        {"More content"}
+                                      </Typography>
+                 </Paper>
+               </Box>
+             </Grid>
+           </Grid>
      </div>
     );
 }
