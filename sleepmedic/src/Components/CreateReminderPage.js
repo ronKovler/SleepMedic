@@ -179,7 +179,7 @@ function CreateRem() {
     return (
      <div className="create-rem-container">
         <Navbar />
-        <Grid container justifyContent="center" alignItems="center" sx={{ height: '70vh' }}>
+        <Grid container justifyContent="center" alignItems="center" sx={{ height: '90vh' }}>
             <Grid item xs={12} sm={8} md={6} lg={4}>
                 <Box textAlign="center">
                     <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', padding: '20px' }}>
@@ -281,10 +281,15 @@ function CreateRem() {
                         </Typography>
 
                         <Typography variant="body" component="div" color="black" fontSize="14pt">
-                        <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='20pt' paddingTop='20pt'>
-                            <Button variant='contained' onClick={handleCreateReminder}>Create</Button>
-                            <Button href="/profilepage" variant='contained'> Cancel</Button>
-                        </Box>
+                            {/* Submitting and Canceling */}
+                          <Box display="flex" justifyContent="center" paddingTop='20pt'>
+                            <Box flexGrow={1} paddingRight="5px">
+                              <Button href="/profilepage" variant='contained' fullWidth>Cancel</Button>
+                            </Box>
+                            <Box flexGrow={1} paddingLeft="5px">
+                              <Button variant='contained' onClick={handleCreateReminder} fullWidth>Create</Button>
+                            </Box>
+                          </Box>
                         </Typography>
                     </Paper>
                 </Box>
