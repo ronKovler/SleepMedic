@@ -4,9 +4,10 @@ import {TextField, Select, MenuItem, Button } from "@mui/material/";
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-//import Navbar from './/navbar/Navbar';
 import Navbar from './navbar/Navbar';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import {isMobile} from 'react-device-detect';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -176,105 +177,125 @@ function CreateRem() {
         }
     };
     return (
-     <div className="sleep-medic-container">
-     <Navbar />
-       <div className="create-rem-form">
-        <h1>Create a Reminder</h1>
-         <div className="form-group">
-           <label htmlFor="reminder-method">To enable SMS notifications, please select your carrier:</label>
-           <br/>
-           &nbsp;
-           <Select
-                labelId="Carrier Type"
-                id="carrier-type"
-                value={Carrier}
-                label="Carrier Type"
-                onChange={(e) => handleOnChangeCarrier(e.target.value)}
-                style={{ width: "230px" }} >
-                <MenuItem value="No, email it">No, email it </MenuItem>
-                <MenuItem value="AT&T">AT&T</MenuItem>
-                <MenuItem value="Boost Mobile">Boost Mobile</MenuItem>
-                <MenuItem value="Consumer Cellular">Consumer Cellular</MenuItem>
-                <MenuItem value="Cricket Wireless">Cricket Wireless</MenuItem>
-                <MenuItem value="Google Fi Wireless">Google Fi Wireless</MenuItem>
-                <MenuItem value="MetroPCS">MetroPCS</MenuItem>
-                <MenuItem value="Sprint">Sprint</MenuItem>
-                <MenuItem value="T-Mobile">T-Mobile</MenuItem>
-                <MenuItem value="U.S. Cellular">U.S. Cellular</MenuItem>
-                <MenuItem value="Verizon">Verizon</MenuItem>
-                <MenuItem value="Xfinity Mobile">Xfinity Mobile</MenuItem>
-           </Select>
-           <br/>
-           <br/>
-           <br/>
-           <label htmlFor="reminder-type">Reminder Type:</label>
-           <br/>
-           &nbsp;
-           <Select
-                labelId="Reminder Type"
-                id="reminder-type"
-                value={ReminderType}
-                label="Reminder Type"
-                onChange={(e) => handleOnChangeRemType(e.target.value)}
-                style={{ width: "230px" }} >
-                <MenuItem value="None">None</MenuItem>
-                <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
-                <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
-           </Select>
-           <br/>
-           <br/>
-            <label htmlFor="reminder-type-err-msg">{RemTypeErrMsg}</label>
-         </div>
-         <div className="days-list">
-            {daysOfWeek.map(({day}, index) => {
-                return(
-                <li key={index}>
-                <div className="days-list-item">
-                    <input
-                        type="checkbox"
-                        id={`custom-checkbox-${index}`}
-                        name={day}
-                        value={day}
-                        checked={checkedState[index]}
-                        onChange={() => handleOnChangeCB(index)}
-                    />
-                    <label htmlFor={`custom-checkbox-${index}`}>{day}</label>
-                </div>
-                </li>
-                );
-            })}
-         </div>
-         <label htmlFor="days-input-err-msg">{daysInputErrMsg}</label>
+     <div className="create-rem-container">
+        <Navbar />
+        <Grid container justifyContent="center" alignItems="center" sx={{ height: '90vh' }}>
+            <Grid item xs={12} sm={8} md={6} lg={4}>
+                <Box textAlign="center">
+                    <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', padding: '20px' }}>
+                        <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
+                            {/* Title */}
+                            {"Create a Reminder"}
+                            <br/>
+                            <br/>
+                        </Typography>
 
-         {/* Time Input */}
-         <FormControl sx={{width: '30%', marginTop: '20pt'}}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <TimePicker label="Reminder Time" value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
-            </LocalizationProvider>
-         </FormControl>
+                        <Typography variant="body" component="div" color="black" fontSize="14pt">
+                            {/* Carrier Selection */}
+                            <label htmlFor="reminder-method">To enable SMS notifications, please select your carrier:</label>
+                            <br/>
+                            &nbsp;
+                            <Select labelId="Carrier Type" id="carrier-type" value={Carrier} label="Carrier Type" onChange={(e) => handleOnChangeCarrier(e.target.value)}
+                            style={{ width: "230px", marginTop: '10pt' }}>
+                                <MenuItem value="No, email it">No, email it</MenuItem>
+                                <MenuItem value="AT&T">AT&T</MenuItem>
+                                <MenuItem value="Boost Mobile">Boost Mobile</MenuItem>
+                                <MenuItem value="Consumer Cellular">Consumer Cellular</MenuItem>
+                                <MenuItem value="Cricket Wireless">Cricket Wireless</MenuItem>
+                                <MenuItem value="Google Fi Wireless">Google Fi Wireless</MenuItem>
+                                <MenuItem value="MetroPCS">MetroPCS</MenuItem>
+                                <MenuItem value="Sprint">Sprint</MenuItem>
+                                <MenuItem value="T-Mobile">T-Mobile</MenuItem>
+                                <MenuItem value="U.S. Cellular">U.S. Cellular</MenuItem>
+                                <MenuItem value="Verizon">Verizon</MenuItem>
+                                <MenuItem value="Xfinity Mobile">Xfinity Mobile</MenuItem>
+                            </Select>
+                            <br/>
+                            <br/>
+                        </Typography>
 
-         <label htmlFor="Timezone">Timezone:
-         <Select
-                         labelId="Timezone"
-                         id="Timezone"
-                         value={Timezone}
-                         label="Timezone"
-                         onChange={(e) => handleOnChangeTimezone(e.target.value)}
-                         style={{ width: "230px" }} >
-                         <MenuItem value="Pacific">Pacific</MenuItem>
-                         <MenuItem value="Mountain">Mountain</MenuItem>
-                         <MenuItem value="Central">Central</MenuItem>
-                         <MenuItem value="Eastern">Eastern</MenuItem>
-                    </Select>
-                    </label>
-         <label htmlFor="reminder-time-err-msg">{timeErrMsg}</label>
-         <div className="button-group">
-            <Link to="/profilepage">
-            <Button variant="contained">Cancel</Button>
-            </Link>
-            <Button variant="contained" onClick={handleCreateReminder}>Create</Button>
-         </div>
-       </div>
+                        <Typography variant="body" component="div" color="black" fontSize="14pt">
+                            {/* Reminder Type Selection */}
+                            <label htmlFor="reminder-type" sx={{ marginBottom: '10px', textAlign: 'center' }}>Reminder Type:</label>
+                            <br/>
+                            &nbsp;
+                            <Select labelId="Reminder Type" id="reminder-type" value={ReminderType} label="Reminder Type" onChange={(e) => handleOnChangeRemType(e.target.value)} style={{ width: "230px", marginTop: '10pt' }} >
+                                <MenuItem value="None">None</MenuItem>
+                                <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
+                                <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
+                            </Select>
+                            <br/>
+                            <br/>
+                            <label htmlFor="reminder-type-err-msg" style={{ color: 'crimson' }}>{RemTypeErrMsg}</label>
+                        </Typography>
+
+                        <Typography variant="body" component="div" color="black" fontSize="14pt">
+                            {/* Choosing the days of the week */}
+                            <div className="days-list">
+                                {daysOfWeek.map(({day}, index) => {
+                                    return(
+                                        <li key={index}>
+                                            <div className="days-list-item">
+                                                <input
+                                                    type="checkbox"
+                                                    id={`custom-checkbox-${index}`}
+                                                    name={day}
+                                                    value={day}
+                                                    checked={checkedState[index]}
+                                                    onChange={() => handleOnChangeCB(index)}
+                                                />
+                                                <label htmlFor={`custom-checkbox-${index}`}>{day}</label>
+                                            </div>
+                                        </li>
+                                    );
+                                })}
+                            <br/>
+                            <br/>
+                            <br/>
+                            <label htmlFor="days-input-err-msg" style={{ color: 'crimson' }}>{daysInputErrMsg}</label>
+                            </div>
+                        </Typography>
+
+                        <Typography variant="body" component="div" color="black" fontSize="14pt" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            {/* Picking the time for the reminder */}
+                            <label htmlFor="reminder-time" sx={{textAlign: 'center' }}>Reminder Time:</label>
+
+                            <FormControl sx={{width: '30%', marginTop: '10pt'}}>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <TimePicker value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
+                                        </LocalizationProvider>
+                            </FormControl>
+                            <br/>
+                        </Typography>
+
+                        <Typography variant="body" component="div" color="black" fontSize="14pt">
+                            {/* Picking the timezone */}
+                            <label htmlFor="Timezone" sx={{ marginBottom: '10px', textAlign: 'center' }}>Timezone:</label>
+                                <br/>
+                                &nbsp;
+                                <Select labelId="Timezone" id="Timezone" value={Timezone} label="Timezone" onChange={(e) => handleOnChangeTimezone(e.target.value)} style={{ width: "230px", marginTop: '10pt'}} >
+                                    <MenuItem value="Pacific">Pacific</MenuItem>
+                                    <MenuItem value="Mountain">Mountain</MenuItem>
+                                    <MenuItem value="Central">Central</MenuItem>
+                                    <MenuItem value="Eastern">Eastern</MenuItem>
+                                </Select>
+                        </Typography>
+
+                        <Typography variant="body" component="div" color="black" fontSize="14pt">
+                            {/* Submitting and Canceling */}
+                          <Box display="flex" justifyContent="center" paddingTop='20pt'>
+                            <Box flexGrow={1} paddingRight="5px">
+                              <Button href="/profilepage" variant='contained' fullWidth>Cancel</Button>
+                            </Box>
+                            <Box flexGrow={1} paddingLeft="5px">
+                              <Button variant='contained' onClick={handleCreateReminder} fullWidth>Create</Button>
+                            </Box>
+                          </Box>
+                        </Typography>
+                    </Paper>
+                </Box>
+            </Grid>
+        </Grid>
      </div>
     );
 }
