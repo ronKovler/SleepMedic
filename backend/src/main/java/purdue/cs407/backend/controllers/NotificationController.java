@@ -161,6 +161,7 @@ public class NotificationController {
      * @param reminderID - ID of reminder to cancel
      * @return - 1 on success, http error otherwise
      */
+    @Transactional
     @RequestMapping(value = "delete/{reminderID}", method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> deleteReminder(@PathVariable Long reminderID) {
