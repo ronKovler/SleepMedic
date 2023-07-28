@@ -3,7 +3,9 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    position: relative;
+    align-self: center;
+    justify-self: center;
+    position: center;
     width: 50%;
     height: 55%;
     /*background-color: white;          <-- original */
@@ -50,6 +52,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    align-content: center;
     text-align: center;
     backgroundColor: #57118E;          /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
     background: repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% );

@@ -819,10 +819,10 @@ export default function Home() {
                                 <Typography variant="h4" component="div"
                                             sx={{flexGrow: 1,
                                                 fontWeight: 'bold',
-                                                color: 'black', 
+                                                color: 'white', 
                                                 paddingTop: '10px',
                                                 paddingBottom: '10px',
-                                                textAlign: 'center', color: 'white'}}>
+                                                textAlign: 'center'}}>
                                     {username} 
                                 </Typography>
                             </Paper>

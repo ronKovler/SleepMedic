@@ -2,7 +2,6 @@ package purdue.cs407.backend.controllers;
 
 
 import jakarta.mail.MessagingException;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,14 +14,11 @@ import purdue.cs407.backend.entities.SleepRecord;
 import purdue.cs407.backend.entities.User;
 import purdue.cs407.backend.pojos.EmailDetails;
 import purdue.cs407.backend.repositories.RecordRepository;
+import purdue.cs407.backend.repositories.ReminderRepository;
 import purdue.cs407.backend.repositories.UserRepository;
 import purdue.cs407.backend.services.AuthService;
 import purdue.cs407.backend.services.EmailService;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.Collection;
 
 @RestController
@@ -32,16 +28,20 @@ public class AccountController {
 
     private final UserRepository userRepository;
     private final RecordRepository recordRepository;
+
+    private final ReminderRepository reminderRepository;
     private final AuthService authService;
     private final EmailService emailService;
 
 
     public AccountController(UserRepository userRepository, RecordRepository recordRepository,
-                             AuthService authService, EmailService emailService) {
+                             AuthService authService, EmailService emailService,
+                             ReminderRepository reminderRepository) {
         this.userRepository = userRepository;
         this.recordRepository = recordRepository;
         this.authService = authService;
         this.emailService = emailService;
+        this.reminderRepository = reminderRepository;
     }
 
     /**
@@ -158,6 +158,12 @@ public class AccountController {
     }
 
     /**
+     * API to view all current reminders on the users account page.
+     * @return List of
+     */
+
+
+    /**
      * Delete User Account
      */
     @Transactional
@@ -166,8 +172,9 @@ public class AccountController {
         User user = getCurrentUser();
 
         // Delete associated records using cascade delete
-        recordRepository.deleteByUser(user);
-
+        recordRepository.deleteAllByUser(user);
+        // Delete reminders
+        reminderRepository.deleteAllByUser(user);
         // Now delete the user account
         userRepository.delete(user);
 
