@@ -2,6 +2,10 @@ import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
 import {TextField, Button, Alert, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, Grid, Paper} from "@mui/material/";
 import axios from "axios";
 import { useState } from 'react';
+import FormControl from '@mui/material/FormControl';
+//import Box from '@mui/material/Box';
+//import Navbar from './navbar/Navbar';
+//import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import {useCookies} from "react-cookie";
@@ -486,6 +490,7 @@ function OpenProfilePage() {
                                         </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>
+                                        <Button onClick={() => setOpenDel(false)}>Cancel</Button>
                                         <Button onClick={(e)=>deleteAccount(e)}>Yes, please delete account</Button>
                                     </DialogActions>
                                 </Dialog>
