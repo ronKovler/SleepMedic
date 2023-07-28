@@ -147,8 +147,8 @@ function OpenProfilePage() {
             </Grid>
             <div className="profile-page-form">
                 <Link to="/createreminder">
-                                    <Button variant="contained">Create A Reminder</Button>
-                                </Link>
+                    <Button variant="contained">Create A Reminder</Button>
+                </Link>
                 <Link to="/home">
                     <Button variant="contained">Home</Button>
                 </Link>

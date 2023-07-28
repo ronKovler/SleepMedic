@@ -2,6 +2,11 @@ import "./CreateReminderPage.css";
 import { BrowserRouter as Router, Routes, Link, Route, useNavigate } from 'react-router-dom';
 import {TextField, Select, MenuItem, Button } from "@mui/material/";
 import FormControl from '@mui/material/FormControl';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+//import Navbar from './/navbar/Navbar';
+import Navbar from './navbar/Navbar';
+import Paper from '@mui/material/Paper';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -172,6 +177,7 @@ function CreateRem() {
     };
     return (
      <div className="sleep-medic-container">
+     <Navbar />
        <div className="create-rem-form">
         <h1>Create a Reminder</h1>
          <div className="form-group">
