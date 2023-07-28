@@ -95,5 +95,5 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
      * Delete all records by a user.
      * @param user - User user to delete records.
      */
-    void deleteByUser(User user);
+    void deleteAllByUser(User user);
 }

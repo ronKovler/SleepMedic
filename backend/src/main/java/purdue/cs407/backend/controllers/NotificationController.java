@@ -9,17 +9,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import purdue.cs407.backend.dtos.ReminderRequest;
+import purdue.cs407.backend.dtos.ReminderResponse;
 import purdue.cs407.backend.pojos.EmailDetails;
 import purdue.cs407.backend.entities.Reminder;
 import purdue.cs407.backend.entities.User;
 import purdue.cs407.backend.pojos.ReminderExecutor;
 import purdue.cs407.backend.pojos.ReminderTask;
 import purdue.cs407.backend.repositories.ReminderRepository;
-import purdue.cs407.backend.repositories.UserRepository;
 import purdue.cs407.backend.services.EmailService;
 import purdue.cs407.backend.services.SchedulingService;
 import java.sql.Time;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -129,6 +130,19 @@ public class NotificationController {
     }
 
     /**
+     * Get a list of ReminderDTOS (reminderResponse) on the profile page
+     * @return List<ReminderResponse> (ReminderDTO) can be empty.
+     */
+    @RequestMapping(value = "view_reminders", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ReminderResponse>> viewReminders() {
+        User user = getCurrentUser();
+
+        Collection<Reminder> reminders = reminderRepository.findAllByUser(user);
+
+        return ResponseEntity.ok(reminders.stream().map(ReminderResponse::new).collect(Collectors.toList()));
+    }
+
+    /**
      * Test endpoint for checking reminder. TODO Remove when not needed.
      * @return
      */
@@ -140,6 +154,30 @@ public class NotificationController {
         Reminder reminder = new Reminder(user, new Time(System.currentTimeMillis()), 1);
 
         return ResponseEntity.ok(reminder);
+    }
+
+    /**
+     * Delete a reminder from the account page (authorized user)
+     * @param reminderID - ID of reminder to cancel
+     * @return - 1 on success, http error otherwise
+     */
+    @Transactional
+    @RequestMapping(value = "delete/{reminderID}", method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> deleteReminder(@PathVariable Long reminderID) {
+        User user = getCurrentUser();
+        Optional<Reminder> optional = reminderRepository.findByReminderID(reminderID);
+        if (optional.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Reminder reminder = optional.get();
+        if (!reminder.getUser().equals(user)) {
+            return ResponseEntity.status(403).build();
+        }
+        user.removeReminder(reminder);
+        reminderRepository.delete(reminder);
+        return ResponseEntity.ok(1);
     }
 
     /**
