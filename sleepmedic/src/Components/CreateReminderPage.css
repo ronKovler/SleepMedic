@@ -39,6 +39,8 @@
 .days-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;  /* Center the checkboxes horizontally */
+  align-items: center;      /* Center the checkboxes vertically */
   margin: 0;
   padding: 0;
   list-style-type: none;
