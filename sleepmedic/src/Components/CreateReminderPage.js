@@ -226,7 +226,7 @@ function CreateRem() {
                             </Select>
                             <br/>
                             <br/>
-                            <label htmlFor="reminder-type-err-msg">{RemTypeErrMsg}</label>
+                            <label htmlFor="reminder-type-err-msg" style={{ color: 'crimson' }}>{RemTypeErrMsg}</label>
                         </Typography>
 
                         <Typography variant="body" component="div" color="black" fontSize="14pt">
@@ -252,6 +252,7 @@ function CreateRem() {
                             <br/>
                             <br/>
                             <br/>
+                            <label htmlFor="days-input-err-msg" style={{ color: 'crimson' }}>{daysInputErrMsg}</label>
                             </div>
                         </Typography>
 
