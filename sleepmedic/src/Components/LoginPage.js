@@ -130,7 +130,7 @@ function Login() {
     alignItems: 'center', // Vertically center the content
       
     }}>
-      <Paper sx={{backgroundColor: '#D9D3E4',  minWidth: isMobile ? '300px' : '400px', padding: 2, borderRadius: '1rem'}} square={false} elevation={3} style={{textAlign: 'center'}}> 
+      <Paper sx={{backgroundColor: '#D9D3E4',  width: isMobile ? '300px' : '350px', padding: 2, borderRadius: '1rem'}} square={false} elevation={3} style={{textAlign: 'center'}}> 
         <img onMouseOut={() => setLogoSize('100%')} onMouseOver={() => {setLogoSize('120%')}} onClick={() => navigate('/')} src={logo} title='Back to Language Select' alt="Sleep-Medic Logo" style={{height: "8rem", width: "auto", scale: logoSize}}/>
        
         <Typography variant="h4" component="div"
@@ -143,7 +143,7 @@ function Login() {
           </Typography>
         {error && <Alert severity="error" sx={{color: "red", fontSize: "0.85rem"}}><strong>Username/Password was entered incorrectly!</strong></Alert>}
         
-        <FormControl sx={{width: '70%', marginTop: '10pt'}}>
+        <FormControl sx={{width: '80%', marginTop: '10pt'}}>
           <InputLabel>{t("login.email")}</InputLabel>
           <OutlinedInput
             type="email"
@@ -158,7 +158,7 @@ function Login() {
           />
         </FormControl>
         
-        <FormControl sx={{width: '70%', marginTop: '20pt'}}>
+        <FormControl sx={{width: '80%', marginTop: '20pt'}}>
           <InputLabel>{t("login.password")}</InputLabel>
           <OutlinedInput
             type="password"

@@ -82,6 +82,7 @@ public class AccountController {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
+    //TODO ADD INJECTION CHECKING FOR FOLLOWING 2 METHODS
     /**
      * Check if we can make an account with the given email
      * @param email - Email to check
@@ -93,6 +94,21 @@ public class AccountController {
 
         System.out.println("Checking if email exists by request: " + email);
         Boolean exists = userRepository.existsByEmail(email.toLowerCase());
+
+        return ResponseEntity.ok(!exists);
+    }
+
+    /**
+     * Check if we can make an account with the given phone
+     * @param phone - Email to check
+     * @return - True if its free, false if not
+     */
+    @RequestMapping(value="auth/check_phone/{phone}", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> checkPhone(@PathVariable String phone) {
+
+        System.out.println("Checking if phone exists by request: " + phone);
+        Boolean exists = userRepository.existsByPhone(phone);
 
         return ResponseEntity.ok(!exists);
     }
