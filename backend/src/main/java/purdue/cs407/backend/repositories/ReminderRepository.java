@@ -26,7 +26,7 @@ public interface ReminderRepository extends JpaRepository<Reminder, Long> {
      * @param user User whose reminders we want
      * @return Collection<Reminder> (can be empty).
      */
-    Collection<Reminder> findAllByUser(User user);
+    Collection<Reminder> findAllByUserOrderByTriggerTimeAsc(User user);
 
     void deleteAllByUser(User user);
 }

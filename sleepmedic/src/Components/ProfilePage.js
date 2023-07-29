@@ -309,7 +309,7 @@ function OpenProfilePage() {
                             padding: '10px',
                             textAlign: 'center'}}
                             >
-                            Profile Page
+                            Account & Details
                         </Typography>
                     </Paper>
                 </Grid>
@@ -332,7 +332,7 @@ function OpenProfilePage() {
                         <ReminderList/>
                 
                         <Box display="flex" alignItems="center" justifyContent="center" padding='10px'>
-                            <Button onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon/>} variant="contained">Create Reminder</Button>
+                            <Button sx={{width:'210px'}} onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon/>} variant="contained">Create Reminder</Button>
                         </Box>
                            
                     </Paper>
@@ -362,7 +362,7 @@ function OpenProfilePage() {
                                     automatically generated and sent to the email associated with your account.
                                 </Typography> 
                                 <Box display="flex" alignItems="center" justifyContent="center" padding='10px'>
-                                    <Button onClick={handleExportData} variant="contained" endIcon={<IosShareOutlinedIcon/>}>Export Data</Button>
+                                    <Button sx={{width:'210px'}} onClick={handleExportData} variant="contained" endIcon={<IosShareOutlinedIcon/>}>Export Data</Button>
                                 </Box>
                             </Paper> 
                         </Grid>
@@ -389,7 +389,7 @@ function OpenProfilePage() {
 
                                 <Box display="flex" alignItems="center" justifyContent="center" padding='10px'>
                                     {/* Change Password */}
-                                    <Button variant="contained" onClick={(e) => setOpen(true)} endIcon={<EditOutlinedIcon/>}>Change Password</Button>
+                                    <Button sx={{width:'210px'}} variant="contained" onClick={(e) => setOpen(true)} endIcon={<EditOutlinedIcon/>}>Change Password</Button>
                                 </Box>
                             </Paper>  
                         </Grid>
@@ -413,7 +413,8 @@ function OpenProfilePage() {
                                 
 
 
-                                <Dialog open={open} onClose={() => setOpen(false)}>
+                                <Dialog open={open} onClose={() => setOpen(false)} 
+                                PaperProps={{style: {backgroundColor:'#D9D3E4'}}}>
                                     {changeFin ? <div><DialogTitle>Password Reset!</DialogTitle>
                                     <DialogContent>
                                         <DialogContentText>
@@ -469,8 +470,8 @@ function OpenProfilePage() {
                                         }
                                     </DialogContent>
                                     <DialogActions>
-                                        <Button onClick={() => setOpen(false)}>Cancel</Button>
-                                        <Button onClick={(e) => handlePasswordChange(e)}>Change Password</Button>
+                                        <Button variant={'outlined'} onClick={() => setOpen(false)}>Cancel</Button>
+                                        <Button variant={'contained'} onClick={(e) => handlePasswordChange(e)}>Change Password</Button>
                                     </DialogActions></div>}
                                 </Dialog>
 
@@ -478,15 +479,23 @@ function OpenProfilePage() {
 
                                 <Dialog
                                 open={openDel}
+                                PaperProps={{style: {backgroundColor:'#D9D3E4'}}}
                                 >
-                                    <DialogTitle>Delete Account Confirmation</DialogTitle>
+                                    <DialogTitle textAlign={'center'} fontWeight={'bold'}>
+                                        Delete Account Confirmation
+                                    </DialogTitle>
                                     <DialogContent>
-                                        <DialogContentText>
-                                            Are you sure you want to delete your SleepMedic Account?
+                                        <DialogContentText textAlign={'center'} fontWeight={'bold'}>
+                                            Are you sure you want to permanently <br/> delete your SleepMedic Account?
                                         </DialogContentText>
                                     </DialogContent>
-                                    <DialogActions>
-                                        <Button onClick={(e)=>deleteAccount(e)}>Yes, please delete account</Button>
+                                    <DialogActions justifyContent={'center'} alignContent={'center'}>
+                                        <Button variant='contained' textAlign={'left'} onClick={() => setOpenDel(false)}>Cancel</Button>
+                                        {/* <Box display="flex" alignItems="center" justifyContent="center" padding='10px'> */}
+                                        
+                                            <Button variant='contained' sx={{color:'white', backgroundColor:'#c41104' }} onClick={(e)=>deleteAccount(e)}>Yes, permanently delete my account</Button>
+                                        {/* </Box> */}
+                                        
                                     </DialogActions>
                                 </Dialog>
                             </Paper>

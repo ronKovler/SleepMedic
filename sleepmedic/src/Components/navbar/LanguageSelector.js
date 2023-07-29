@@ -20,8 +20,8 @@ const LanguageSelector = () => {
       label={t('navbar.language')}
       sx={{ color: "white", fieldset: { border: "none" }  }}
     >
-      <MenuItem value="en">English</MenuItem>
-      <MenuItem value="es">Español</MenuItem>
+      <MenuItem value="en">EN</MenuItem>
+      <MenuItem value="es">ES</MenuItem>
       {/* Add more languages if needed */}
     </Select>
   );

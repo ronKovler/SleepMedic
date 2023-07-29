@@ -137,7 +137,7 @@ public class NotificationController {
     public ResponseEntity<List<ReminderResponse>> viewReminders() {
         User user = getCurrentUser();
 
-        Collection<Reminder> reminders = reminderRepository.findAllByUser(user);
+        Collection<Reminder> reminders = reminderRepository.findAllByUserOrderByTriggerTimeAsc(user);
 
         return ResponseEntity.ok(reminders.stream().map(ReminderResponse::new).collect(Collectors.toList()));
     }

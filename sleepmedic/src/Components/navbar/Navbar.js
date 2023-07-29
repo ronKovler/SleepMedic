@@ -56,29 +56,25 @@ export default function Navbar() {
         navigate("/login");
     }
     return (
-        <AppBar position="static" theme={barTheme} sx={{fontStyle: 'italic',}}>
+        <AppBar position="static" theme={barTheme} >
             <Toolbar>
                 {/* PUT settings here? */}
-                <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold', color: 'white'}}>
-                    <Link to="/home" className={styles['noDecorTitles']}>
-                        <img src={navLogo} alt="Sleep-Medic Logo" className="logo" style={{height: "3rem", width: "auto", paddingTop: '10px'}}/>
-                    </Link>
-                </Typography>
                 <LanguageSelector/>
                 {/* When more buttons added, probably use ButtonGroup for better UI */}
                 <IconButton href="/statistics" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
                     <LegendToggleIcon />
                 </IconButton>
-                <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }} onClick={(e) => handleLogout(e)}>
-                    <LogoutIcon /> {/* Hide Logout to left menu button??? */}
-                </IconButton>
-
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold', color: 'white'}} textAlign={'center'}>
+                    <Link to="/home" className={styles['noDecorTitles']}>
+                        <img src={navLogo} alt="Sleep-Medic Logo" className="logo" style={{height: "3rem", width: "auto", paddingTop: '10px'}}/>
+                    </Link>
+                </Typography>
                 <IconButton href="/profilepage" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
                     <AccountBoxIcon />
                 </IconButton>
+                <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }} onClick={(e) => handleLogout(e)}>
+                    <LogoutIcon /> {/* Hide Logout to left menu button??? */}
+                </IconButton>    
             </Toolbar>
         </AppBar>
     )

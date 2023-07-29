@@ -38,6 +38,8 @@ import Pagination from '@mui/material/Pagination';
 import TextField from '@mui/material/TextField'; // Add this line
 import Badge from '@mui/material/Badge';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
+import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
+
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -865,8 +867,8 @@ export default function Home() {
                                         </Typography>
                                     </Grid>
                                 </Grid>
-                                <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                    <Button href="/statistics" endIcon={<LegendToggleIcon/>} variant='contained'>{t("home.viewInsight")}</Button>
+                                <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>              
+                                    <Button onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon/>} variant="contained">Create Reminder</Button>
                                 </Box>
                             </Paper>
                         </Grid>
