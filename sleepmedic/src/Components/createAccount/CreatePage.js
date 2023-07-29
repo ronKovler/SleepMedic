@@ -23,6 +23,7 @@ function CreateAccount() {
     const [next, setNext] = useState(false);
     const [confirmError, setConfirmError] = useState(true);
     const [emailFree, setEmailFree] = useState(true);
+    const [emailError, setEmailError] = useState(true);
     const [phoneFree, setPhoneFree] = useState(true);
     const [phoneError, setPhoneError] = useState(true);
     const [complexError, setComplexError] = useState(true);
@@ -85,9 +86,21 @@ function CreateAccount() {
     }
 
     const checkEmail = async (e) => {
-        let res = await axios.get("https://api.sleepmedic.me:8443/account/auth/check_email/" + email, headers)
-
-        setEmailFree(res.data);
+        if (email.length > 0) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailRegex.test(email)) {
+                setEmailError(true);
+                let res = await axios.get("https://api.sleepmedic.me:8443/account/auth/check_email/" + email, headers)
+                setEmailFree(res.data);
+            } else {
+                setEmailError(false);
+                setEmailFree(true)
+            }
+        } else {
+            setEmailError(false);
+            setEmailFree(true);
+        }
+        
     }
 
     const checkPhone = async (e) => {
@@ -340,14 +353,14 @@ function CreateAccount() {
                                     checkPhone(e);
                                 }}
                             />
-                            <FormHelperText>{phoneFree ? null: 'This phone number is taken!'}</FormHelperText>
+                            <FormHelperText>{phoneFree ? null: 'This phone number already being used!'}</FormHelperText>
                             <FormHelperText>{phoneError ? null: 'This phone number is invalid'}</FormHelperText>
                         </FormControl>
                     </Grid>
 
                     <Grid item xs>
                         <FormControl 
-                        error={!emailFree}
+                        error={(!emailFree || !emailError)}
                         sx={{width: '80%', marginTop: '10pt'}}>
                             <InputLabel>Email</InputLabel>
                             <OutlinedInput
@@ -363,6 +376,7 @@ function CreateAccount() {
                                 onBlur={e => checkEmail(e)}
                             />
                             <FormHelperText>{emailFree ? null: 'This email is already being used!'}</FormHelperText>
+                            <FormHelperText>{emailError ? null: 'This email is invalid'}</FormHelperText>
                         </FormControl>
                     </Grid>
 
