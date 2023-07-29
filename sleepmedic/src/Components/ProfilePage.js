@@ -33,6 +33,7 @@ import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
+
 //Shaun
 function OpenProfilePage() {
     //implement logic for collecting parameters
@@ -68,7 +69,7 @@ function OpenProfilePage() {
             return;
         }
         var cookies = getCookiesDict();
-        console.log(cookies._auth);
+        console.log(cookies._auth); 
         var headers = {
             "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
             "Content-Type": 'application/json; charset=utf-8',

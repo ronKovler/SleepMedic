@@ -56,8 +56,8 @@
     },
     "login": {
       "title": "Iniciar Sesión",
-      "email": "Correo electrónico:",
-      "password": "Contraseña:",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
       "remember-me": "Recordarme",
       "forgot-password": {
         "title": "Olvidé mi Contraseña",

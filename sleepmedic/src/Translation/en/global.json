@@ -56,8 +56,8 @@
     },
     "login": {
         "title": "Login",
-        "email": "Email:",
-        "password": "Password:",
+        "email": "Email",
+        "password": "Password",
         "remember-me": "Remember Me",
         "forgot-password": {
             "title": "Forgot Password",
