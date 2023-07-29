@@ -189,16 +189,28 @@ function CreateRem() {
 
     }}>
         <Navbar />
-        <Grid container justifyContent="center" alignItems="center" sx={{ height: '90vh' }}>
+        <Grid container spacing={2} columns={1} sx={{margin: 0, paddingRight: 4, paddingTop: 0, justifyContent: 'center', alignContent: 'center'}}>
+                        <Grid item sx>
+                            <Paper elevation={3} sx={{backgroundColor: '#7293A0'}}>
+                                <Typography
+                                variant="h4"
+                                component="div"
+                                sx={{flexGrow: 1,
+                                    fontWeight: 'bold',
+                                    color: 'white',
+                                    padding: '10px',
+                                    textAlign: 'center'}}
+                                    >
+                                    Create a Reminder
+                                </Typography>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+        <Grid container justifyContent="center" direction={'row'} alignItems="center" sx={{ height: '70vh' }}>
             <Grid item xs={12} sm={8} md={6} lg={4}>
                 <Box textAlign="center">
-                    <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', padding: '20px' }}>
-                        <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                            {/* Title */}
-                            {"Create a Reminder"}
-                            <br/>
-                            <br/>
-                        </Typography>
+                    <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', padding: '10px'}}>
+
 
                         <Typography variant="body" component="div" color="black" fontSize="14pt">
                             {/* Carrier Selection */}
@@ -239,8 +251,9 @@ function CreateRem() {
                             <label htmlFor="reminder-type-err-msg" style={{ color: 'crimson' }}>{RemTypeErrMsg}</label>
                         </Typography>
 
-                        <Typography variant="body" component="div" color="black" fontSize="14pt">
+                        <Typography variant="body" component="div" color="black" fontSize="14pt" justifyContent="center" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                             {/* Choosing the days of the week */}
+                            <Box display="flex" justifyContent="center">
                             <div className="days-list">
                                 {daysOfWeek.map(({day}, index) => {
                                     return(
@@ -264,13 +277,14 @@ function CreateRem() {
                             <br/>
                             <label htmlFor="days-input-err-msg" style={{ color: 'crimson' }}>{daysInputErrMsg}</label>
                             </div>
+                            </Box>
                         </Typography>
 
                         <Typography variant="body" component="div" color="black" fontSize="14pt" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             {/* Picking the time for the reminder */}
                             <label htmlFor="reminder-time" sx={{textAlign: 'center' }}>Reminder Time:</label>
 
-                            <FormControl sx={{width: '30%', marginTop: '10pt'}}>
+                            <FormControl sx={{display: 'flex', flexDirection: 'row', marginTop: '10pt'}}>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                             <TimePicker value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
                                         </LocalizationProvider>
