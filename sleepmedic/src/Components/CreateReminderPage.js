@@ -1,6 +1,6 @@
 import "./CreateReminderPage.css";
 import { BrowserRouter as Router, Routes, Link, Route, useNavigate } from 'react-router-dom';
-import {TextField, Select, MenuItem, Button } from "@mui/material/";
+import { InputLabel, FormHelperText, TextField, Select, MenuItem, Button, FormGroup, FormControlLabel } from "@mui/material/";
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -16,7 +16,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import axios from "axios";
 import { valueToPercent } from '@mui/base';
 import React, { useState } from 'react';
-
+import Checkbox from '@mui/material/Checkbox';
+import AddAlertOutlinedIcon from '@mui/icons-material/AddAlertOutlined';
 
 function getCookiesDict() {
     let cookies = document.cookie.split("; ");
@@ -30,14 +31,14 @@ function getCookiesDict() {
 //Shaun
 function CreateRem() {
     const today = dayjs();
-    const [Carrier, setCarrier] = useState("No, email it");
-    const [ReminderType, setRemType] = useState("None");
+    const [Carrier, setCarrier] = useState("none");
+    const [ReminderType, setRemType] = useState("Bedtime Reminder");
     //const [ReminderTime, setRemTime] = useState('');
     const[ReminderTime, setRemTime] = React.useState(today.set('hour', 22).set('minute',  30).set('second', 0));
     const [Timezone, setTimezone] = useState("Pacific");
     const daysOfWeek = [{day: "Sun"}, {day:"Mon"}, {day:"Tues"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}];
     const [checkedState, setCheckedState] = useState(
-        new Array(daysOfWeek.length).fill(false)
+        [false, false, false, false, false, false, false]
     );
     const [RemTypeErrMsg, setRemTypeErrMsg] = useState("");
     const reminderTypeErrMsg = "Please specify a type of reminder to complete creation.";
@@ -63,14 +64,17 @@ function CreateRem() {
 
     //handleChange() method for checkboxes: maintains which days are selected by the user
     const handleOnChangeCB = (position) => {
-        const updatedCheckedState = checkedState.map((item, index) =>
-          index === position ? !item : item
-        );
-        setCheckedState(updatedCheckedState);
-        //if the updated position's value is true, then we know at least one box is checked, make sure errMsg is empty.
-        if (updatedCheckedState[position] == true) {
-            setDaysErrMsg("");
-        }
+        console.log( 'clicked ' + position)
+        let tempData = [...checkedState];
+        console.log('was ' + tempData[position]);
+        tempData[position] = !tempData[position];
+        console.log('is ' + tempData[position]);
+        setCheckedState(tempData);
+        tempData.forEach(v => {
+            if (v) {
+                setDaysErrMsg("");
+            } 
+        })
     };
 
     //handleChange() method for Timezone
@@ -117,7 +121,7 @@ function CreateRem() {
             console.log('Create button clicked');
             //grabbing the carrier type
             let chosenCarrier;
-            if (Carrier == "No, email it") {
+            if (Carrier == "none") {
                 chosenCarrier = null;
             }
             else chosenCarrier = Carrier;
@@ -176,6 +180,8 @@ function CreateRem() {
             }
         }
     };
+
+
     return (
     <Box  sx={{
                 /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
@@ -186,40 +192,32 @@ function CreateRem() {
             width: '100vw',
             overflowX: 'hidden'
 
-
+        
     }}>
-        <Navbar />
-        <Grid container spacing={2} columns={1} sx={{margin: 0, paddingRight: 4, paddingTop: 0, justifyContent: 'center', alignContent: 'center'}}>
-                        <Grid item sx>
-                            <Paper elevation={3} sx={{backgroundColor: '#7293A0'}}>
-                                <Typography
-                                variant="h4"
-                                component="div"
-                                sx={{flexGrow: 1,
-                                    fontWeight: 'bold',
-                                    color: 'white',
-                                    padding: '10px',
-                                    textAlign: 'center'}}
-                                    >
-                                    Create a Reminder
-                                </Typography>
-                            </Paper>
-                        </Grid>
-                    </Grid>
-        <Grid container justifyContent="center" direction={'row'} alignItems="center" sx={{ height: '70vh' }}>
-            <Grid item xs={12} sm={8} md={6} lg={4}>
-                <Box textAlign="center">
-                    <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', padding: '10px'}}>
-
-
-                        <Typography variant="body" component="div" color="black" fontSize="14pt">
-                            {/* Carrier Selection */}
-                            <label htmlFor="reminder-method">To enable SMS notifications, please select your carrier:</label>
-                            <br/>
-                            &nbsp;
-                            <Select labelId="Carrier Type" id="carrier-type" value={Carrier} label="Carrier Type" onChange={(e) => handleOnChangeCarrier(e.target.value)}
-                            style={{ width: "230px", marginTop: '10pt' }}>
-                                <MenuItem value="No, email it">No, email it</MenuItem>
+        <Navbar/>
+        
+        <Grid spacing={2}  sx={{margin: 0}} container justifyContent="center" alignContent={'center'} direction={'column'} alignItems="center" >
+            <Grid item xs>
+                
+                <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', padding: 2, borderRadius: '1rem', minWidth: isMobile ? 300 : 320}}>
+                    <Typography
+                    variant="h4"
+                    component="div"
+                    sx={{flexGrow: 1,
+                        fontWeight: 'bold',
+                        color: 'black',
+                        padding: '10px',
+                        textAlign: 'center'}}
+                        >
+                        Create a Reminder
+                    </Typography>
+                    {/* Carrier Selection */}
+                    <Box display="flex" justifyContent="center" alignContent={'center'} > 
+                        <FormControl 
+                        sx={{ width:'70%', marginTop: '10pt'}}>
+                            <InputLabel sx={{ color: 'black'}} color="secondary" >To enable SMS notifications, please select your carrier</InputLabel>
+                            <Select labelId="Carrier Type" id="carrier-type" value={Carrier} label="To enable SMS notifications, please select your carrier" onChange={(e) => handleOnChangeCarrier(e.target.value)}>
+                                <MenuItem value="none">No thanks, I prefer email notifications</MenuItem>
                                 <MenuItem value="AT&T">AT&T</MenuItem>
                                 <MenuItem value="Boost Mobile">Boost Mobile</MenuItem>
                                 <MenuItem value="Consumer Cellular">Consumer Cellular</MenuItem>
@@ -232,92 +230,82 @@ function CreateRem() {
                                 <MenuItem value="Verizon">Verizon</MenuItem>
                                 <MenuItem value="Xfinity Mobile">Xfinity Mobile</MenuItem>
                             </Select>
-                            <br/>
-                            <br/>
-                        </Typography>
+                        </FormControl>
+                    </Box>
+                    
 
-                        <Typography variant="body" component="div" color="black" fontSize="14pt">
-                            {/* Reminder Type Selection */}
-                            <label htmlFor="reminder-type" sx={{ marginBottom: '10px', textAlign: 'center' }}>Reminder Type:</label>
-                            <br/>
-                            &nbsp;
-                            <Select labelId="Reminder Type" id="reminder-type" value={ReminderType} label="Reminder Type" onChange={(e) => handleOnChangeRemType(e.target.value)} style={{ width: "230px", marginTop: '10pt' }} >
-                                <MenuItem value="None">None</MenuItem>
+                    <Box display="flex" justifyContent="center" alignContent={'center'} > 
+                        <FormControl 
+                        sx={{ width:'70%', marginTop: '10pt'}}>
+                            <InputLabel sx={{ color: 'black'}} color="secondary" >What type of reminder do you want?</InputLabel>
+                            <Select labelId="Reminder Type" id="reminder-type" value={ReminderType} label="What type of reminder do you want?" onChange={(e) => handleOnChangeRemType(e.target.value)} >
                                 <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
                                 <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
                             </Select>
-                            <br/>
-                            <br/>
-                            <label htmlFor="reminder-type-err-msg" style={{ color: 'crimson' }}>{RemTypeErrMsg}</label>
-                        </Typography>
+                        </FormControl>
+                    </Box>
+                    
 
-                        <Typography variant="body" component="div" color="black" fontSize="14pt" justifyContent="center" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                            {/* Choosing the days of the week */}
-                            <Box display="flex" justifyContent="center">
-                            <div className="days-list">
-                                {daysOfWeek.map(({day}, index) => {
-                                    return(
-                                        <li key={index}>
-                                            <div className="days-list-item">
-                                                <input
-                                                    type="checkbox"
-                                                    id={`custom-checkbox-${index}`}
-                                                    name={day}
-                                                    value={day}
-                                                    checked={checkedState[index]}
-                                                    onChange={() => handleOnChangeCB(index)}
-                                                />
-                                                <label htmlFor={`custom-checkbox-${index}`}>{day}</label>
-                                            </div>
-                                        </li>
-                                    );
-                                })}
-                            <br/>
-                            <br/>
-                            <br/>
-                            <label htmlFor="days-input-err-msg" style={{ color: 'crimson' }}>{daysInputErrMsg}</label>
-                            </div>
-                            </Box>
-                        </Typography>
+                    <Typography  
+                    variant="h6"
+                    component="div"
+                    sx={{flexGrow: 1,
+                        
+                        color: 'black',
+                        paddingTop: '10px',
+                        textAlign: 'center'}}>
+                        On which day(s) should this reminder be triggered?
+                    </Typography>
+                    <Box display="flex" justifyContent="center" alignContent={'center'} > 
+                        <FormGroup  sx={{ '& .MuiFormControlLabel-root': { margin: 0 } }} style={{input: {boxSizing: 'border-box'}}} row={ true}> 
+                            <FormControlLabel  key={checkedState[0]} control={<Checkbox checked={checkedState[0]} onClick={() => handleOnChangeCB(0)}/>} labelPlacement={"bottom"} label='Sun' sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[1]} onClick={() => handleOnChangeCB(1)}/>} labelPlacement={"bottom"} label='Mon' sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[2]} onChange={() => handleOnChangeCB(2)}/>} labelPlacement={"bottom"} label='Tue' sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[3]} onChange={() => handleOnChangeCB(3)}/> } labelPlacement={"bottom"} label='Wed' sx={{ m: 1 }}/> 
+                            <FormControlLabel control={<Checkbox checked={checkedState[4]} onChange={() => handleOnChangeCB(4)}/>} labelPlacement={"bottom"} label='Thu' sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[5]} onChange={() => handleOnChangeCB(5)}/>} labelPlacement={"bottom"} label='Fri' sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[6]} onChange={() => handleOnChangeCB(6)}/>} labelPlacement={"bottom"} label='Sat' sx={{ m: 1 }}/>
+                        </FormGroup>
+                    </Box> 
 
-                        <Typography variant="body" component="div" color="black" fontSize="14pt" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            {/* Picking the time for the reminder */}
-                            <label htmlFor="reminder-time" sx={{textAlign: 'center' }}>Reminder Time:</label>
+                    <Box display="flex" justifyContent="center" alignContent={'center'} > 
+                          
+                    </Box>
 
-                            <FormControl sx={{display: 'flex', flexDirection: 'row', marginTop: '10pt'}}>
-                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <TimePicker value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
-                                        </LocalizationProvider>
-                            </FormControl>
-                            <br/>
-                        </Typography>
+                    <Grid container direction={'row'} justifyContent={'center'}> 
+                        <FormControl 
+                        sx={{ width:'30%', marginTop: '10pt', marginRight: '5pt'}}>
+                            <InputLabel shrink={true} sx={{ color: 'black'}} color="secondary" >Reminder time</InputLabel>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <TimePicker label={'Reminder time'} value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
+                            </LocalizationProvider>
+                        </FormControl> 
+                        <FormControl 
+                        sx={{ width:'30%', marginTop: '10pt', marginLeft: '5pt'}}>
+                            <InputLabel sx={{ color: 'black'}} color="secondary" >Timezone</InputLabel>
+                            <Select labelId="Timezone" id="Timezone" value={Timezone} label="Timezone" onChange={(e) => handleOnChangeTimezone(e.target.value)}>
+                                <MenuItem value="Pacific">Pacific</MenuItem>
+                                <MenuItem value="Mountain">Mountain</MenuItem>
+                                <MenuItem value="Central">Central</MenuItem>
+                                <MenuItem value="Eastern">Eastern</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
 
-                        <Typography variant="body" component="div" color="black" fontSize="14pt">
-                            {/* Picking the timezone */}
-                            <label htmlFor="Timezone" sx={{ marginBottom: '10px', textAlign: 'center' }}>Timezone:</label>
-                                <br/>
-                                &nbsp;
-                                <Select labelId="Timezone" id="Timezone" value={Timezone} label="Timezone" onChange={(e) => handleOnChangeTimezone(e.target.value)} style={{ width: "230px", marginTop: '10pt'}} >
-                                    <MenuItem value="Pacific">Pacific</MenuItem>
-                                    <MenuItem value="Mountain">Mountain</MenuItem>
-                                    <MenuItem value="Central">Central</MenuItem>
-                                    <MenuItem value="Eastern">Eastern</MenuItem>
-                                </Select>
-                        </Typography>
-
-                        <Typography variant="body" component="div" color="black" fontSize="14pt">
-                            {/* Submitting and Canceling */}
-                          <Box display="flex" justifyContent="center" paddingTop='20pt'>
-                            <Box flexGrow={1} paddingRight="5px">
-                              <Button href="/profilepage" variant='contained' fullWidth>Cancel</Button>
-                            </Box>
-                            <Box flexGrow={1} paddingLeft="5px">
-                              <Button variant='contained' onClick={handleCreateReminder} fullWidth>Create</Button>
-                            </Box>
-                          </Box>
-                        </Typography>
-                    </Paper>
-                </Box>
+                    
+                    <Typography variant="body" component="div" color="black" fontSize="14pt">
+                        {/* Submitting and Canceling */}
+                        <Box display="flex" justifyContent="center" paddingTop='20pt'>
+                        <Box flexGrow={1} paddingRight="5px">
+                            <Button href="/profilepage" variant='outlined' fullWidth>Cancel</Button>
+                        </Box>
+                        <Box flexGrow={1} paddingLeft="5px">
+                            <Button variant='contained' endIcon={<AddAlertOutlinedIcon/>} onClick={handleCreateReminder} fullWidth>Create</Button>
+                        </Box>
+                        </Box>
+                    </Typography>
+                </Paper>
+                
             </Grid>
         </Grid>
     </Box>

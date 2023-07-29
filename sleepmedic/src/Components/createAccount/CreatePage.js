@@ -295,7 +295,7 @@ function CreateAccount() {
                                         setFirstName(e.target.value)}  
                                     onBlur={e => checkFirst(e)}
                                 />
-                                <FormHelperText>{firstError ? null: 'Enter your first name'}</FormHelperText>
+                                <FormHelperText sx={{ margin: 0 }}>{firstError ? null: 'Enter your first name'}</FormHelperText>
                             </FormControl>
                         </Grid>
                         <Grid item xs>
@@ -315,7 +315,7 @@ function CreateAccount() {
                                         setLastName(e.target.value)}  
                                     onBlur={e => checkLast(e)}
                                 />
-                                <FormHelperText>{lastError ? null: 'Enter your last name'}</FormHelperText>
+                                <FormHelperText sx={{ margin: 0 }}>{lastError ? null: 'Enter your last name'}</FormHelperText>
                             </FormControl>
                         </Grid>
                     </Grid>
@@ -337,7 +337,7 @@ function CreateAccount() {
                                         setBirth(e.target.value)}  
                                     onBlur={e => checkBirth(e)}
                                 />
-                                <FormHelperText>{birthError ? null: 'Enter a valid birthdate'}</FormHelperText>
+                                <FormHelperText sx={{ margin: 0 }}>{birthError ? null: 'Enter a valid birthdate'}</FormHelperText>
                             </FormControl>
                         </Grid>
                         <Grid item xs>
@@ -363,7 +363,7 @@ function CreateAccount() {
                                     <MenuItem value={"F"}>Female</MenuItem>
                                     <MenuItem value={"O"}>Other</MenuItem>
                                 </Select>
-                                <FormHelperText>{sexError ? null: 'Select your sex'}</FormHelperText>
+                                <FormHelperText sx={{ margin: 0 }}>{sexError ? null: 'Select your sex'}</FormHelperText>
                             </FormControl>
                         </Grid>                
                     </Grid>
@@ -483,7 +483,7 @@ function CreateAccount() {
                 </Grid>
 
             ) : (
-                <Grid container direction={'column'}>
+                <Grid container direction={'column'} spacing={1}>
                     
                     <Grid item xs>
                         <FormControl 
@@ -510,15 +510,15 @@ function CreateAccount() {
                                     checkPhone(e);
                                 }}
                             />
-                            <FormHelperText>{phoneFree ? null: 'This phone number already being used!'}</FormHelperText>
-                            <FormHelperText>{phoneError ? null: 'This phone number is invalid'}</FormHelperText>
+                            <FormHelperText sx={{ margin: 0 }}>{phoneFree ? null: 'This phone number already being used!'}</FormHelperText>
+                            <FormHelperText sx={{ margin: 0 }}>{phoneError ? null: 'This phone number is invalid'}</FormHelperText>
                         </FormControl>
                     </Grid>
 
                     <Grid item xs>
                         <FormControl 
                         error={(!emailFree || !emailError)}
-                        sx={{width: '80%', marginTop: '10pt'}}>
+                        sx={{width: '80%'}}>
                             <InputLabel>Email</InputLabel>
                             <OutlinedInput
                                 
@@ -532,15 +532,15 @@ function CreateAccount() {
                                     setEmail(e.target.value)}  
                                 onBlur={e => checkEmail(e)}
                             />
-                            <FormHelperText>{emailFree ? null: 'This email is already being used!'}</FormHelperText>
-                            <FormHelperText>{emailError ? null: 'This email is invalid'}</FormHelperText>
+                            <FormHelperText sx={{ margin: 0 }}>{emailFree ? null: 'This email is already being used!'}</FormHelperText>
+                            <FormHelperText sx={{ margin: 0 }}>{emailError ? null: 'This email is invalid'}</FormHelperText>
                         </FormControl>
                     </Grid>
 
                     <Grid item xs>
                         <FormControl 
                         error={(!confirmError || !complexError)}
-                        sx={{width: '80%', marginTop: '10pt'}}>
+                        sx={{width: '80%'}}>
                             <InputLabel>Password</InputLabel>
                             <OutlinedInput
                                 type="password"
@@ -559,7 +559,7 @@ function CreateAccount() {
                     <Grid item xs>
                         <FormControl 
                         error={(!confirmError || !complexError)}
-                        sx={{width: '80%', marginTop: '10pt'}}>
+                        sx={{width: '80%'}}>
                             <InputLabel> Confirm Password</InputLabel>
                             <OutlinedInput
                                 type="password"
@@ -572,8 +572,8 @@ function CreateAccount() {
                                     setConfirmation(e.target.value)}  
                                 onBlur={e => checkMatch(e)}
                             />
-                            <FormHelperText>{confirmError ? null: 'These passwords do not match!'}</FormHelperText>
-                            <FormHelperText>{complexError ? null: <Typography textAlign={'center'}>
+                            <FormHelperText sx={{ margin: 0 }}>{confirmError ? null: 'These passwords do not match!'}</FormHelperText>
+                            <FormHelperText sx={{ margin: 0 }}>{complexError ? null: <Typography textAlign={'center'}>
                             Ensure your password is more than 8 characters long 
                             and contains a lower & Upper case letter, number, and special character (ex. !@#$%&)
                         </Typography>}</FormHelperText>
