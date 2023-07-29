@@ -318,8 +318,8 @@ function OpenProfilePage() {
 
             <Grid container spacing={2} columns={3} direction={'row'} sx={{margin: 0, paddingRight: 4, paddingTop: 0, justifyContent: 'center', alignContent: 'center'}}>
                 
-                <Grid item xs={1} sx={{minWidth: isMobile ? 300 : 420}}>
-                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320}}> 
+                <Grid item xs={1} sx={{minWidth: isMobile ? '100%' : 320}}>
+                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? '100%' : 320}}> 
                         <Typography
                         variant="h5" 
                         component="div"

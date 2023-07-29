@@ -481,11 +481,7 @@ function CreateAccount() {
                     </Box>
                         
                 </Grid>
-                
-                    
-                        
-                    
-                
+
             ) : (
                 <Grid container direction={'column'}>
                     
@@ -601,7 +597,6 @@ function CreateAccount() {
                     <Link to="/login">Or login to an existing account</Link>
                 
                 </Grid>
-                
                 
             )}
             </Paper>
