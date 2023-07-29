@@ -13,6 +13,7 @@ import "./CreatePage.css";
 import logo from '../../sleep_logo_purp.svg';
 import {isMobile} from 'react-device-detect';
 import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
+import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 
 function CreateAccount() {
     const [logoSize, setLogoSize] = useState('100%');
@@ -100,11 +101,11 @@ function CreateAccount() {
             setEmailError(false);
             setEmailFree(true);
         }
-        
     }
 
     const checkPhone = async (e) => {
-        if (phone.length < 10) {
+        console.log(phone);
+        if (phone.length < 10 || phone === '') {
             setPhoneError(false);
             setPhoneFree(true)
         } else {
@@ -115,11 +116,55 @@ function CreateAccount() {
         
     }
 
+    const checkFirst = async(e) => {
+        if (firstname.length < 1) {
+            setFirstError(false);
+        } else {
+            setFirstError(true);
+        }
+    }
+    const checkLast = async(e) => {
+        if (lastname.length < 1) {
+            setLastError(false);
+        } else {
+            setLastError(true);
+        }
+    }
+
+    const checkBirth = async(e) => {
+        if (birth === '') {
+            setBirthError(false);
+        } else {
+            const timestamp = Date.parse(birth);
+            const twelveYearInMilliseconds = 12 * 365 * 24 * 60 * 60 * 1000;
+            const difference = Date.now() - timestamp;
+            
+            if (!isNaN(timestamp) && difference > twelveYearInMilliseconds) {
+                setBirthError(true);
+            } else {
+                setBirthError(false);
+            }
+        }
+        
+    }
+
+    const checkSex = async(e) => {
+        if (sex === '') {
+            setSexError(false);
+        } else {
+            setSexError(true)
+        }
+    }
+
     //Second Part (Account Details)
     const [firstname, setFirstName] = useState('');
+    const [firstError, setFirstError] = useState(true);
     const [lastname, setLastName] = useState('');
+    const [lastError, setLastError] = useState(true);
     const [birth, setBirth] = useState('');
+    const [birthError, setBirthError] = useState(true);
     const [sex, setSex] = useState('');
+    const [sexError, setSexError] = useState(true);
     const [phone, setPhone] = useState('');
     const navigate = useNavigate();
     const signIn = useSignIn();
@@ -232,93 +277,209 @@ function CreateAccount() {
                         
                 {next ? (
                 <Grid container direction={'column'}>
-                    <div className='account-details'>
+                    <Grid container direction={'row'}>
+                        <Grid item xs>
+                            <FormControl 
+                            error={!firstError}
+                            sx={{width: '95%', marginTop: '10pt'}}>
+                                <InputLabel>First Name</InputLabel>
+                                <OutlinedInput
+                                    
+                                    type="text"
+                                    
+                                    color="secondary"
+                                    value={firstname}
+                                    label='Email' //todo add translation
+                                    sx={{ background: 'white', input: { color: 'black' }}}
+                                    onChange = {(e)=>
+                                        setFirstName(e.target.value)}  
+                                    onBlur={e => checkFirst(e)}
+                                />
+                                <FormHelperText>{firstError ? null: 'Enter your first name'}</FormHelperText>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs>
+                            <FormControl 
+                            error={!lastError}
+                            sx={{width: '95%', marginTop: '10pt'}}>
+                                <InputLabel>Last Name</InputLabel>
+                                <OutlinedInput
+                                    
+                                    type="text"
+                                    
+                                    color="secondary"
+                                    value={lastname}
+                                    label='Email' //todo add translation
+                                    sx={{ background: 'white', input: { color: 'black' }}}
+                                    onChange = {(e)=>
+                                        setLastName(e.target.value)}  
+                                    onBlur={e => checkLast(e)}
+                                />
+                                <FormHelperText>{lastError ? null: 'Enter your last name'}</FormHelperText>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+                    <Grid container direction={'row'}>
+                        <Grid item xs>
+                            <FormControl 
+                            error={!birthError}
+                            sx={{width: '95%', marginTop: '10pt'}}>
+                                <InputLabel shrink={true}>Birthdate</InputLabel>
+                                <OutlinedInput
+                                    
+                                    type="date"
+                                    
+                                    color="secondary"
+                                    value={birth}
+                                    label='' //todo add translation
+                                    sx={{ background: 'white', input: { color: 'black' }}}
+                                    onChange = {(e)=>
+                                        setBirth(e.target.value)}  
+                                    onBlur={e => checkBirth(e)}
+                                />
+                                <FormHelperText>{birthError ? null: 'Enter a valid birthdate'}</FormHelperText>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs>
+                            <FormControl 
+                            error={!sexError}
+                            sx={{width: '95%', marginTop: '10pt'}}>
+                                <InputLabel sx={{ color: 'black'}} color="secondary" id="sex-label">Sex</InputLabel>
+                                <Select
+                                    labelId="Sex"
+                                    required
+                                    id="demo-simple-select-helper"
+                                    value={sex}
+                                    label="Sex"
+                                    onChange={(e) => {setSex(e.target.value); checkSex(e.target.value)}}
+                                    onBlur={(e) => checkSex(e.target.value)}
+                                    color="secondary"
+                                    sx={{ background: 'white', input: { color: 'black' }}}
+                                    >
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={"M"}>Male</MenuItem>
+                                    <MenuItem value={"F"}>Female</MenuItem>
+                                    <MenuItem value={"O"}>Other</MenuItem>
+                                </Select>
+                                <FormHelperText>{sexError ? null: 'Select your sex'}</FormHelperText>
+                            </FormControl>
+                        </Grid>                
+                    </Grid>
+                    <Typography 
+                    variant="h6" 
+                    fontWeight={'bold'}
+                    paddingTop={'10px'}
+                    component="div" 
+                    width={'95%'}
+                    sx={{flexGrow: 1,color: 'black', textAlign: 'center'}}>
+                        Please answer the following to the best of your knowledge.
+                    </Typography>
 
-                        &nbsp;
-                        <TextField sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }} variant="outlined" required color="secondary" type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)} placeholder='First Name'/>
-                        &nbsp;
-                        <TextField sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }} required color="secondary" type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder='Last Name'/>
-                        &nbsp;
-                        <TextField sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }} required color="secondary" type="date" value={birth} onChange={(e) => setBirth(e.target.value)} placeholder='Birthdate'/>
-                        &nbsp;
-                        <FormControl required sx={{m: 0, minWidth: 100 }}>
-                        <InputLabel sx={{ color: 'black'}} color="secondary" id="sex-label">Sex</InputLabel>
-                        <Select
-                            labelId="Sex"
-                            required
-                            id="demo-simple-select-helper"
-                            value={sex}
-                            label="Sex"
-                            onChange={(e) => setSex(e.target.value)}
-                            color="secondary"
-                            sx={{ color: 'black', fieldset: { borderColor: "white" } }}
-                            >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={"M"}>Male</MenuItem>
-                            <MenuItem value={"F"}>Female</MenuItem>
-                            <MenuItem value={"O"}>Other</MenuItem>
-                        </Select>
-                        </FormControl>
-                        &nbsp;
-                        </div>
-                        <br/><br/>
-                        <div>
-                            <h3>Please answer the following to the best of your knowledge.</h3>
-                            <h4>On average:</h4>
-                            
-                            How many hours do you sleep each night? &nbsp;
-                            <select value={q1} onChange={(e) => setQ1(e.target.value)} style={{width: "5rem"}}>
-                                <option selected value={""}>None</option>
-                                <option value={"3-4"}>3-4 Hours</option>
-                                <option value={"5-6"}>5-6 Hours</option>
-                                <option value={"7-8"}>7-8 Hours</option>
-                                <option value={"9+"}>9+ Hours</option>
-                            </select>
-                            
-                            <br/>
-                            How many times do you wake up each night? &nbsp;
-                            <select value={q2} onChange={(e) => setQ2(e.target.value)} style={{width: "5rem"}}>
-                                <option selected value={""}>None</option>
-                                <option value={"1"}>1</option>
-                                <option value={"2"}>2</option>
-                                <option value={"3"}>3</option>
-                                <option value={"4+"}>4+</option>
-                            </select>
-                            <br/>
-                            How long do you spend trying to fall asleep? &nbsp;
-                            <select value={q3} onChange={(e) => setQ3(e.target.value)} style={{width: "5rem"}}>
-                                <option selected value={""}>None</option>
-                                <option value={"30-1"}>30 to an Hour</option>
-                                <option value={"1-2"}>1-2 Hours</option>
-                                <option value={"3-4"}>3-4 Hours</option>
-                                <option value={"4+"}>4+ Hours</option>
-                            </select>
-                            <br/>
-                            What time do you go to bed? &nbsp;
-                            <select value={q4} onChange={(e) => setQ4(e.target.value)} style={{maxWidth: "7rem"}}>
-                                <option selected value={""}>None</option>
-                                <option value={"8pm"}>8pm</option>
-                                <option value={"9-10pm"}>9-10pm</option>
-                                <option value={"11-12am"}>11-12am</option>
-                                <option value={"1am+"}>1am or Later</option>
-                            </select>
-                            <br/>
-                            What time do you wake up? &nbsp;
-                            <select value={q5} onChange={(e) => setQ5(e.target.value)} style={{maxWidth: "7rem"}}>
-                                <option selected value={""}>None</option>
-                                <option value={"5am"}> 5am</option>
-                                <option value={"6-7am"}>6-7am</option>
-                                <option value={"8-9am"}>8-9am</option>
-                                <option value={"10-11am"}>10-11am</option>
-                                <option value={"12pm+"}>12pm or Later</option>
-                            </select>
-                            <br/>
-                            <br/>
-                            <Button variant="contained" onClick={(e) => handleConfirmData(e)}>Submit</Button>
-                        </div>
-                        <br/>
+                    <Typography 
+                    variant="h7" 
+                    fontWeight={'bold'}
+                    component="div" 
+                    width={'95%'}
+                    sx={{flexGrow: 1,color: 'black', textAlign: 'center'}}>
+                        On average:
+                    </Typography>
+                    
+                    
+                        
+                    <Typography 
+                    variant="h7" 
+                    component="div" 
+                    width={'95%'}
+                    sx={{flexGrow: 1,color: 'black'}}>
+                        How many hours do you sleep each night? 
+                        <select value={q1} onChange={(e) => setQ1(e.target.value)} style={{width: "5rem"}}>
+                        <option selected value={""}>None</option>
+                        <option value={"3-4"}>3-4 Hours</option>
+                        <option value={"5-6"}>5-6 Hours</option>
+                        <option value={"7-8"}>7-8 Hours</option>
+                        <option value={"9+"}>9+ Hours</option>
+                    </select> 
+                    </Typography>
+
+                    <Typography 
+                    variant="h7" 
+                    component="div" 
+                    width={'95%'}
+                    sx={{flexGrow: 1,color: 'black'}}>
+                        How many times do you wake up each night? 
+                        <select value={q1} onChange={(e) => setQ1(e.target.value)} style={{width: "5rem"}}>
+                            <option selected value={""}>None</option>
+                            <option value={"3-4"}>3-4 Hours</option>
+                            <option value={"5-6"}>5-6 Hours</option>
+                            <option value={"7-8"}>7-8 Hours</option>
+                            <option value={"9+"}>9+ Hours</option>
+                        </select> 
+                    </Typography>
+
+                    <Typography 
+                    variant="h7" 
+                    component="div" 
+                    width={'95%'}
+                    sx={{flexGrow: 1,color: 'black'}}>
+                        How long do you spend trying to fall asleep?
+                        <select value={q3} onChange={(e) => setQ3(e.target.value)} style={{width: "5rem"}}>
+                            <option selected value={""}>None</option>
+                            <option value={"30-1"}>30 to an Hour</option>
+                            <option value={"1-2"}>1-2 Hours</option>
+                            <option value={"3-4"}>3-4 Hours</option>
+                            <option value={"4+"}>4+ Hours</option>
+                        </select>
+                    </Typography>
+
+                    <Typography 
+                    variant="h7" 
+                    component="div" 
+                    width={'95%'}
+                    sx={{flexGrow: 1,color: 'black'}}>
+                        What time do you go to bed?
+                        <select value={q4} onChange={(e) => setQ4(e.target.value)} style={{maxWidth: "7rem"}}>
+                            <option selected value={""}>None</option>
+                            <option value={"8pm"}>8pm</option>
+                            <option value={"9-10pm"}>9-10pm</option>
+                            <option value={"11-12am"}>11-12am</option>
+                            <option value={"1am+"}>1am or Later</option>
+                        </select>
+                    </Typography>
+                        
+                    <Typography 
+                    variant="h7" 
+                    component="div" 
+                    width={'95%'}
+                    sx={{flexGrow: 1,color: 'black'}}>
+                        What time do you wake up?
+                        <select value={q5} onChange={(e) => setQ5(e.target.value)} style={{maxWidth: "7rem"}}>
+                            <option selected value={""}>None</option>
+                            <option value={"5am"}> 5am</option>
+                            <option value={"6-7am"}>6-7am</option>
+                            <option value={"8-9am"}>8-9am</option>
+                            <option value={"10-11am"}>10-11am</option>
+                            <option value={"12pm+"}>12pm or Later</option>
+                        </select>
+                    </Typography>
+                                      
+                    <Box display="flex" alignItems="center" justifyContent="center" paddingTop='10px'>
+                        <Button endIcon={<PersonAddAltOutlinedIcon/>} onClick={(e) => {
+                            checkFirst(e);
+                            checkLast(e);
+                            checkBirth(e);
+                            checkSex(e);
+                            if (firstError && lastError && birthError && sexError) {
+                                handleConfirmData(e)
+                            }
+                        } } //todo add translation
+            
+                        type="submit" variant="contained" color="primary">
+                            Create Account 
+                        </Button>
+                    </Box>
+                        
                 </Grid>
                 
                     
@@ -424,9 +585,16 @@ function CreateAccount() {
                     </Grid>
                     
                     <Box display="flex" alignItems="center" justifyContent="center" padding='10px'>
-                        <Button endIcon={<PersonAddAltOutlinedIcon/>} onClick={() => {if (emailFree && confirmError && complexError){setNext(true)}}}  //todo add translation
+                        <Button endIcon={<ArrowForwardOutlinedIcon/>} onClick={(e) => {
+                            checkEmail(e);
+                            checkPhone(e);
+                            checkMatch(e);
+                            if (emailFree && phoneFree && emailError && phoneError && confirmError && complexError) {
+                                setNext(true);
+                            }
+                        }}  //todo add translation
                         type="submit" variant="contained" color="primary">
-                            Create Account 
+                            Continue 
                         </Button>
                     </Box>
                     
