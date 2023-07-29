@@ -209,14 +209,12 @@ function CreateRem() {
         <Grid container justifyContent="center" direction={'row'} alignItems="center" sx={{ height: '70vh' }}>
             <Grid item xs={12} sm={8} md={6} lg={4}>
                 <Box textAlign="center">
-                    <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', padding: '10px'}}>
-
-
+                    <Paper elevation={10} sx={{ backgroundColor: '#D9D3E4', padding: '10px'}}>
                         <Typography variant="body" component="div" color="black" fontSize="14pt">
                             {/* Carrier Selection */}
-                            <label htmlFor="reminder-method">To enable SMS notifications, please select your carrier:</label>
-                            <br/>
-                            &nbsp;
+                            <Box display="flex" justifyContent="center">
+                                <label htmlFor="reminder-method">To enable SMS notifications, please select your carrier:</label>
+                            </Box>
                             <Select labelId="Carrier Type" id="carrier-type" value={Carrier} label="Carrier Type" onChange={(e) => handleOnChangeCarrier(e.target.value)}
                             style={{ width: "230px", marginTop: '10pt' }}>
                                 <MenuItem value="No, email it">No, email it</MenuItem>
@@ -238,46 +236,45 @@ function CreateRem() {
 
                         <Typography variant="body" component="div" color="black" fontSize="14pt">
                             {/* Reminder Type Selection */}
-                            <label htmlFor="reminder-type" sx={{ marginBottom: '10px', textAlign: 'center' }}>Reminder Type:</label>
-                            <br/>
-                            &nbsp;
+                            <Box display="flex" justifyContent="center">
+                                <label htmlFor="reminder-type" sx={{ marginBottom: '10px', textAlign: 'center' }}>Reminder Type:</label>
+                            </Box>
                             <Select labelId="Reminder Type" id="reminder-type" value={ReminderType} label="Reminder Type" onChange={(e) => handleOnChangeRemType(e.target.value)} style={{ width: "230px", marginTop: '10pt' }} >
                                 <MenuItem value="None">None</MenuItem>
                                 <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
                                 <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
                             </Select>
+                            <Box display="flex" justifyContent="center">
+                                <label htmlFor="reminder-type-err-msg" style={{ color: 'crimson' }}>{RemTypeErrMsg}</label>
+                            </Box>
                             <br/>
-                            <br/>
-                            <label htmlFor="reminder-type-err-msg" style={{ color: 'crimson' }}>{RemTypeErrMsg}</label>
                         </Typography>
 
-                        <Typography variant="body" component="div" color="black" fontSize="14pt" justifyContent="center" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                        <Typography variant="body" component="div" color="black" fontSize="14pt" justifyContent="center" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                             {/* Choosing the days of the week */}
-                            <Box display="flex" justifyContent="center">
                             <div className="days-list">
                                 {daysOfWeek.map(({day}, index) => {
                                     return(
                                         <li key={index}>
-                                            <div className="days-list-item">
-                                                <input
-                                                    type="checkbox"
-                                                    id={`custom-checkbox-${index}`}
-                                                    name={day}
-                                                    value={day}
-                                                    checked={checkedState[index]}
-                                                    onChange={() => handleOnChangeCB(index)}
-                                                />
-                                                <label htmlFor={`custom-checkbox-${index}`}>{day}</label>
-                                            </div>
+                                        <div className="days-list-item">
+                                            <input
+                                            type="checkbox"
+                                            id={`custom-checkbox-${index}`}
+                                            name={day}
+                                            value={day}
+                                            checked={checkedState[index]}
+                                            onChange={() => handleOnChangeCB(index)}
+                                            />
+                                            <label htmlFor={`custom-checkbox-${index}`}>{day}</label>
+                                        </div>
                                         </li>
-                                    );
+                                        );
                                 })}
-                            <br/>
-                            <br/>
-                            <br/>
-                            <label htmlFor="days-input-err-msg" style={{ color: 'crimson' }}>{daysInputErrMsg}</label>
                             </div>
+                            <Box display="flex" justifyContent="center">
+                                <label htmlFor="days-input-err-msg" style={{ color: 'crimson' }}>{daysInputErrMsg}</label>
                             </Box>
+                            <br/>
                         </Typography>
 
                         <Typography variant="body" component="div" color="black" fontSize="14pt" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -294,15 +291,15 @@ function CreateRem() {
 
                         <Typography variant="body" component="div" color="black" fontSize="14pt">
                             {/* Picking the timezone */}
-                            <label htmlFor="Timezone" sx={{ marginBottom: '10px', textAlign: 'center' }}>Timezone:</label>
-                                <br/>
-                                &nbsp;
-                                <Select labelId="Timezone" id="Timezone" value={Timezone} label="Timezone" onChange={(e) => handleOnChangeTimezone(e.target.value)} style={{ width: "230px", marginTop: '10pt'}} >
-                                    <MenuItem value="Pacific">Pacific</MenuItem>
-                                    <MenuItem value="Mountain">Mountain</MenuItem>
-                                    <MenuItem value="Central">Central</MenuItem>
-                                    <MenuItem value="Eastern">Eastern</MenuItem>
-                                </Select>
+                            <Box display="flex" justifyContent="center">
+                                <label htmlFor="Timezone" sx={{ marginBottom: '10px', textAlign: 'center' }}>Timezone:</label>
+                            </Box>
+                            <Select labelId="Timezone" id="Timezone" value={Timezone} label="Timezone" onChange={(e) => handleOnChangeTimezone(e.target.value)} style={{ width: "230px", marginTop: '10pt'}} >
+                                <MenuItem value="Pacific">Pacific</MenuItem>
+                                <MenuItem value="Mountain">Mountain</MenuItem>
+                                <MenuItem value="Central">Central</MenuItem>
+                                <MenuItem value="Eastern">Eastern</MenuItem>
+                            </Select>
                         </Typography>
 
                         <Typography variant="body" component="div" color="black" fontSize="14pt">
