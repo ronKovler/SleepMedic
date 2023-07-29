@@ -73,7 +73,7 @@ function CreateRem() {
         tempData.forEach(v => {
             if (v) {
                 setDaysErrMsg("");
-            } 
+            }
         })
     };
 
@@ -180,8 +180,6 @@ function CreateRem() {
             }
         }
     };
-
-
     return (
     <Box  sx={{
                 /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
@@ -192,13 +190,13 @@ function CreateRem() {
             width: '100vw',
             overflowX: 'hidden'
 
-        
+
     }}>
         <Navbar/>
-        
+
         <Grid spacing={2}  sx={{margin: 0}} container justifyContent="center" alignContent={'center'} direction={'column'} alignItems="center" >
             <Grid item xs>
-                
+
                 <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', padding: 2, borderRadius: '1rem', minWidth: isMobile ? 300 : 320}}>
                     <Typography
                     variant="h4"
@@ -212,8 +210,8 @@ function CreateRem() {
                         Create a Reminder
                     </Typography>
                     {/* Carrier Selection */}
-                    <Box display="flex" justifyContent="center" alignContent={'center'} > 
-                        <FormControl 
+                    <Box display="flex" justifyContent="center" alignContent={'center'} >
+                        <FormControl
                         sx={{ width:'70%', marginTop: '10pt'}}>
                             <InputLabel sx={{ color: 'black'}} color="secondary" >To enable SMS notifications, please select your carrier</InputLabel>
                             <Select labelId="Carrier Type" id="carrier-type" value={Carrier} label="To enable SMS notifications, please select your carrier" onChange={(e) => handleOnChangeCarrier(e.target.value)}>
@@ -232,10 +230,10 @@ function CreateRem() {
                             </Select>
                         </FormControl>
                     </Box>
-                    
 
-                    <Box display="flex" justifyContent="center" alignContent={'center'} > 
-                        <FormControl 
+
+                    <Box display="flex" justifyContent="center" alignContent={'center'} >
+                        <FormControl
                         sx={{ width:'70%', marginTop: '10pt'}}>
                             <InputLabel sx={{ color: 'black'}} color="secondary" >What type of reminder do you want?</InputLabel>
                             <Select labelId="Reminder Type" id="reminder-type" value={ReminderType} label="What type of reminder do you want?" onChange={(e) => handleOnChangeRemType(e.target.value)} >
@@ -244,43 +242,43 @@ function CreateRem() {
                             </Select>
                         </FormControl>
                     </Box>
-                    
 
-                    <Typography  
+
+                    <Typography
                     variant="h6"
                     component="div"
                     sx={{flexGrow: 1,
-                        
+
                         color: 'black',
                         paddingTop: '10px',
                         textAlign: 'center'}}>
                         On which day(s) should this reminder be triggered?
                     </Typography>
-                    <Box display="flex" justifyContent="center" alignContent={'center'} > 
-                        <FormGroup  sx={{ '& .MuiFormControlLabel-root': { margin: 0 } }} style={{input: {boxSizing: 'border-box'}}} row={ true}> 
+                    <Box display="flex" justifyContent="center" alignContent={'center'} >
+                        <FormGroup  sx={{ '& .MuiFormControlLabel-root': { margin: 0 } }} style={{input: {boxSizing: 'border-box'}}} row={ true}>
                             <FormControlLabel  key={checkedState[0]} control={<Checkbox checked={checkedState[0]} onClick={() => handleOnChangeCB(0)}/>} labelPlacement={"bottom"} label='Sun' sx={{ m: 1 }}/>
                             <FormControlLabel control={<Checkbox checked={checkedState[1]} onClick={() => handleOnChangeCB(1)}/>} labelPlacement={"bottom"} label='Mon' sx={{ m: 1 }}/>
                             <FormControlLabel control={<Checkbox checked={checkedState[2]} onChange={() => handleOnChangeCB(2)}/>} labelPlacement={"bottom"} label='Tue' sx={{ m: 1 }}/>
-                            <FormControlLabel control={<Checkbox checked={checkedState[3]} onChange={() => handleOnChangeCB(3)}/> } labelPlacement={"bottom"} label='Wed' sx={{ m: 1 }}/> 
+                            <FormControlLabel control={<Checkbox checked={checkedState[3]} onChange={() => handleOnChangeCB(3)}/> } labelPlacement={"bottom"} label='Wed' sx={{ m: 1 }}/>
                             <FormControlLabel control={<Checkbox checked={checkedState[4]} onChange={() => handleOnChangeCB(4)}/>} labelPlacement={"bottom"} label='Thu' sx={{ m: 1 }}/>
                             <FormControlLabel control={<Checkbox checked={checkedState[5]} onChange={() => handleOnChangeCB(5)}/>} labelPlacement={"bottom"} label='Fri' sx={{ m: 1 }}/>
                             <FormControlLabel control={<Checkbox checked={checkedState[6]} onChange={() => handleOnChangeCB(6)}/>} labelPlacement={"bottom"} label='Sat' sx={{ m: 1 }}/>
                         </FormGroup>
-                    </Box> 
-
-                    <Box display="flex" justifyContent="center" alignContent={'center'} > 
-                          
                     </Box>
 
-                    <Grid container direction={'row'} justifyContent={'center'}> 
-                        <FormControl 
+                    <Box display="flex" justifyContent="center" alignContent={'center'} >
+
+                    </Box>
+
+                    <Grid container direction={'row'} justifyContent={'center'}>
+                        <FormControl
                         sx={{ width:'30%', marginTop: '10pt', marginRight: '5pt'}}>
                             <InputLabel shrink={true} sx={{ color: 'black'}} color="secondary" >Reminder time</InputLabel>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <TimePicker label={'Reminder time'} value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
                             </LocalizationProvider>
-                        </FormControl> 
-                        <FormControl 
+                        </FormControl>
+                        <FormControl
                         sx={{ width:'30%', marginTop: '10pt', marginLeft: '5pt'}}>
                             <InputLabel sx={{ color: 'black'}} color="secondary" >Timezone</InputLabel>
                             <Select labelId="Timezone" id="Timezone" value={Timezone} label="Timezone" onChange={(e) => handleOnChangeTimezone(e.target.value)}>
@@ -292,7 +290,7 @@ function CreateRem() {
                         </FormControl>
                     </Grid>
 
-                    
+
                     <Typography variant="body" component="div" color="black" fontSize="14pt">
                         {/* Submitting and Canceling */}
                         <Box display="flex" justifyContent="center" paddingTop='20pt'>
@@ -305,7 +303,7 @@ function CreateRem() {
                         </Box>
                     </Typography>
                 </Paper>
-                
+
             </Grid>
         </Grid>
     </Box>
