@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import Navbar from './navbar/Navbar';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Autocomplete from '@mui/material/Autocomplete';
 import {isMobile} from 'react-device-detect';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -35,14 +36,29 @@ function CreateRem() {
     //const [ReminderTime, setRemTime] = useState('');
     const[ReminderTime, setRemTime] = React.useState(today.set('hour', 22).set('minute',  30).set('second', 0));
     const [Timezone, setTimezone] = useState("Pacific");
+
+    const daysOptionList = [
+      { value: 0, label: "Sunday" },
+      { value: 1, label: "Monday" },
+      { value: 2, label: "Tuesday" },
+      { value: 3, label: "Wednesday" },
+      { value: 4, label: "Thursday" },
+      { value: 5, label: "Friday" },
+      { value: 6, label: "Saturday" }
+    ];
+    const [selectedDaysOptions, setSelectedDaysOptions] = useState();
+
     const daysOfWeek = [{day: "Sun"}, {day:"Mon"}, {day:"Tues"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}];
     const [checkedState, setCheckedState] = useState(
         new Array(daysOfWeek.length).fill(false)
     );
+
     const [RemTypeErrMsg, setRemTypeErrMsg] = useState("");
     const reminderTypeErrMsg = "Please specify a type of reminder to complete creation.";
+
     const [daysInputErrMsg, setDaysErrMsg] = useState("");
     const daysErrMsg = "You must select at least one day for your reminder.";
+
     const [timeErrMsg, setRemTimeErrMsg] = useState("");
     const emptyTimeInputMsg = "You must input a time to trigger the reminder.";
     const badTimeInputFormat = "Please input time in the following format; e.g. 10:45PM, 8:00AM"
@@ -59,6 +75,16 @@ function CreateRem() {
         if (value != "None") {
             setRemTypeErrMsg("");
         }
+    };
+
+    const handleSelectedDays = (selectedOptions) => {
+            // Map the selected options to get an array of selected values (0 to 6)
+                const selectedValues = selectedOptions.map((option) => option.value);
+                setSelectedDaysOptions(selectedValues);
+                console.log("bRUH: " + selectedValues); // This will log the array of selected values
+
+            /*setSelectedDaysOptions(selectedOptions);
+            console.log(selectedDaysOptions);   */
     };
 
     //handleChange() method for checkboxes: maintains which days are selected by the user
@@ -255,23 +281,17 @@ function CreateRem() {
                             {/* Choosing the days of the week */}
                             <Box display="flex" justifyContent="center">
                             <div className="days-list">
-                                {daysOfWeek.map(({day}, index) => {
-                                    return(
-                                        <li key={index}>
-                                            <div className="days-list-item">
-                                                <input
-                                                    type="checkbox"
-                                                    id={`custom-checkbox-${index}`}
-                                                    name={day}
-                                                    value={day}
-                                                    checked={checkedState[index]}
-                                                    onChange={() => handleOnChangeCB(index)}
-                                                />
-                                                <label htmlFor={`custom-checkbox-${index}`}>{day}</label>
-                                            </div>
-                                        </li>
-                                    );
-                                })}
+                                <Autocomplete
+                                                multiple
+                                                options={daysOptionList}
+                                                getOptionLabel={(option) => option.label}
+                                                value={selectedDaysOptions}
+                                                onChange={(event, newValue) => handleSelectedDays(newValue)}
+                                                style={{ width: "230px", marginTop: '10pt' }}
+                                                renderInput={(params) => (
+                                                    <TextField {...params} variant="outlined" placeholder="Select the days" />
+                                                )}
+                                            />
                             <br/>
                             <br/>
                             <br/>
