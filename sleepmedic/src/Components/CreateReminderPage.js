@@ -194,7 +194,7 @@ function CreateRem() {
     }}>
         <Navbar/>
 
-        <Grid spacing={2}  sx={{margin: 0}} container justifyContent="center" alignContent={'center'} direction={'column'} alignItems="center" >
+        <Grid spacing={2}  sx={{marginTop: '5%'}} container justifyContent="center" alignContent={'center'} direction={'column'} alignItems="center" >
             <Grid item xs>
 
                 <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', padding: 2, borderRadius: '1rem', minWidth: isMobile ? 300 : 320}}>
