@@ -31,6 +31,7 @@ import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBullet
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined'; // next icon
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'; //back icon
 import Navbar from './navbar/Navbar';
+import {isMobile} from 'react-device-detect';
 import "./Education.css"
 import { useState } from 'react';
 
@@ -719,10 +720,10 @@ function EducationPage() {
     }}>
       <Navbar />
 
-      <Grid container direction={'row'} spacing={1} sx={{flexGrow: 1}}>
-        <Grid item xs={3} sx={{flexGrow: 1}} height={'100%'}>
+      <Grid container direction={isMobile ? 'column' : 'row'} spacing={1} sx={{flexGrow: 1}}>
+        <Grid item xs={isMobile ? true : 3} sx={{flexGrow: 1}} height={'100%'}>
           <List
-            sx={{ flexGrow: 1, width: '100%', maxWidth: 360, bgcolor: '#D9D3E4',  overflowY: 'auto', height: '100%' , maxHeight: 'calc(100vh - 76px)'}}
+            sx={{ flexGrow: 1, width: '100%', maxWidth: isMobile ? '100%' : 360, bgcolor: '#D9D3E4',  overflowY: 'auto', height: '100%' , maxHeight: 'calc(100vh - 76px)'}}
             component="nav"
 
             aria-labelledby="nested-list-subheader"
@@ -800,7 +801,7 @@ function EducationPage() {
         </Grid>
 
         <Grid item xs={true} >
-          <Grid container direction={'column'} paddingRight={'2%'} paddingTop={2} justifyContent={'center'} alignContent={'center'}>
+          <Grid container direction={'column'} paddingRight={isMobile? 0 : '2%'} paddingTop={2} justifyContent={'center'} alignContent={'center'}>
             <Grid item xs >
               <Box display={'flex'} justifyContent={'center'} alignContent={'center'} >
                 <Card style={{backgroundColor: '#D9D3E4'}} square={false}>
