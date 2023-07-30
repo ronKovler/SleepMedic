@@ -27,7 +27,7 @@
         },
         "new-record": "New Record",
         "input-prompt": {
-            "new-record": "To record new sleep, please enter your daily sleep data below.",
+            "new-record": "To create a new record, please fill in the information below.",
             "edit-record": "To update a sleep record, alter your responses as necessary.",
             "fall-time": "How long did it take to fall asleep? (min)",
             "awake-time": "Did you wake up in the night? If so, for how long? (min)",

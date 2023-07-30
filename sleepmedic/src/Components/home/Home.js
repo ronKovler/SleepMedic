@@ -77,11 +77,8 @@ const MARKS = [
 ]
 
 const FIELDS_SPECIFICATION = `
-Fields Explanation: 
-Fall asleep is the time you take to fall asleep.
-Restlessness is the level of restless you felt when you decide to sleep.
-Sleep duration is the amount of time you take for a continous sleep.
-Woke up time is the total count of you wake up in the middle of the night.
+Enter the data to the best of your knowledge. For all the questions, it is important
+you answer honestly. 
 `;
 
 function getCurrentWeek() {
