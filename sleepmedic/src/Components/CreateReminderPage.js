@@ -277,7 +277,7 @@ function CreateRem() {
                         sx={{ width:'30%', marginTop: '10pt', marginRight: '5pt'}}>
                             <InputLabel shrink={true} sx={{ color: 'black'}} color="secondary" >{t("reminder.reminder-time")}</InputLabel>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <TimePicker label={'Reminder time'} value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
+                                <TimePicker label={t("reminder.reminder-time")} value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
                             </LocalizationProvider>
                         </FormControl>
                         <FormControl
