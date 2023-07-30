@@ -91,6 +91,9 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
      */
     Boolean existsByUserAndDateAndRecordIDNot(User user, Date date, Long recordID);
 
+    @Query(value = "SELECT s FROM SleepRecord s WHERE s.user = :user ORDER BY s.date DESC LIMIT 1")
+    Optional<SleepRecord> getNewest(@Param("user") User user);
+
     /**
      * Delete all records by a user.
      * @param user - User user to delete records.

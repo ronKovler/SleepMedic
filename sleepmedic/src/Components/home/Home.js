@@ -39,7 +39,7 @@ import TextField from '@mui/material/TextField'; // Add this line
 import Badge from '@mui/material/Badge';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
-
+import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -923,7 +923,7 @@ export default function Home() {
                                     </Grid>
                                     <Grid item xs={1}>
                                         <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                            <Button variant='contained' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>
+                                            <Button variant='contained' endIcon={<NoteAddOutlinedIcon/>} onClick={handleClickOpen}>
                                                 {t("home.new-record")}
                                             </Button>
                                         </Box>
@@ -1103,8 +1103,8 @@ export default function Home() {
                         </Grid>
                         <Grid item xs={1}>
                             <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
-                                <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>
-                                    {isNewRecord ? t("home.submit"): t("home.update")}
+                                <Button sx={{marginTop: '20pt'}} variant='contained' onClick={handleSubmit}>
+                                    {isNewRecord ? t("home.create"): t("home.update")}
                                 </Button>
                             </Box>
                         </Grid>

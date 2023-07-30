@@ -82,6 +82,7 @@ public class AccountController {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
+
     //TODO ADD INJECTION CHECKING FOR FOLLOWING 2 METHODS
     /**
      * Check if we can make an account with the given email

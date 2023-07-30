@@ -117,7 +117,8 @@ public class HomeController {
         int week = (user.getEducationProgress() >> 4) & 0b00001111;
         int day = user.getEducationProgress() & 0b00001111;
         double progress = ((7.0 * week + day) / (7.0 * 6));
-        return ResponseEntity.ok(new InfoResponse(user.getFirstName(), user.getLastName(), progress));
+        List<AdviceResponse> advice = analyzeData(recordRepository.getNewest(user).orElse(null));
+        return ResponseEntity.ok(new InfoResponse(user.getFirstName(), user.getLastName(), progress, advice));
     }
 
     /**
