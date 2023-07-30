@@ -41,6 +41,11 @@ function EducationPage() {
   const [readings, setReadings] = useState(t("education.week1.day1.lesson1.reading"));
   const [weekOpen, setWeekOpen] = useState(0);
   const [dayOpen, setDayOpen] = useState(0);
+
+  const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
+  const [currentDayIndex, setCurrentDayIndex] = useState(0);
+  const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
+
   const lessonPlan = [
     {
       week: t("education.week1.title"),
@@ -752,14 +757,91 @@ function EducationPage() {
     }
   ];
 
+  const findCurrentPage = (lesson, day, week, weekIndex, dayIndex) => {
+    let currentLessonInd;
+    for (var i = 0; i < day.lessons.length; i++) {
+        if (day.lessons[i].title === lesson.title) {
+            currentLessonInd = i;
+        }
+    }
+    console.log("Inside findCurrentPage()");
+    console.log("weekIndex: " + weekIndex);
+    console.log("dayIndex: " + dayIndex);
+    //setCurrentWeekIndex(currentWeekInd);
+    setCurrentWeekIndex(weekIndex);
+    console.log("The current weekIndex is: " + weekIndex);
+    //setCurrentDayIndex(currentDayInd);
+    setCurrentDayIndex(dayIndex);
+    console.log("The current day is " + dayIndex);
+    setCurrentLessonIndex(currentLessonInd);
+    console.log("Current lesson index is: " + currentLessonInd);
+  }
 
-
-  const handleButtonClick = (lesson) => {
+  const handleButtonClick = (lesson, day, week, weekIndex, dayIndex) => {
     // Handle button click for a specific button
-
     setReadingTitle(lesson.title);
     setReadings(lesson.reading);
+    findCurrentPage(lesson, day, week, weekIndex, dayIndex);
   };
+
+  const findNextPage = () => {
+    //simple case - lesson is not last of day, we just go to next lesson of the day
+    //if the current lesson is the last of the day, we have to go to next day and the first lesson of the next day
+    //if the current day is the last in the week, we have to go to the next week, 1st day of that week, 1st lesson of that day.
+    //reset global states for the currentWeekIndex, currentDayIndex, currentLessonIndex
+
+    //console.log("Current page title is " + lessonPlan[currentWeekInd].days[currentDayInd].lessons[currentLessonInd].title);
+    //console.log("Next page title is " + lessonPlan[currentWeekInd].days[currentDayInd].lessons[currentLessonInd+1].title);
+
+
+  }
+
+  const handleNextButtonClick = () => {
+    console.log("Inside handleNextButtonClick");
+    console.log("currentWeekIndex is: " + currentWeekIndex);
+    console.log("currentDayIndex is: " + currentDayIndex);
+    console.log("currentLessonIndex is: " + currentLessonIndex);
+    let tempNextWeekIndex;
+    let tempNextDayIndex;
+    let tempNextLessonIndex;
+
+    //if the current day is the last in the week and the lesson is the last of that day, we go to next week, 1st day of week, 1st lesson
+    if ((currentDayIndex == 6) && (currentLessonIndex == lessonPlan[currentWeekIndex].days[currentDayIndex].lessons.length-1)){
+        //go to the next week, 1st day of the week, 1st lesson
+        tempNextWeekIndex = currentWeekIndex + 1;
+        tempNextDayIndex = 0;
+        tempNextLessonIndex = 0;
+        setReadingTitle(lessonPlan[tempNextWeekIndex].days[tempNextDayIndex].lessons[tempNextLessonIndex].title);
+        setReadings(lessonPlan[tempNextWeekIndex].days[tempNextDayIndex].lessons[tempNextLessonIndex].reading);
+        setCurrentWeekIndex(tempNextWeekIndex);
+        setCurrentDayIndex(tempNextDayIndex);
+        setCurrentLessonIndex(tempNextLessonIndex);
+        console.log("Current line 819 page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex].title);
+    }
+    //if the current lesson is the last of the day, we go to the next day and the first lesson of that day
+    else if ((currentLessonIndex == lessonPlan[currentWeekIndex].days[currentDayIndex].lessons.length-1)) {
+        tempNextWeekIndex = currentWeekIndex;
+        tempNextDayIndex = currentDayIndex + 1;
+        tempNextLessonIndex = 0;
+        setReadingTitle(lessonPlan[tempNextWeekIndex].days[tempNextDayIndex].lessons[tempNextLessonIndex].title);
+        setReadings(lessonPlan[tempNextWeekIndex].days[tempNextDayIndex].lessons[tempNextLessonIndex].reading);
+    }
+    //if the lesson is not the last of the current day, we just go to the next lesson of the day.
+    else {
+        tempNextWeekIndex = currentWeekIndex;
+        tempNextDayIndex = currentDayIndex;
+        tempNextLessonIndex = currentLessonIndex + 1;
+        setReadingTitle(lessonPlan[tempNextWeekIndex].days[tempNextDayIndex].lessons[tempNextLessonIndex].title);
+        setReadings(lessonPlan[tempNextWeekIndex].days[tempNextDayIndex].lessons[tempNextLessonIndex].reading);
+    }
+    //reset global states for currentWeekIndex, currentDayIndex, currentLessonIndex appropriately.
+
+    setCurrentWeekIndex(tempNextWeekIndex);
+    setCurrentDayIndex(tempNextDayIndex);
+    setCurrentLessonIndex(tempNextLessonIndex);
+    console.log("Current page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex].title);
+        //console.log("Next page title is " + lessonPlan[currentWeekInd].days[currentDayInd].lessons[currentLessonInd+1].title);
+  }
 
   return (
     <Box sx={{
@@ -832,7 +914,7 @@ function EducationPage() {
 
 
                             {day.lessons.map((lesson, buttonIndex) => (
-                              <ListItemButton key={buttonIndex} sx={{ pl: 6 }} onClick={() => handleButtonClick(lesson)} >
+                              <ListItemButton key={buttonIndex} sx={{ pl: 6 }} onClick={() => handleButtonClick(lesson, day, week, weekIndex, dayIndex)} >
                                 <ListItemIcon>
                                   <FormatListBulletedOutlinedIcon />
                                 </ListItemIcon>
@@ -879,7 +961,7 @@ function EducationPage() {
                 </Button>
               </Grid>
               <Grid item xs textAlign={'left'}>
-              <Button endIcon={<ArrowForwardOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}}>
+              <Button endIcon={<ArrowForwardOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}} onClick={handleNextButtonClick}>
                   Next
                 </Button>
               </Grid>
