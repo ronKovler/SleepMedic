@@ -15,10 +15,11 @@ const LanguageSelector = () => {
 
   return (
     <Select
+      title='Select your Language' 
       value={i18n.language}
       onChange={handleChangeLanguage}
       label={t('navbar.language')}
-      sx={{ color: "white", fieldset: { border: "none" }  }}
+      sx={{ color: "white", fieldset: { border: "none" }}}
     >
       <MenuItem value="en">EN</MenuItem>
       <MenuItem value="es">ES</MenuItem>

@@ -59,7 +59,7 @@ export default function Navbar() {
         <AppBar position="static" theme={barTheme} >
             <Toolbar>
                 {/* PUT settings here? */}
-                <LanguageSelector title='Select your Language' sx={{mr: 2}}/>
+                <LanguageSelector />
                 {/* When more buttons added, probably use ButtonGroup for better UI */}
                 <IconButton title="Go to Insights" href="/statistics" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
                     <LegendToggleIcon />
@@ -72,7 +72,7 @@ export default function Navbar() {
                 <IconButton title='Go to Account Page' href="/profilepage" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
                     <AccountBoxIcon />
                 </IconButton>
-                <IconButton title='Sign out' size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }} onClick={(e) => handleLogout(e)}>
+                <IconButton title='Sign out' size="large" edge="start" aria-label="menu" sx={{ mr: 0, color: 'white' }} onClick={(e) => handleLogout(e)}>
                     <LogoutIcon /> {/* Hide Logout to left menu button??? */}
                 </IconButton>    
             </Toolbar>
