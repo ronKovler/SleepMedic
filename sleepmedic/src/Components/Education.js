@@ -802,7 +802,7 @@ function EducationPage() {
           <Grid container direction={'column'} paddingRight={'2%'} paddingTop={2} justifyContent={'center'} alignContent={'center'}>
             <Grid item xs >
               <Box display={'flex'} justifyContent={'center'} alignContent={'center'} >
-                <Card>
+                <Card style={{backgroundColor: '#D9D3E4'}}>
                   <CardContent>
                     <Typography textAlign={'center'} variant="h5" component="div">
                       {readingTitle}
@@ -814,8 +814,8 @@ function EducationPage() {
                 </Card>
               </Box>
             </Grid>
-            <Grid container direction={'row'} xs spacing={2}>
-              <Grid item xs textAlign={'right'}>
+            <Grid container direction={'row'} xs spacing={2} paddingTop={1}>
+              <Grid item xs textAlign={'right'} >
               <Button startIcon={<ArrowBackOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}}>
                   Back
                 </Button>
