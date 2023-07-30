@@ -74,6 +74,16 @@
         "or-create": "or create an account",
         "login": "login"
     },
+    "editGoals": {
+      "title": "Edit your Goals",
+      "create-reminder": "Create a Reminder",
+      "home": "Home"
+    },
+    "notificationPage": {
+      "title": "Notification Preferences",
+      "optInOut": "Opt-in/Opt-Out",
+      "back": "back"
+    },
     "education": {
         "table-of-contents": "Table of Contents",
         "dashboard": "Dashboard",
