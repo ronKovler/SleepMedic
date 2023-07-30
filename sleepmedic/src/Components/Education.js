@@ -749,7 +749,7 @@ function EducationPage() {
                 {readingTitle}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {readings}
+                <div dangerouslySetInnerHTML={{ __html: readings.replace(/\n/g, '<br />') }} />
               </Typography>
             </CardContent>
           </Card>
