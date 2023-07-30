@@ -175,7 +175,8 @@ public class NotificationController {
         if (!reminder.getUser().equals(user)) {
             return ResponseEntity.status(403).build();
         }
-        user.removeReminder(reminder);
+        reminder.getUser().removeReminder(reminder);
+        schedulingService.removeScheduledTask(reminder.getJobID());
         reminderRepository.delete(reminder);
         return ResponseEntity.ok(1);
     }
