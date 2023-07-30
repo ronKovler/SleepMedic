@@ -722,13 +722,13 @@ function EducationPage() {
       <Grid container direction={'row'} spacing={1} sx={{flexGrow: 1}}>
         <Grid item xs={3} sx={{flexGrow: 1}} height={'100%'}>
           <List
-            sx={{ flexGrow: 1, width: '100%', maxWidth: 360, bgcolor: 'background.paper',  overflowY: 'auto', height: '100%' , maxHeight: 'calc(100vh - 76px)'}}
+            sx={{ flexGrow: 1, width: '100%', maxWidth: 360, bgcolor: '#D9D3E4',  overflowY: 'auto', height: '100%' , maxHeight: 'calc(100vh - 76px)'}}
             component="nav"
 
             aria-labelledby="nested-list-subheader"
             subheader={
-              <ListSubheader component="div" id="nested-list-subheader">
-                <Typography textAlign={'center'} variant="h5" fontWeight={'bold'}>
+              <ListSubheader disableGutters component="div" id="nested-list-subheader" bgcolor='#D9D3E4'>
+                <Typography paddingTop={1} paddingBottom={1} textAlign={'center'} color={'black'} variant="h5" fontWeight={'bold'} bgcolor={'#D9D3E4'} >
                   Table of Contents
                 </Typography>
               </ListSubheader>
@@ -804,7 +804,7 @@ function EducationPage() {
               <Box display={'flex'} justifyContent={'center'} alignContent={'center'} >
                 <Card>
                   <CardContent>
-                    <Typography variant="h5" component="div">
+                    <Typography textAlign={'center'} variant="h5" component="div">
                       {readingTitle}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
