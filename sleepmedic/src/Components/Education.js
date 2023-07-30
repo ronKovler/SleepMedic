@@ -803,12 +803,12 @@ function EducationPage() {
           <Grid container direction={'column'} paddingRight={'2%'} paddingTop={2} justifyContent={'center'} alignContent={'center'}>
             <Grid item xs >
               <Box display={'flex'} justifyContent={'center'} alignContent={'center'} >
-                <Card style={{backgroundColor: '#D9D3E4'}}>
+                <Card style={{backgroundColor: '#D9D3E4'}} square={false}>
                   <CardContent>
-                    <Typography textAlign={'center'} variant="h5" component="div">
+                    <Typography textAlign={'center'} variant="h4" component="div" color={'#2d2e2e'} fontWeight={'bold'}>
                       {readingTitle}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography fontSize={'1.4rem'} color="#3d3d3d">
                       <div dangerouslySetInnerHTML={{ __html: readings.replace(/\n/g, '<br />') }} />
                     </Typography>
                   </CardContent>
