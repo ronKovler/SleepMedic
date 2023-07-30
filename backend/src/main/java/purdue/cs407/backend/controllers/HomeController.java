@@ -117,7 +117,7 @@ public class HomeController {
         int week = (user.getEducationProgress() >> 4) & 0b00001111;
         int day = user.getEducationProgress() & 0b00001111;
         double progress = ((7.0 * week + day) / (7.0 * 6));
-        List<AdviceResponse> advice = analyzeData(recordRepository.getNewest(user).orElse(null));
+        List<AdviceResponse> advice = analyzeData(user);
         return ResponseEntity.ok(new InfoResponse(user.getFirstName(), user.getLastName(), progress, advice));
     }
 
@@ -158,8 +158,8 @@ public class HomeController {
 
         SleepRecord record = new SleepRecord(request, user);
         user.addRecord(record);
-        ArrayList<AdviceResponse> response = analyzeData(record);
         record = recordRepository.save(record);
+        ArrayList<AdviceResponse> response = analyzeData(user);
 
         return ResponseEntity.ok(response);
     }
@@ -177,18 +177,23 @@ public class HomeController {
     * BEFORE ANY OF THIS, we need a baseline of 2 weeks of data
     * Avg upTime, avg hoursSlept,
     * */
-    private ArrayList<AdviceResponse> analyzeData(SleepRecord record) {
+    private ArrayList<AdviceResponse> analyzeData(User user) {
         // Create array to hold our response data.
         ArrayList<AdviceResponse> data = new ArrayList<>();
 
         // Collect and average data (check if we have enough too before wasting cpu)
-        Collection<SleepRecord> records = recordRepository.getLastTwoWeeks(record.getUser());
-        if (records.size() < 13) {
+        Collection<SleepRecord> recordSet = recordRepository.getLastTwoWeeksAndOne(user);
+        if (recordSet.size() < 14) {
             data.add(new AdviceResponse(-1, null)); // Base case not enough data, -1 corresponds to this on frontend
             return data;
         }
+
+        ArrayList<SleepRecord> records = (ArrayList<SleepRecord>) recordSet.stream().toList();
+
+        SleepRecord record = records.get(0); // This is the newest record
+        records.remove(0);
         // This averages records which is the last 14 records
-        AverageRecord averages = new AverageRecord(records.stream().toList());
+        AverageRecord averages = new AverageRecord(records);
 
         //Calculate baseline from 2 weeks of data
         long fifteenMin = 15 /*minutes*/ * 60 /*seconds*/ * 1000 /*ms*/;
