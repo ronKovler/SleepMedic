@@ -752,14 +752,63 @@ function EducationPage() {
     }
   ];
 
+  const findNextPage = (lesson, day, week) => {
+    console.log(week);
+    console.log(day);
+    console.log(lesson);
+    //the first case where the day is not the end of the current week
+    //console.log(typeof lessonPlan);
+    const weekRegex = /Week (\d+)/;
+    const match2 = week.week.match(weekRegex);
+    let currentWeekNum;
+    if (match2 && match2[1]) {
+      currentWeekNum = parseInt(match2[1]);
+      console.log("The current weekNum is: " + currentWeekNum); // Output: 4
+    } else {
+      console.log("Week number not found.");
+    }
+
+    const dayRegex = /Day #(\d+)/;
+    const match = day.day.match(dayRegex);
+    let currentDayNum;
+    if (match && match[1]) {
+      currentDayNum = parseInt(match[1]);
+      console.log("The current day is " + currentDayNum); // Output: 1
+    } else {
+      console.log("Number not found in the input string.");
+    }
+
+    const currentDayIndex = currentDayNum - 1;
+    const currentWeekIndex = currentWeekNum - 1;
+    //determine if nextDayIndex is in this week or next week.
+    //and accordingly, set nextWeekIndex
+    const nextDayIndex = currentDayNum;
+
+    let currentLessonIndex;
+    for (var i = 0; i < day.lessons.length; i++) {
+        if (day.lessons[i].title === lesson.title) {
+            currentLessonIndex = i;
+            console.log("Current lesson index is: " + currentLessonIndex);
+        }
+    }
+    //console.log(lessonPlan[0].days[currentDayIndex - 1]);
+    console.log("Current page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex].title);
+    console.log("Next page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex+1].title);
 
 
-  const handleButtonClick = (lesson) => {
+
+  }
+
+  const handleButtonClick = (lesson, day, week) => {
     // Handle button click for a specific button
-
     setReadingTitle(lesson.title);
     setReadings(lesson.reading);
+    findNextPage(lesson, day, week);
   };
+
+  /*const handleNextButtonClick = () => {
+
+  } */
 
   return (
     <Box sx={{
@@ -832,7 +881,7 @@ function EducationPage() {
 
 
                             {day.lessons.map((lesson, buttonIndex) => (
-                              <ListItemButton key={buttonIndex} sx={{ pl: 6 }} onClick={() => handleButtonClick(lesson)} >
+                              <ListItemButton key={buttonIndex} sx={{ pl: 6 }} onClick={() => handleButtonClick(lesson, day, week)} >
                                 <ListItemIcon>
                                   <FormatListBulletedOutlinedIcon />
                                 </ListItemIcon>
