@@ -300,7 +300,7 @@ function OpenProfilePage() {
             <Navbar />
             <Grid container spacing={2} columns={1} sx={{margin: 0, paddingRight: 4, paddingTop: 0, justifyContent: 'center', alignContent: 'center'}}>
                 <Grid item sx>
-                    <Paper elevation={3} sx={{backgroundColor: '#7293A0'}}>
+                    <Paper elevation={3} sx={{backgroundColor: '#7293A0', minWidth: isMobile ? '100%' : 320}}>
                         <Typography
                         variant="h4" 
                         component="div"
