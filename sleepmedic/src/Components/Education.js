@@ -987,7 +987,7 @@ function EducationPage() {
                 </Button>
               </Grid>
               <Grid item xs textAlign={'left'}>
-              <Button endIcon={<ArrowForwardOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}}>
+              <Button endIcon={<ArrowForwardOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}} onClick={handleNextButtonClick}>
                   {t("education.next")}
                 </Button>
               </Grid>
