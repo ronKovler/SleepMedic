@@ -78,6 +78,10 @@ function EducationPage() {
               {
                 title: t("education.week1.day3.lesson2.title"),
                 reading: t("education.week1.day3.lesson2.reading")
+              },
+              {
+                title: t("education.week1.day3.lesson3.title"),
+                reading: t("education.week1.day3.lesson3.reading")
               }
             ]
           },
@@ -95,6 +99,10 @@ function EducationPage() {
               {
                 title: t("education.week1.day4.lesson3.title"),
                 reading: t("education.week1.day4.lesson3.reading")
+              },
+              {
+                title: t("education.week1.day4.lesson4.title"),
+                reading: t("education.week1.day4.lesson4.reading")
               }
             ]
           },
