@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
 const LanguageSelector = () => {
-  const { t, i18n } = useTranslation();
+    const [t, i18n] = useTranslation("global");
 
   const handleChangeLanguage = (event) => {
     i18n.changeLanguage(event.target.value);
@@ -21,8 +21,8 @@ const LanguageSelector = () => {
       label={t('navbar.language')}
       sx={{ color: "white", fieldset: { border: "none" }}}
     >
-      <MenuItem value="en">EN</MenuItem>
-      <MenuItem value="es">ES</MenuItem>
+      <MenuItem value="en">{t("language-select.en")}</MenuItem>
+      <MenuItem value="es">{t("language-select.es")}</MenuItem>
       {/* Add more languages if needed */}
     </Select>
   );

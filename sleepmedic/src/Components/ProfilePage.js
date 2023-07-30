@@ -32,12 +32,14 @@ import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutl
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import { useTranslation } from 'react-i18next';
 
 
 //Shaun
 function OpenProfilePage() {
     //implement logic for collecting parameters
     const [newPassword, setNewPassword] = useState('');
+    const [t, i18n] = useTranslation("global");
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [open, setOpen] = useState(false);
     const [openDel, setOpenDel] = useState(false);
@@ -182,7 +184,7 @@ function OpenProfilePage() {
                 
                 textAlign: 'center'}}
             >
-                You have no reminders, you can create a reminder below.
+                {t("profile.noReminders")}
             </Typography>
         ) : (
             <List dense={'dense'}>
@@ -208,7 +210,7 @@ function OpenProfilePage() {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    primary={getFormattedTime(item.triggerTime) + ' - ' + (item.message === 1 ? 'Bedtime Reminder' : 'Sleep Hygiene Reminder')}
+                    primary={getFormattedTime(item.triggerTime) + ' - ' + (item.message === 1 ? t("profile.bedtimeReminder") : t("profile.sleepHygieneReminder"))}
                     secondary={item.triggerDays}
                   />
                 </ListItem>
@@ -311,7 +313,7 @@ function OpenProfilePage() {
                             padding: '10px',
                             textAlign: 'center'}}
                             >
-                            Account & Details
+                            {t("profile.account&Details")}
                         </Typography>
                     </Paper>
                 </Grid>
@@ -329,12 +331,12 @@ function OpenProfilePage() {
                             color: 'black', 
                             paddingTop: '10px',
                             textAlign: 'center'}}>
-                            Reminders
+                            {t("profile.reminders")}
                         </Typography>   
                         <ReminderList/>
                 
                         <Box display="flex" alignItems="center" justifyContent="center" padding='10px'>
-                            <Button sx={{width:'210px'}} onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon/>} variant="contained">Create Reminder</Button>
+                            <Button sx={{width:'210px'}} onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon/>} variant="contained">{t("profile.createReminder")}</Button>
                         </Box>
                            
                     </Paper>
@@ -352,7 +354,7 @@ function OpenProfilePage() {
                                     color: 'black', 
                                     paddingTop: '10px',
                                     textAlign: 'center'}}>
-                                    Data Export
+                                    {t("profile.dataExport")}
                                 </Typography> 
                                 <Typography
                                 variant="h6" 
@@ -360,11 +362,10 @@ function OpenProfilePage() {
                                 sx={{flexGrow: 1,
                                     color: 'black', 
                                     textAlign: 'center'}}>
-                                    You can export your sleep records to a CSV file for your own keeping or to show to a health provider. The file will be
-                                    automatically generated and sent to the email associated with your account.
+                                    {t("profile.exportPrompt")}
                                 </Typography> 
                                 <Box display="flex" alignItems="center" justifyContent="center" padding='10px'>
-                                    <Button sx={{width:'210px'}} onClick={handleExportData} variant="contained" endIcon={<IosShareOutlinedIcon/>}>Export Data</Button>
+                                    <Button sx={{width:'210px'}} onClick={handleExportData} variant="contained" endIcon={<IosShareOutlinedIcon/>}>{t("profile.exportButton")}</Button>
                                 </Box>
                             </Paper> 
                         </Grid>
@@ -378,7 +379,7 @@ function OpenProfilePage() {
                                     color: 'black', 
                                     paddingTop: '10px',
                                     textAlign: 'center'}}>
-                                    Account Details
+                                    {t("profile.accountDetails")}
                                 </Typography> 
                                 <Typography
                                 variant="h6" 
@@ -386,12 +387,12 @@ function OpenProfilePage() {
                                 sx={{flexGrow: 1,
                                     color: 'black', 
                                     textAlign: 'center'}}>
-                                    Update your account details below.
+                                    {t("profile.accountDetailsPrompt")}
                                 </Typography> 
 
                                 <Box display="flex" alignItems="center" justifyContent="center" padding='10px'>
                                     {/* Change Password */}
-                                    <Button sx={{width:'210px'}} variant="contained" onClick={(e) => setOpen(true)} endIcon={<EditOutlinedIcon/>}>Change Password</Button>
+                                    <Button sx={{width:'210px'}} variant="contained" onClick={(e) => setOpen(true)} endIcon={<EditOutlinedIcon/>}>{t("profile.changePasswordButton")}</Button>
                                 </Box>
                             </Paper>  
                         </Grid>
@@ -404,11 +405,11 @@ function OpenProfilePage() {
                                     color: 'black', 
                                     paddingTop: '10px',
                                     textAlign: 'center'}}>
-                                    Permanently delete your account and all related data.
+                                    {t("profile.deletePrompt")}
                                 </Typography> 
                                 <Box display="flex" alignItems="center" justifyContent="center" padding='0px'>
                                     {/* Delete Account */}
-                                    <Button onClick={()=>setOpenDel(true)} sx={{color:'#c41104' }}endIcon={<DeleteForeverOutlinedIcon/>}>Delete Account</Button>
+                                    <Button onClick={()=>setOpenDel(true)} sx={{color:'#c41104' }}endIcon={<DeleteForeverOutlinedIcon/>}>{t("profile.deleteAccountButton")}</Button>
                                 </Box>
 
                             
@@ -417,24 +418,24 @@ function OpenProfilePage() {
 
                                 <Dialog open={open} onClose={() => setOpen(false)} 
                                 PaperProps={{style: {backgroundColor:'#D9D3E4'}}}>
-                                    {changeFin ? <div><DialogTitle>Password Reset!</DialogTitle>
+                                    {changeFin ? <div><DialogTitle>{t("profile.passwordReset.title")}</DialogTitle>
                                     <DialogContent>
                                         <DialogContentText>
-                                            Continue enjoying our app.
+                                            {t("profile.passwordReset.prompt")}
                                         </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>
-                                        <Button onClick={(e) => closeChangeConfirm(e)}>Continue</Button>
-                                    </DialogActions></div> : <div><DialogTitle>Change Password</DialogTitle>
+                                        <Button onClick={(e) => closeChangeConfirm(e)}>{t("profile.passwordReset.continueButton")}</Button>
+                                    </DialogActions></div> : <div><DialogTitle>{t("profile.passwordReset.changePassword")}</DialogTitle>
                                     <DialogContent>
                                         <DialogContentText>
-                                        Please enter your new password.
+                                            {t("profile.passwordReset.prompt")}
                                         </DialogContentText>
                                         <TextField
                                         autoFocus
                                         margin="dense"
                                         id="new-password"
-                                        label="New Password"
+                                        label={t("profile.passwordReset.newPassword")}
                                         type="password"
                                         onBlur={e => checkMatch(e)}
                                         fullWidth
@@ -448,7 +449,7 @@ function OpenProfilePage() {
                                         autoFocus
                                         margin="dense"
                                         id="new-password"
-                                        label="Confirm New Password"
+                                        label={t("profile.passwordReset.confirmNewPassword")}
                                         type="password"
                                         fullWidth
                                         variant="standard"
@@ -472,8 +473,8 @@ function OpenProfilePage() {
                                         }
                                     </DialogContent>
                                     <DialogActions>
-                                        <Button variant={'outlined'} onClick={() => setOpen(false)}>Cancel</Button>
-                                        <Button variant={'contained'} onClick={(e) => handlePasswordChange(e)}>Change Password</Button>
+                                        <Button variant={'outlined'} onClick={() => setOpen(false)}>{t("profile.passwordReset.cancel")}</Button>
+                                        <Button variant={'contained'} onClick={(e) => handlePasswordChange(e)}>{t("profile.passwordReset.changePasswordButton")}</Button>
                                     </DialogActions></div>}
                                 </Dialog>
 
@@ -484,18 +485,18 @@ function OpenProfilePage() {
                                 PaperProps={{style: {backgroundColor:'#D9D3E4'}}}
                                 >
                                     <DialogTitle textAlign={'center'} fontWeight={'bold'}>
-                                        Delete Account Confirmation
+                                        {t("profile.deleteAccount.confirm")}
                                     </DialogTitle>
                                     <DialogContent>
                                         <DialogContentText textAlign={'center'} fontWeight={'bold'}>
-                                            Are you sure you want to permanently <br/> delete your SleepMedic Account?
+                                        {t("profile.deleteAccount.confirmPrompt1")} <br/> {t("profile.deleteAccount.confirmPrompt2")}
                                         </DialogContentText>
                                     </DialogContent>
                                     <DialogActions justifyContent={'center'} alignContent={'center'}>
-                                        <Button variant='contained' textAlign={'left'} onClick={() => setOpenDel(false)}>Cancel</Button>
+                                        <Button variant='contained' textAlign={'left'} onClick={() => setOpenDel(false)}>{t("profile.deleteAccount.cancel")}</Button>
                                         {/* <Box display="flex" alignItems="center" justifyContent="center" padding='10px'> */}
                                         
-                                            <Button variant='contained' sx={{color:'white', backgroundColor:'#c41104' }} onClick={(e)=>deleteAccount(e)}>Yes, permanently delete my account</Button>
+                                            <Button variant='contained' sx={{color:'white', backgroundColor:'#c41104' }} onClick={(e)=>deleteAccount(e)}>{t("profile.deleteAccount.deleteConfirm")}</Button>
                                         {/* </Box> */}
                                         
                                     </DialogActions>
