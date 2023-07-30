@@ -23,6 +23,7 @@ import { LineChart,
          ResponsiveContainer,
          ScatterChart, Scatter
         } from 'recharts';
+import { useTranslation } from "react-i18next";
 
 
 function getCookiesDict() {
@@ -107,6 +108,7 @@ function makeBooleansRadialBar(data) {
 }
 
 export default function Statistics() {
+    const [t, i18n] = useTranslation("global");
     const[monthRecords, setMonthRecords] = React.useState([]);
     const[allAvgs, setAllAvgs] = React.useState({});
     const[showAvg, setShowAvg] = React.useState(false);
@@ -186,22 +188,22 @@ export default function Statistics() {
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Paper sx={{ width: '100%', backgroundColor: '#D9D3E4'}}>
                                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                                <Tab label="Monthly Quality" {...a11yProps(0)} />
-                                <Tab label="Monthly Efficiency" {...a11yProps(1)} />
-                                <Tab label="Monthly Falling Asleep Time" {...a11yProps(2)} />
-                                <Tab label="Times" {...a11yProps(3)} />
+                                <Tab label={t("stats.monthlyQuality")} {...a11yProps(0)} />
+                                <Tab label={t("stats.monthlyEfficiency")} {...a11yProps(1)} />
+                                <Tab label={t("stats.monthlyFallingTime")} {...a11yProps(2)} />
+                                <Tab label={t("stats.times")} {...a11yProps(3)} />
                                 </Tabs>
                             </Paper>
                             
                         </Box>
                         <CustomTabPanel value={value} index={0}>
-                            {makeLineGraph(monthRecords, "date", 'quality', [0,5], 6, showAvg, allAvgs.quality)}
+                            {makeLineGraph(monthRecords, t("stats.date"), t("stats.quality"), [0,5], 6, showAvg, allAvgs.quality)}
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={1}>
-                            {makeLineGraph(monthRecords, "date", 'efficiency', [0,100], 6, showAvg, allAvgs.efficiency)}
+                            {makeLineGraph(monthRecords, t("stats.date"), t("stats.efficiency"), [0,100], 6, showAvg, allAvgs.efficiency)}
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={2}>
-                            {makeLineGraph(monthRecords, "date", 'fallTime', [0,30], 6, showAvg, allAvgs.fallTime)}
+                            {makeLineGraph(monthRecords, t("stats.date"), t("stats.fallTime"), [0,30], 6, showAvg, allAvgs.fallTime)}
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={3}>
                             {/* {makeLineGraph(monthRecords, "date", 'upTime', [0,24], 4, showAvg)} */}
@@ -213,11 +215,11 @@ export default function Statistics() {
                                                 
                                                 <ScatterChart margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
                                                     <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-                                                    <XAxis stroke={'white'} type="category" dataKey={"date"} allowDuplicatedCategory={false}/>
-                                                    <YAxis yAxisId='upT' stroke={'white'} type="number" dataKey={"upTime"} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
-                                                    <YAxis hide={true} yAxisId='downT' stroke={'white'} type="number" dataKey={"downTime"} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
-                                                    <YAxis hide={true} yAxisId='wakeT' stroke={'white'} type="number" dataKey={"wakeTime"} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
-                                                    <YAxis hide={true} yAxisId='sleepT' stroke={'white'} type="number" dataKey={"sleepTime"} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <XAxis stroke={'white'} type="category" dataKey={t("stats.date")} allowDuplicatedCategory={false}/>
+                                                    <YAxis yAxisId='upT' stroke={'white'} type="number" dataKey={t("stats.upTime")} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <YAxis hide={true} yAxisId='downT' stroke={'white'} type="number" dataKey={t("stats.downTime")} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <YAxis hide={true} yAxisId='wakeT' stroke={'white'} type="number" dataKey={t("stats.upTime")} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <YAxis hide={true} yAxisId='sleepT' stroke={'white'} type="number" dataKey={t("stats.sleepTime")} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
                                                     <Tooltip/>
                                                     <Scatter yAxisId='upT' name="Up Time" data={monthRecords} shape={<UpShape />}/>
                                                     <Scatter yAxisId='downT' name="Down Time" data={monthRecords} shape={<DownShape />}/>

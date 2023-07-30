@@ -11,6 +11,7 @@ import {isMobile} from 'react-device-detect';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { useTranslation } from "react-i18next";
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import axios from "axios";
@@ -32,21 +33,22 @@ function getCookiesDict() {
 function CreateRem() {
     const today = dayjs();
     const [Carrier, setCarrier] = useState("none");
+    const [t, i18n] = useTranslation("global");
     const [ReminderType, setRemType] = useState("Bedtime Reminder");
     //const [ReminderTime, setRemTime] = useState('');
     const[ReminderTime, setRemTime] = React.useState(today.set('hour', 22).set('minute',  30).set('second', 0));
     const [Timezone, setTimezone] = useState("Pacific");
-    const daysOfWeek = [{day: "Sun"}, {day:"Mon"}, {day:"Tues"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}];
+    const daysOfWeek = [{day: t("reminder.sun")}, {day:t("reminder.mon")}, {day:t("reminder.tue")}, {day:t("reminder.wed")}, {day:t("reminder.thu")}, {day:t("reminder.fri")}, {day:t("reminder.sat")}];
     const [checkedState, setCheckedState] = useState(
         [false, false, false, false, false, false, false]
     );
     const [RemTypeErrMsg, setRemTypeErrMsg] = useState("");
-    const reminderTypeErrMsg = "Please specify a type of reminder to complete creation.";
+    const reminderTypeErrMsg = t("reminder.reminderTypeErrMsg");
     const [daysInputErrMsg, setDaysErrMsg] = useState("");
-    const daysErrMsg = "You must select at least one day for your reminder.";
+    const daysErrMsg = t("reminder.daysErrMsg");
     const [timeErrMsg, setRemTimeErrMsg] = useState("");
-    const emptyTimeInputMsg = "You must input a time to trigger the reminder.";
-    const badTimeInputFormat = "Please input time in the following format; e.g. 10:45PM, 8:00AM"
+    const emptyTimeInputMsg = t("reminder.emptyTimeInputMsg");
+    const badTimeInputFormat = t("reminder.badTimeInputFormat");
     const navigate = useNavigate();
 
     //handleChange() method for Carrier
@@ -207,15 +209,15 @@ function CreateRem() {
                         padding: '10px',
                         textAlign: 'center'}}
                         >
-                        Create a Reminder
+                        {t("reminder.title")}
                     </Typography>
                     {/* Carrier Selection */}
                     <Box display="flex" justifyContent="center" alignContent={'center'} >
                         <FormControl
                         sx={{ width:'70%', marginTop: '10pt'}}>
-                            <InputLabel sx={{ color: 'black'}} color="secondary" >To enable SMS notifications, please select your carrier</InputLabel>
+                            <InputLabel sx={{ color: 'black'}} color="secondary" >{t("reminder.carrierPrompt")}</InputLabel>
                             <Select labelId="Carrier Type" id="carrier-type" value={Carrier} label="To enable SMS notifications, please select your carrier" onChange={(e) => handleOnChangeCarrier(e.target.value)}>
-                                <MenuItem value="none">No thanks, I prefer email notifications</MenuItem>
+                                <MenuItem value="none">{t("reminder.emailPrefered")}</MenuItem>
                                 <MenuItem value="AT&T">AT&T</MenuItem>
                                 <MenuItem value="Boost Mobile">Boost Mobile</MenuItem>
                                 <MenuItem value="Consumer Cellular">Consumer Cellular</MenuItem>
@@ -235,10 +237,10 @@ function CreateRem() {
                     <Box display="flex" justifyContent="center" alignContent={'center'} >
                         <FormControl
                         sx={{ width:'70%', marginTop: '10pt'}}>
-                            <InputLabel sx={{ color: 'black'}} color="secondary" >What type of reminder do you want?</InputLabel>
+                            <InputLabel sx={{ color: 'black'}} color="secondary" >{t("reminder.reminderTypePrompt")}</InputLabel>
                             <Select labelId="Reminder Type" id="reminder-type" value={ReminderType} label="What type of reminder do you want?" onChange={(e) => handleOnChangeRemType(e.target.value)} >
-                                <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
-                                <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
+                                <MenuItem value="Bedtime Reminder">{t("reminder.bedtimeReminder")}</MenuItem>
+                                <MenuItem value="Sleep Hygiene Reminder">{t("reminder.sleepHygieneReminder")}</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
@@ -252,17 +254,17 @@ function CreateRem() {
                         color: 'black',
                         paddingTop: '10px',
                         textAlign: 'center'}}>
-                        On which day(s) should this reminder be triggered?
+                        {t("reminder.triggerDaysPrompt")}
                     </Typography>
                     <Box display="flex" justifyContent="center" alignContent={'center'} >
                         <FormGroup  sx={{ '& .MuiFormControlLabel-root': { margin: 0 } }} style={{input: {boxSizing: 'border-box'}}} row={ true}>
-                            <FormControlLabel  key={checkedState[0]} control={<Checkbox checked={checkedState[0]} onClick={() => handleOnChangeCB(0)}/>} labelPlacement={"bottom"} label='Sun' sx={{ m: 1 }}/>
-                            <FormControlLabel control={<Checkbox checked={checkedState[1]} onClick={() => handleOnChangeCB(1)}/>} labelPlacement={"bottom"} label='Mon' sx={{ m: 1 }}/>
-                            <FormControlLabel control={<Checkbox checked={checkedState[2]} onChange={() => handleOnChangeCB(2)}/>} labelPlacement={"bottom"} label='Tue' sx={{ m: 1 }}/>
-                            <FormControlLabel control={<Checkbox checked={checkedState[3]} onChange={() => handleOnChangeCB(3)}/> } labelPlacement={"bottom"} label='Wed' sx={{ m: 1 }}/>
-                            <FormControlLabel control={<Checkbox checked={checkedState[4]} onChange={() => handleOnChangeCB(4)}/>} labelPlacement={"bottom"} label='Thu' sx={{ m: 1 }}/>
-                            <FormControlLabel control={<Checkbox checked={checkedState[5]} onChange={() => handleOnChangeCB(5)}/>} labelPlacement={"bottom"} label='Fri' sx={{ m: 1 }}/>
-                            <FormControlLabel control={<Checkbox checked={checkedState[6]} onChange={() => handleOnChangeCB(6)}/>} labelPlacement={"bottom"} label='Sat' sx={{ m: 1 }}/>
+                        <FormControlLabel  key={checkedState[0]} control={<Checkbox checked={checkedState[0]} onClick={() => handleOnChangeCB(0)}/>} labelPlacement={"bottom"} label={t("reminder.sun")} sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[1]} onClick={() => handleOnChangeCB(1)}/>} labelPlacement={"bottom"} label={t("reminder.mon")} sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[2]} onChange={() => handleOnChangeCB(2)}/>} labelPlacement={"bottom"} label={t("reminder.tue")} sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[3]} onChange={() => handleOnChangeCB(3)}/> } labelPlacement={"bottom"} label={t("reminder.wed")} sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[4]} onChange={() => handleOnChangeCB(4)}/>} labelPlacement={"bottom"} label={t("reminder.thu")} sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[5]} onChange={() => handleOnChangeCB(5)}/>} labelPlacement={"bottom"} label={t("reminder.fri")} sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[6]} onChange={() => handleOnChangeCB(6)}/>} labelPlacement={"bottom"} label={t("reminder.sat")} sx={{ m: 1 }}/>
                         </FormGroup>
                     </Box>
 
@@ -273,19 +275,19 @@ function CreateRem() {
                     <Grid container direction={'row'} justifyContent={'center'}>
                         <FormControl
                         sx={{ width:'30%', marginTop: '10pt', marginRight: '5pt'}}>
-                            <InputLabel shrink={true} sx={{ color: 'black'}} color="secondary" >Reminder time</InputLabel>
+                            <InputLabel shrink={true} sx={{ color: 'black'}} color="secondary" >{t("reminder.reminder-time")}</InputLabel>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <TimePicker label={'Reminder time'} value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
                             </LocalizationProvider>
                         </FormControl>
                         <FormControl
                         sx={{ width:'30%', marginTop: '10pt', marginLeft: '5pt'}}>
-                            <InputLabel sx={{ color: 'black'}} color="secondary" >Timezone</InputLabel>
+                            <InputLabel sx={{ color: 'black'}} color="secondary" >{t("reminder.timezone")}</InputLabel>
                             <Select labelId="Timezone" id="Timezone" value={Timezone} label="Timezone" onChange={(e) => handleOnChangeTimezone(e.target.value)}>
-                                <MenuItem value="Pacific">Pacific</MenuItem>
-                                <MenuItem value="Mountain">Mountain</MenuItem>
-                                <MenuItem value="Central">Central</MenuItem>
-                                <MenuItem value="Eastern">Eastern</MenuItem>
+                                <MenuItem value="Pacific">{t("reminder.pacific")}</MenuItem>
+                                <MenuItem value="Mountain">{t("reminder.mountain")}</MenuItem>
+                                <MenuItem value="Central">{t("reminder.central")}</MenuItem>
+                                <MenuItem value="Eastern">{t("reminder.eastern")}</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -295,10 +297,10 @@ function CreateRem() {
                         {/* Submitting and Canceling */}
                         <Box display="flex" justifyContent="center" paddingTop='20pt'>
                         <Box flexGrow={1} paddingRight="5px">
-                            <Button href="/profilepage" variant='outlined' fullWidth>Cancel</Button>
+                            <Button href="/profilepage" variant='outlined' fullWidth>{t("reminder.cancel")}</Button>
                         </Box>
                         <Box flexGrow={1} paddingLeft="5px">
-                            <Button variant='contained' endIcon={<AddAlertOutlinedIcon/>} onClick={handleCreateReminder} fullWidth>Create</Button>
+                            <Button variant='contained' endIcon={<AddAlertOutlinedIcon/>} onClick={handleCreateReminder} fullWidth></Button>
                         </Box>
                         </Box>
                     </Typography>

@@ -265,14 +265,14 @@ function CreateAccount() {
             
         }}>
             <Paper sx={{backgroundColor: '#D9D3E4',  minWidth: isMobile ? '300px' : '400px', maxWidth: isMobile ? '350px' : '500px', padding: 2, borderRadius: '1rem'}} square={false} elevation={3} style={{textAlign: 'center'}}> 
-                <img onMouseOut={() => setLogoSize('100%')} onMouseOver={() => {setLogoSize('120%')}} onClick={() => navigate('/')} src={logo} title='Back to Language Select' alt="Sleep-Medic Logo" style={{height: "8rem", width: "auto", scale: logoSize}}/>
+                <img onMouseOut={() => setLogoSize('100%')} onMouseOver={() => {setLogoSize('120%')}} onClick={() => navigate('/')} src={logo} title={t("createAccount.logoTitle")} alt="Sleep-Medic Logo" style={{height: "8rem", width: "auto", scale: logoSize}}/>
        
                 <Typography variant="h4" component="div"
                 sx={{flexGrow: 1,
                 fontWeight: 'bold',
                 color: '#black', 
                 textAlign: 'center'}}>
-                    Create an Account
+                    {t("createAccount.title")}
                 </Typography>
                         
                 {next ? (
@@ -282,7 +282,7 @@ function CreateAccount() {
                             <FormControl 
                             error={!firstError}
                             sx={{width: '95%', marginTop: '10pt'}}>
-                                <InputLabel>First Name</InputLabel>
+                                <InputLabel>{t("createAccount.firstName")}</InputLabel>
                                 <OutlinedInput
                                     
                                     type="text"
@@ -295,14 +295,14 @@ function CreateAccount() {
                                         setFirstName(e.target.value)}  
                                     onBlur={e => checkFirst(e)}
                                 />
-                                <FormHelperText sx={{ margin: 0 }}>{firstError ? null: 'Enter your first name'}</FormHelperText>
+                                <FormHelperText sx={{ margin: 0 }}>{firstError ? null: t("createAccount.firstErr")}</FormHelperText>
                             </FormControl>
                         </Grid>
                         <Grid item xs>
                             <FormControl 
                             error={!lastError}
                             sx={{width: '95%', marginTop: '10pt'}}>
-                                <InputLabel>Last Name</InputLabel>
+                                <InputLabel>{t("createAccount.lastName")}</InputLabel>
                                 <OutlinedInput
                                     
                                     type="text"
@@ -315,7 +315,7 @@ function CreateAccount() {
                                         setLastName(e.target.value)}  
                                     onBlur={e => checkLast(e)}
                                 />
-                                <FormHelperText sx={{ margin: 0 }}>{lastError ? null: 'Enter your last name'}</FormHelperText>
+                                <FormHelperText sx={{ margin: 0 }}>{lastError ? null: t("createAccount.lastErr")}</FormHelperText>
                             </FormControl>
                         </Grid>
                     </Grid>
@@ -324,7 +324,7 @@ function CreateAccount() {
                             <FormControl 
                             error={!birthError}
                             sx={{width: '95%', marginTop: '10pt'}}>
-                                <InputLabel shrink={true}>Birthdate</InputLabel>
+                                <InputLabel shrink={true}>{t("createAccount.birthdate")}</InputLabel>
                                 <OutlinedInput
                                     
                                     type="date"
@@ -337,14 +337,14 @@ function CreateAccount() {
                                         setBirth(e.target.value)}  
                                     onBlur={e => checkBirth(e)}
                                 />
-                                <FormHelperText sx={{ margin: 0 }}>{birthError ? null: 'Enter a valid birthdate'}</FormHelperText>
+                                <FormHelperText sx={{ margin: 0 }}>{birthError ? null: t("createAccount.birthdateErr")}</FormHelperText>
                             </FormControl>
                         </Grid>
                         <Grid item xs>
                             <FormControl 
                             error={!sexError}
                             sx={{width: '95%', marginTop: '10pt'}}>
-                                <InputLabel sx={{ color: 'black'}} color="secondary" id="sex-label">Sex</InputLabel>
+                                <InputLabel sx={{ color: 'black'}} color="secondary" id="sex-label">{t("createAccount.sex")}</InputLabel>
                                 <Select
                                     labelId="Sex"
                                     required
@@ -357,112 +357,16 @@ function CreateAccount() {
                                     sx={{ background: 'white', input: { color: 'black' }}}
                                     >
                                     <MenuItem value="">
-                                        <em>None</em>
+                                        <em>{t("createAccount.none")}</em>
                                     </MenuItem>
-                                    <MenuItem value={"M"}>Male</MenuItem>
-                                    <MenuItem value={"F"}>Female</MenuItem>
-                                    <MenuItem value={"O"}>Other</MenuItem>
+                                    <MenuItem value={"M"}>M{t("createAccount.male")}</MenuItem>
+                                    <MenuItem value={"F"}>{t("createAccount.female")}</MenuItem>
+                                    <MenuItem value={"O"}>{t("createAccount.other")}</MenuItem>
                                 </Select>
                                 <FormHelperText sx={{ margin: 0 }}>{sexError ? null: 'Select your sex'}</FormHelperText>
                             </FormControl>
                         </Grid>                
                     </Grid>
-                    <Typography 
-                    variant="h6" 
-                    fontWeight={'bold'}
-                    paddingTop={'10px'}
-                    component="div" 
-                    width={'95%'}
-                    sx={{flexGrow: 1,color: 'black', textAlign: 'center'}}>
-                        Please answer the following to the best of your knowledge.
-                    </Typography>
-
-                    <Typography 
-                    variant="h7" 
-                    fontWeight={'bold'}
-                    component="div" 
-                    width={'95%'}
-                    sx={{flexGrow: 1,color: 'black', textAlign: 'center'}}>
-                        On average:
-                    </Typography>
-                    
-                    
-                        
-                    <Typography 
-                    variant="h7" 
-                    component="div" 
-                    width={'95%'}
-                    sx={{flexGrow: 1,color: 'black'}}>
-                        How many hours do you sleep each night? 
-                        <select value={q1} onChange={(e) => setQ1(e.target.value)} style={{width: "5rem"}}>
-                        <option selected value={""}>None</option>
-                        <option value={"3-4"}>3-4 Hours</option>
-                        <option value={"5-6"}>5-6 Hours</option>
-                        <option value={"7-8"}>7-8 Hours</option>
-                        <option value={"9+"}>9+ Hours</option>
-                    </select> 
-                    </Typography>
-
-                    <Typography 
-                    variant="h7" 
-                    component="div" 
-                    width={'95%'}
-                    sx={{flexGrow: 1,color: 'black'}}>
-                        How many times do you wake up each night? 
-                        <select value={q1} onChange={(e) => setQ1(e.target.value)} style={{width: "5rem"}}>
-                            <option selected value={""}>None</option>
-                            <option value={"3-4"}>3-4 Hours</option>
-                            <option value={"5-6"}>5-6 Hours</option>
-                            <option value={"7-8"}>7-8 Hours</option>
-                            <option value={"9+"}>9+ Hours</option>
-                        </select> 
-                    </Typography>
-
-                    <Typography 
-                    variant="h7" 
-                    component="div" 
-                    width={'95%'}
-                    sx={{flexGrow: 1,color: 'black'}}>
-                        How long do you spend trying to fall asleep?
-                        <select value={q3} onChange={(e) => setQ3(e.target.value)} style={{width: "5rem"}}>
-                            <option selected value={""}>None</option>
-                            <option value={"30-1"}>30 to an Hour</option>
-                            <option value={"1-2"}>1-2 Hours</option>
-                            <option value={"3-4"}>3-4 Hours</option>
-                            <option value={"4+"}>4+ Hours</option>
-                        </select>
-                    </Typography>
-
-                    <Typography 
-                    variant="h7" 
-                    component="div" 
-                    width={'95%'}
-                    sx={{flexGrow: 1,color: 'black'}}>
-                        What time do you go to bed?
-                        <select value={q4} onChange={(e) => setQ4(e.target.value)} style={{maxWidth: "7rem"}}>
-                            <option selected value={""}>None</option>
-                            <option value={"8pm"}>8pm</option>
-                            <option value={"9-10pm"}>9-10pm</option>
-                            <option value={"11-12am"}>11-12am</option>
-                            <option value={"1am+"}>1am or Later</option>
-                        </select>
-                    </Typography>
-                        
-                    <Typography 
-                    variant="h7" 
-                    component="div" 
-                    width={'95%'}
-                    sx={{flexGrow: 1,color: 'black'}}>
-                        What time do you wake up?
-                        <select value={q5} onChange={(e) => setQ5(e.target.value)} style={{maxWidth: "7rem"}}>
-                            <option selected value={""}>None</option>
-                            <option value={"5am"}> 5am</option>
-                            <option value={"6-7am"}>6-7am</option>
-                            <option value={"8-9am"}>8-9am</option>
-                            <option value={"10-11am"}>10-11am</option>
-                            <option value={"12pm+"}>12pm or Later</option>
-                        </select>
-                    </Typography>
                                       
                     <Box display="flex" alignItems="center" justifyContent="center" paddingTop='10px'>
                         <Button endIcon={<PersonAddAltOutlinedIcon/>} onClick={(e) => {
@@ -476,7 +380,7 @@ function CreateAccount() {
                         } } //todo add translation
             
                         type="submit" variant="contained" color="primary">
-                            Create Account 
+                            {t("createAccount.createButton")}
                         </Button>
                     </Box>
                         
@@ -490,7 +394,7 @@ function CreateAccount() {
                         error={(!phoneFree || !phoneError)} 
                         sx={{width: '80%', marginTop: '10pt'}}
                         >
-                            <InputLabel>Phone Number</InputLabel>
+                            <InputLabel>{t("createAccount.phonenumber")}</InputLabel>
                             <OutlinedInput
                                 type="tel"
                                 id="number"
@@ -510,8 +414,8 @@ function CreateAccount() {
                                     checkPhone(e);
                                 }}
                             />
-                            <FormHelperText sx={{ margin: 0 }}>{phoneFree ? null: 'This phone number already being used!'}</FormHelperText>
-                            <FormHelperText sx={{ margin: 0 }}>{phoneError ? null: 'This phone number is invalid'}</FormHelperText>
+                            <FormHelperText sx={{ margin: 0 }}>{phoneFree ? null: t("createAccount.phoneFreeErr")}</FormHelperText>
+                            <FormHelperText sx={{ margin: 0 }}>{phoneError ? null: t("createAccount.phoneErr")}</FormHelperText>
                         </FormControl>
                     </Grid>
 
@@ -532,8 +436,8 @@ function CreateAccount() {
                                     setEmail(e.target.value)}  
                                 onBlur={e => checkEmail(e)}
                             />
-                            <FormHelperText sx={{ margin: 0 }}>{emailFree ? null: 'This email is already being used!'}</FormHelperText>
-                            <FormHelperText sx={{ margin: 0 }}>{emailError ? null: 'This email is invalid'}</FormHelperText>
+                            <FormHelperText sx={{ margin: 0 }}>{emailFree ? null: t("createAccount.emailFreeErr")}</FormHelperText>
+                            <FormHelperText sx={{ margin: 0 }}>{emailError ? null: t("createAccount.emailErr")}</FormHelperText>
                         </FormControl>
                     </Grid>
 
@@ -541,7 +445,7 @@ function CreateAccount() {
                         <FormControl 
                         error={(!confirmError || !complexError)}
                         sx={{width: '80%'}}>
-                            <InputLabel>Password</InputLabel>
+                            <InputLabel>{t("createAccount.password")}</InputLabel>
                             <OutlinedInput
                                 type="password"
                                 id="password"
@@ -560,7 +464,7 @@ function CreateAccount() {
                         <FormControl 
                         error={(!confirmError || !complexError)}
                         sx={{width: '80%'}}>
-                            <InputLabel> Confirm Password</InputLabel>
+                            <InputLabel>{t("createAccount.confirmPassword")}</InputLabel>
                             <OutlinedInput
                                 type="password"
                                 id="confirmPassword"
@@ -572,10 +476,9 @@ function CreateAccount() {
                                     setConfirmation(e.target.value)}  
                                 onBlur={e => checkMatch(e)}
                             />
-                            <FormHelperText sx={{ margin: 0 }}>{confirmError ? null: 'These passwords do not match!'}</FormHelperText>
+                            <FormHelperText sx={{ margin: 0 }}>{confirmError ? null: t("createAccount.confirmErr")}</FormHelperText>
                             <FormHelperText sx={{ margin: 0 }}>{complexError ? null: <Typography textAlign={'center'}>
-                            Ensure your password is more than 8 characters long 
-                            and contains a lower & Upper case letter, number, and special character (ex. !@#$%&)
+                            {t("createAccount.complexErr")}
                         </Typography>}</FormHelperText>
                         </FormControl>
                     </Grid>
@@ -590,11 +493,11 @@ function CreateAccount() {
                             }
                         }}  //todo add translation
                         type="submit" variant="contained" color="primary">
-                            Continue 
+                            {t("createAccount.continue")}
                         </Button>
                     </Box>
                     
-                    <Link to="/login">Or login to an existing account</Link>
+                    <Link to="/login">{t("createAccount.or-login")}</Link>
                 
                 </Grid>
                 

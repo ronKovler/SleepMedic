@@ -7,363 +7,723 @@
       "spanish": "Español",
       "next": "Empezar"
     },
+    "language-select": {
+      "en": "EN",
+      "es": "ES"
+    },  
     "home": {
       "7-day": {
-        "title": "Promedios de 7 días",
-        "time-spent-falling": "Tiempo para conciliar el sueño:",
-        "time-spent-awake": "Tiempo despierto durante la noche:",
-        "quality": "Calidad:",
-        "hours-slept": "Horas dormidas:"
+          "title": "Promedios de 7 Días",
+          "time-spent-falling": "Tiempo para dormirse:",
+          "time-spent-awake": "Tiempo despierto:",
+          "quality": "Calidad:",
+          "hours-slept": "Horas de sueño:"
       },
       "effAdvice": {
-        "1": "Tu eficiencia del sueño está lejos del 90%, te recomendamos mantenerla cerca del 90%.",
-        "2": "¡Buen trabajo, sigue así!"
+          "1": "Tu eficiencia de sueño está muy lejos del 90%, recomendamos mantenerla cerca del 90%.",
+          "2": "¡Buen trabajo, sigue así!"
       },
       "viewInsight": "Ver Información",
-      "insightMessage": "Obtén información valiosa sobre tus patrones de sueño visualizando tus hábitos. Explóralos en la página de Información.",
+      "insightMessage": "Obtén información valiosa sobre tus patrones de sueño visualizando tus hábitos. Explora en la página de Información.",
       "weekly-advices": {
-        "title": "Consejos Semanales",
-        "1": "Ya quiero tomar una siesta mañana."
+          "title": "Consejos Semanales",
+          "1": "Ya quiero echarme una siesta mañana."
       },
       "new-record": "Nuevo Registro",
       "input-prompt": {
-        "new-record": "Para registrar un nuevo sueño, ingresa tus datos diarios de sueño a continuación.",
-        "edit-record": "Para actualizar un registro de sueño, modifica tus respuestas según sea necesario.",
-        "fall-time": "¿Cuánto tiempo tardaste en conciliar el sueño? (min)",
-        "awake-time": "¿Te despertaste durante la noche? En caso afirmativo, ¿por cuánto tiempo? (min)",
-        "down-time": "¿A qué hora te acostaste?",
-        "sleep-time": "¿A qué hora te dormiste?",
-        "wake-time": "¿A qué hora te despertaste?",
-        "up-time": "¿A qué hora te levantaste?",
-        "quality": "Calidad"
+          "new-record": "Para crear un nuevo registro, por favor completa la siguiente información.",
+          "edit-record": "Para actualizar un registro de sueño, modifica tus respuestas según sea necesario.",
+          "fall-time": "¿Cuánto tiempo tomó quedarte dormido/a? (min)",
+          "awake-time": "¿Te despertaste durante la noche? En caso afirmativo, ¿por cuánto tiempo? (min)",
+          "down-time": "¿A qué hora te metiste en la cama?",
+          "sleep-time": "¿A qué hora te quedaste dormido/a?",
+          "wake-time": "¿A qué hora te despertaste?",
+          "up-time": "¿A qué hora te levantaste?",
+          "quality": "Calidad"
       },
       "sleep-journal": {
-        "physical-activity": "¿Realizaste alguna actividad física hoy?",
-        "naps": "¿Tomaste siestas durante el día?",
-        "alcohol": "¿Consumiste alcohol menos de 6 horas antes de dormir?",
-        "caffeine": "¿Consumiste cafeína menos de 6 horas antes de dormir?",
-        "electronics": "¿Usaste el teléfono, la tableta o miraste televisión en la cama?",
-        "difficulty-falling": "¿Tuviste dificultades para conciliar el sueño?",
-        "difficulty-staying": "¿Tuviste dificultades para permanecer dormido?",
-        "racing-thoughts": "¿Tuviste pensamientos acelerados mientras estabas en la cama?",
-        "dreams": "¿Tuviste algún sueño?"
+          "physical-activity": "¿Realizaste alguna actividad física hoy?",
+          "naps": "¿Tomaste alguna siesta durante el día?",
+          "alcohol": "¿Consumiste alcohol menos de 6 horas antes de acostarte?",
+          "caffeine": "¿Consumiste cafeína menos de 6 horas antes de acostarte?",
+          "electronics": "¿Usaste el teléfono, la tablet o viste televisión en la cama?",
+          "difficulty-falling": "¿Tuviste dificultades para conciliar el sueño?",
+          "difficulty-staying": "¿Tuviste dificultades para permanecer dormido/a?",
+          "racing-thoughts": "¿Tuviste pensamientos acelerados mientras estabas en la cama?",
+          "dreams": "¿Tuviste algún sueño?"
       },
       "viewLessons": "Ver Lecciones",
-      "education-progress": "Progreso en la Educación",
+      "education-progress": "Progreso de Educación",
       "cancel": "Cancelar",
-      "submit": "Enviar",
+      "create": "Crear",
       "update": "Actualizar"
+  },  
+  "login": {
+        "title": "Iniciar sesión",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "remember-me": "Recordarme",
+        "forgot-password": {
+            "title": "Olvidé mi contraseña",
+            "instructions": "Por favor ingresa el correo electrónico y la fecha de nacimiento asociados con tu cuenta para iniciar el proceso de recuperación de contraseña.",
+            "email": "Dirección de correo electrónico",
+            "dob": "Fecha de nacimiento",
+            "cancel": "Cancelar",
+            "recover": "Recuperar contraseña",
+            "thank-you": "Gracias",
+            "final-message": "Recibirás un correo electrónico pronto si existe una cuenta con el correo electrónico y fecha de nacimiento proporcionados.",
+            "confirm": "Confirmar"
+        },
+        "or-create": "o crea una cuenta",
+        "login": "Iniciar sesión"
     },
-    "login": {
-      "title": "Iniciar Sesión",
-      "email": "Correo electrónico",
-      "password": "Contraseña",
-      "remember-me": "Recordarme",
-      "forgot-password": {
-        "title": "Olvidé mi Contraseña",
-        "instructions": "Por favor, ingresa el correo electrónico y tu fecha de nacimiento asociada a tu cuenta para iniciar el proceso de recuperación de contraseña.",
-        "email": "Dirección de Correo Electrónico",
-        "dob": "Fecha de Nacimiento",
+    "createAccount": {
+        "title": "Crear cuenta",
+        "logoTitle": "Volver a seleccionar idioma",
+        "firstName": "Nombre",
+        "firstErr": "Ingresa tu nombre",
+        "lastName": "Apellido",
+        "lastErr": "Ingresa tu apellido",
+        "birthdate": "Fecha de nacimiento",
+        "birthdateErr": "Ingresa una fecha de nacimiento válida",
+        "sex": "Sexo",
+        "none": "Ninguno",
+        "male": "Masculino",
+        "female": "Femenino",
+        "other": "otro",
+        "sexErr": "Selecciona tu sexo",
+        "createButton": "Crear cuenta",
+        "phonenumber": "Número de teléfono",
+        "phoneFreeErr": "¡Este número de teléfono ya está en uso!",
+        "phoneErr": "Este número de teléfono no es válido",
+        "email": "Correo electrónico",
+        "emailFreeErr": "Este correo electrónico ya está en uso!",
+        "emailErr": "Este correo electrónico no es válido",
+        "password": "Contraseña",
+        "confirmPassword": "Confirmar contraseña",
+        "confirmErr": "¡Las contraseñas no coinciden!",
+        "complexErr": "Asegúrate de que tu contraseña tenga más de 8 caracteres y contenga letras mayúsculas y minúsculas, números y caracteres especiales (por ejemplo, !@#$%&)",
+        "continue": "Continuar",
+        "or-login": "O inicia sesión en una cuenta existente"
+    },
+    "editGoals": {
+        "title": "Editar tus metas",
+        "create-reminder": "Crear un recordatorio",
+        "home": "Inicio"
+    },
+    "notificationPage": {
+        "title": "Preferencias de notificación",
+        "optInOut": "Activar/Desactivar",
+        "back": "Atrás"
+    },
+    "reminder": {
+        "title": "Crear un recordatorio",
+        "carrierPrompt": "Para habilitar las notificaciones por SMS, selecciona tu proveedor de telefonía",
+        "emailPrefered": "No, gracias. Prefiero notificaciones por correo electrónico",
+        "reminderTypeErrMsg": "Por favor especifica un tipo de recordatorio para completar la creación.",
+        "daysErrMsg": "Debes seleccionar al menos un día para el recordatorio.",
+        "emptyTimeInputMsg": "Debes ingresar una hora para activar el recordatorio.",
+        "badTimeInputFormat": "Por favor ingresa la hora en el siguiente formato; por ejemplo, 10:45PM, 8:00AM",
+        "reminderTypePrompt": "¿Qué tipo de recordatorio deseas?",
+        "bedtimeReminder": "Recordatorio de hora de dormir",
+        "sleepHygieneReminder": "Recordatorio de higiene del sueño",
+        "triggerDaysPrompt": "¿En qué día(s) se debe activar este recordatorio?",
+        "sun": "Dom",
+        "mon": "Lun",
+        "tue": "Mar",
+        "wed": "Mié",
+        "thu": "Jue",
+        "fri": "Vie",
+        "sat": "Sáb",
+        "reminder-time": "Hora del recordatorio",
+        "timezone": "Zona horaria",
+        "pacific": "Pacífico",
+        "mountain": "Montaña",
+        "central": "Central",
+        "eastern": "Oriental",
         "cancel": "Cancelar",
-        "recover": "Recuperar Contraseña",
-        "thank-you": "Gracias",
-        "final-message": "Recibirás un correo electrónico pronto si existe una cuenta con el correo electrónico y la fecha de nacimiento proporcionados.",
-        "confirm": "Confirmar"
-      },
-      "or-create": "o crear una cuenta",
-      "login": "Iniciar Sesión"
+        "create": "Crear"
+    },
+    "stats": {
+        "date": "fecha",
+        "monthlyQuality": "Calidad mensual",
+        "quality": "calidad",
+        "monthlyEfficiency": "Eficiencia mensual",
+        "efficiency": "eficiencia",
+        "monthlyFallingTime": "Tiempo de conciliación mensual",
+        "fallTime": "Tiempo de conciliación",
+        "times": "Veces",
+        "downTime": "Tiempo en cama",
+        "upTime": "Hora de levantarse",
+        "sleepTime": "Hora de dormir"
+    },
+    "profile": {
+        "noReminders": "No tienes recordatorios, puedes crear uno a continuación.",
+        "bedtimeReminder": "Recordatorio de hora de dormir",
+        "sleepHygieneReminder": "Recordatorio de higiene del sueño",
+        "account&Details": "Cuenta y detalles",
+        "reminders": "Recordatorios",
+        "createReminder": "Crear recordatorio",
+        "dataExport": "Exportar datos",
+        "exportPrompt": "Puedes exportar tus registros de sueño a un archivo CSV para tu uso personal o para mostrarlo a un proveedor de salud. El archivo se generará automáticamente y se enviará al correo electrónico asociado a tu cuenta.",
+        "exportButton": "Exportar datos",
+        "accountDetails": "Detalles de la cuenta",
+        "accountDetailsPrompt": "Actualiza los detalles de tu cuenta a continuación.",
+        "changePasswordButton": "Cambiar contraseña",
+        "deletePrompt": "Eliminar permanentemente tu cuenta y todos los datos relacionados.",
+        "deleteAccountButton": "Eliminar cuenta",
+        "passwordReset": {
+            "title": "¡Restablecimiento de contraseña!",
+            "prompt": "Continúa disfrutando de nuestra aplicación.",
+            "continueButton": "Continuar",
+            "changePassword": "Cambiar contraseña",
+            "changePasswordPrompt": "Por favor ingresa tu nueva contraseña.",
+            "newPassword": "Nueva contraseña",
+            "confirmNewPassword": "Confirmar nueva contraseña",
+            "cancel": "Cancelar",
+            "changePasswordButton": "Cambiar contraseña"
+        },
+        "deleteAccount": {
+            "confirm": "Confirmación para eliminar la cuenta",
+            "confirmPrompt1": "¿Estás seguro de que deseas eliminar permanentemente tu",
+            "confirmPrompt2": "cuenta de SleepMedic?",
+            "cancel": "Cancelar",
+            "deleteConfirm": "Sí, eliminar permanentemente mi cuenta"
+        }
     },
     "education": {
-      "table-of-contents": "Tabla de Contenidos",
-      "dashboard": "Tablero de Control",
+      "table-of-contents": "Table of Contents",
+      "next": "Siguiente",
+      "back": "Atrás",
+      "dashboard": "Dashboard",
       "week1": {
         "title": "Semana 1",
         "day1": {
-          "title": "Día 1",
+          "title": "Día #1: Introducción",
           "lesson1": {
-            "title": "Lección 1",
-            "reading": "Lectura Lección 1"
+            "title": "Bienvenido(a) a la Terapia Cognitivo-Conductual Digital de Sleep-Medic",
+            "reading": "\nLa Terapia Cognitivo-Conductual Digital para el Insomnio (dCBT-i) es una forma moderna y accesible de terapia diseñada para ayudar a personas que tienen problemas para dormir. Sleep-Medic utiliza dCBT-i para ofrecer técnicas cognitivo-conductuales y mejorar tus patrones de sueño.\n\nEl objetivo principal de dCBT-I es empoderarte con herramientas prácticas y conocimientos para mejorar tu sueño según tus propios términos. El formato digital lo hace conveniente y flexible, permitiéndote acceder a los recursos cuando y donde desees. Mediante dCBT-i, puedes aprender a manejar pensamientos acelerados, reducir la ansiedad relacionada con el sueño y adoptar hábitos de sueño más saludables.\n\nEs importante comprender que CBT-I no es una solución rápida o una cura mágica para el insomnio. Requiere esfuerzo y compromiso de tu parte para realizar cambios duraderos en tus hábitos de sueño. CBT-I tampoco consiste en tomar medicamentos para forzar el sueño, sino en aprender habilidades para mejorar el sueño de forma natural.\n\ndCBT-I combina terapia cognitiva y terapia conductual para abordar los pensamientos y comportamientos que pueden contribuir a tu insomnio."
           },
           "lesson2": {
-            "title": "Lección 2",
-            "reading": "Lectura Lección 2"
+            "title": "Terapia Cognitiva vs. Terapia Conductual",
+            "reading": "\nTerapia Cognitiva: Este aspecto te ayuda a reconocer y cambiar pensamientos negativos sobre el sueño. El programa digital proporcionará lecciones interactivas y ejercicios para cuestionar creencias poco útiles, como el miedo a no dormir o preocuparse por las consecuencias del insomnio.\n\nTerapia Conductual: dCBT-I se enfoca en modificar hábitos y comportamientos que pueden afectar tu sueño. El programa te guiará para establecer un horario de sueño consistente, crear una rutina relajante antes de acostarte y evitar actividades estimulantes antes de dormir (como usar dispositivos electrónicos)."
           },
           "lesson3": {
-            "title": "Lección 3",
-            "reading": "Lectura Lección 3"
-          }
-        },
-        "day2": {
-          "title": "Día 2",
+            "title": "PSQI e ISI Iniciales",
+            "reading": "\nLos cuestionarios de calidad del sueño PSQI (Índice de Calidad del Sueño de Pittsburgh) e ISI (Índice de Gravedad del Insomnio) juegan un papel crucial en la evaluación inicial de personas que experimentan problemas relacionados con el sueño.\nEstos cuestionarios se emplean al comienzo del programa para evaluar la gravedad del insomnio y la calidad general del sueño.\n\nEl PSQI examina diversos aspectos del sueño, como la duración del sueño, las interrupciones del sueño y la eficiencia del sueño, mientras que el ISI se centra específicamente en medir la gravedad de los síntomas del insomnio.\n\nAl administrar estos cuestionarios, los profesionales de la salud pueden obtener información valiosa sobre los patrones de sueño de los participantes, lo que les permite adaptar planes de tratamiento personalizados e intervenciones para abordar sus necesidades específicas de manera efectiva."
+          },
           "lesson4": {
-            "title": "Lección 4",
-            "reading": "Lectura Lección 4"
+            "title": "Registro del Sueño - Parte 1",
+            "reading": "\nSi estás lidiando con el insomnio, hay una herramienta sencilla que puede ayudarte a comprender mejor tus patrones de sueño y allanar el camino hacia un sueño mejor. Se llama Registro del Sueño y puede marcar una gran diferencia para mejorar tu sueño y bienestar general.\n\nUn Registro del Sueño es una forma sencilla y poderosa de hacer un seguimiento de tus actividades relacionadas con el sueño. Es como un diario donde registras información importante sobre tu sueño cada día. Al completar un Registro del Sueño regularmente, puedes monitorear la calidad de tu sueño, identificar patrones o desencadenantes que afectan tu sueño y trabajar para realizar cambios positivos. Como parte de Sleep-Medic, hemos incluido registros del sueño en la página de inicio. Por favor, tómate un momento para localizarlos."
           },
           "lesson5": {
-            "title": "Lección 5",
-            "reading": "Lectura Lección 5"
+            "title": "Registro del Sueño - Parte 2",
+            "reading": "\nLlevar un Registro del Sueño es fácil. Cada noche, antes de acostarte, tómate unos minutos para anotar la siguiente información:\n - Hora de Acostarse: La hora a la que te acuestas y tratas de dormir.\n - Tiempo para Conciliar el Sueño: Cuánto tiempo te lleva realmente quedarte dormido(a) después de acostarte.\n - Número de Veces Despierto(a): Cuántas veces te despiertas durante la noche.\n - Tiempo Total Despierto(a): El tiempo total que pasas despierto(a) durante la noche.\n - Hora de Despertar: La hora a la que te levantas por la mañana.\n - Calidad del Sueño: Califica la calidad de tu sueño.\n - Somnolencia Diurna: Qué tan somnoliento(a) te sientes durante el día en una escala del 1 al 5 (siendo 1 nada somnoliento(a) y 5 muy somnoliento(a)).\n - Factores Adicionales: Factores que podrían haber afectado tu sueño (por ejemplo, estrés, consumo de cafeína, ejercicio)."
           },
           "lesson6": {
-            "title": "Lección 6",
-            "reading": "Lectura Lección 6"
+            "title": "Registro del Sueño - Parte 3",
+            "reading": "\nLlevar un Registro del Sueño puede parecer sencillo, pero sus beneficios son significativos:\n - Comprender tus Patrones de Sueño: Al registrar constantemente tus actividades de sueño, puedes identificar patrones que afectan tu sueño, como ciertos hábitos, factores estresantes o actividades.\n - Identificar Problemas de Sueño: Un Registro del Sueño puede ayudarte a reconocer posibles problemas de sueño, como dificultad para conciliar el sueño o despertares frecuentes.\n - Guía para el Tratamiento: Si buscas ayuda de un profesional de la salud para tus problemas de sueño, un Registro del Sueño puede proporcionar información valiosa para orientar sus evaluaciones y recomendaciones de tratamiento.\n - Seguimiento del Progreso: A medida que realizas cambios para mejorar tu sueño, un Registro del Sueño puede ayudarte a rastrear tu progreso y ver cómo tus esfuerzos afectan la calidad de tu sueño con el tiempo.\n - Empoderamiento: Llevar un Registro del Sueño te empodera para tomar un papel activo en la mejora de tu sueño. Te brinda una mejor comprensión de tus patrones de sueño y te permite tomar decisiones informadas sobre tus hábitos de sueño."
+          },
+          "lesson7": {
+            "title": "Registro del Sueño - Parte 4",
+            "reading": "\nRecuerda, es esencial ser consistente en el registro de tus actividades de sueño durante algunas semanas para obtener una imagen más clara de tus patrones de sueño. Además, considera compartir tu Registro del Sueño con un profesional de la salud si continúas experimentando dificultades para dormir.\n\nCon el poder del conocimiento y las ideas proporcionadas por tu Registro del Sueño, puedes dar pasos hacia lograr un sueño mejor y disfrutar de días más energizados y satisfactorios."
           }
         },
+          "day2": {
+            "title": "Día #2: Impacto del Sueño",
+            "lesson1": {
+                "title": "¿Cuántas horas de sueño se necesitan?",
+                "reading": "\nEn promedio, los adultos necesitan alrededor de 7 a 9 horas de sueño cada noche. Sin embargo, las necesidades individuales de sueño pueden variar, y algunas personas pueden sentirse descansadas con un poco más o menos de sueño.\n\n¡Las personas con insomnio a menudo encuentran que necesitan menos horas de sueño que la persona promedio, y eso está bien!\n\nCada persona es diferente, y encontrar la cantidad adecuada de sueño que te deje sintiéndote renovado y alerta durante el día es esencial."
+            },
+            "lesson2": {
+                "title": "Beneficios del sueño",
+                "reading": "\nEl sueño es como magia para nuestro cuerpo y mente. Cuando dormimos lo suficiente, trae numerosos beneficios, tales como:\n - Restauración: El sueño permite que nuestros cuerpos descansen y se reparen, ayudándonos a recuperarnos de las actividades del día y recargar energías para el siguiente.\n\n - Mejora del estado de ánimo: Dormir lo suficiente puede mejorar nuestro estado de ánimo, haciéndonos sentir más felices y positivos.\n\n - Mayor concentración y enfoque: Una buena noche de sueño nos ayuda a estar alerta y concentrados durante el día, lo que facilita completar tareas y aprender cosas nuevas.\n\n - Mejora de la memoria: El sueño desempeña un papel crucial en la consolidación de recuerdos, ayudándonos a recordar información importante.\n\n - Sistema inmunológico saludable: Un cuerpo bien descansado tiene un sistema inmunológico más fuerte, mejor preparado para combatir infecciones y enfermedades."
+            },
+            "lesson3": {
+                "title": "Impacto en la salud de la falta de sueño",
+                "reading": "\nNo dormir lo suficiente puede tener consecuencias significativas para nuestra salud. Algunos de los impactos comunes de la falta de sueño incluyen:\n - Fatiga diurna: La falta de sueño puede causar somnolencia durante el día, lo que dificulta mantenerse despierto y realizar actividades diarias.\n - Mayor riesgo de accidentes: La privación del sueño puede afectar nuestro juicio y tiempo de reacción, aumentando el riesgo de accidentes, tanto en el hogar como al conducir.\n - Aumento de peso: La falta de sueño puede afectar el equilibrio de las hormonas que controlan el apetito, lo que lleva a un mayor deseo de alimentos poco saludables y posiblemente a aumentar de peso.\n - Problemas cardiovasculares: La falta crónica de sueño puede contribuir a problemas cardíacos y presión arterial alta.\n - Problemas de salud mental: La falta de sueño está vinculada a un mayor riesgo de ansiedad y depresión."
+            },
+            "lesson4": {
+                "title": "Impacto económico de la falta de sueño",
+                "reading": "\nLas consecuencias de la falta de sueño van más allá de nuestra salud y bienestar; también pueden tener implicaciones económicas.\nLos problemas relacionados con el sueño pueden llevar a una disminución de la productividad y un aumento del ausentismo en el lugar de trabajo. Además, los costos de atención médica relacionados con los trastornos del sueño y sus efectos pueden ejercer presión sobre tu salud personal, tu vida laboral y la economía en general.\n\nEn conclusión, el sueño juega un papel crucial en nuestra salud física y mental, y su impacto en nuestra vida diaria no puede ser exagerado. Esfuérzate por dar prioridad al sueño y establecer una rutina antes de acostarte que promueva un sueño reparador. Si el insomnio persiste, considera consultar a un profesional de la salud que pueda ayudarte a mejorar tus hábitos de sueño y tu bienestar general. Recuerda, un mejor sueño conduce a una vida más feliz y saludable."
+            },
+            "lesson5": {
+                "title": "¿Qué es el GAD-7?",
+                "reading": "\nEl Generalized Anxiety Disorder 7 (GAD-7) es una valiosa herramienta utilizada en entornos de atención médica para evaluar y medir la gravedad del trastorno de ansiedad generalizada en los pacientes.\nCompuesto por siete preguntas cuidadosamente diseñadas, el GAD-7 permite a los profesionales de la salud comprender los niveles de ansiedad del paciente y el impacto que puede tener en su bienestar.\n\nLa ansiedad es una condición compleja que puede manifestarse de diversas formas, y su relación con el insomnio es especialmente notable. A menudo, la ansiedad puede actuar tanto como causa como consecuencia del insomnio, creando un ciclo desafiante que altera los patrones de sueño y exacerba los sentimientos de inquietud e inquietud.\n\nAl incorporar el cuestionario GAD-7 en las evaluaciones de los pacientes, los proveedores de atención médica pueden identificar problemas relacionados con la ansiedad de manera temprana, lo que conduce a intervenciones más específicas y efectivas para mejorar tanto la salud mental como la calidad del sueño."
+            },
+            "lesson6": {
+                "title": "GAD-7",
+                "reading": "\nPara cada pregunta, califica la frecuencia de la experiencia durante las últimas dos semanas en una escala del 0 al 3:\n0 - Nada en absoluto\n1 - Varios días\n2 - Más de la mitad de los días\n3 - Casi todos los días\n\nPreguntas:\n1. Sentirse nervioso, ansioso o tenso\n2. No poder dejar de preocuparse o controlar las preocupaciones\n3. Preocuparse demasiado por diferentes cosas\n4. Problemas para relajarse\n5. Estar tan inquieto que es difícil estar quieto\n6. Irritarse o enojarse fácilmente\n7. Sentir miedo, como si algo terrible pudiera suceder"
+            }
+        },
         "day3": {
-          "title": "Día 3",
+            "title": "Día #3: Etapas del Sueño",
+            "lesson1": {
+                "title": "Las Diferentes Etapas del Sueño",
+                "reading": "\nEl sueño es un proceso complejo que se puede dividir en dos categorías principales: sueño sin movimiento ocular rápido (NREM) y sueño con movimiento ocular rápido (REM). El sueño NREM tiene tres etapas, mientras que el sueño REM es su propia etapa única.\n\nEtapa 1 (NREM): Esta es la etapa más ligera del sueño cuando estás a punto de dormirte. Es posible que experimentes pensamientos fugaces y espasmos musculares. Si alguien te despierta durante esta etapa, es posible que ni siquiera te des cuenta de que estabas dormido.\n\nEtapa 2 (NREM): En esta etapa, tu cuerpo se relaja aún más, y la actividad cerebral disminuye. Pasas la mayor parte del tiempo de sueño en la Etapa 2.\n\nEtapa 3 (NREM): La etapa de sueño profundo, también conocida como sueño de ondas lentas. Es esencial para la restauración y el crecimiento físico, lo que promueve una sensación de frescura al despertar.\n\nSueño REM: El sueño REM es la etapa donde ocurren la mayoría de los sueños vívidos. Aunque los sueños pueden ocurrir en cualquier etapa del sueño, a menudo los asociamos con el sueño REM. Tus ojos se mueven rápidamente y la actividad cerebral aumenta. Es vital para la consolidación de la memoria y el procesamiento emocional.\n\nA lo largo de la noche, nuestras etapas de sueño pasan por un ciclo repetitivo, comenzando con la Etapa 1, progresando a sueño profundo (Etapa 3) y entrando en el sueño REM. Este ciclo ocurre aproximadamente cada 90 minutos. A medida que avanza la noche, el tiempo dedicado al sueño REM aumenta, mientras que el sueño profundo disminuye. El sueño REM es más predominante durante las últimas horas de la noche, lo que contribuye a los sueños vívidos."
+            },
+            "lesson2": {
+                "title": "Cómo afecta la edad a las etapas del sueño",
+                "reading": "\nLos patrones de sueño evolucionan a medida que envejecemos, y la cantidad de tiempo dedicado a cada etapa puede variar.\n\nBebés y Niños: Los bebés pasan la mayor parte de su sueño en REM, que es vital para el desarrollo cerebral. A medida que crecen, las etapas NREM se hacen más pronunciadas, con el sueño profundo (Etapa 3) siendo más prominente en la infancia.\n\nAdolescentes: Los adolescentes experimentan un cambio en su reloj biológico interno, lo que lleva a horarios de sueño retrasados. Necesitan más sueño en general, con el sueño profundo (Etapa 3) siendo esencial para su crecimiento y desarrollo.\n\nAdultos: Los adultos pasan alrededor del 20-25% de su sueño en el sueño REM, y el resto es sueño NREM. El sueño profundo (Etapa 3) disminuye con la edad, lo que lleva a un sueño más ligero en los adultos mayores.\n\nAncianos: A medida que envejecemos, el sueño profundo disminuye, lo que lleva a un sueño más fragmentado con despertares frecuentes durante la noche."
+            },
+            "lesson3": {
+                "title": "Cómo afecta el género a nuestras etapas de sueño",
+                "reading": "\nLas diferencias biológicas y hormonales pueden influir en las etapas de sueño entre géneros, pero en general, los patrones de sueño son similares.\n\nMujeres: Las fluctuaciones hormonales durante el ciclo menstrual, el embarazo y la menopausia pueden afectar el sueño. Los trastornos del sueño, como el insomnio, pueden ser más comunes en mujeres.\n\nHombres: Los hombres pueden experimentar trastornos del sueño debido a condiciones como la apnea del sueño, que es más prevalente en los hombres.\n\nConclusión:\nComprender las etapas del sueño es como descifrar el lenguaje del descanso. El flujo rítmico del ciclo de sueño y su impacto en la edad y el género pueden proporcionar información sobre tus dificultades para dormir. Establecer una rutina de sueño consistente y crear un ambiente cómodo para dormir también puede contribuir a un mejor sueño. Recuerda, abrazar los misterios de las etapas del sueño puede llevarte a noches más reparadoras y a una versión revitalizada de ti mismo."
+            }
+        },
+        "day4": {
+            "title": "Día #4: Fisiología del Sueño y el Deseo de Dormir",
+            "lesson1": {
+                "title": "Psicología del Sueño",
+                "reading": "\nSi te encuentras dando vueltas en la cama por la noche, incapaz de conciliar el sueño, comprender la ciencia detrás de la fisiología del sueño y el deseo de dormir puede arrojar luz sobre tus dificultades. En esta lección, exploraremos los fascinantes procesos que regulan nuestro ciclo sueño-vigilia, conocidos como Proceso C y Proceso S, y cómo impactan nuestro descanso nocturno.\n\nNuestro ciclo sueño-vigilia está regulado por una compleja interacción entre dos procesos esenciales: el Proceso C (ritmo circadiano) y el Proceso S (homeostasis sueño-vigilia)."
+            },
+            "lesson2": {
+                "title": "Proceso C",
+                "reading": "\nPiensa en el ritmo circadiano como el reloj interno de tu cuerpo, que guía tus patrones de sueño y vigilia a lo largo de un período de 24 horas. Este ritmo natural está influenciado por señales externas, como la luz del sol y la oscuridad, que ayudan a regular las funciones de nuestro cuerpo.\n\nPapel de la Luz Solar: La luz del sol actúa como una poderosa señal para nuestro cerebro de que es hora de despertarse y estar alerta. A medida que avanza el día, nuestra capacidad de alerta disminuye gradualmente y comenzamos a sentirnos somnolientos por la tarde.\n\nMelatonina: Una hormona esencial llamada melatonina también está involucrada en el Proceso C. A medida que se pone el sol, nuestro cerebro libera melatonina, lo que indica a nuestro cuerpo que es hora de relajarse y prepararse para dormir."
+            },
+            "lesson3": {
+                "title": "Proceso S",
+                "reading": "\nLa homeostasis sueño-vigilia es como una presión interna para dormir que aumenta a medida que permanecemos despiertos. Cuanto más tiempo estemos despiertos, más presión se acumula, lo que nos hace sentir más somnolientos y ansiosos por descansar. Piensa en el Proceso S como una especie de alcancía para monedas en tu hogar. Puede llevar mucho tiempo llenar esa alcancía de monedas, pero una vez que está llena, se vacía de inmediato. De manera similar, se necesita un día completo para acumular la presión o necesidad de dormir, pero una siesta durante el día en el momento equivocado o durante demasiado tiempo puede agotar esa necesidad de sueño, lo que dificulta conciliar el sueño por la noche.\n\nAdenosina: La adenosina es una sustancia química que se acumula en nuestro cerebro mientras estamos despiertos. Gradualmente crea presión de sueño y es responsable de la sensación de somnolencia. Cuando dormimos, los niveles de adenosina disminuyen, lo que nos permite despertar sintiéndonos renovados. ¿Sabías que el café o la cafeína te hace sentir más despierto al aumentar la cantidad de adenosina en tu cerebro por un corto tiempo?\n\nEl Deseo de Dormir: El deseo de dormir es el resultado de la interacción entre el Proceso C y el Proceso S. A medida que avanzamos en nuestro día, el Proceso S acumula presión de sueño, haciéndonos sentir gradualmente más somnolientos. Al mismo tiempo, el Proceso C guía nuestro ciclo sueño-vigilia, por lo que naturalmente nos sentimos más despiertos durante el día y más somnolientos por la noche."
+            },
+            "lesson4": {
+                "title": "Insomnio y Consejos para un Mejor Sueño",
+                "reading": "\nEl insomnio es la alteración del delicado equilibrio entre el Proceso C y el Proceso S, lo que lleva a dificultades para conciliar el sueño o mantenerse dormido. Factores como el estrés, los horarios de sueño irregulares y el uso excesivo de dispositivos electrónicos antes de acostarse pueden interferir con el ritmo natural sueño-vigilia de nuestro cuerpo.\n\nPara combatir el insomnio y tener un sueño de calidad, implementa lo siguiente:\n - Horario de Sueño Consistente: Intenta acostarte y levantarte a la misma hora todos los días, incluso los fines de semana.\n - Crea un Ambiente Propicio para Dormir: Haz de tu dormitorio un lugar cómodo, oscuro y silencioso para promover un mejor sueño.\n - Limita los Estímulos: Evita la cafeína y los dispositivos electrónicos cerca de la hora de dormir.\n - Técnicas de Relajación: Practica ejercicios de relajación, como respiración profunda o estiramientos suaves, antes de dormir.\n - Limita las Siestas Diurnas: Mantén las siestas diurnas cortas y evita dormir demasiado cerca de la hora de acostarte."
+            }
+        },
+        "day5": {
+          "title": "Día #5: Insomnio y sus causas",
+          "lesson1": {
+            "title": "Introducción",
+            "reading": "\nCon el insomnio, puede ser difícil conciliar el sueño. Recuerda, no estás solo. El insomnio es un trastorno del sueño común que afecta a muchos adultos, pero hay esperanza para un mejor sueño.\n\nEn esta lección, exploraremos qué es el insomnio y las diversas causas detrás de él, incluidos los tres P (factores predisponentes, precipitantes y perpetuantes). Comprender los tres P del insomnio y sus causas subyacentes puede proporcionar información valiosa sobre tus dificultades para dormir. También exploraremos otros factores que contribuyen al insomnio, como el estrés, los medicamentos, las condiciones médicas y sustancias como el alcohol, el tabaco, las drogas ilícitas y la electrónica."
+          },
+          "lesson2": {
+            "title": "¿Qué es el insomnio?",
+            "reading": "\nEl insomnio es un trastorno del sueño caracterizado por dificultad para conciliar el sueño, permanecer dormido o despertar demasiado temprano y no poder volver a dormir. Puede dejarte sintiéndote cansado, irritable e incapaz de funcionar de la mejor manera durante el día."
+          },
+          "lesson3": {
+            "title": "Causas del insomnio - Estrés y ansiedad",
+            "reading": "\nEstrés y ansiedad: Las tensiones diarias de la vida, las presiones laborales o las preocupaciones personales pueden dificultar la relajación y conciliación del sueño de las siguientes maneras:\n - Pensamientos acelerados: Cuando estamos estresados o ansiosos, nuestras mentes pueden llenarse de pensamientos acelerados. Estos pensamientos pueden ser sobre nuestras preocupaciones diarias, incertidumbres futuras o eventos pasados. A la hora de dormir, estos pensamientos pueden dificultar la relajación y el silencio de nuestras mentes, impidiendo que conciliemos el sueño.\n\n - Tensión física: El estrés y la ansiedad pueden llevar a la tensión física en nuestros cuerpos. Cuando nos acostamos para dormir, esta tensión puede dificultar encontrar una posición de descanso, lo que provoca inquietud y dificultad para mantenernos dormidos.\n\n - Hiperactividad: El estrés y la ansiedad pueden desencadenar un estado de hiperactividad, donde nuestros cuerpos y mentes están en alerta máxima. Este estado de alerta elevado puede dificultar apagar y relajarnos para dormir."
+          },
+          "lesson4": {
+            "title": "Causas del insomnio - Condiciones médicas",
+            "reading": "\nCondiciones médicas: Mientras has lidiado con el insomnio, es esencial considerar qué condiciones médicas podrían estar contribuyendo a tus dificultades para dormir:\n - Síndrome de piernas inquietas (SPI): El SPI es un trastorno neurológico que provoca sensaciones incómodas en las piernas, a menudo descritas como picazón, hormigueo o sensaciones de arrastre. Estas sensaciones pueden ser más pronunciadas durante los períodos de descanso, como cuando te acuestas para dormir. El SPI puede dificultar la relajación y el sueño, lo que conduce al insomnio.\n\n - Apnea del sueño: La apnea del sueño es un trastorno del sueño caracterizado por pausas en la respiración durante el sueño. Estas pausas pueden ser breves pero frecuentes, interrumpiendo el sueño y provocando despertares durante toda la noche. Las personas con apnea del sueño pueden no ser conscientes de estos despertares, pero pueden experimentar somnolencia diurna y fatiga debido a la mala calidad del sueño.\n\n - Dolor crónico: Las condiciones médicas que causan dolor crónico, como la artritis, la fibromialgia o el dolor de espalda, pueden dificultar encontrar una posición cómoda para dormir y mantenerse dormido. El dolor puede provocar despertares frecuentes durante la noche y contribuir al insomnio.\n\n - Enfermedad por reflujo gastroesofágico (ERGE): La ERGE es un trastorno digestivo que provoca el flujo del ácido estomacal hacia el esófago, causando acidez estomacal e incomodidad. Los síntomas pueden empeorar cuando estamos acostados, dificultando el sueño reparador.\n\n - Depresión y ansiedad: Las afecciones de salud mental como la depresión y la ansiedad pueden alterar los patrones de sueño y llevar al insomnio. Pensamientos acelerados, preocupaciones y sentimientos de tristeza pueden dificultar la relajación y conciliación del sueño.\n"
+          },
+          "lesson5": {
+            "title": "Causas del insomnio - Medicamentos",
+            "reading": "\nMedicamentos: Algunos medicamentos, especialmente los estimulantes o aquellos que afectan el sistema nervioso central, pueden interferir con el sueño y contribuir al insomnio:\n - Estimulantes: Algunos medicamentos, como ciertos antidepresivos, medicamentos para el TDAH o descongestionantes, contienen estimulantes que pueden interferir con el sueño. Estos estimulantes pueden aumentar la vigilancia y dificultar la relajación y el sueño.\n\n - Corticosteroides: Los corticosteroides, utilizados para tratar diversas afecciones médicas, pueden alterar los patrones de sueño y contribuir al insomnio. Pueden causar cambios en los niveles hormonales del cuerpo y afectar el ciclo natural del sueño-vigilia.\n\n - Diuréticos: Los diuréticos, recetados frecuentemente para controlar condiciones como la hipertensión, pueden aumentar la necesidad de orinar durante la noche. Los viajes frecuentes al baño pueden interrumpir el sueño y provocar despertares.\n\n - Betabloqueantes: Los betabloqueantes, utilizados para tratar afecciones cardíacas e hipertensión, pueden provocar pesadillas y sueños vívidos, lo que puede interrumpir el sueño y causar trastornos del sueño.\n\nSi sospechas que tus medicamentos están causando dificultades para dormir, consulta tus inquietudes con tu proveedor de atención médica. Pueden revisar tus medicamentos y considerar ajustar la dosis o el momento del medicamento o recetar un medicamento alternativo. NO DEJES DE TOMAR O MODIFICAR NINGUNO DE TUS MEDICAMENTOS ANTES DE HABLAR PRIMERO CON TU PROVEEDOR DE ATENCIÓN MÉDICA."
+          },
+          "lesson6": {
+            "title": "Causas del insomnio - Sustancias",
+            "reading": "\nConsumir sustancias como el alcohol, el tabaco o drogas ilícitas puede afectar negativamente la calidad del sueño, lo que provoca interrupciones en el sueño:\n - Cafeína: La cafeína es un estimulante natural que se encuentra en el café, té, ciertos refrescos y algunas bebidas energéticas. Funciona bloqueando la adenosina, un químico cerebral que promueve la somnolencia. Al hacerlo, la cafeína aumenta la vigilancia y reduce la sensación de fatiga, lo que dificulta conciliar el sueño. Los efectos de la cafeína pueden durar varias horas. Tarda alrededor de 8 a 10 horas para que el cuerpo elimine la mitad de la cafeína consumida. Esto significa que si tomas una taza de café o té después de la 1 pm, las propiedades estimulantes de la cafeína podrían seguir activas en tu sistema cuando llegue la hora de ir a dormir, lo que dificulta conciliar el sueño.\n\n - Alcohol: Aunque el alcohol puede hacerte sentir inicialmente somnoliento y relajado, puede interrumpir tu ciclo de sueño. Después de los efectos calmantes iniciales, el alcohol puede provocar un sueño fragmentado e inquieto. También puede aumentar la cantidad de veces que te despiertas durante la noche, lo que te impide alcanzar etapas de sueño profundo y reparador. Como resultado, puedes despertarte sintiéndote cansado y aturdido, en lugar de renovado.\n\n - Tabaco: La nicotina, un estimulante que se encuentra en los productos de tabaco, puede interferir con tu capacidad para conciliar el sueño y mantenerse dormido. Fumar o usar tabaco cerca de la hora de dormir puede aumentar tu frecuencia cardíaca y estimular tu cerebro, lo que dificulta relajarte y calmarte para dormir. El síndrome de abstinencia de la nicotina durante la noche también puede hacerte despertar y tener dificultades para volver a dormir.\n\n - Drogas: Las drogas ilícitas pueden tener diversos efectos en el sueño, dependiendo de la sustancia y su impacto en el sistema nervioso central. Las drogas estimulantes como la cocaína y la metanfetamina pueden provocar trastornos del sueño y reducir la duración total del sueño. Por otro lado, las drogas como la marihuana también pueden afectar los patrones de sueño, lo que lleva a interrupciones en la etapa de sueño REM, que es crucial para la consolidación de la memoria y el procesamiento emocional."
+          },
           "lesson7": {
-            "title": "Lección 7",
-            "reading": "Lectura Lección 7"
+            "title": "Causas del insomnio - Electrónica",
+            "reading": "\nElectrónica: El uso de dispositivos electrónicos como teléfonos inteligentes, computadoras e incluso televisores antes de acostarse o en la cama puede interferir con el ciclo natural de sueño-vigilia del cuerpo.\n - Impacto de la luz azul: Los dispositivos electrónicos, como teléfonos inteligentes, tabletas y computadoras, emiten luz azul. Este tipo de luz puede interferir con la producción de melatonina en el cuerpo, una hormona que ayuda a regular los ciclos de sueño-vigilia. La exposición a la luz azul antes de acostarte puede engañar a tu cerebro para que piense que todavía es de día, lo que dificulta conciliar el sueño.\n\n - Estimulación mental: Interactuar con dispositivos electrónicos, especialmente en redes sociales, videojuegos o contenido estimulante, puede mantener tu mente activa y alerta. Esta estimulación mental puede dificultar que tu cerebro se relaje y se tranquilice para dormir.\n\n - Interrupciones del sueño: Cuando usas dispositivos electrónicos en la cama, es posible que te sientas tentado a revisar mensajes, correos electrónicos o notificaciones durante la noche. Este comportamiento puede provocar despertares frecuentes e interrumpir tu patrón general de sueño."
           },
           "lesson8": {
-            "title": "Lección 8",
-            "reading": "Lectura Lección 8"
+            "title": "Los 3 P",
+            "reading": "\nFactores predisponentes: Estos son factores que hacen que una persona sea más vulnerable a desarrollar insomnio. Los factores predisponentes son como bloques de construcción que sientan las bases para las dificultades para dormir. Pueden incluir rasgos o experiencias de nuestro pasado, como ser naturalmente sensibles a los cambios ambientales o tener antecedentes familiares de insomnio. Los factores predisponentes preparan el escenario para posibles desafíos para dormir.\n\nFactores precipitantes: Los factores precipitantes son eventos o situaciones que desencadenan episodios agudos de insomnio. Son como chispas que encienden las interrupciones del sueño. Por ejemplo, cambios significativos en la vida, eventos estresantes o convulsiones emocionales pueden perturbar nuestra capacidad para relajarnos y conciliar el sueño. Ejemplos comunes de factores precipitantes incluyen el estrés relacionado con el trabajo, problemas en las relaciones o enfrentar una pérdida.\n\nFactores perpetuantes: Los factores perpetuantes son hábitos o comportamientos que mantienen el insomnio a lo largo del tiempo. Son como ciclos que perpetúan las dificultades para dormir. Cuando experimentamos noches de sueño deficiente debido al estrés u otros factores, podemos desarrollar preocupaciones y ansiedades sobre no dormir bien. Esto puede conducir a la ansiedad al acostarnos, donde empezamos a asociar nuestra cama con la incapacidad para dormir, lo que dificulta conciliar el sueño cuando nos acostamos. Estos patrones refuerzan el insomnio y pueden hacer que sea más difícil romper el ciclo."
           },
           "lesson9": {
-            "title": "Lección 9",
-            "reading": "Lectura Lección 9"
+            "title": "Reflexiones finales",
+            "reading": "\nReconocer los tres P del insomnio puede ser el primer paso para encontrar estrategias efectivas para mejorar el sueño.\n\nAl comprender los factores que pueden estar contribuyendo a tus dificultades para dormir, puedes tomar medidas proactivas para crear un ambiente tranquilo, adoptar hábitos de sueño saludables y manejar el estrés para promover noches reparadoras.\n\nRecuerda que la experiencia de cada persona con el insomnio es única y encontrar el enfoque correcto para manejarlo puede llevar tiempo. Cubriremos estrategias específicas para abordar estos problemas."
+          }
+        },
+        "day6": {
+          "title": "Día #6: Pastillas para dormir",
+          "lesson1": {
+            "title": "Introducción",
+            "reading": "\nComo has lidiado con el insomnio, es probable que hayas visto anuncios de somníferos para ayudarte a dormir, e incluso es posible que hayas probado algunos de ellos. Seguramente te preguntas por qué deberías seguir este programa cuando podrías tomar una pastilla para dormir. \n\nLa respuesta breve a esta pregunta es que la TCC-I (Terapia Cognitivo-Conductual para el Insomnio) y la TCC-I digital se consideran el tratamiento de primera línea para el insomnio y pueden proporcionarte herramientas prácticas para superar las dificultades para dormir y lograr un descanso mejor.\n\nLos somníferos tienen riesgos. Veamos un poco más de cerca algunos tipos comunes de somníferos."
+          },
+          "lesson2": {
+            "title": "Medicamentos para dormir sin receta",
+            "reading": "\nLos somníferos de venta libre están disponibles sin receta y pueden ayudar con las dificultades ocasionales para dormir. \n\nA menudo contienen antihistamínicos como ingrediente activo, que generalmente se usan para tratar las alergias, pero también tienen efectos sedantes que pueden inducir somnolencia y ayudar a conciliar el sueño. \n\nEn los Estados Unidos, la melatonina está disponible sin receta, pero en muchas otras áreas, como Europa, es un medicamento con receta, por lo que no debe tomarse a la ligera."
+          },
+          "lesson3": {
+            "title": "Medicamentos para dormir con receta",
+            "reading": "\nLos medicamentos para dormir con receta son más fuertes que las opciones sin receta y generalmente se usan para el tratamiento a corto plazo del insomnio.\n\nHay diferentes tipos de medicamentos para dormir con receta, que incluyen:\n - Benzodiazepinas: Estos medicamentos tienen un efecto calmante en el cerebro y pueden ayudar con la ansiedad y el sueño. Por lo general, se usan para el tratamiento a corto plazo debido al riesgo de dependencia.\n\n - Hipnóticos no benzodiazepínicos (medicamentos Z): Al igual que las benzodiazepinas, los medicamentos Z también tienen efectos sedantes pero con un menor riesgo de dependencia.\n\n - Agonistas de los receptores de melatonina: Estos medicamentos se dirigen a los receptores de melatonina en el cerebro para regular el ciclo sueño-vigilia y promover el sueño.\n\n - Antagonistas de orexina: La orexina es una sustancia química cerebral que ayuda a regular el estado de alerta. Los antagonistas de orexina bloquean los receptores de orexina, promoviendo el sueño al reducir la vigilia."
+          },
+          "lesson4": {
+            "title": "Somníferos naturales y a base de hierbas",
+            "reading": "\nAlgunas personas prefieren utilizar somníferos naturales o a base de hierbas. \n\nEstos pueden incluir suplementos que contienen ingredientes como raíz de valeriana, manzanilla, que pueden tener efectos sedantes leves y promover la relajación."
+          },
+          "lesson5": {
+            "title": "Efectos secundarios a corto plazo de los somníferos",
+            "reading": "\nSomnolencia: Muchos somníferos pueden causar somnolencia, lo cual puede ser deseable a la hora de acostarse, pero puede ser un problema si se toma durante el día. \n\nMareos: Algunas personas pueden experimentar mareos o desmayos como efecto secundario de los somníferos. \n\nConfusión o deterioro de la memoria: Ciertos medicamentos para dormir pueden provocar confusión temporal o problemas de memoria."
+          },
+          "lesson6": {
+            "title": "Efectos secundarios a largo plazo de los somníferos",
+            "reading": "\nDependencia: El uso regular de somníferos, especialmente benzodiazepinas, puede llevar a la dependencia, lo que dificulta dormir sin el medicamento. \n\nTolerancia: Con el tiempo, el cuerpo puede desarrollar tolerancia a los efectos de los somníferos, lo que requiere dosis más altas para el mismo efecto. \n\nInsomnio de rebote: Interrumpir abruptamente los somníferos puede provocar insomnio de rebote, donde las dificultades para dormir empeoran temporalmente. \n\nEfectos cognitivos: El uso prolongado de ciertos somníferos puede estar asociado con alteraciones cognitivas y un mayor riesgo de demencia en algunas personas."
+          },
+          "lesson7": {
+            "title": "Conclusión",
+            "reading": "\nPara mejoras sostenibles en el sueño, la TCC-I y la TCC-I digital se consideran la mejor opción para abordar el insomnio crónico. \n\nSi bien los somníferos pueden ser útiles en ciertas situaciones, tienen limitaciones y riesgos a largo plazo. Si estás considerando tomar somníferos, es importante hablar primero con tu proveedor de atención médica para discutir los beneficios y riesgos potenciales y para determinar la mejor opción para tu situación única.\n\nEn las próximas lecciones, aprenderemos más sobre la TCC-I y cómo aplicarla para mejorar el sueño de forma duradera."
+          }
+        },
+        "day7": {
+          "title": "Día #7: TCC-I",
+          "lesson1": {
+            "title": "Las 5 partes de la TCC-I",
+            "reading": "\nLa Terapia Cognitivo-Conductual para el Insomnio (TCC-I) generalmente consta de cinco componentes principales:\n 1. Restricción del sueño: Este componente implica limitar el tiempo pasado en la cama para que coincida con la cantidad real de sueño que una persona está obteniendo. Su objetivo es consolidar y mejorar la eficiencia del sueño.\n\n 2. Terapia de control de estímulos: Esta parte ayuda a romper las asociaciones negativas entre la cama y las perturbaciones del sueño. Se alienta a los pacientes a utilizar la cama solo para dormir y tener relaciones sexuales, evitando actividades como leer, ver televisión o usar dispositivos electrónicos en la cama.\n\n 3. Higiene del sueño: La higiene del sueño se enfoca en adoptar hábitos de sueño saludables y optimizar el entorno para dormir. Incluye recomendaciones como mantener un horario de sueño constante, crear una rutina relajante antes de acostarse y asegurar un ambiente cómodo para dormir.\n\n 4. Terapia cognitiva: Este aspecto aborda los pensamientos negativos y las preocupaciones que pueden contribuir al insomnio. Los pacientes aprenden a identificar y desafiar los pensamientos y creencias poco útiles sobre el sueño, reemplazándolos por pensamientos más equilibrados y positivos.\n\n 5. Técnicas de relajación: La TCC-I a menudo incluye ejercicios de relajación, como la relajación muscular progresiva o la respiración profunda, para ayudar a las personas a reducir la tensión física y mental antes de acostarse."
+          },
+          "lesson2": {
+            "title": "¿Por qué se recomienda la TCC-I digital?",
+            "reading": "\nLa TCC-I digital ofrece un enfoque moderno y conveniente para brindar técnicas cognitivo-conductuales efectivas para manejar el insomnio y mejorar los patrones de sueño. \n\nEmpodera a las personas con herramientas prácticas y conocimientos para tomar el control de su salud del sueño y lograr un sueño reparador y restaurador a través de las siguientes cualidades:\n - Enfoque sin medicación: La TCC-I digital es una terapia no basada en medicamentos, lo que significa que no depende de pastillas para dormir para mejorar el sueño. En cambio, aborda las causas subyacentes del insomnio a través de técnicas cognitivas y conductuales.\n\n - Beneficios a largo plazo: A diferencia de las pastillas para dormir, que pueden proporcionar alivio a corto plazo pero pueden tener desventajas, la TCC-I digital ofrece beneficios duraderos. Al aprender e implementar las estrategias enseñadas en la TCC-I digital, puedes desarrollar hábitos de sueño más saludables a largo plazo.\n\n - Seguridad y accesibilidad: La TCC-I digital es una opción segura y accesible. Puede accederse desde la comodidad de tu hogar a través de plataformas digitales, lo que resulta conveniente para aquellas personas con horarios ocupados o acceso limitado a terapias en persona.\n\n - Enfoque personalizado: Los programas de TCC-I digital se pueden adaptar a tus necesidades y desafíos específicos para dormir. La terapia se centra en comprender tus patrones de sueño y proporcionar estrategias personalizadas para mejorarlos."
           }
         }
       },
       "week2": {
         "title": "Semana 2",
+        "day1": {
+          "title": "Día #1: Higiene del sueño, lo mínimo necesario",
+          "lesson1": {
+            "title": "Electrónicos",
+            "reading": "Educación sobre el impacto de los dispositivos electrónicos en la calidad del sueño. Discusión sobre la importancia de limitar el uso de dispositivos electrónicos antes de acostarse."
+          },
+          "lesson2": {
+            "title": "Ejercicio",
+            "reading": "Explicación de la relación entre el ejercicio regular y la mejora de la calidad del sueño. Discusión sobre el momento ideal para hacer ejercicio para promover una mejor calidad del sueño."
+          },
+          "lesson3": {
+            "title": "Entorno - Nocturno",
+            "reading": "Discusión sobre la importancia de crear un entorno propicio para dormir, incluidos factores como la iluminación, el ruido y la temperatura."
+          },
+          "lesson4": {
+            "title": "Entorno - Luz solar al despertar",
+            "reading": "Explicación de los beneficios de la exposición a la luz solar natural al despertar. Discusión sobre cómo la luz natural ayuda a regular el ciclo sueño-vigilia."
+          }
+        },
+        "day2": {
+          "title": "Día #2: Control de estímulos #1",
+          "lesson1": {
+            "title": "Asociar la cama con el sueño",
+            "reading": "Explicación del concepto de control de estímulos y cómo implica establecer una fuerte asociación entre la cama y el sueño. Discusión de estrategias para crear un entorno propicio para dormir."
+          },
+          "lesson2": {
+            "title": "Las 3 'S' del uso de la cama: Sueño, Enfermedad y Sexo",
+            "reading": "Discusión de las tres actividades que deben asociarse con la cama: Sueño, Enfermedad (cuando se está enfermo) y Sexo. Recomendación de evitar actividades no relacionadas con el sueño en la cama para mejorar la eficiencia del sueño."
+          }
+        },
+        "day3": {
+          "title": "Día #3: Restricción del sueño #1",
+          "lesson1": {
+            "title": "¿Qué es la eficiencia del sueño, Tiempo en cama vs. Tiempo de sueño?",
+            "reading": "Explicación del concepto de eficiencia del sueño, que es el porcentaje de tiempo que se pasa durmiendo mientras se está en la cama. Discusión sobre la diferencia entre el tiempo total en la cama y el tiempo real de sueño."
+          },
+          "lesson2": {
+            "title": "Eficiencia del sueño ideal",
+            "reading": "Discusión sobre los objetivos recomendados de eficiencia del sueño para una calidad óptima del sueño. Explicación de cómo aumentar la eficiencia del sueño puede ayudar a consolidar el sueño y reducir los despertares nocturnos."
+          },
+          "lesson3": {
+            "title": "Levantarse a la misma hora todos los días",
+            "reading": "Enfatizar la importancia de mantener una hora de despertar constante todos los días, incluso los fines de semana. Las horas de despertar regulares ayudan a regular el ritmo circadiano y mejorar los patrones de sueño."
+          },
+          "lesson4": {
+            "title": "Encuesta al paciente: hora de despertar necesaria/deseada",
+            "reading": "Trabajar con los pacientes para determinar su hora de despertar ideal y alinearla con su horario y compromisos diarios."
+          }
+        },
         "day4": {
-          "title": "Día 4",
-          "lesson10": {
-            "title": "Lección 10",
-            "reading": "Lectura Lección 10"
+          "title": "Día #4: Técnica de relajación #1",
+          "lesson1": {
+            "title": "No forzar el sueño",
+            "reading": "Explicación del concepto de no forzar el sueño y evitar esfuerzos excesivos para conciliar el sueño. Fomentar una actitud relajada hacia el sueño."
           },
-          "lesson11": {
-            "title": "Lección 11",
-            "reading": "Lectura Lección 11"
-          },
-          "lesson12": {
-            "title": "Lección 12",
-            "reading": "Lectura Lección 12"
+          "lesson2": {
+            "title": "Respiración diafragmática",
+            "reading": "Enseñar a los pacientes técnicas de respiración diafragmática como ejercicio de relajación para reducir el estrés y la ansiedad antes de acostarse. Explicar cómo la respiración controlada puede promover un estado de calma propicio para dormir."
           }
         },
         "day5": {
-          "title": "Día 5",
-          "lesson13": {
-            "title": "Lección 13",
-            "reading": "Lectura Lección 13"
+          "title": "Día #5: Reestructuración cognitiva #1",
+          "lesson1": {
+            "title": "Enfoque en abordar las preocupaciones sobre el sueño",
+            "reading": "Explicación de que la reestructuración cognitiva tiene como objetivo abordar los patrones de pensamiento negativos y las preocupaciones relacionadas con el sueño. Discutir el impacto de la rumiación y la ansiedad en la calidad del sueño."
           },
-          "lesson14": {
-            "title": "Lección 14",
-            "reading": "Lectura Lección 14"
+          "lesson2": {
+            "title": "Calcular cuánto tiempo ha tenido insomnio el paciente en días",
+            "reading": "Trabajar con los pacientes para determinar la duración de su insomnio en días. Comprender la cronicidad del insomnio puede ayudar a establecer expectativas realistas de mejora."
           },
-          "lesson15": {
-            "title": "Lección 15",
-            "reading": "Lectura Lección 15"
+          "lesson3": {
+            "title": "Extremos lógicos de catástrofe",
+            "reading": "Guiar a los pacientes para desafiar el pensamiento catastrófico sobre las consecuencias del mal sueño. Alentarlos a evaluar la probabilidad real de que ocurran escenarios catastróficos debido a la falta de sueño."
+          },
+          "lesson4": {
+            "title": "Riesgo real frente a riesgo anticipado",
+            "reading": "Discutir la discrepancia entre los riesgos reales asociados con el insomnio y los riesgos percibidos. Destacar la tendencia a sobreestimar las consecuencias negativas y la importancia de una evaluación realista."
+          },
+          "lesson5": {
+            "title": "Reducir el estrés con 'pensamientos improbables'",
+            "reading": "Introducir el concepto de usar un 'pensamiento desestresante' para contrarrestar los pensamientos ansiosos sobre el sueño. Alentar a los pacientes a imaginar un escenario positivo e improbable para reducir la ansiedad sobre el sueño."
           }
         },
         "day6": {
-          "title": "Día 6",
-          "lesson16": {
-            "title": "Lección 16",
-            "reading": "Lectura Lección 16"
-          },
-          "lesson17": {
-            "title": "Lección 17",
-            "reading": "Lectura Lección 17"
-          },
-          "lesson18": {
-            "title": "Lección 18",
-            "reading": "Lectura Lección 18"
+          "title": "Día #6: Revisión de la semana",
+          "lesson1": {
+            "title": "Alentar a los pacientes a enfocarse en lo que han aprendido y logrado hasta ahora",
+            "reading": "Repasar los conceptos clave cubiertos durante la semana y alentar a los pacientes a reflexionar sobre su progreso. Enfatizar la importancia de la persistencia y el esfuerzo constante para mejorar los hábitos de sueño."
+          }
+        },
+        "day7": {
+          "title": "Día #7: Titulación del sueño #1",
+          "lesson1": {
+            "title": "Ajustar el tiempo total en la cama/hora de acostarse y hora de despertarse",
+            "reading": "Guiar a los pacientes para hacer ajustes en su tiempo total en la cama y hora de acostarse según su eficiencia del sueño y necesidades individuales. Discutir la importancia de mantener una hora de despertar constante."
           }
         }
       },
       "week3": {
         "title": "Semana 3",
+        "day1": {
+          "title": "Día #1: Higiene del sueño #2",
+          "lesson1": {
+            "title": "Detalles sobre el uso de dispositivos electrónicos y relajación antes de dormir",
+            "reading": "Proporcionar pautas específicas sobre cómo manejar el uso de dispositivos electrónicos, especialmente en las horas previas a dormir. Discutir técnicas de relajación para relajarse antes de dormir."
+          },
+          "lesson2": {
+            "title": "Caso detallado del entorno - luz diurna y nocturna",
+            "reading": "Explicar la importancia de la exposición a la luz natural durante el día y minimizar la exposición a la luz artificial brillante por la noche. Discutir estrategias para manejar la exposición a la luz para mejorar la calidad del sueño."
+          }
+        },
+        "day2": {
+          "title": "Día #2: Control de estímulos #2",
+          "lesson1": {
+            "title": "Establecer un límite de tiempo para salir de la cama",
+            "reading": "Establecer un límite de tiempo específico para que los pacientes se mantengan fuera de la cama si no pueden conciliar el sueño. Discutir estrategias para manejar los despertares nocturnos y reducir el tiempo despierto en la cama."
+          },
+          "lesson2": {
+            "title": "Actividades relajantes y sin esfuerzo mental",
+            "reading": "Alentar a los pacientes a participar en actividades relajantes y sin esfuerzo mental cuando no puedan dormir. Proporcionar sugerencias de actividades tranquilas para evitar aumentar el nivel de alerta y la ansiedad sobre el sueño."
+          }
+        },
+        "day3": {
+          "title": "Día #3: Restricción del sueño #2",
+          "lesson1": {
+            "title": "Ajustar el tiempo en la cama (TIB)",
+            "reading": "Trabajar con los pacientes para ajustar aún más su tiempo total en la cama en función de las mejoras en la eficiencia del sueño y las necesidades individuales."
+          }
+        },
+        "day4": {
+          "title": "Día #4: Técnica de relajación #2",
+          "lesson1": {
+            "title": "Importancia de la relajación",
+            "reading": "Enfatizar el papel de las técnicas de relajación en el manejo del estrés y la mejora de la calidad del sueño. Discutir los beneficios de incorporar ejercicios de relajación en la rutina antes de acostarse."
+          },
+          "lesson2": {
+            "title": "Relajación muscular progresiva",
+            "reading": "Enseñar a los pacientes técnicas de relajación muscular progresiva para reducir la tensión muscular y promover la relajación física antes de dormir."
+          }
+        },
+        "day5": {
+          "title": "Día #5: Reestructuración cognitiva #2",
+          "lesson1": {
+            "title": "Diario de preocupaciones",
+            "reading": "Presentar el concepto de un diario de preocupaciones para que los pacientes registren y desafíen los pensamientos ansiosos sobre el sueño. Discutir cómo el diario puede ayudar a identificar patrones y distorsiones cognitivas."
+          }
+        },
+        "day6": {
+          "title": "Día #6: Revisión de la semana",
+          "lesson1": {
+            "title": "Alentar a los pacientes a enfocarse en lo que han aprendido esta semana y logrado hasta ahora",
+            "reading": "Repasar los conceptos clave cubiertos durante la semana y alentar a los pacientes a reflexionar sobre su progreso. Discutir cómo seguir aplicando las técnicas aprendidas más allá del programa."
+          }
+        },
         "day7": {
-          "title": "Día 7",
-          "lesson19": {
-            "title": "Lección 19",
-            "reading": "Lectura Lección 19"
-          },
-          "lesson20": {
-            "title": "Lección 20",
-            "reading": "Lectura Lección 20"
-          },
-          "lesson21": {
-            "title": "Lección 21",
-            "reading": "Lectura Lección 21"
-          }
-        },
-        "day8": {
-          "title": "Día 8",
-          "lesson22": {
-            "title": "Lección 22",
-            "reading": "Lectura Lección 22"
-          },
-          "lesson23": {
-            "title": "Lección 23",
-            "reading": "Lectura Lección 23"
-          },
-          "lesson24": {
-            "title": "Lección 24",
-            "reading": "Lectura Lección 24"
-          }
-        },
-        "day9": {
-          "title": "Día 9",
-          "lesson25": {
-            "title": "Lección 25",
-            "reading": "Lectura Lección 25"
-          },
-          "lesson26": {
-            "title": "Lección 26",
-            "reading": "Lectura Lección 26"
-          },
-          "lesson27": {
-            "title": "Lección 27",
-            "reading": "Lectura Lección 27"
+          "title": "Día #7: Titulación del sueño #2",
+          "lesson1": {
+            "title": "Ajustar el tiempo total en la cama/hora de acostarse y hora de despertarse",
+            "reading": "Guía para realizar más ajustes en el tiempo total en la cama y la hora de acostarse según la eficiencia del sueño y las necesidades individuales. Enfatizar el aumento gradual del tiempo en la cama a medida que mejora la eficiencia del sueño."
           }
         }
       },
       "week4": {
         "title": "Semana 4",
-        "day10": {
-          "title": "Día 10",
-          "lesson28": {
-            "title": "Lección 28",
-            "reading": "Lectura Lección 28"
+        "day1": {
+          "title": "Día #1: Higiene del sueño #3",
+          "lesson1": {
+            "title": "Detalles sobre el consumo de cafeína y limitar su uso",
+            "reading": "Educar a los pacientes sobre los efectos de la cafeína en el sueño y la importancia de moderar su consumo, especialmente por la tarde y noche."
           },
-          "lesson29": {
-            "title": "Lección 29",
-            "reading": "Lectura Lección 29"
-          },
-          "lesson30": {
-            "title": "Lección 30",
-            "reading": "Lectura Lección 30"
+          "lesson2": {
+            "title": "Caso detallado sobre el consumo de alcohol",
+            "reading": "Discutir el impacto del alcohol en la calidad del sueño. Explicar la necesidad de moderación y evitar el consumo de alcohol cerca de la hora de dormir."
           }
         },
-        "day11": {
-          "title": "Día 11",
-          "lesson31": {
-            "title": "Lección 31",
-            "reading": "Lectura Lección 31"
+        "day2": {
+          "title": "Día #2: Control de estímulos #3",
+          "lesson1": {
+            "title": "Evitar siestas excesivas",
+            "reading": "Discutir el impacto de las siestas diurnas en el sueño nocturno. Proporcionar pautas para manejar las siestas y evitar que interfieran con la calidad del sueño nocturno."
           },
-          "lesson32": {
-            "title": "Lección 32",
-            "reading": "Lectura Lección 32"
-          },
-          "lesson33": {
-            "title": "Lección 33",
-            "reading": "Lectura Lección 33"
+          "lesson2": {
+            "title": "Actividades relajantes y sin esfuerzo mental",
+            "reading": "Alentar a los pacientes a participar en actividades relajantes y sin esfuerzo mental durante la noche para prepararse para dormir. Discutir la importancia de evitar actividades estimulantes antes de acostarse."
           }
         },
-        "day12": {
-          "title": "Día 12",
-          "lesson34": {
-            "title": "Lección 34",
-            "reading": "Lectura Lección 34"
-          },
-          "lesson35": {
-            "title": "Lección 35",
-            "reading": "Lectura Lección 35"
-          },
-          "lesson36": {
-            "title": "Lección 36",
-            "reading": "Lectura Lección 36"
+        "day3": {
+          "title": "Día #3: Restricción del sueño #3",
+          "lesson1": {
+            "title": "Compresión del sueño como alternativa",
+            "reading": "Introducir el concepto de compresión del sueño como un enfoque alternativo a la restricción del sueño. Discutir cómo la compresión del sueño puede adaptarse según los patrones de sueño individuales."
+          }
+        },
+        "day4": {
+          "title": "Día #4: Técnica de relajación #3",
+          "lesson1": {
+            "title": "Imaginación guiada",
+            "reading": "Enseñar a los pacientes técnicas de imaginación guiada para crear imágenes mentales calmantes y positivas antes de dormir. Discutir cómo la imaginación guiada puede promover la relajación y mejorar la calidad del sueño."
+          }
+        },
+        "day5": {
+          "title": "Día #5: Reestructuración cognitiva #3",
+          "lesson1": {
+            "title": "Terapia de Aceptación y Compromiso - Defusión cognitiva",
+            "reading": "Introducir conceptos de la Terapia de Aceptación y Compromiso (ACT) relacionados con la defusión cognitiva. Discutir cómo las técnicas de ACT pueden ayudar a los pacientes a observar y distanciarse de los pensamientos negativos sobre el sueño."
+          }
+        },
+        "day6": {
+          "title": "Día #6: Revisión de la semana",
+          "lesson1": {
+            "title": "Alentar a los pacientes a enfocarse en lo que han aprendido esta semana y logrado hasta ahora",
+            "reading": "Repasar los conceptos clave cubiertos durante la semana y alentar a los pacientes a reflexionar sobre su progreso. Discutir cómo continuar aplicando las técnicas aprendidas más allá del programa."
+          }
+        },
+        "day7": {
+          "title": "Día #7: Titulación del sueño #3",
+          "lesson1": {
+            "title": "Ajustar el tiempo total en la cama/hora de acostarse y hora de despertarse",
+            "reading": "Guía para realizar ajustes finales en el tiempo total en la cama y la hora de acostarse según la eficiencia del sueño y las necesidades individuales. Reforzar la importancia de mantener una hora de despertar constante."
           }
         }
       },
       "week5": {
         "title": "Semana 5",
-        "day13": {
-          "title": "Día 13",
-          "lesson37": {
-            "title": "Lección 37",
-            "reading": "Lectura Lección 37"
+        "day1": {
+          "title": "Día #1: Higiene del sueño #4",
+          "lesson1": {
+            "title": "Caso detallado sobre el ejercicio y relajación antes de dormir",
+            "reading": "Discutir los beneficios del ejercicio regular en la calidad del sueño. Proporcionar pautas sobre cómo incorporar el ejercicio en las rutinas diarias y la importancia de las técnicas de relajación antes de dormir."
           },
-          "lesson38": {
-            "title": "Lección 38",
-            "reading": "Lectura Lección 38"
-          },
-          "lesson39": {
-            "title": "Lección 39",
-            "reading": "Lectura Lección 39"
+          "lesson2": {
+            "title": "Caso detallado sobre la dieta y refrigerios saludables",
+            "reading": "Educar a los pacientes sobre el impacto de la dieta en el sueño. Discutir opciones de refrigerios saludables y cómo ciertos alimentos pueden promover o interrumpir el sueño."
           }
         },
-        "day14": {
-          "title": "Día 14",
-          "lesson40": {
-            "title": "Lección 40",
-            "reading": "Lectura Lección 40"
+        "day2": {
+          "title": "Día #2: Control de estímulos #4",
+          "lesson1": {
+            "title": "Mantener una hora de despertar constante",
+            "reading": "Discutir la importancia de mantener una hora de despertar constante para reforzar el ritmo circadiano. Explicar cómo las horas regulares de despertar contribuyen a mejorar la calidad del sueño."
           },
-          "lesson41": {
-            "title": "Lección 41",
-            "reading": "Lectura Lección 41"
-          },
-          "lesson42": {
-            "title": "Lección 42",
-            "reading": "Lectura Lección 42"
+          "lesson2": {
+            "title": "Actividades relajantes y sin esfuerzo mental",
+            "reading": "Alentar a los pacientes a participar en actividades calmantes y relajantes durante la noche para prepararse para dormir. Discutir la importancia de evitar actividades estimulantes antes de acostarse."
           }
         },
-        "day15": {
-          "title": "Día 15",
-          "lesson43": {
-            "title": "Lección 43",
-            "reading": "Lectura Lección 43"
-          },
-          "lesson44": {
-            "title": "Lección 44",
-            "reading": "Lectura Lección 44"
-          },
-          "lesson45": {
-            "title": "Lección 45",
-            "reading": "Lectura Lección 45"
+        "day3": {
+          "title": "Día #3: Restricción del sueño #4",
+          "lesson1": {
+            "title": "Ajustes adicionales al tiempo en la cama (TIB)",
+            "reading": "Trabajar con los pacientes para hacer ajustes adicionales en su tiempo total en la cama en función de las mejoras en la eficiencia del sueño y las necesidades individuales."
+          }
+        },
+        "day4": {
+          "title": "Día #4: Técnica de relajación #4",
+          "lesson1": {
+            "title": "Relajación autógena",
+            "reading": "Enseñar a los pacientes técnicas de relajación autógena para promover la relajación física y mental antes de acostarse. Discutir cómo la relajación autógena puede reducir la ansiedad y mejorar la calidad del sueño."
+          }
+        },
+        "day5": {
+          "title": "Día #5: Reestructuración cognitiva #4",
+          "lesson1": {
+            "title": "Diario de preocupaciones",
+            "reading": "Reforzar el uso del diario de preocupaciones para rastrear y desafiar los pensamientos ansiosos sobre el sueño. Discutir cómo el diario puede ser una herramienta valiosa en la CBT-I."
+          }
+        },
+        "day6": {
+          "title": "Día #6",
+          "lesson1": {
+            "title": "Alentar a los pacientes a enfocarse en lo que han aprendido esta semana y logrado hasta ahora",
+            "reading": "Repasar los conceptos clave cubiertos durante la semana y alentar a los pacientes a reflexionar sobre su progreso. Discutir cómo continuar aplicando las técnicas aprendidas más allá del programa."
+          }
+        },
+        "day7": {
+          "title": "Día #7: Titulación del sueño #4",
+          "lesson1": {
+            "title": "Ajustar el tiempo total en la cama/hora de acostarse y hora de despertarse",
+            "reading": "Guía para hacer ajustes finales en el tiempo total en la cama y la hora de acostarse en función de la eficiencia del sueño y las necesidades individuales. Reforzar la importancia de mantener una hora de despertar constante."
           }
         }
       },
       "week6": {
         "title": "Semana 6",
-        "day16": {
-          "title": "Día 16",
-          "lesson46": {
-            "title": "Lección 46",
-            "reading": "Lectura Lección 46"
+        "day1": {
+          "title": "Día #1: Revisión de toda la higiene del sueño",
+          "lesson1": {
+            "title": "Repasar todas las técnicas y estrategias",
+            "reading": "Recapitulación de todas las recomendaciones de higiene del sueño cubiertas durante el programa. Enfatizar la importancia de mantener una buena higiene del sueño más allá del programa."
           },
-          "lesson47": {
-            "title": "Lección 47",
-            "reading": "Lectura Lección 47"
-          },
-          "lesson48": {
-            "title": "Lección 48",
-            "reading": "Lectura Lección 48"
+          "lesson2": {
+            "title": "Desarrollar un plan para mantener buenos hábitos de sueño",
+            "reading": "Trabajar con los pacientes para crear un plan personalizado para mantener los cambios positivos realizados durante el programa. Discutir estrategias para prevenir recaídas y promover una salud del sueño a largo plazo."
           }
         },
-        "day17": {
-          "title": "Día 17",
-          "lesson49": {
-            "title": "Lección 49",
-            "reading": "Lectura Lección 49"
+        "day2": {
+          "title": "Día #2: Revisión de todo el control de estímulos",
+          "lesson1": {
+            "title": "Repasar todas las técnicas y estrategias",
+            "reading": "Recapitulación de todas las recomendaciones de control de estímulos cubiertas durante el programa. Enfatizar la importancia de mantener las prácticas de control de estímulos para reforzar la asociación entre la cama y el sueño."
           },
-          "lesson50": {
-            "title": "Lección 50",
-            "reading": "Lectura Lección 50"
-          },
-          "lesson51": {
-            "title": "Lección 51",
-            "reading": "Lectura Lección 51"
+          "lesson2": {
+            "title": "Desarrollar un plan para mantener el control de estímulos",
+            "reading": "Ayudar a los pacientes a crear un plan para mantener las prácticas de control de estímulos y abordar posibles desafíos. Discutir estrategias para manejar factores disruptivos."
           }
         },
-        "day18": {
-          "title": "Día 18",
-          "lesson52": {
-            "title": "Lección 52",
-            "reading": "Lectura Lección 52"
+        "day3": {
+          "title": "Día #3: Revisión de toda la restricción del sueño",
+          "lesson1": {
+            "title": "Repasar todas las técnicas y estrategias",
+            "reading": "Recapitulación de todas las recomendaciones de restricción del sueño cubiertas durante el programa. Enfatizar los beneficios de la restricción del sueño para consolidar el sueño y mejorar la eficiencia del sueño."
           },
-          "lesson53": {
-            "title": "Lección 53",
-            "reading": "Lectura Lección 53"
+          "lesson2": {
+            "title": "Revisión del registro del sueño y mantener un registro del sueño",
+            "reading": "Revisar los registros de sueño de los pacientes y discutir la importancia de mantener un registro del sueño a largo plazo. Alentar a los pacientes a usar el registro del sueño como herramienta para la autoevaluación continua."
+          }
+        },
+        "day4": {
+          "title": "Día #4: Revisión de todas las técnicas de relajación y reestructuración cognitiva",
+          "lesson1": {
+            "title": "Repasar todas las técnicas y estrategias",
+            "reading": "Recapitulación de todos los ejercicios de relajación y ejercicios de reestructuración cognitiva cubiertos durante el programa. Enfatizar su papel en el manejo del estrés y la ansiedad para mejorar el sueño."
+          }
+        },
+        "day5": {
+          "title": "Día #5: Obstáculos y futuro",
+          "lesson1": {
+            "title": "Revisión final de obstáculos y estrategias para superarlos",
+            "reading": "Discutir posibles obstáculos que los pacientes puedan enfrentar después del programa y explorar estrategias para superarlos. Abordar desafíos comunes en el mantenimiento de buenos hábitos de sueño."
           },
-          "lesson54": {
-            "title": "Lección 54",
-            "reading": "Lectura Lección 54"
+          "lesson2": {
+            "title": "Discusión de metas de sueño futuras",
+            "reading": "Ayudar a los pacientes a establecer metas claras y realistas para su sueño futuro. Alentar la perseverancia y la flexibilidad en la búsqueda de una salud del sueño óptima."
+          }
+        },
+        "day6": {
+          "title": "Día #6: Celebración del progreso",
+          "lesson1": {
+            "title": "Reconocimiento del trabajo realizado",
+            "reading": "Celebrar los logros y el progreso de los pacientes a lo largo del programa. Reconocer sus esfuerzos y dedicación para mejorar su calidad de sueño."
+          }
+        },
+        "day7": {
+          "title": "Día #7: Cierre del programa",
+          "lesson1": {
+            "title": "Finalización del programa y despedida",
+            "reading": "Despedida del programa y reiteración de la disponibilidad para apoyo continuo si es necesario. Alentar a los pacientes a mantener el enfoque en su sueño y bienestar general."
           }
         }
       }
-    }
+    }    
   }
   

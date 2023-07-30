@@ -875,12 +875,12 @@ function EducationPage() {
             <Grid container direction={'row'} xs spacing={2} paddingTop={1}>
               <Grid item xs textAlign={'right'} >
               <Button startIcon={<ArrowBackOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}}>
-                  Back
+                  {t("education.back")}
                 </Button>
               </Grid>
               <Grid item xs textAlign={'left'}>
               <Button endIcon={<ArrowForwardOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}}>
-                  Next
+                  {t("education.next")}
                 </Button>
               </Grid>
             </Grid>

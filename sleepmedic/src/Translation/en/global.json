@@ -7,6 +7,10 @@
         "spanish": "Spanish",
         "next": "Get Started"
     }, 
+    "language-select": {
+      "en": "EN",
+      "es": "ES"
+    },
     "home": {
         "7-day": {
             "title": "7-Day Averages",
@@ -73,6 +77,35 @@
         "or-create": "or create an account",
         "login": "login"
     },
+    "createAccount": {
+      "title": "Create Account",
+      "logoTitle": "Back to Language Select",
+      "firstName": "First Name",
+      "firstErr": "Enter your first name",
+      "lastName": "Last Name",
+      "lastErr": "Enter your last name",
+      "birthdate": "Birthdate",
+      "birthdateErr": "Enter a valid birthdate",
+      "sex": "Sex",
+      "none": "None",
+      "male": "Male",
+      "female": "Female",
+      "other": "other",
+      "sexErr": "Select your sex",
+      "createButton": "Create Account",
+      "phonenumber": "Phone Number",
+      "phoneFreeErr": "This phone number already being used!",
+      "phoneErr": "This phone number is invalid",
+      "email": "Email",
+      "emailFreeErr": "This email is already being used!",
+      "emailErr": "This email is invalid",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "confirmErr": "These passwords do not match!",
+      "complexErr": " Ensure your password is more than 8 characters long and contains a lower & Upper case letter, number, and special character (ex. !@#$%&)",
+      "continue": "Continue",
+      "or-login": "Or login to an existing account"
+    },
     "editGoals": {
       "title": "Edit your Goals",
       "create-reminder": "Create a Reminder",
@@ -83,8 +116,91 @@
       "optInOut": "Opt-in/Opt-Out",
       "back": "back"
     },
+    "reminder": {
+      "title": "Create a Reminder",
+      "carrierPrompt": "To enable SMS notifications, please select your carrier",
+      "emailPrefered": "No thanks, I prefer email notifications",
+      "reminderTypeErrMsg": "Please specify a type of reminder to complete creation.",
+      "daysErrMsg": "You must select at least one day for your reminder.",
+      "emptyTimeInputMsg": "You must input a time to trigger the reminder.",
+      "badTimeInputFormat": "Please input time in the following format; e.g. 10:45PM, 8:00AM",
+      "reminderTypePrompt": "What type of reminder do you want?",
+      "bedtimeReminder": "Bedtime Reminder",
+      "sleepHygieneReminder": "Sleep Hygiene Reminder",
+      "triggerDaysPrompt": "On which day(s) should this reminder be triggered?",
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "reminder-time": "Reminder time",
+      "timezone": "Timezone",
+      "pacific": "Pacific",
+      "mountain": "Mountain",
+      "central": "Central",
+      "eastern": "Eastern",
+      "cancel": "Cancel",
+      "create": "Create"
+    },
+    "stats": {
+
+      "date": "date",
+      
+      "monthlyQuality": "Monthly Quality",
+      "quality": "quality",
+
+      "monthlyEfficiency": "Monthly Efficiency",
+      "efficiency": "efficiency",
+
+      "monthlyFallingTime": "Monthly Falling Asleep Time",
+      "fallTime": "fallTime",
+
+      "times": "Times",
+      "downTime": "downTime",
+      "upTime": "upTime",
+      "sleepTime": "sleepTime"
+      
+    },
+    "profile": {
+      "noReminders": "You have no reminders, you can create a reminder below.",
+      "bedtimeReminder": "Bedtime Reminder",
+      "sleepHygieneReminder": "Sleep Hygiene Reminder",
+      "account&Details": "Account & Details",
+      "reminders": "Reminders",
+      "createReminder": "Create Reminder",
+      "dataExport": "Data Export",
+      "exportPrompt": "You can export your sleep records to a CSV file for your own keeping or to show to a health provider. The file will becautomatically generated and sent to the email associated with your account.",
+      "exportButton": "Export Data",
+      "accountDetails": "Account Details",
+      "accountDetailsPrompt": "Update your account details below.",
+      "changePasswordButton": "Change Password",
+      "deletePrompt": "Permanently delete your account and all related data.",
+      "deleteAccountButton": "Delete Account",
+      "passwordReset": {
+        "title": "Password Reset!",
+        "prompt": "Continue enjoying our app.",
+        "continueButton": "Continue",
+        "changePassword": "Change Password",
+        "changePasswordPrompt": "Please enter your new password.",
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password",
+        "cancel": "Cancel",
+        "changePasswordButton": "Change Password"
+      },
+      "deleteAccount": {
+        "confirm": "Delete Account Confirmation",
+        "confirmPrompt1":"Are you sure you want to permanently",
+        "confirmPrompt2": "delete your SleepMedic Account?",
+        "cancel": "Cancel",
+        "deleteConfirm": "Yes, permanently delete my account"
+      }
+    },
     "education": {
         "table-of-contents": "Table of Contents",
+        "next": "Next",
+        "back": "Back",
         "dashboard": "Dashboard",
           "week1": {
             "title": "Week 1",
