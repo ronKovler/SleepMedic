@@ -36,10 +36,10 @@ import { useState } from 'react';
 
 function EducationPage() {
   const [t, i18n] = useTranslation("global");
-  const [readingTitle, setReadingTitle] = useState("Reading Title");
-  const [readings, setReadings] = useState("This is a placeholder");
-  const [weekOpen, setWeekOpen] = useState(-1);
-  const [dayOpen, setDayOpen] = useState(-1);
+  const [readingTitle, setReadingTitle] = useState(t("education.week1.day1.lesson1.title"));
+  const [readings, setReadings] = useState(t("education.week1.day1.lesson1.reading"));
+  const [weekOpen, setWeekOpen] = useState(0);
+  const [dayOpen, setDayOpen] = useState(0);
   const lessonPlan = [
     {
       week: t("education.week1.title"),
@@ -691,6 +691,7 @@ function EducationPage() {
           ]
         },
       ]
+
     }
   ];
 
@@ -798,7 +799,7 @@ function EducationPage() {
         </Grid>
 
         <Grid item xs={true} >
-          <Grid container direction={'column'} paddingRight={4} paddingTop={2} justifyContent={'center'} alignContent={'center'}>
+          <Grid container direction={'column'} paddingRight={'2%'} paddingTop={2} justifyContent={'center'} alignContent={'center'}>
             <Grid item xs >
               <Box display={'flex'} justifyContent={'center'} alignContent={'center'} >
                 <Card>

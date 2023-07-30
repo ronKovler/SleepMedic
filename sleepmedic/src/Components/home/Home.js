@@ -804,7 +804,7 @@ export default function Home() {
             height: '100vh' ,
             width: '100vw',
             overflow: 'hidden',
-            overflowY: 'scroll'
+            overflowY: 'auto'
             
         }}>
             <Navbar/>

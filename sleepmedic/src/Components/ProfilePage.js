@@ -293,7 +293,8 @@ function OpenProfilePage() {
 
         height: '100vh' ,
         width: '100vw',
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+        overflowY: 'auto'
 
         
         }}>
