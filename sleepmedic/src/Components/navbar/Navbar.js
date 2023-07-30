@@ -56,29 +56,25 @@ export default function Navbar() {
         navigate("/login");
     }
     return (
-        <AppBar position="static" theme={barTheme} sx={{fontStyle: 'italic',}}>
+        <AppBar position="static" theme={barTheme} >
             <Toolbar>
                 {/* PUT settings here? */}
-                <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
-                    <MenuIcon />
+                <LanguageSelector />
+                {/* When more buttons added, probably use ButtonGroup for better UI */}
+                <IconButton title="Go to Insights" href="/statistics" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
+                    <LegendToggleIcon />
                 </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold', color: 'white'}}>
-                    <Link to="/home" className={styles['noDecorTitles']}>
+                <Typography  variant="h6" sx={{ mr:2, flexGrow: 1, fontWeight: 'bold', color: 'white'}} textAlign={'center'}>
+                    <Link title="Back to Sleep-Medic Home" to="/home" className={styles['noDecorTitles']}>
                         <img src={navLogo} alt="Sleep-Medic Logo" className="logo" style={{height: "3rem", width: "auto", paddingTop: '10px'}}/>
                     </Link>
                 </Typography>
-                <LanguageSelector/>
-                {/* When more buttons added, probably use ButtonGroup for better UI */}
-                <IconButton href="/statistics" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
-                    <LegendToggleIcon />
-                </IconButton>
-                <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }} onClick={(e) => handleLogout(e)}>
-                    <LogoutIcon /> {/* Hide Logout to left menu button??? */}
-                </IconButton>
-
-                <IconButton href="/profilepage" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
+                <IconButton title='Go to Account Page' href="/profilepage" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
                     <AccountBoxIcon />
                 </IconButton>
+                <IconButton title='Sign out' size="large" edge="start" aria-label="menu" sx={{ mr: 0, color: 'white' }} onClick={(e) => handleLogout(e)}>
+                    <LogoutIcon /> {/* Hide Logout to left menu button??? */}
+                </IconButton>    
             </Toolbar>
         </AppBar>
     )

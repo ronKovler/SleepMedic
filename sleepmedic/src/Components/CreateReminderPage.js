@@ -1,10 +1,23 @@
 import "./CreateReminderPage.css";
 import { BrowserRouter as Router, Routes, Link, Route, useNavigate } from 'react-router-dom';
-import {TextField, Select, MenuItem, Button } from "@mui/material/";
+import { InputLabel, FormHelperText, TextField, Select, MenuItem, Button, FormGroup, FormControlLabel } from "@mui/material/";
+import FormControl from '@mui/material/FormControl';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Navbar from './navbar/Navbar';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import {isMobile} from 'react-device-detect';
+import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import axios from "axios";
 import { valueToPercent } from '@mui/base';
 import React, { useState } from 'react';
-
+import Checkbox from '@mui/material/Checkbox';
+import AddAlertOutlinedIcon from '@mui/icons-material/AddAlertOutlined';
 
 function getCookiesDict() {
     let cookies = document.cookie.split("; ");
@@ -17,13 +30,15 @@ function getCookiesDict() {
 
 //Shaun
 function CreateRem() {
-    const [Carrier, setCarrier] = useState("No, email it");
-    const [ReminderType, setRemType] = useState("None");
-    const [ReminderTime, setRemTime] = useState('');
+    const today = dayjs();
+    const [Carrier, setCarrier] = useState("none");
+    const [ReminderType, setRemType] = useState("Bedtime Reminder");
+    //const [ReminderTime, setRemTime] = useState('');
+    const[ReminderTime, setRemTime] = React.useState(today.set('hour', 22).set('minute',  30).set('second', 0));
     const [Timezone, setTimezone] = useState("Pacific");
     const daysOfWeek = [{day: "Sun"}, {day:"Mon"}, {day:"Tues"}, {day:"Wed"}, {day:"Thu"}, {day:"Fri"}, {day:"Sat"}];
     const [checkedState, setCheckedState] = useState(
-        new Array(daysOfWeek.length).fill(false)
+        [false, false, false, false, false, false, false]
     );
     const [RemTypeErrMsg, setRemTypeErrMsg] = useState("");
     const reminderTypeErrMsg = "Please specify a type of reminder to complete creation.";
@@ -49,20 +64,23 @@ function CreateRem() {
 
     //handleChange() method for checkboxes: maintains which days are selected by the user
     const handleOnChangeCB = (position) => {
-        const updatedCheckedState = checkedState.map((item, index) =>
-          index === position ? !item : item
-        );
-        setCheckedState(updatedCheckedState);
-        //if the updated position's value is true, then we know at least one box is checked, make sure errMsg is empty.
-        if (updatedCheckedState[position] == true) {
-            setDaysErrMsg("");
-        }
+        console.log( 'clicked ' + position)
+        let tempData = [...checkedState];
+        console.log('was ' + tempData[position]);
+        tempData[position] = !tempData[position];
+        console.log('is ' + tempData[position]);
+        setCheckedState(tempData);
+        tempData.forEach(v => {
+            if (v) {
+                setDaysErrMsg("");
+            }
+        })
     };
 
     //handleChange() method for Timezone
-        const handleOnChangeTimezone = (value) => {
-            setTimezone(value);
-        };
+    const handleOnChangeTimezone = (value) => {
+        setTimezone(value);
+    };
 
     const reminderTypeInputValidation = () => {
         if (ReminderType == "None") {
@@ -87,23 +105,9 @@ function CreateRem() {
         return false;
     };
 
-    const timeInputValidation = () => {
-        if (ReminderTime === "") {
-            setRemTimeErrMsg(emptyTimeInputMsg);
-            return false;
-        }
-        const timePattern = /^(1[0-2]|0?[1-9]):[0-5][0-9](AM|PM)$/;
-        if (!timePattern.test(ReminderTime)) {
-            setRemTimeErrMsg(badTimeInputFormat);
-            return false;
-        }
-        setRemTimeErrMsg("");
-        return true;
-    };
-
     //Main input validation function. Calls other specific inputValidation functions.
     const validate = () => {
-        if (reminderTypeInputValidation() && daysInputValidation() && timeInputValidation()) {
+        if (reminderTypeInputValidation() && daysInputValidation()) {
             return true;
         }
         return false;
@@ -117,7 +121,7 @@ function CreateRem() {
             console.log('Create button clicked');
             //grabbing the carrier type
             let chosenCarrier;
-            if (Carrier == "No, email it") {
+            if (Carrier == "none") {
                 chosenCarrier = null;
             }
             else chosenCarrier = Carrier;
@@ -132,19 +136,10 @@ function CreateRem() {
                 reminderTypeInt = 0;
             }
 
+            console.log("ReminderTime is: " + ReminderTime)
             //grab ReminderTime and convert to the required format (hr:min:sec) (military)
-            const [time, clock] = ReminderTime.split(/(?<=[0-9]{2})(?=[AP]M)/);
-            const [hours, minutes] = time.split(":");
-            let formattedHours = parseInt(hours, 10); // Parse hours as integer
-            if (clock === "PM") {
-                if (formattedHours !== 12) {
-                    formattedHours += 12; // Add 12 hours for PM format (except when it's 12PM)
-                }
-            } else if (formattedHours === 12) {
-                formattedHours = 0; // Convert 12 AM to 0 hours
-            }
-            const formattedMinutes = minutes.padStart(2, '0'); // Pad minutes with leading zero if necessary
-            const formattedReminderTime = `${formattedHours}:${formattedMinutes}:00`;
+            const militaryFormat = dayjs(ReminderTime).format('HH:mm:ss');
+            console.log("military format of ReminderTime is: " + militaryFormat)
 
             //grabbing the timezone selected by user
             let chosenTimezone;
@@ -157,7 +152,7 @@ function CreateRem() {
             else if (Timezone == "Central")    {
                 chosenTimezone = 2;
             }
-            else chosenTimezone = 3;
+            else chosenTimezone = 3;    //Eastern
 
             //grabbing the days selected by user
             const selectedDays = checkedState
@@ -169,17 +164,16 @@ function CreateRem() {
                 "Authorization":'Bearer ' + tok
             }
             var reminderInfo = {
-                //pass the carrier.
                 carrier: chosenCarrier,
                 timezone: chosenTimezone,
-                triggerTime: formattedReminderTime, //Time at which reminder emails will be triggered on the chosen days
+                triggerTime: militaryFormat,        //Time at which reminder emails will be triggered on the chosen days
                 triggerDays: selectedDays,          //a list of integers where 0 is Sun, 6 is Sat
                 message: reminderTypeInt,           //1 or 2; Bedtime or General Sleep Reminder
             }
             try {
                 let res = await axios.post("https://api.sleepmedic.me:8443/reminder/create_reminder", reminderInfo, {headers});
                 console.log(res);
-                navigate("/editgoal");
+                navigate("/profilepage");
             }
             catch (err) {
                 console.log("Failed to send CreateReminder data.");
@@ -187,105 +181,132 @@ function CreateRem() {
         }
     };
     return (
-     <div className="sleep-medic-container">
-       <div className="create-rem-form">
-        <h1>Create a Reminder</h1>
-         <div className="form-group">
-           <label htmlFor="reminder-method">To enable SMS notifications, please select your carrier:</label>
-           <br/>
-           &nbsp;
-           <Select
-                labelId="Carrier Type"
-                id="carrier-type"
-                value={Carrier}
-                label="Carrier Type"
-                onChange={(e) => handleOnChangeCarrier(e.target.value)}
-                style={{ width: "230px" }} >
-                <MenuItem value="No, email it">No, email it </MenuItem>
-                <MenuItem value="AT&T">AT&T</MenuItem>
-                <MenuItem value="Boost Mobile">Boost Mobile</MenuItem>
-                <MenuItem value="Consumer Cellular">Consumer Cellular</MenuItem>
-                <MenuItem value="Cricket Wireless">Cricket Wireless</MenuItem>
-                <MenuItem value="Google Fi Wireless">Google Fi Wireless</MenuItem>
-                <MenuItem value="MetroPCS">MetroPCS</MenuItem>
-                <MenuItem value="Sprint">Sprint</MenuItem>
-                <MenuItem value="T-Mobile">T-Mobile</MenuItem>
-                <MenuItem value="U.S. Cellular">U.S. Cellular</MenuItem>
-                <MenuItem value="Verizon">Verizon</MenuItem>
-                <MenuItem value="Xfinity Mobile">Xfinity Mobile</MenuItem>
-           </Select>
-           <br/>
-           <br/>
-           <br/>
-           <label htmlFor="reminder-type">Reminder Type:</label>
-           <br/>
-           &nbsp;
-           <Select
-                labelId="Reminder Type"
-                id="reminder-type"
-                value={ReminderType}
-                label="Reminder Type"
-                onChange={(e) => handleOnChangeRemType(e.target.value)}
-                style={{ width: "230px" }} >
-                <MenuItem value="None">None</MenuItem>
-                <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
-                <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
-           </Select>
-           <br/>
-           <br/>
-            <label htmlFor="reminder-type-err-msg">{RemTypeErrMsg}</label>
-         </div>
-         <div className="days-list">
-            {daysOfWeek.map(({day}, index) => {
-                return(
-                <li key={index}>
-                <div className="days-list-item">
-                    <input
-                        type="checkbox"
-                        id={`custom-checkbox-${index}`}
-                        name={day}
-                        value={day}
-                        checked={checkedState[index]}
-                        onChange={() => handleOnChangeCB(index)}
-                    />
-                    <label htmlFor={`custom-checkbox-${index}`}>{day}</label>
-                </div>
-                </li>
-                );
-            })}
-         </div>
-         <label htmlFor="days-input-err-msg">{daysInputErrMsg}</label>
-         <div className="form-group">
-           <label htmlFor="reminder-time">Reminder Time:</label>
-           <input
-             id="reminder-time"
-             value={ReminderTime}
-             onChange={(e) => setRemTime(e.target.value)}
-           />
-         </div>
-         <label htmlFor="Timezone">Timezone:
-         <Select
-                         labelId="Timezone"
-                         id="Timezone"
-                         value={Timezone}
-                         label="Timezone"
-                         onChange={(e) => handleOnChangeTimezone(e.target.value)}
-                         style={{ width: "230px" }} >
-                         <MenuItem value="Pacific">Pacific</MenuItem>
-                         <MenuItem value="Mountain">Mountain</MenuItem>
-                         <MenuItem value="Central">Central</MenuItem>
-                         <MenuItem value="Eastern">Eastern</MenuItem>
-                    </Select>
-                    </label>
-         <label htmlFor="reminder-time-err-msg">{timeErrMsg}</label>
-         <div className="button-group">
-            <Link to="/editgoal">
-            <Button variant="contained">Cancel</Button>
-            </Link>
-            <Button variant="contained" onClick={handleCreateReminder}>Create</Button>
-         </div>
-       </div>
-     </div>
+    <Box  sx={{
+                /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
+            background: 'repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% )',
+            animation: 'animazione 13s ease-in-out infinite alternate-reverse',
+
+            height: '100vh' ,
+            width: '100vw',
+            overflowX: 'hidden'
+
+
+    }}>
+        <Navbar/>
+
+        <Grid spacing={2}  sx={{marginTop: '5%'}} container justifyContent="center" alignContent={'center'} direction={'column'} alignItems="center" >
+            <Grid item xs>
+
+                <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', padding: 2, borderRadius: '1rem', minWidth: isMobile ? 300 : 320}}>
+                    <Typography
+                    variant="h4"
+                    component="div"
+                    sx={{flexGrow: 1,
+                        fontWeight: 'bold',
+                        color: 'black',
+                        padding: '10px',
+                        textAlign: 'center'}}
+                        >
+                        Create a Reminder
+                    </Typography>
+                    {/* Carrier Selection */}
+                    <Box display="flex" justifyContent="center" alignContent={'center'} >
+                        <FormControl
+                        sx={{ width:'70%', marginTop: '10pt'}}>
+                            <InputLabel sx={{ color: 'black'}} color="secondary" >To enable SMS notifications, please select your carrier</InputLabel>
+                            <Select labelId="Carrier Type" id="carrier-type" value={Carrier} label="To enable SMS notifications, please select your carrier" onChange={(e) => handleOnChangeCarrier(e.target.value)}>
+                                <MenuItem value="none">No thanks, I prefer email notifications</MenuItem>
+                                <MenuItem value="AT&T">AT&T</MenuItem>
+                                <MenuItem value="Boost Mobile">Boost Mobile</MenuItem>
+                                <MenuItem value="Consumer Cellular">Consumer Cellular</MenuItem>
+                                <MenuItem value="Cricket Wireless">Cricket Wireless</MenuItem>
+                                <MenuItem value="Google Fi Wireless">Google Fi Wireless</MenuItem>
+                                <MenuItem value="MetroPCS">MetroPCS</MenuItem>
+                                <MenuItem value="Sprint">Sprint</MenuItem>
+                                <MenuItem value="T-Mobile">T-Mobile</MenuItem>
+                                <MenuItem value="U.S. Cellular">U.S. Cellular</MenuItem>
+                                <MenuItem value="Verizon">Verizon</MenuItem>
+                                <MenuItem value="Xfinity Mobile">Xfinity Mobile</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+
+
+                    <Box display="flex" justifyContent="center" alignContent={'center'} >
+                        <FormControl
+                        sx={{ width:'70%', marginTop: '10pt'}}>
+                            <InputLabel sx={{ color: 'black'}} color="secondary" >What type of reminder do you want?</InputLabel>
+                            <Select labelId="Reminder Type" id="reminder-type" value={ReminderType} label="What type of reminder do you want?" onChange={(e) => handleOnChangeRemType(e.target.value)} >
+                                <MenuItem value="Bedtime Reminder">Bedtime Reminder</MenuItem>
+                                <MenuItem value="Sleep Hygiene Reminder">Sleep Hygiene Reminder</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+
+
+                    <Typography
+                    variant="h6"
+                    component="div"
+                    sx={{flexGrow: 1,
+
+                        color: 'black',
+                        paddingTop: '10px',
+                        textAlign: 'center'}}>
+                        On which day(s) should this reminder be triggered?
+                    </Typography>
+                    <Box display="flex" justifyContent="center" alignContent={'center'} >
+                        <FormGroup  sx={{ '& .MuiFormControlLabel-root': { margin: 0 } }} style={{input: {boxSizing: 'border-box'}}} row={ true}>
+                            <FormControlLabel  key={checkedState[0]} control={<Checkbox checked={checkedState[0]} onClick={() => handleOnChangeCB(0)}/>} labelPlacement={"bottom"} label='Sun' sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[1]} onClick={() => handleOnChangeCB(1)}/>} labelPlacement={"bottom"} label='Mon' sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[2]} onChange={() => handleOnChangeCB(2)}/>} labelPlacement={"bottom"} label='Tue' sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[3]} onChange={() => handleOnChangeCB(3)}/> } labelPlacement={"bottom"} label='Wed' sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[4]} onChange={() => handleOnChangeCB(4)}/>} labelPlacement={"bottom"} label='Thu' sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[5]} onChange={() => handleOnChangeCB(5)}/>} labelPlacement={"bottom"} label='Fri' sx={{ m: 1 }}/>
+                            <FormControlLabel control={<Checkbox checked={checkedState[6]} onChange={() => handleOnChangeCB(6)}/>} labelPlacement={"bottom"} label='Sat' sx={{ m: 1 }}/>
+                        </FormGroup>
+                    </Box>
+
+                    <Box display="flex" justifyContent="center" alignContent={'center'} >
+
+                    </Box>
+
+                    <Grid container direction={'row'} justifyContent={'center'}>
+                        <FormControl
+                        sx={{ width:'30%', marginTop: '10pt', marginRight: '5pt'}}>
+                            <InputLabel shrink={true} sx={{ color: 'black'}} color="secondary" >Reminder time</InputLabel>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <TimePicker label={'Reminder time'} value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
+                            </LocalizationProvider>
+                        </FormControl>
+                        <FormControl
+                        sx={{ width:'30%', marginTop: '10pt', marginLeft: '5pt'}}>
+                            <InputLabel sx={{ color: 'black'}} color="secondary" >Timezone</InputLabel>
+                            <Select labelId="Timezone" id="Timezone" value={Timezone} label="Timezone" onChange={(e) => handleOnChangeTimezone(e.target.value)}>
+                                <MenuItem value="Pacific">Pacific</MenuItem>
+                                <MenuItem value="Mountain">Mountain</MenuItem>
+                                <MenuItem value="Central">Central</MenuItem>
+                                <MenuItem value="Eastern">Eastern</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+
+
+                    <Typography variant="body" component="div" color="black" fontSize="14pt">
+                        {/* Submitting and Canceling */}
+                        <Box display="flex" justifyContent="center" paddingTop='20pt'>
+                        <Box flexGrow={1} paddingRight="5px">
+                            <Button href="/profilepage" variant='outlined' fullWidth>Cancel</Button>
+                        </Box>
+                        <Box flexGrow={1} paddingLeft="5px">
+                            <Button variant='contained' endIcon={<AddAlertOutlinedIcon/>} onClick={handleCreateReminder} fullWidth>Create</Button>
+                        </Box>
+                        </Box>
+                    </Typography>
+                </Paper>
+
+            </Grid>
+        </Grid>
+    </Box>
     );
 }
 

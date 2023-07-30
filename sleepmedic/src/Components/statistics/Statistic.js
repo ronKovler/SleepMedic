@@ -175,7 +175,7 @@ export default function Statistics() {
             height: '100vh' ,
             width: '100vw',
             overflow: 'hidden',
-            overflowY: 'scroll'
+            overflowY: 'auto'
             
         }}>
             <Navbar/>
@@ -198,7 +198,7 @@ export default function Statistics() {
                             {makeLineGraph(monthRecords, "date", 'quality', [0,5], 6, showAvg, allAvgs.quality)}
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={1}>
-                            {makeLineGraph(monthRecords, "date", 'efficiency', [0,1], 6, showAvg, allAvgs.efficiency)}
+                            {makeLineGraph(monthRecords, "date", 'efficiency', [0,100], 6, showAvg, allAvgs.efficiency)}
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={2}>
                             {makeLineGraph(monthRecords, "date", 'fallTime', [0,30], 6, showAvg, allAvgs.fallTime)}

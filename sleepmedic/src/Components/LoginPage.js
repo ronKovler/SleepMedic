@@ -4,11 +4,11 @@ import { TextField, SimpleDialog }  from "@mui/material/";
 import { useSignIn } from 'react-auth-kit';
 import axios from "axios";
 import "./LoginPage.css";
-import { Button, Alert, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, Checkbox } from '@mui/material';
+import { Typography, FormControl, OutlinedInput, InputLabel, Paper, Box, Button, Alert, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, Checkbox } from '@mui/material';
 import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import logo from '../sleep_logo_purp.svg';
-
+import { isMobile } from 'react-device-detect';
 
 
 function Login() {
@@ -116,46 +116,80 @@ function Login() {
   }
 
   return (
-    <div className="container">
-      <form className="login-form" onSubmit={handleLogin}>
+    <Box  sx={{
+      /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
+    background: 'repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% )',
+    animation: 'animazione 13s ease-in-out infinite alternate-reverse',
+
+    height: '100vh' ,
+    width: '100vw',
+    overflowX: 'hidden',
+
+    display: 'flex', // Enable flexbox layout
+    justifyContent: 'center', // Horizontally center the content
+    alignItems: 'center', // Vertically center the content
+      
+    }}>
+      <Paper sx={{backgroundColor: '#D9D3E4',  width: isMobile ? '300px' : '350px', padding: 2, borderRadius: '1rem'}} square={false} elevation={3} style={{textAlign: 'center'}}> 
         <img onMouseOut={() => setLogoSize('100%')} onMouseOver={() => {setLogoSize('120%')}} onClick={() => navigate('/')} src={logo} title='Back to Language Select' alt="Sleep-Medic Logo" style={{height: "8rem", width: "auto", scale: logoSize}}/>
-        <h1>{t("login.title")}</h1>
-        {error && <Alert severity="error" sx={{color: "red", fontSize: "0.85rem"}}><strong>Username/Password was Entered Incorrectly!</strong></Alert>}
-        <label style={{fontWeight: "bold"}} htmlFor="email">{t("login.email")}</label>
-        <TextField
-          type="email"
-          id="email"
-          value={email}
-          placeholder="Username" 
-          variant="outlined"
-          onChange={(e) => setEmail(e.target.value)}
-          color="secondary"
-          style={{width: "70%", height: "4%"}}
-          sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
-          required
-        />
-        <br/>
-        <br/>
-        <label style={{fontWeight: "bold"}} htmlFor="password">{t("login.password")}</label>
-        <TextField
-          type="password"
-          id="password"
-          value={password}
-          placeholder="Password"
-          variant="outlined"
-          onChange={(e) => setPassword(e.target.value)}
-          color="secondary"
-          style={{width: "70%", height: "4%"}}
-          sx={{ input: { color: 'black' }, fieldset: { borderColor: "white" }  }}
-          required
-        />
-        <br/>
-        <div>{t("login.remember-me")}<Checkbox onClick={()=>setRememberMe(!rememberMe)}/> <br/>
-        <Button type="submit" variant="contained" color="primary" onClick={(e) => handleLogin(e)}>{t("login.login")}</Button>
-        </div>
-        <Button style={{color: "white"}} onClick={() => setOpen(true)}>{t("login.forgot-password.title")}</Button>
-        <Link to="/createaccount" style={{color: "white"}}>{t("login.or-create")}</Link>
-        <Dialog open={open} onClose={() => setOpen(false)}>
+       
+        <Typography variant="h4" component="div"
+            sx={{flexGrow: 1,
+                fontWeight: 'bold',
+                color: '#black', 
+              
+                textAlign: 'center'}}>
+              {t("login.title")} 
+          </Typography>
+        {error && <Alert severity="error" sx={{color: "red", fontSize: "0.85rem"}}><strong>Username/Password was entered incorrectly!</strong></Alert>}
+        
+        <FormControl sx={{width: '80%', marginTop: '10pt'}}>
+          <InputLabel>{t("login.email")}</InputLabel>
+          <OutlinedInput
+            type="email"
+            id="email"
+            color="secondary"
+            value={email}
+            label={t("login.email")}
+            sx={{ background: 'white', input: { color: 'black' }}}
+            onChange = {(e)=>
+                setEmail(e.target.value)}
+                 
+          />
+        </FormControl>
+        
+        <FormControl sx={{width: '80%', marginTop: '20pt'}}>
+          <InputLabel>{t("login.password")}</InputLabel>
+          <OutlinedInput
+            type="password"
+            id="password"
+            color="secondary"
+            value={password}
+            label={t("login.password")}
+            sx={{ background: 'white', input: { color: 'black' }  }} 
+            onChange = {(e)=>
+                setPassword(e.target.value)}
+                
+          />
+        </FormControl>
+        
+        <Box display="flex" alignItems="center" justifyContent="center" padding='0px'>
+          {t("login.remember-me")}<Checkbox onClick={()=>setRememberMe(!rememberMe)}/> 
+        </Box>
+        <Box display="flex" alignItems="center" justifyContent="center" padding='0px'>
+          <Button type="submit" variant="contained" color="primary" onClick={(e) => handleLogin(e)}>{t("login.login")}</Button>
+        </Box>
+        
+       
+        <Box display="flex" alignItems="center" justifyContent="center" padding='0px'>
+          <Button style={{color: "white"}} onClick={() => setOpen(true)}>{t("login.forgot-password.title")}</Button>
+        </Box>
+        <Box display="flex" alignItems="center" justifyContent="center" padding='0px'>
+          <Link to="/createaccount" style={{color: "white"}}>{t("login.or-create")}</Link>
+        </Box>
+        
+        <Dialog open={open} onClose={() => setOpen(false)}
+        PaperProps={{style: {backgroundColor:'#D9D3E4'}}}>
           <DialogTitle>{t("login.forgot-password.title")}</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -187,8 +221,8 @@ function Login() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setOpen(false)}>{t("login.forgot-password.cancel")}</Button>
-            <Button onClick={(e) => handleForgotPassword(e)}>{t("login.forgot-password.recover")}</Button>
+            <Button variant='outlined' onClick={() => setOpen(false)}>{t("login.forgot-password.cancel")}</Button>
+            <Button variant='contained' onClick={(e) => handleForgotPassword(e)}>{t("login.forgot-password.recover")}</Button>
           </DialogActions>
         </Dialog>
         <Dialog
@@ -204,8 +238,9 @@ function Login() {
             <Button onClick={() => setOpenFin(false)}>{t("login.forgot-password.confirm")}</Button>
           </DialogActions>
         </Dialog>
-      </form>
-    </div>
+      </Paper>
+    </Box>
+    
   );
 }
 

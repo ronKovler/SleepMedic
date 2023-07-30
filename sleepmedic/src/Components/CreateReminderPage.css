@@ -1,3 +1,12 @@
+.create-rem-container {
+    backgroundColor: #57118E;          /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
+    background: repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% );
+    animation: animazione 13s ease-in-out infinite alternate-reverse;
+    min-height: 100vh;
+    height: auto;
+}
+
+
 .create-rem-form {
     display: flex;
     flex-direction: column;
@@ -5,7 +14,7 @@
     align-items: center;
     position: relative;
     width: 50%;
-    height: 75%;
+    height: auto;
     /*background-color: white;  */
     background-color: #D9D3E4;        /* <--- chosen foreground   */
     /*color: black;     */  /* Gold text color */
@@ -30,6 +39,8 @@
 .days-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;  /* Center the checkboxes horizontally */
+  align-items: center;      /* Center the checkboxes vertically */
   margin: 0;
   padding: 0;
   list-style-type: none;
@@ -41,27 +52,7 @@
   margin-right: 1rem;
 }
 
-  .alt-login div {
-    width: 7rem;
-    height: 3rem;
-    border-radius: 0.25em;
-    background-color: #1f1e1e;  /* Blue background color */
-    display: inline-flex;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    cursor: pointer;
-  }
 
-  .createRem {
-    width: 60%;
-    height: 3em;
-    background-color: #ff700; /* gray background color */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.5s;
-    border-radius: 0.25em;
-    cursor: pointer;
-  }
+
+
   

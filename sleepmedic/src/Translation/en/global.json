@@ -22,14 +22,14 @@
         "viewInsight": "View Insights",
         "insightMessage": "Gain valuable insights into your sleep patterns by visualizing your habits. Explore them on the Insights page.",
         "weekly-advices": {
-            "title": "Weekly Advices",
+            "title": "Weekly Advice",
             "1": "I already want to take a nap tomorrow."
         },
         "new-record": "New Record",
         "input-prompt": {
-            "new-record": "To record new sleep, please enter your daily sleep data below.",
+            "new-record": "To create a new record, please fill in the information below.",
             "edit-record": "To update a sleep record, alter your responses as necessary.",
-            "sleep-duration": "How long did it take to fall asleep? (min)",
+            "fall-time": "How long did it take to fall asleep? (min)",
             "awake-time": "Did you wake up in the night? If so, for how long? (min)",
             "down-time": "What time did you get into bed? ",
             "sleep-time": "What time did you fall asleep?",
@@ -40,8 +40,8 @@
         "sleep-journal": {
             "physical-activity": "Did you engage in any physical activity today?",
             "naps": "Did you have any naps during the day?",
-            "alchol": "Did you consume alcohol less than 6 hours before bedtime?",
-            "caffine": "Did you consume caffeine less than 6 hours before bedtime?",
+            "alcohol": "Did you consume alcohol less than 6 hours before bedtime?",
+            "caffeine": "Did you consume caffeine less than 6 hours before bedtime?",
             "electronics": "Did you use a phone, tablet, or watch television in bed?",
             "difficulty-falling": "Did you have any difficulty falling asleep?",
             "difficulty-staying": "Did you have any difficulty staying asleep?",
@@ -51,14 +51,13 @@
         "viewLessons": "View Lessons",
         "education-progress": "Education Progress",
         "cancel": "Cancel",
-        "submit": "Submit",
+        "create": "Create",
         "update": "Update"
-
     },
     "login": {
         "title": "Login",
-        "email": "Email:",
-        "password": "Password:",
+        "email": "Email",
+        "password": "Password",
         "remember-me": "Remember Me",
         "forgot-password": {
             "title": "Forgot Password",
@@ -92,110 +91,174 @@
             "day1": {
               "title": "Day #1: Introduction",
               "lesson1": {
-                "title": "Purpose of the program and structure of plan",
-                "reading": "Introduce the purpose of the program and the structure of the education plan. Explain that the program aims to improve sleep patterns and address insomnia through Cognitive Behavioral Therapy for Insomnia (CBT-I)."
+                "title": "Welcome to Sleep-Medic's Digital Cognitive Behavioral Therapy",
+                "reading": "\nDigital Cognitive Behavioral Therapy for Insomnia (dCBT-i) is a modern and accessible form of therapy designed to aid individuals who have trouble sleeping. Sleep-Medic uses dCBT-i to deliver cognitive-behavioral techniques to improve your sleep patterns.\n\n The main purpose of dCBT-I is to empower you with practical tools and knowledge to improve your sleep on your own terms. The digital format makes it convenient and flexible, allowing you to access the resources whenever and wherever you want. Through dCBT-i, you can learn to manage racing thoughts, reduce sleep-related anxiety, and adopt healthier sleep habits.\n\nIt's important to understand that CBT-I is not a quick fix or a magic cure for insomnia. It requires effort and commitment from you to make lasting changes to your sleep habits. \nCBT-I is also not about taking medication to force sleep but rather about learning skills to naturally improve sleep.\n\ndCBT-I combines cognitive therapy and behavioral therapy to tackle the thoughts and behaviors that may be contributing to your insomnia."
               },
               "lesson2": {
-                "title": "Baseline PSQI & ISI",
-                "reading": "Explain the use of the PSQI (Pittsburgh Sleep Quality Index) and ISI (Insomnia Severity Index) sleep questionnaires for baseline assessment. These will help evaluate the severity of insomnia and sleep quality at the beginning of the program."
+                "title": "Cognitive vs Behavioral Therapy",
+                "reading": "\nCognitive Therapy: This aspect helps you recognize and change negative thoughts about sleep. The digital program will provide interactive lessons and exercises to challenge unhelpful beliefs, like the fear of not sleeping or worrying about the consequences of insomnia.\n\nBehavioral Therapy: dCBT-I focuses on modifying habits and behaviors that can impact your sleep. The program will guide you in establishing a consistent sleep schedule, creating a calming bedtime routine, and avoiding stimulating activities before bedtime (like using electronic devices)."
               },
               "lesson3": {
-                "title": "Introduce sleep log",
-                "reading": "Introduce the concept of a sleep log and its importance. Explain that patients will be required to maintain a sleep log to track their sleep patterns, bedtime routines, and sleep-related behaviors throughout the program."
+                "title": "Baseline PSQI & ISI",
+                "reading": "\nThe PSQI (Pittsburgh Sleep Quality Index) and ISI (Insomnia Severity Index) sleep questionnaires serve a crucial role in the baseline assessment of individuals experiencing sleep-related issues. \nThese questionnaires are employed at the start of the program to gauge the severity of insomnia and assess the overall quality of sleep. \n\nThe PSQI examines various aspects of sleep, such as sleep duration, sleep disturbances, and sleep efficiency, while the ISI focuses specifically on measuring the severity of insomnia symptoms. \n\nBy administering these questionnaires, healthcare professionals can gain valuable insights into the participants' sleep patterns, enabling them to tailor personalized treatment plans and interventions to address their specific needs effectively."
+              },
+              "lesson4": {
+                "title": "Sleep Log - Part 1",
+                "reading": "\nAs you're struggling with insomnia, there's a simple tool that can help you understand your sleep patterns better and pave the way to better sleep. \nIt's called a Sleep Log, and it can make a big difference in improving your sleep and overall well-being.\n\nA Sleep Log is a straightforward and powerful way to keep track of your sleep-related activities. It's like a diary where you record important information about your sleep every day. \nBy filling out a Sleep Log regularly, you can monitor how well you sleep, identify patterns or triggers that affect your sleep, and work towards making positive changes. \nAs part of Sleep-Medic, we have included sleep logs on the Homepage. Please take a moment to locate these."
+              },
+              "lesson5": {
+                "title": "Sleep Log - Part 2",
+                "reading": "\nKeeping a Sleep Log is easy. Each night before you go to bed, take a few minutes to jot down the following information:\n - Bedtime: The time you get into bed and try to fall asleep.\n - Time to Fall Asleep: How long it takes you to actually fall asleep after lying down.\n - Number of Times Awake: How many times you wake up during the night.\n - Total Time Awake: The total time you spend awake during the night.\n - Wake Up Time: The time you wake up in the morning.\n - Quality of Sleep: Rate the quality of your sleep.\n - Daytime Sleepiness: How sleepy you feel during the day on a scale from 1 to 5 (1 being not sleepy at all and 5 being very sleepy).\n - Additional factors:  Factors that might have affected your sleep (e.g., stress, caffeine intake, exercise)"
+              },
+              "lesson6": {
+                "title": "Sleep Log - Part 3",
+                "reading": "\nKeeping a Sleep Log might seem simple, but its benefits are significant:\n - Understanding Your Sleep Patterns: By consistently logging your sleep activities, you can identify patterns that affect your sleep, such as certain habits, stressors, or activities.\n - Identifying Sleep Problems: A Sleep Log can help you recognize potential sleep problems, like difficulty falling asleep or waking up frequently.\n - Guiding Treatment: If you seek help from a healthcare professional for your sleep issues, a Sleep Log can provide valuable information to guide their assessment and treatment recommendations.\n - Tracking Progress: As you make changes to improve your sleep, a Sleep Log can help you track your progress and see how your efforts impact your sleep quality over time.\n - Empowerment: Keeping a Sleep Log empowers you to take an active role in improving your sleep. It gives you a better understanding of your sleep patterns and allows you to make informed decisions about your sleep habits."
+              },
+              "lesson7": {
+                "title": "Sleep Log - Part 4",
+                "reading": "\nRemember, it's essential to be consistent in recording your sleep activities for a few weeks to get a clearer picture of your sleep patterns. \nAlso, consider sharing your Sleep Log with a healthcare professional if you continue to experience sleep difficulties.\n\nWith the power of knowledge and the insights provided by your Sleep Log, you can take steps toward achieving better sleep and enjoying more energized and fulfilling days."
               }
             },
             "day2": {
               "title": "Day #2: Impact of Sleep",
               "lesson1": {
                 "title": "How much sleep is needed?",
-                "reading": "Educate patients on the recommended amount of sleep needed for different age groups. Discuss the importance of individual sleep needs and variations."
+                "reading": "\nOn average, adults need about 7 to 9 hours of sleep each night. However, individual sleep needs may vary, and some people may feel well-rested with slightly more or less sleep.\n\n People with insomnia will often find themselves requiring less sleep than the average person, and that’s ok! \n\nEvery person is different and finding the right amount of sleep that leaves you feeling refreshed and alert during the day is essential."
               },
               "lesson2": {
                 "title": "Benefits of sleep",
-                "reading": "Explain the numerous benefits of quality sleep, including improved cognitive function, emotional well-being, and physical health."
+                "reading": "\nSleep is like magic for our bodies and minds. When we get enough sleep, it brings numerous benefits, such as:\n - Restoration: Sleep allows our bodies to rest and repair, helping us recover from the day's activities and recharge for the next.\n\n - Improved Mood: Getting sufficient sleep can enhance our mood, making us feel happier and more positive.\n\n - Enhanced Concentration and Focus: A good night's sleep helps us stay alert and focused during the day, making it easier to complete tasks and learn new things.\n\n - Better Memory: Sleep plays a crucial role in consolidating memories, helping us remember important information.\n\n - Healthy Immune System: A well-rested body has a stronger immune system, better equipped to fight off infections and illnesses.\n"
               },
               "lesson3": {
                 "title": "Health impact of insufficient sleep",
-                "reading": "Discuss the negative health consequences associated with insufficient sleep, such as increased risk of chronic conditions, mental health issues, and impaired immune function."
+                "reading": "\nNot getting enough sleep can have significant consequences on our health. Some common health impacts of insufficient sleep include:\n - Daytime Fatigue: Lack of sleep can lead to daytime sleepiness, making it challenging to stay awake and perform daily activities.\n - Increased Risk of Accidents: Sleep deprivation can impair our judgment and reaction time, increasing the risk of accidents, both at home and while driving.\n - Weight Gain: Insufficient sleep can disrupt the balance of hormones that control appetite, leading to an increased desire for unhealthy foods and potential weight gain.\n - Cardiovascular Issues: Chronic sleep deprivation may contribute to heart problems and high blood pressure.\n - Mental Health Struggles: Lack of sleep is linked to an increased risk of anxiety and depression."
               },
               "lesson4": {
                 "title": "Economic impact of insufficient sleep",
-                "reading": "Explore the economic implications of inadequate sleep, including reduced productivity, workplace accidents, and increased healthcare costs."
+                "reading": "\nThe consequences of insufficient sleep extend beyond our health and well-being; they can also have economic implications. \nSleep-related issues can lead to decreased productivity and an increase in absenteeism in the workplace. Additionally, healthcare costs related to sleep disorders and their effects can put a strain on your personal health, your worklife and the economy as a whole.\n\nIn conclusion, sleep plays a crucial role in our physical and mental health, and its impact on our daily lives cannot be overstated. \nStrive to prioritize sleep and establish a bedtime routine that promotes restful sleep. \nIf insomnia persists, consider consulting a healthcare professional who can help you improve your sleep habits and overall well-being. Remember, better sleep leads to a happier and healthier life.\n"
               },
               "lesson5": {
-                "title": "Survey patient; GAD-7",
-                "reading": "Survey patients using the Generalized Anxiety Disorder 7 (GAD-7) questionnaire to assess their anxiety levels. Anxiety can be both a cause and a consequence of insomnia."
+                "title": "What is the GAD-7?",
+                "reading": "\nThe Generalized Anxiety Disorder 7 (GAD-7) is a valuable tool used in healthcare settings to assess and measure the severity of generalized anxiety disorder in patients.\n Consisting of seven thoughtfully designed questions, the GAD-7 enables healthcare professionals to gain insight into the patient's anxiety levels and the impact it may have on their well-being. \n\nAnxiety is a complex condition that can manifest in various ways, and its relationship with insomnia is particularly noteworthy. Often, anxiety can act as both a cause and a consequence of insomnia, creating a challenging cycle that disrupts sleep patterns and exacerbates feelings of unease and restlessness. \n\nBy incorporating the GAD-7 questionnaire in patient assessments, healthcare providers can identify anxiety-related issues early on, leading to more targeted and effective interventions to improve both mental health and sleep quality. \n"
+              },
+              "lesson6": {
+                "title": "GAD-7",
+                "reading": "\nFor each question, rate the frequency of the experience over the past two weeks on a scale from 0 to 3:\n0 - Not at all \n1 - Several days \n2 - More than half the days \n3 - Nearly every day\n\nQuestions\n1. Feeling nervous, anxious, or on edge\n2. Not being able to stop or control worrying\n3. Worrying too much about different things\n4. Trouble relaxing\n5. Being so restless that it's hard to sit still\n6. Becoming easily annoyed or irritable\n7. Feeling afraid, as if something awful might happen\n\nCalculate the total score by summing up the scores for all seven items, ranging from 0 to 21. \nHigher total scores indicate higher levels of anxiety.\n"
               }
             },
             "day3": {
               "title": "Day #3: Sleep Stages",
               "lesson1": {
-                "title": "Education regarding different stages of sleep",
-                "reading": "Explain the different stages of sleep, including NREM (Non-Rapid Eye Movement) stages and REM (Rapid Eye Movement) sleep. Describe the characteristics of each stage and their importance in the sleep cycle."
+                "title": "The Different Stages of Sleep",
+                "reading": "\nSleep is a complex process that can be divided into two main categories: Non-REM (Rapid Eye Movement) sleep and REM sleep. Non-REM sleep has three stages, while REM sleep is its own unique stage.\n\nStage 1 (Non-REM): This is the lightest stage of sleep when you're just drifting off. You might experience fleeting thoughts and muscle twitches. If someone wakes you during this stage, you might not even realize you were asleep.\n\nStage 2 (Non-REM): In this stage, your body relaxes further, and your brain activity slows down. You spend most of your sleep time in Stage 2.\n\nStage 3 (Non-REM): The deep sleep stage, also known as slow-wave sleep. It is essential for physical restoration and growth, promoting a refreshed feeling upon waking.\n\nREM Sleep: REM sleep is the stage where most vivid dreaming occurs. While dreaming can occur in any stage of sleep, we often associate it with REM sleep. Your eyes move rapidly, and your brain activity increases. It is vital for memory consolidation and emotional processing.\n\nThroughout the night, our sleep stages go through a repeating cycle, starting with Stage 1, progressing to deep sleep (Stage 3), and entering REM sleep. This cycle occurs approximately every 90 minutes. As the night progresses, the amount of time spent in REM sleep increases, while deep sleep decreases. REM sleep is more dominant during the later hours of the night, contributing to vivid dreams."
               },
               "lesson2": {
-                "title": "Education on how different stages of sleep change based on gender and age",
-                "reading": "Discuss how sleep patterns and stages can vary based on gender and age. Address the changes that occur during childhood, adolescence, adulthood, and older adulthood."
+                "title": "How age affects the stages of sleep",
+                "reading": "\nSleep patterns evolve as we age, and the amount of time spent in each stage can differ.\n\nInfants and Children: Babies spend most of their sleep in REM, vital for brain development. As they grow, non-REM stages become more pronounced, with deep sleep (Stage 3) more prominent in childhood.\n\nTeenagers: Adolescents experience a shift in their internal body clock, leading to delayed sleep times. They need more sleep overall, with Stage 3 deep sleep essential for their growth and development.\n\nAdults: Adults spend around 20-25% of their sleep in REM sleep, and the rest is in non-REM sleep. Stage 3 deep sleep decreases with age, leading to lighter sleep in older adults.\n\nElderly: As we age, deep sleep diminishes, leading to more fragmented sleep with frequent awakenings during the night.\n"
+              },
+              "lesson3": {
+                "title": "How gender affects our stages of sleep",
+                "reading": "\nBiological and hormonal differences can influence sleep stages between genders, but overall, sleep patterns are similar.\n\nWomen: Hormonal fluctuations during the menstrual cycle, pregnancy, and menopause can impact sleep. Sleep disorders, like insomnia, may be more common in women.\n\nMen: Men may experience sleep disturbances due to conditions like sleep apnea, which is more prevalent in males.\n\nConclusion:\nUnderstanding sleep stages is like decoding the language of rest. The sleep cycle's rhythmic flow and its impact across age and gender can provide insights into your sleep struggles. Establishing a consistent bedtime routine and creating a comfortable sleep environment may also contribute to better sleep. Remember, embracing the mysteries of sleep stages can lead you to more restful nights and a revitalized you!\n"
               }
             },
             "day4": {
               "title": "Day #4: Sleep physiology and the desire to sleep",
               "lesson1": {
-                "title": "Process C",
-                "reading": "Explain Process C, which regulates the circadian rhythm and influences the timing of sleep and wakefulness. Discuss how external factors like light exposure and daily routines can affect Process C."
+                "title": "Sleep Psychology",
+                "reading": "\nIf you find yourself tossing and turning at night, unable to fall asleep, understanding the science behind sleep physiology and the desire to sleep may shed light on your struggles. \nIn this lesson, we will explore the fascinating processes that regulate our sleep-wake cycle, known as Process C and Process S, and how they impact our nightly rest.\n\nOur sleep-wake cycle is governed by a complex interaction between two essential processes: Process C (Circadian Rhythm) and Process S (Sleep-Wake Homeostasis)."
               },
               "lesson2": {
-                "title": "Process S",
-                "reading": "Explain Process S, the homeostatic sleep drive that accumulates sleep pressure over the day. Discuss the interaction between Process C and Process S in regulating sleep-wake cycles."
+                "title": "Process C",
+                "reading": "\nThink of the Circadian Rhythm as your body's internal clock, guiding your sleep and wake patterns over a 24-hour period. \nThis natural rhythm is influenced by external cues, like sunlight and darkness, which help regulate our body's functions.\n\nRole of Sunlight: Sunlight serves as a powerful signal to our brain that it's time to wake up and be alert. As the day progresses, our alertness gradually decreases, and we begin to feel drowsy in the evening.\n\nMelatonin: An essential hormone called melatonin is also involved in Process C. As the sun sets, our brain releases melatonin, which signals to our body that it's time to wind down and prepare for sleep.\n"
               },
               "lesson3": {
-                "title": "Epworth sleepiness evaluation",
-                "reading": "Introduce the Epworth Sleepiness Scale, a self-report questionnaire used to assess daytime sleepiness. Explain how excessive daytime sleepiness can indicate underlying sleep disorders."
+                "title": "Process S",
+                "reading": "\nSleep-Wake Homeostasis is like a built-in sleep pressure that increases the longer we stay awake. The longer we've been awake, the more pressure builds up, making us feel sleepier and more eager to rest. \nThink of Process S kind of like a coin-jar for spare change in your home. It can take a long time to fill up that coin jar, but once it’s full, it gets emptied right away. \nIn the same way, it takes a full day to build up the pressure or need to sleep, but a nap during the day at the wrong time or for too long can deplete that sleep drive making it harder to fall asleep at night.\n\nAdenosine: Adenosine is a chemical that accumulates in our brain as we're awake. It gradually creates sleep pressure and is responsible for the feeling of sleepiness. When we sleep, adenosine levels decrease, allowing us to wake up feeling refreshed. \nDid you know that coffee or caffeine makes you feel more awake by increasing the amount of adenosine in your brain for a short time? \n\nThe Desire to Sleep: The desire to sleep is the result of the interaction between Process C and Process S. As we go about our day, Process S accumulates sleep pressure, gradually making us feel sleepier. \nAt the same time, Process C guides our sleep-wake cycle, so we naturally feel more awake during the day and drowsier in the evening.\n"
+              },
+              "lesson4": {
+                "title": "Insomnia & Tips for Better Sleep",
+                "reading": "\nInsomnia is the disruption of the delicate balance between Process C and Process S, leading to difficulties falling asleep or staying asleep. \nFactors like stress, irregular sleep schedules, and excessive use of electronic devices before bedtime can interfere with our body's natural sleep-wake rhythm.\n\nTo combat insomnia and have quality sleep, implement the following:\n - Consistent Sleep Schedule: Try to go to bed and wake up at the same time each day, even on weekends.\n - Create a Sleep-Friendly Environment: Make your bedroom comfortable, dark, and quiet to promote better sleep.\n - Limit Stimulants: Avoid caffeine and electronics close to bedtime.\n - Relaxation Techniques: Practice relaxation exercises, like deep breathing or gentle stretches, before sleep.\n - Limit Daytime Naps: Keep daytime naps short and avoid napping too close to bedtime.\n"
               }
             },
             "day5": {
               "title": "Day #5: Insomnia & its causes",
               "lesson1": {
-                "title": "What is insomnia",
-                "reading": "Define insomnia and its key characteristics, including difficulty falling asleep, staying asleep, and waking up too early. Explain the impact of insomnia on daily functioning and quality of life."
+                "title": "Introduction",
+                "reading": "\nWith insomnia, it can be challenging to drift off to dreamland. Remember, you're not alone. Insomnia is a common sleep disorder that affects many adults, but there's hope for better sleep. \n\nIn this lesson, we will explore what insomnia is, and the various causes behind it, including the three P's (Predisposing, Precipitating, and Perpetuating factors). \nUnderstanding the three P's of insomnia and its underlying causes can provide valuable insights into your sleep struggles. \nWe will also explore other factors contributing to insomnia, such as stress, medications, medical conditions, and substances like alcohol, tobacco, illicit drugs, and electronics."
               },
               "lesson2": {
-                "title": "Causes of insomnia",
-                "reading": "Explore the various causes of insomnia, including psychological factors like stress and anxiety, medications, underlying medical conditions, and substance use (alcohol, tobacco, illicit drugs)."
+                "title": "What is insomnia?",
+                "reading": "\nInsomnia is a sleep disorder characterized by difficulty falling asleep, staying asleep, or waking up too early and being unable to go back to sleep. \nIt can leave you feeling tired, moody, and unable to function at your best during the day."
               },
               "lesson3": {
+                "title": "Causes of insomnia - Stress & Anxiety",
+                "reading": "\nStress and Anxiety: Daily life stressors, work pressures, or personal concerns can make it difficult to relax and fall asleep in the following ways:\n - Racing Thoughts: When we are stressed or anxious, our minds can become filled with racing thoughts. These thoughts can be about our daily worries, future uncertainties, or past events. When it's time to sleep, these thoughts can make it difficult to relax and quiet our minds, preventing us from falling asleep.\n\n - Physical Tension: Stress and anxiety can lead to physical tension in our bodies. When we lie down to sleep, this tension can make it uncomfortable to find a restful position, leading to restlessness and difficulty staying asleep.\n\n - Hyperarousal: Stress and anxiety can trigger a state of hyperarousal, where our bodies and minds are on high alert. This heightened state of alertness can make it challenging to switch off and unwind for sleep."
+              },
+              "lesson4": {
+                "title": "Causes of insomnia - Medical Conditions",
+                "reading": "\nMedical Conditions: As you've been struggling with insomnia, it's essential to consider what medical conditions might be contributing to your sleep difficulties:\n - Restless Legs Syndrome (RLS): RLS is a neurological disorder that causes uncomfortable sensations in the legs, often described as itching, tingling, or crawling sensations. These sensations can be more pronounced during periods of rest, such as when lying down to sleep. RLS can make it challenging to relax and fall asleep, leading to insomnia.\n\n - Sleep Apnea: Sleep apnea is a sleep disorder characterized by pauses in breathing during sleep. These pauses can be brief but frequent, disrupting sleep and leading to awakenings throughout the night. People with sleep apnea may not be aware of these awakenings but may experience daytime sleepiness and fatigue due to poor sleep quality.\n\n - Chronic Pain: Medical conditions that cause chronic pain, such as arthritis, fibromyalgia, or back pain, can make it difficult to find a comfortable sleep position and stay asleep. Pain can lead to frequent awakenings during the night and contribute to insomnia.\n\n - Gastroesophageal Reflux Disease (GERD): GERD is a digestive disorder that causes stomach acid to flow back into the esophagus, leading to heartburn and discomfort. Symptoms may worsen when lying down, making it challenging to get restful sleep.\n\n - Depression and Anxiety: Mental health conditions like depression and anxiety can disrupt sleep patterns and lead to insomnia. Racing thoughts, worries, and feelings of sadness can make it difficult to relax and fall asleep.\n"
+              },
+              "lesson5": {
+                "title": "Causes of insomnia - Medications",
+                "reading": "\nMedications: Some medications, especially stimulants or those affecting the central nervous system, can interfere with sleep and contribute to insomnia: \n - Stimulants: Some medications, such as certain antidepressants, ADHD medications, or decongestants, contain stimulants that can interfere with sleep. These stimulants can increase alertness and make it challenging to relax and fall asleep.\n\n - Corticosteroids: Corticosteroids, used to treat various medical conditions, can disrupt sleep patterns and lead to insomnia. They can cause changes in the body's hormone levels and affect the natural sleep-wake cycle.\n\n - Diuretics: Diuretics, often prescribed to manage conditions like high blood pressure, can increase the need to urinate during the night. Frequent trips to the bathroom can disrupt sleep and lead to awakenings. \n\n - Beta-Blockers: Beta-blockers, used to treat heart conditions and hypertension, can cause nightmares and vivid dreams, which may disrupt sleep and lead to sleep disturbances. \n\nIf you suspect that your medications are causing sleep difficulties, discuss your concerns with your healthcare provider. They can review your medications and may consider adjusting the dosage or timing of the medication or prescribing an alternative medication. DO NOT STOP OR ALTER ANY OF YOUR MEDICATIONS BEFORE FIRST SPEAKING WITH YOUR HEALTHCARE PROVIDER."
+              },
+              "lesson6": {
+                "title": "Causes of insomnia - Substances",
+                "reading": "\nConsuming substances like alcohol, tobacco, or illicit drugs can negatively impact sleep quality, leading to disrupted sleep: \n - Caffeine: Caffeine is a natural stimulant found in coffee, tea, certain sodas, and some energy drinks. It works by blocking adenosine, a brain chemical that promotes sleepiness. \nBy doing so, caffeine increases alertness and reduces the feeling of fatigue, making it harder to fall asleep. The effects of caffeine can last for several hours. It takes around 8 to 10 hours for the body to eliminate half of the caffeine consumed. This means that if you have a cup of coffee or tea after 1 pm the stimulant properties of caffeine might still be active in your system when it's time to go to bed, leading to difficulties falling asleep. \n\n - Alcohol: While alcohol might initially make you feel drowsy and relaxed, it can disrupt your sleep cycle. After the initial calming effects wear off, alcohol can lead to fragmented and restless sleep. It can also increase the number of times you wake up during the night, preventing you from reaching deep, restorative sleep stages. As a result, you may wake up feeling tired and groggy, instead of refreshed.\n\n - Tobacco: Nicotine, a stimulant found in tobacco products, can interfere with your ability to fall asleep and stay asleep. Smoking or using tobacco close to bedtime can increase your heart rate and stimulate your brain, making it difficult to relax and wind down for sleep. Nicotine withdrawal during the night can also cause you to wake up and struggle to fall back asleep.\n\n - Drugs: Illicit drugs can have various effects on sleep, depending on the substance and its impact on the central nervous system. Stimulant drugs like cocaine and methamphetamine can lead to sleep disturbances and reduce your overall sleep duration. On the other hand, drugs like marijuana can also affect sleep patterns, leading to disruptions in the REM sleep stage, which is crucial for memory consolidation and emotional processing."
+              },
+              "lesson7": {
+                "title": "Causes of insomnia - Electronics",
+                "reading": "\nElectronics: Using electronic devices like smartphones and computers and even television before bedtime or in bed can interfere with the body's natural sleep-wake cycle.\n - Blue Light Impact: Electronic devices, such as smartphones, tablets, and computers, emit blue light. This type of light can interfere with the body's production of melatonin, a hormone that helps regulate sleep-wake cycles. Exposure to blue light before bedtime can trick your brain into thinking it's still daytime, making it harder to fall asleep.\n\n - Mental Stimulation: Engaging with electronic devices, especially social media, video games, or stimulating content, can keep your mind active and alert. This mental stimulation can make it difficult for your brain to relax and wind down for sleep.\n\n - Sleep Disruptions: When you use electronic devices in bed, you might be tempted to check messages, emails, or notifications during the night. This behavior can lead to frequent awakenings and disrupt your overall sleep pattern."
+              },
+              "lesson8": {
                 "title": "The 3 P's",
-                "reading": "Discuss the three common factors known as the '3 P's' that can contribute to insomnia: predisposing, precipitating, and perpetuating factors. Address how identifying these factors can help in developing a personalized treatment plan."
+                "reading": "\nPredisposing Factors: These are factors that make a person more vulnerable to developing insomnia. Predisposing factors are like building blocks that lay the foundation for sleep difficulties. \nThey may include traits or experiences from our past, such as being naturally sensitive to environmental changes or having a family history of insomnia. \nPredisposing factors set the stage for potential sleep challenges.\n\nPrecipitating Factors: Precipitating factors are events or situations that trigger acute episodes of insomnia. They are like sparks that ignite sleep disruptions. For instance, significant life changes, stressful events, or emotional upheavals can disrupt our ability to relax and fall asleep. Common examples of precipitating factors include work-related stress, relationship problems, or coping with loss.\n\nPerpetuating Factors: Perpetuating factors are habits or behaviors that maintain insomnia over time. They are like cycles that perpetuate sleep difficulties. When we experience nights of poor sleep due to stress or other factors, we might develop worries and anxieties about not sleeping well. This can lead to bedtime anxiety, where we start associating our bed with being unable to sleep, making it harder to fall asleep when we get into bed. These patterns reinforce insomnia and can make it more challenging to break the cycle."
+              },
+              "lesson9": {
+                "title": "Closing Thoughts",
+                "reading": "\nRecognizing the three P's of insomnia can be the first step toward finding effective strategies to improve sleep. \n\nBy understanding the factors that may be contributing to your sleep difficulties, you can take proactive steps to create a calming environment, adopt healthy sleep habits, and manage stress to promote restful nights. \n\nRemember that each person's experience with insomnia is unique, and finding the right approach to manage it may take time, and we will cover specific strategies to address these issues. "
               }
             },
             "day6": {
               "title": "Day #6: Sleeping Pills",
               "lesson1": {
-                "title": "Evaluation for RLS",
-                "reading": "Discuss Restless Legs Syndrome (RLS) and its association with sleep disturbances. Explain the importance of evaluating for RLS in patients with insomnia."
+                "title": "Introduction",
+                "reading": "\nAs you’ve struggled with insomnia, you’ve likely seen advertisements for sleep aids to help with your sleep, and you may have tried some of them yourself. \nYou are likely asking yourself why you should go through this program when instead you could possibly take a pill?  \n\nThe short answer to this question is that CBT-I and digital CBT-I are considered the first-line treatment for insomnia, and it can provide you with practical tools to overcome sleep difficulties and achieve better rest. \n\nSleep aids come with risks. Let’s explore some common types of sleep aids a little further. "
               },
               "lesson2": {
-                "title": "Types of pills",
-                "reading": "Introduce different types of sleeping pills commonly used to treat insomnia. Discuss the classification, mechanisms of action, and potential side effects of these medications."
+                "title": "OTC Sleep Medications",
+                "reading": "\nOTC sleep aids are available without a prescription and can help with occasional sleep difficulties. \n\nThey often contain antihistamines as their active ingredient, which are typically used to treat allergies, but they also have sedative effects that can induce drowsiness and help with falling asleep. \n\nIn the United States, melatonin is available over-the-counter, however in many other areas such as Europe, it is a prescription medication, so it should not be taken lightly."
               },
               "lesson3": {
-                "title": "Efficacy/Failure of pills",
-                "reading": "Explore the effectiveness of sleeping pills in treating insomnia and factors that can contribute to treatment failure. Highlight the importance of using sleeping pills as a short-term solution and combining them with CBT-I for long-term benefits."
+                "title": "Prescription Sleep Medications",
+                "reading": "\nPrescription sleep medications are stronger than OTC options and are often used for short-term treatment of insomnia. \n\nThere are different types of prescription sleep medications, including:\n - Benzodiazepines: These drugs have a calming effect on the brain and can help with anxiety and sleep. They are generally used for short-term treatment due to the risk of dependency.\n\n - Non-Benzodiazepine Hypnotics (Z-drugs): Similar to benzodiazepines, Z-drugs also have sedative effects but with a lower risk of dependency.\n\n - Melatonin Receptor Agonists: These medications target melatonin receptors in the brain to regulate the sleep-wake cycle and promote sleep.\n\n - Orexin Antagonists: Orexin is a brain chemical that helps regulate wakefulness. Orexin antagonists block orexin receptors, promoting sleep by reducing wakefulness."
               },
               "lesson4": {
-                "title": "Evaluate for OSA",
-                "reading": "Discuss Obstructive Sleep Apnea (OSA) and its potential impact on sleep quality. Explain the importance of evaluating patients for OSA and distinguishing it from primary insomnia."
+                "title": "Herbal and Natural Sleep Aids",
+                "reading": "\nSome people prefer to use herbal or natural sleep aids. \n\nThese may include supplements containing ingredients like valerian root, chamomile, which can have mild sedative effects and promote relaxation."
+              },
+              "lesson5": {
+                "title": "Short-Term Side Effects of Sleeping Aids",
+                "reading": "\nDrowsiness: Many sleep aids can cause drowsiness, which may be desirable at bedtime but can be a concern if taken during the day. \n\nDizziness: Some individuals may experience dizziness or lightheadedness as a side effect of sleep aids. \n\nConfusion or Memory Impairment: Certain sleep medications can lead to temporary confusion or memory problems."
+              },
+              "lesson6": {
+                "title": "Long-Term Side Effects of Sleeping Aids",
+                "reading": "\nDependency: Regular use of sleep aids, especially benzodiazepines, can lead to dependence, making it challenging to sleep without the medication. \n\nTolerance: Over time, the body may develop tolerance to the effects of sleep aids, requiring higher doses for the same effect. \n\nRebound Insomnia: Discontinuing sleep aids abruptly can lead to rebound insomnia, where sleep difficulties worsen temporarily. \n\nCognitive Effects: Long-term use of certain sleep aids may be associated with cognitive impairments and an increased risk of dementia in some individuals."
+              },
+              "lesson7": {
+                "title": "Conclusion",
+                "reading": "\nFor sustainable improvements in sleep, non-medication approaches like Cognitive Behavioral Therapy for Insomnia (CBT-I) are recommended. CBT-I helps address the underlying causes of insomnia and promotes healthy sleep habits without relying on medication. While sleep aids can be helpful for some individuals, it's essential to use them judiciously and under the guidance of a healthcare professional. \nSleep aids can cause side effects, dependency, and rebound insomnia if used improperly or for an extended period."
               }
             },
             "day7": {
               "title": "Day #7: CBT-I",
               "lesson1": {
-                "title": "5 parts of CBT-I",
-                "reading": "Introduce the five components of Cognitive Behavioral Therapy for Insomnia (CBT-I): Sleep hygiene, Stimulus Control, Sleep Restriction, Relaxation Techniques, and Cognitive Restructuring. Explain how each component contributes to improving sleep patterns."
+                "title": "The 5 parts of CBT-I",
+                "reading": "\nCognitive Behavioral Therapy for Insomnia (CBT-I) typically consists of five core components:\n 1. Sleep Restriction: This component involves restricting the time spent in bed to match the actual amount of sleep a person is getting. It aims to consolidate and improve sleep efficiency.\n\n 2. Stimulus Control Therapy: This part helps break the negative associations between the bed and sleep disturbances. Patients are encouraged to use the bed only for sleep and sex, avoiding activities like reading, watching TV, or using electronic devices in bed.\n\n 3. Sleep Hygiene: Sleep hygiene focuses on adopting healthy sleep habits and optimizing the sleep environment. It includes recommendations such as maintaining a consistent sleep schedule, creating a relaxing bedtime routine, and ensuring a comfortable sleep environment.\n\n 4. Cognitive Therapy: This aspect addresses the negative thoughts and worries that can contribute to insomnia. Patients learn to identify and challenge unhelpful thoughts and beliefs about sleep, replacing them with more balanced and positive ones.\n\n 5. Relaxation Techniques: CBT-I often includes relaxation exercises, such as progressive muscle relaxation or deep breathing, to help individuals reduce physical and mental tension before bedtime."
               },
               "lesson2": {
-                "title": "Dysfunctional Beliefs & Attitude About Sleep Questionnaire (DBAS-16)",
-                "reading": "Explain the use of the DBAS-16 questionnaire to assess dysfunctional beliefs and attitudes about sleep. Discuss how identifying and addressing these beliefs are crucial in CBT-I."
+                "title": "Why is DCBT-I Recommended?",
+                "reading": "\nDigital CBT-I offers a modern and convenient approach to delivering effective cognitive-behavioral techniques for managing insomnia and improving sleep patterns. \n\nIt empowers individuals with practical tools and knowledge to take control of their sleep health and achieve restful, restorative sleep through the following qualities:\n - Non-Medication Approach: dCBT-I is a non-medication-based therapy, which means it does not rely on sleeping pills to improve sleep. Instead, it addresses the root causes of insomnia through cognitive and behavioral techniques.\n\n - Long-Term Benefits: Unlike sleeping pills, which may provide short-term relief but can have drawbacks, dCBT-I offers lasting benefits. By learning and implementing the strategies taught in dCBT-I, you can develop healthier sleep habits for the long term.\n\n - Safety and Accessibility: Digital CBT-I is a safe and accessible option. It can be accessed from the comfort of your home using digital platforms, making it convenient for those with busy schedules or limited access to in-person therapy.\n\n - Individualized Approach: dCBT-I programs can be tailored to your specific sleep needs and challenges. The therapy focuses on understanding your sleep patterns and providing personalized strategies for improvement."
               }
             }
           },

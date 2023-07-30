@@ -38,6 +38,8 @@ import Pagination from '@mui/material/Pagination';
 import TextField from '@mui/material/TextField'; // Add this line
 import Badge from '@mui/material/Badge';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
+import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
+import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -75,11 +77,8 @@ const MARKS = [
 ]
 
 const FIELDS_SPECIFICATION = `
-Fields Explanation: 
-Fall asleep is the time you take to fall asleep.
-Restlessness is the level of restless you felt when you decide to sleep.
-Sleep duration is the amount of time you take for a continous sleep.
-Woke up time is the total count of you wake up in the middle of the night.
+Enter the data to the best of your knowledge. For all the questions, it is important
+you answer honestly. 
 `;
 
 function getCurrentWeek() {
@@ -398,7 +397,7 @@ export default function Home() {
 
             if (element.name === 'down') {
                 am.push({name: 'Out of Bed', value: elapsedTime});
-                tempLabel += '🔽 : ' + avgDown;
+                tempLabel += '🔽@' + avgDown;
             } else if (element.name === 'wake') {
                 am.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
                 tempLabel += '⏰@' + avgWake;
@@ -428,12 +427,21 @@ export default function Home() {
         })
         console.log("label: " + tempLabel);
         setPieAmLabel(tempLabel);
-        setPieAmData(am.reverse());
-        setPiePmData(pm.reverse());
+        if (am.length > 0) {
+            setPieAmData(am.reverse());
+        } else {
+            setPieAmData([{name: 'Out of Bed', value: 12}])
+        }
+        
+        if (pm.length > 0) {
+            setPiePmData(pm.reverse());
+        } else {
+            setPiePmData([{name: 'Out of Bed', value: 12}])
+        }
         
         
-        setPieEffLabel('🔋' + (res.data.efficiency * 100).toFixed(1) + '%');
-        setPieEffData([{name: '0', value: 1 - res.data.efficiency}, {name: '1', value: res.data.efficiency, fill: '#2f875d'}])
+        setPieEffLabel('🔋' + (res.data.efficiency).toFixed(1) + '%');
+        setPieEffData([{name: '0', value: 100 - res.data.efficiency}, {name: '1', value: res.data.efficiency, fill: '#2f875d'}])
     }
 
     async function getData() {
@@ -465,12 +473,12 @@ export default function Home() {
             console.log( res2.data)
             setAvgFallTime(res2.data.fallTime + " min");
             setAvgAwakeTime(res2.data.awakeTime + " min");
-            setAvgQuality(res2.data.quality);
+            setAvgQuality((res2.data.quality).toFixed(1));
             
             
             setPieData(res2);
         
-            setAvgHoursSlept(res2.data.hoursSlept + " hrs");
+            setAvgHoursSlept((res2.data.hoursSlept).toFixed(1) + " hrs");
 
             
         }
@@ -796,7 +804,7 @@ export default function Home() {
             height: '100vh' ,
             width: '100vw',
             overflow: 'hidden',
-            overflowY: 'scroll'
+            overflowY: 'auto'
             
         }}>
             <Navbar/>
@@ -810,10 +818,10 @@ export default function Home() {
                                 <Typography variant="h4" component="div"
                                             sx={{flexGrow: 1,
                                                 fontWeight: 'bold',
-                                                color: 'black', 
+                                                color: 'white', 
                                                 paddingTop: '10px',
                                                 paddingBottom: '10px',
-                                                textAlign: 'center', color: 'white'}}>
+                                                textAlign: 'center'}}>
                                     {username} 
                                 </Typography>
                             </Paper>
@@ -856,8 +864,8 @@ export default function Home() {
                                         </Typography>
                                     </Grid>
                                 </Grid>
-                                <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                    <Button href="/statistics" endIcon={<LegendToggleIcon/>} variant='contained'>{t("home.viewInsight")}</Button>
+                                <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>              
+                                    <Button onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon/>} variant="contained">Create Reminder</Button>
                                 </Box>
                             </Paper>
                         </Grid>
@@ -912,7 +920,7 @@ export default function Home() {
                                     </Grid>
                                     <Grid item xs={1}>
                                         <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                            <Button variant='contained' endIcon={<AddCircleOutlineIcon/>} onClick={handleClickOpen}>
+                                            <Button variant='contained' endIcon={<NoteAddOutlinedIcon/>} onClick={handleClickOpen}>
                                                 {t("home.new-record")}
                                             </Button>
                                         </Box>
@@ -995,10 +1003,10 @@ export default function Home() {
 
                     {/* Sleep Duration Input */}
                     <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>{t("home.input-prompt.sleep-duration")}</InputLabel>
+                        <InputLabel>{t("home.input-prompt.fall-time")}</InputLabel>
                         <OutlinedInput
                             value={fallTime}
-                            label="fallTime"
+                            label={t("home.input-prompt.fall-time")}
                             onChange = {(e)=>
                                 setFallTime(e.target.value)}
                             type="text"
@@ -1010,7 +1018,7 @@ export default function Home() {
                         <InputLabel>{t("home.input-prompt.awake-time")}</InputLabel>
                         <OutlinedInput
                             value={awakeTime}
-                            label="wokeUpCount"
+                            label={t("home.input-prompt.awake-time")}
                             onChange = {(e)=>
                                 setAwakeTime(e.target.value)}
                             type="text"
@@ -1092,8 +1100,8 @@ export default function Home() {
                         </Grid>
                         <Grid item xs={1}>
                             <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
-                                <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>
-                                    {isNewRecord ? t("home.submit"): t("home.update")}
+                                <Button sx={{marginTop: '20pt'}} variant='contained' onClick={handleSubmit}>
+                                    {isNewRecord ? t("home.create"): t("home.update")}
                                 </Button>
                             </Box>
                         </Grid>

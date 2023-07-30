@@ -72,15 +72,15 @@ public class RecordResponse {
     public RecordResponse(SleepRecord r) {
         this.recordID = r.getRecordID();
         this.date = r.getDate();
-        String[] downTemp = r.getDownTime().toString().split(":");
+        String[] downTemp = r.getDownTimeTime().toString().split(":");
         this.downTime = Integer.parseInt(downTemp[0]) + (Double.parseDouble(downTemp[1]) / 60.0);
         this.fallTime = r.getFallTime();
-        String[] sleepTemp = r.getSleepTime().toString().split(":");
+        String[] sleepTemp = r.getSleepTimeTime().toString().split(":");
         this.sleepTime = Integer.parseInt(sleepTemp[0]) + (Double.parseDouble(sleepTemp[1]) / 60.0);
-        String[] wakeTemp = r.getWakeTime().toString().split(":");
+        String[] wakeTemp = r.getWakeTimeTime().toString().split(":");
         this.wakeTime = Integer.parseInt(wakeTemp[0]) + (Double.parseDouble(wakeTemp[1]) / 60.0);
         this.awakeTime = r.getAwakeTime();
-        String[] upTemp = r.getUpTime().toString().split(":");
+        String[] upTemp = r.getUpTimeTime().toString().split(":");
         this.upTime = Integer.parseInt(upTemp[0]) + (Double.parseDouble(upTemp[1]) / 60.0);
         this.quality = r.getQuality();
         this.physicalActivity = (r.getJournal() & (byte) 0b10000000) != 0;

@@ -3,7 +3,9 @@ package purdue.cs407.backend.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import purdue.cs407.backend.entities.Reminder;
+import purdue.cs407.backend.entities.User;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,4 +21,12 @@ public interface ReminderRepository extends JpaRepository<Reminder, Long> {
      */
     Optional<Reminder> findByReminderID(Long reminderID);
 
+    /**
+     * Find all reminders made by a user
+     * @param user User whose reminders we want
+     * @return Collection<Reminder> (can be empty).
+     */
+    Collection<Reminder> findAllByUserOrderByTriggerTimeAsc(User user);
+
+    void deleteAllByUser(User user);
 }
