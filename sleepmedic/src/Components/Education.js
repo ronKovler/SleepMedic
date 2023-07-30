@@ -59,6 +59,22 @@ function EducationPage() {
             {
               title: t("education.week1.day1.lesson3.title"),
               reading: t("education.week1.day1.lesson3.reading")
+            },
+            {
+            title: t("education.week1.day1.lesson4.title"),
+                reading: t("education.week1.day1.lesson4.reading")
+            },
+            {
+            title: t("education.week1.day1.lesson5.title"),
+                reading: t("education.week1.day1.lesson5.reading")
+            },
+            {
+            title: t("education.week1.day1.lesson6.title"),
+                reading: t("education.week1.day1.lesson6.reading")
+            },
+            {
+            title: t("education.week1.day1.lesson7.title"),
+                reading: t("education.week1.day1.lesson7.reading")
             }
           ]
         },
@@ -84,6 +100,10 @@ function EducationPage() {
             {
               title: t("education.week1.day2.lesson5.title"),
               reading: t("education.week1.day2.lesson5.reading")
+            },
+            {
+                title: t("education.week1.day2.lesson6.title"),
+                reading: t("education.week1.day2.lesson6.reading")
             }
           ]
         },
@@ -139,6 +159,30 @@ function EducationPage() {
             {
               title: t("education.week1.day5.lesson3.title"),
               reading: t("education.week1.day5.lesson3.reading")
+            },
+            {
+                title: t("education.week1.day5.lesson4.title"),
+                reading: t("education.week1.day5.lesson4.reading")
+            },
+            {
+                title: t("education.week1.day5.lesson5.title"),
+                reading: t("education.week1.day5.lesson5.reading")
+            },
+            {
+                title: t("education.week1.day5.lesson6.title"),
+                reading: t("education.week1.day5.lesson6.reading")
+            },
+            {
+                title: t("education.week1.day5.lesson7.title"),
+                reading: t("education.week1.day5.lesson7.reading")
+            },
+            {
+                title: t("education.week1.day5.lesson8.title"),
+                reading: t("education.week1.day5.lesson8.reading")
+            },
+            {
+                title: t("education.week1.day5.lesson9.title"),
+                reading: t("education.week1.day5.lesson9.reading")
             }
           ]
         },
@@ -160,6 +204,18 @@ function EducationPage() {
             {
               title: t("education.week1.day6.lesson4.title"),
               reading: t("education.week1.day6.lesson4.reading")
+            },
+            {
+                title: t("education.week1.day6.lesson5.title"),
+                reading: t("education.week1.day6.lesson5.reading")
+            },
+            {
+                title: t("education.week1.day6.lesson6.title"),
+                reading: t("education.week1.day6.lesson6.reading")
+            },
+            {
+                title: t("education.week1.day6.lesson7.title"),
+                reading: t("education.week1.day6.lesson7.reading")
             }
           ]
         },
