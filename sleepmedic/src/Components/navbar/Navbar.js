@@ -59,12 +59,12 @@ export default function Navbar() {
         <AppBar position="static" theme={barTheme} >
             <Toolbar>
                 {/* PUT settings here? */}
-                <LanguageSelector/>
+                <LanguageSelector sx={{mr: 2}}/>
                 {/* When more buttons added, probably use ButtonGroup for better UI */}
                 <IconButton href="/statistics" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
                     <LegendToggleIcon />
                 </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold', color: 'white'}} textAlign={'center'}>
+                <Typography variant="h6" sx={{ mr:2, flexGrow: 1, fontWeight: 'bold', color: 'white'}} textAlign={'center'}>
                     <Link to="/home" className={styles['noDecorTitles']}>
                         <img src={navLogo} alt="Sleep-Medic Logo" className="logo" style={{height: "3rem", width: "auto", paddingTop: '10px'}}/>
                     </Link>
