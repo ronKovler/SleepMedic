@@ -739,6 +739,7 @@ function EducationPage() {
               <div>
                 <ListItemButton onClick={() => {
                   if (Object.is(weekOpen, weekIndex)) {
+                    setDayOpen(-1)
                     setWeekOpen(-1);
                   } else {
                     setWeekOpen(weekIndex)
