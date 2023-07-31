@@ -313,7 +313,7 @@ public class HomeController {
         record.setQuality(request.getQuality());
         record.setDreams(request.getDreams());
 
-        double efficiency = record.hoursSlept() / record.hoursInBed();
+        double efficiency = 100 * (record.hoursSlept() / record.hoursInBed());
         record.setEfficiency(efficiency);
         recordRepository.save(record);
 
