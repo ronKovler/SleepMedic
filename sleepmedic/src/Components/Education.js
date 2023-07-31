@@ -762,6 +762,24 @@ function EducationPage() {
     }
   ];
 
+  const [initiate, setInitiate] = useState(true);
+
+  async function retrieveProgress() {
+    let headers = getGetHeaders();
+
+    try {
+      let res = axios.get("https://api.sleepmedic.me:8443/edu/get_progress", {headers});
+      setWeekOpen(res.week);
+      setDayOpen(res.day);
+      setReadingTitle(lessonPlan[res.week].days[res.day].lessons[0].title)
+      setReadings(lessonPlan[res.week].days[res.day].lessons[0].reading)
+    } catch (e) {
+
+    }
+    setInitiate(false);
+
+  }
+
   function getCookiesDict() {
     let cookies = document.cookie.split("; ");
     let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
@@ -796,7 +814,7 @@ function EducationPage() {
     const cookies = getCookiesDict();
     if (cookies._auth == null) {
         navigate("/")
-    }
+    } 
     
   }, []);
   const handleButtonClick = (lesson, day, week, weekIndex, dayIndex) => {
@@ -821,6 +839,15 @@ function EducationPage() {
         "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
         "Content-Type": 'application/json; charset=utf-8',
         "Authorization":'Bearer ' + cookies._auth
+    };
+    return headers;
+  }
+
+  function getGetHeaders() {
+    const cookies = getCookiesDict();
+    const headers = {
+        "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
+        "Authorization": 'Bearer ' + cookies._auth
     };
     return headers;
   }
