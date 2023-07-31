@@ -478,8 +478,7 @@ export default function Home() {
             console.log(t(helperStr + advices[i].adviceID.toString()));
             if (advices[i].var != null) {
                 var time = getFormattedTimeForAdvice(advices[i].var);
-                tempAdvices += " - " + t(helperStr + advices[i].adviceID.toString()).replace("<VAR>", time) + "\n";
-                //tempAdvices += t(helperStr + advices[i].adviceID.toString()).replace("<VAR>", advices[i].var) + "\n\n";
+                tempAdvices += " - " + t(helperStr + advices[i].adviceID.toString(), {VAR:time}) + "\n";
                 setHomeWeeklyAdvice(tempAdvices);
                 console.log(tempAdvices);
             }
