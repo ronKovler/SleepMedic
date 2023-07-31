@@ -31,6 +31,7 @@ import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBullet
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined'; // next icon
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'; //back icon
 import Navbar from './navbar/Navbar';
+import axios from "axios";
 import {isMobile} from 'react-device-detect';
 import "./Education.css"
 import { useState } from 'react';
@@ -45,6 +46,8 @@ function EducationPage() {
   const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
+
+  const [progress, setProgress] = useState([]);
 
   const lessonPlan = [
     {
@@ -767,10 +770,9 @@ function EducationPage() {
     console.log("Inside findCurrentPage()");
     console.log("weekIndex: " + weekIndex);
     console.log("dayIndex: " + dayIndex);
-    //setCurrentWeekIndex(currentWeekInd);
+
     setCurrentWeekIndex(weekIndex);
     console.log("The current weekIndex is: " + weekIndex);
-    //setCurrentDayIndex(currentDayInd);
     setCurrentDayIndex(dayIndex);
     console.log("The current day is " + dayIndex);
     setCurrentLessonIndex(currentLessonInd);
@@ -784,19 +786,26 @@ function EducationPage() {
     findCurrentPage(lesson, day, week, weekIndex, dayIndex);
   };
 
-  const findNextPage = () => {
-    //simple case - lesson is not last of day, we just go to next lesson of the day
-    //if the current lesson is the last of the day, we have to go to next day and the first lesson of the next day
-    //if the current day is the last in the week, we have to go to the next week, 1st day of that week, 1st lesson of that day.
-    //reset global states for the currentWeekIndex, currentDayIndex, currentLessonIndex
-
-    //console.log("Current page title is " + lessonPlan[currentWeekInd].days[currentDayInd].lessons[currentLessonInd].title);
-    //console.log("Next page title is " + lessonPlan[currentWeekInd].days[currentDayInd].lessons[currentLessonInd+1].title);
-
-
+  function getCookiesDict() {
+        let cookies = document.cookie.split("; ");
+        let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
+            acc[key] = val.join('=');
+            return acc;
+        }, {});
+        return cookiesDict;
   }
 
-  const handleNextButtonClick = () => {
+  function getPostHeaders() {
+    const cookies = getCookiesDict();
+    const headers = {
+        "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
+        "Content-Type": 'application/json; charset=utf-8',
+        "Authorization":'Bearer ' + cookies._auth
+    };
+    return headers;
+  }
+
+  const handleNextButtonClick = async() => {
     console.log("Inside handleNextButtonClick");
     console.log("currentWeekIndex is: " + currentWeekIndex);
     console.log("currentDayIndex is: " + currentDayIndex);
@@ -804,9 +813,13 @@ function EducationPage() {
     let tempNextWeekIndex;
     let tempNextDayIndex;
     let tempNextLessonIndex;
+    let completedDay;
 
     //if the current day is the last in the week and the lesson is the last of that day, we go to next week, 1st day of week, 1st lesson
     if ((currentDayIndex == 6) && (currentLessonIndex == lessonPlan[currentWeekIndex].days[currentDayIndex].lessons.length-1)){
+        //store progress
+        completedDay = {week: currentWeekIndex, day: currentDayIndex};
+
         //go to the next week, 1st day of the week, 1st lesson
         tempNextWeekIndex = currentWeekIndex + 1;
         tempNextDayIndex = 0;
@@ -816,10 +829,13 @@ function EducationPage() {
         setCurrentWeekIndex(tempNextWeekIndex);
         setCurrentDayIndex(tempNextDayIndex);
         setCurrentLessonIndex(tempNextLessonIndex);
-        console.log("Current line 819 page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex].title);
+        //console.log("Current line 819 page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex].title);
     }
     //if the current lesson is the last of the day, we go to the next day and the first lesson of that day
     else if ((currentLessonIndex == lessonPlan[currentWeekIndex].days[currentDayIndex].lessons.length-1)) {
+        //store progress
+        completedDay = {week: currentWeekIndex, day: currentDayIndex};
+
         tempNextWeekIndex = currentWeekIndex;
         tempNextDayIndex = currentDayIndex + 1;
         tempNextLessonIndex = 0;
@@ -835,12 +851,22 @@ function EducationPage() {
         setReadings(lessonPlan[tempNextWeekIndex].days[tempNextDayIndex].lessons[tempNextLessonIndex].reading);
     }
     //reset global states for currentWeekIndex, currentDayIndex, currentLessonIndex appropriately.
-
     setCurrentWeekIndex(tempNextWeekIndex);
     setCurrentDayIndex(tempNextDayIndex);
     setCurrentLessonIndex(tempNextLessonIndex);
     console.log("Current page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex].title);
-        //console.log("Next page title is " + lessonPlan[currentWeekInd].days[currentDayInd].lessons[currentLessonInd+1].title);
+    console.log("Currently, completedDay is: ", completedDay);
+    //if completedDay is not undefined, do the PATCH request.
+    if (typeof completedDay !== "undefined") {
+        const headers = getPostHeaders();
+        try {
+            let res = await axios.patch("https://api.sleepmedic.me:8443/edu/update_progress", completedDay, {headers});
+            console.log(res);
+        }
+        catch (err) {
+            console.log("Failed to PATCH request the progress");
+        }
+    }
   }
 
   return (
@@ -961,7 +987,7 @@ function EducationPage() {
                 </Button>
               </Grid>
               <Grid item xs textAlign={'left'}>
-              <Button endIcon={<ArrowForwardOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}}>
+              <Button endIcon={<ArrowForwardOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}} onClick={handleNextButtonClick}>
                   {t("education.next")}
                 </Button>
               </Grid>
