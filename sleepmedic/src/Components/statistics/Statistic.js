@@ -56,8 +56,7 @@ function getGetHeaders() {
     return headers; 
 }
 
-
-
+// Tabs components
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -91,10 +90,6 @@ function a11yProps(index) {
     };
 }
 
-function makeBooleansRadialBar(data) {
-
-}
-
 export default function Statistics() {
     const [t, i18n] = useTranslation("global");
     const navigate = useNavigate();
@@ -120,6 +115,7 @@ export default function Statistics() {
         
       }, []);
 
+    // journal labels on graphs
     const CustomizedLabel = props => {
         const { x, y, stroke, value, dataPoint } = props
         let direction = 1;
@@ -188,6 +184,7 @@ export default function Statistics() {
         )
     }
     
+    // Make a line graph for a numeric data
     function makeLineGraph(data, x, y, scale=[0,10], ytick, isRefLine, avg) {
         return (
             
@@ -337,7 +334,7 @@ export default function Statistics() {
                             {makeLineGraph(monthRecords, 'date', 'fallTime', [0,30], 6, showAvg, allAvgs.fallTime)}
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={3}>
-                            {/* {makeLineGraph(monthRecords, "date", 'upTime', [0,24], 4, showAvg)} */}
+                            {/* Time Table */}
                             <Paper sx={{ width: '100%'}} style={{color:'white', background: 'linear-gradient(to top, #3E4464, #222740)'}} elevation={3} >
                                 <Grid container spacing={2} columns={1}  >
                                     <Grid item xs={1}>
