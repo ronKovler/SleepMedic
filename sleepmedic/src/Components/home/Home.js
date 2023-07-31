@@ -880,7 +880,7 @@ export default function Home() {
                                     </Grid>
                                 </Grid>
                                 <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                    <Button onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon />} variant="contained">Create Reminder</Button>
+                                    <Button onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon />} variant="contained">{t("home.createReminder")}</Button>
                                 </Box>
                             </Paper>
                         </Grid>
@@ -1001,7 +1001,7 @@ export default function Home() {
                 <DialogTitle>
                     <Grid container columns={2} justify='flex-end' alignItems='center'>
                         <Grid item xs={1}>
-                            {isNewRecord ? "New Record" : "Edit Record"}
+                            {isNewRecord ? t("home.input-prompt.new-record") : t("home.input-prompt.edit-record")}
                         </Grid>
                         <Grid item xs={1}>
                             <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
