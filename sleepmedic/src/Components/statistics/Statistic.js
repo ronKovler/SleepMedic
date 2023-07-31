@@ -111,7 +111,7 @@ export default function Statistics() {
     const CustomizedLabel = props => {
         const { x, y, stroke, value, dataPoint } = props
         let direction = 1;
-        if (y <= 50) {
+        if (y <= 90) {
             direction = -1;
         }
         let lab = "";
