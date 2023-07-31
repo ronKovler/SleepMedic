@@ -7,6 +7,13 @@
         "spanish": "Spanish",
         "next": "Get Started"
     }, 
+    "navbar": {
+      "logoTitle": "Back to Sleep-Medic Home",
+      "sign-out": "Sign Out",
+      "accountPage": "Go to Account Page",
+      "insights": "Go to Insights",
+      "languageSelect": "Select your Language"
+    },
     "language-select": {
       "en": "EN",
       "es": "ES"
@@ -61,6 +68,7 @@
     "login": {
         "title": "Login",
         "email": "Email",
+        "logoTitle": "Back to Language Select",
         "password": "Password",
         "remember-me": "Remember Me",
         "forgot-password": {

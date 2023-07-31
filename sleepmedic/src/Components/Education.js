@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -34,9 +34,11 @@ import Navbar from './navbar/Navbar';
 import {isMobile} from 'react-device-detect';
 import "./Education.css"
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function EducationPage() {
   const [t, i18n] = useTranslation("global");
+  const navigate = useNavigate();
   const [readingTitle, setReadingTitle] = useState(t("education.week1.day1.lesson1.title"));
   const [readings, setReadings] = useState(t("education.week1.day1.lesson1.reading"));
   const [weekOpen, setWeekOpen] = useState(0);
@@ -751,6 +753,24 @@ function EducationPage() {
 
     }
   ];
+
+  function getCookiesDict() {
+    let cookies = document.cookie.split("; ");
+    let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
+        acc[key] = val.join('=');
+        return acc;
+    }, {});
+    return cookiesDict;
+  }
+  
+  useEffect(() => {
+    //Check if not logged in and redirect.
+    const cookies = getCookiesDict();
+    if (cookies._auth == null) {
+        navigate("/")
+    }
+    
+  }, []);
 
 
 

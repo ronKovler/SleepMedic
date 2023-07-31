@@ -7,6 +7,13 @@
       "spanish": "Español",
       "next": "Empezar"
     },
+    "navbar": {
+      "logoTitle": "Volver a la página principal de Sleep-Medic",
+      "sign-out": "Cerrar sesión",
+      "accountPage": "Ir a la página de la cuenta",
+      "insights": "Ir a la página de estadísticas",
+      "languageSelect": "Seleccionar tu idioma"
+    },
     "language-select": {
       "en": "EN",
       "es": "ES"
@@ -60,6 +67,7 @@
   },  
   "login": {
         "title": "Iniciar sesión",
+        "logoTitle": "Volver a seleccionar idioma",
         "email": "Correo electrónico",
         "password": "Contraseña",
         "remember-me": "Recordarme",
