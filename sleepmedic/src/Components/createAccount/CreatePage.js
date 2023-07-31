@@ -289,7 +289,7 @@ function CreateAccount() {
                                     
                                     color="secondary"
                                     value={firstname}
-                                    label='Email' //todo add translation
+                                    label={t("createAccount.firstName")}
                                     sx={{ background: 'white', input: { color: 'black' }}}
                                     onChange = {(e)=>
                                         setFirstName(e.target.value)}  
@@ -359,7 +359,7 @@ function CreateAccount() {
                                     <MenuItem value="">
                                         <em>{t("createAccount.none")}</em>
                                     </MenuItem>
-                                    <MenuItem value={"M"}>M{t("createAccount.male")}</MenuItem>
+                                    <MenuItem value={"M"}>{t("createAccount.male")}</MenuItem>
                                     <MenuItem value={"F"}>{t("createAccount.female")}</MenuItem>
                                     <MenuItem value={"O"}>{t("createAccount.other")}</MenuItem>
                                 </Select>
