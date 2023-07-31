@@ -789,7 +789,7 @@ function EducationPage() {
     return cookiesDict;
   }
 
-    const findCurrentPage = (lesson, day, week, weekIndex, dayIndex) => {
+  const findCurrentPage = (lesson, day, week, weekIndex, dayIndex) => {
     let currentLessonInd;
     for (var i = 0; i < day.lessons.length; i++) {
         if (day.lessons[i].title === lesson.title) {
@@ -814,7 +814,7 @@ function EducationPage() {
     const cookies = getCookiesDict();
     if (cookies._auth == null) {
         navigate("/")
-    } 
+    }
     
   }, []);
   const handleButtonClick = (lesson, day, week, weekIndex, dayIndex) => {
@@ -850,6 +850,45 @@ function EducationPage() {
         "Authorization": 'Bearer ' + cookies._auth
     };
     return headers;
+  }
+
+  const handleBackButtonClick = () => {
+    console.log("Inside handleBackButtonClick");
+    console.log("Current page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex].title);
+    console.log("the current reading title is " + readingTitle);
+
+    //console.log("dayOpen: " + dayOpen);
+    //console.log("weekOpen: " + weekOpen);
+    let tempBackWeekIndex;
+    let tempBackDayIndex;
+    let tempBackLessonIndex;
+    //if in the first lesson of the first day of the current week, back --> last lesson of day 7 of the week before
+    if ((currentLessonIndex == 0) && (currentDayIndex == 0)) {
+        tempBackWeekIndex = currentWeekIndex - 1;
+        tempBackDayIndex = 6;
+        tempBackLessonIndex = lessonPlan[currentWeekIndex-1].days[6].lessons.length-1;
+        setReadingTitle(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].title);
+        setReadings(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].reading);
+    }
+    //if in the first lesson of the current day of the current week, back --> last lesson of the day before
+    else if (currentLessonIndex == 0) {
+        tempBackWeekIndex = currentWeekIndex;
+        tempBackDayIndex = currentDayIndex - 1;
+        tempBackLessonIndex = lessonPlan[currentWeekIndex].days[currentDayIndex - 1].lessons.length-1;
+        setReadingTitle(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].title);
+        setReadings(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].reading);
+    }
+    //if in a lesson that is not first of current day, back --> previous lesson of current day.
+    else {
+        tempBackWeekIndex = currentWeekIndex;
+        tempBackDayIndex = currentDayIndex;
+        tempBackLessonIndex = currentLessonIndex - 1;
+        setReadingTitle(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].title);
+        setReadings(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].reading);
+    }
+    setCurrentWeekIndex(tempBackWeekIndex);
+    setCurrentDayIndex(tempBackDayIndex);
+    setCurrentLessonIndex(tempBackLessonIndex);
   }
 
   const handleNextButtonClick = async() => {
@@ -932,7 +971,7 @@ function EducationPage() {
     setCurrentLessonIndex(tempNextLessonIndex);
     console.log("Current page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex].title);
     console.log("Currently, completedDay is: ", completedDay);
-    //if completedDay is not undefined, do the PATCH request.
+    //if completedDay is not undefined, do the PATCH request for progress.
     if (typeof completedDay !== "undefined") {
         const headers = getPostHeaders();
         try {
@@ -1058,7 +1097,7 @@ function EducationPage() {
             </Grid>
             <Grid container direction={'row'} xs spacing={2} paddingTop={1}>
               <Grid item xs textAlign={'right'} >
-              <Button startIcon={<ArrowBackOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}}>
+              <Button startIcon={<ArrowBackOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}} onClick={handleBackButtonClick}>
                   {t("education.back")}
                 </Button>
               </Grid>
