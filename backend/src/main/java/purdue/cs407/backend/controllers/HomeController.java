@@ -188,7 +188,7 @@ public class HomeController {
             return data;
         }
 
-        ArrayList<SleepRecord> records = (ArrayList<SleepRecord>) recordSet.stream().toList();
+        ArrayList<SleepRecord> records = new ArrayList<>(recordSet);
 
         SleepRecord record = records.get(0); // This is the newest record
         records.remove(0);

@@ -63,7 +63,9 @@
       "education-progress": "Progreso de Educación",
       "cancel": "Cancelar",
       "create": "Crear",
-      "update": "Actualizar"
+      "update": "Actualizar",
+      "next": "Siguiente",
+      "back": "Atrás"
   },  
   "login": {
         "title": "Iniciar sesión",

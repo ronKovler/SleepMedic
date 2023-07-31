@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import { FormGroup, FormControlLabel } from '@mui/material'
+import {isMobile} from 'react-device-detect';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Table from '@mui/material/Table';
@@ -20,6 +21,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { LineChart,
+         AreaChart,
+         Area,
          Line,
          CartesianGrid, 
          XAxis, YAxis, 
@@ -107,11 +110,17 @@ export default function Statistics() {
 
     const CustomizedLabel = props => {
         const { x, y, stroke, value, dataPoint } = props
-        console.log(dataPoint);
+        let direction = 1;
+        if (y <= 50) {
+            direction = -1;
+        }
         let lab = "";
+        console.log(y);
         let delim = "";
-        let dy = -8;
+        let dy = 8 * direction;
         let labels = [];
+
+        
     
         if (dataPoint.physicalActivity && journalActivity) {
             lab += (delim + '🏋️‍♂️');
@@ -160,7 +169,7 @@ export default function Statistics() {
             {/* {lab} <br/> */}
             {
                 labels.map((elem, index) => 
-                    (<tspan textAnchor="middle" x={x} dy={30}>{elem}</tspan>)
+                    (<tspan textAnchor="middle" x={x} dy={-20 * direction}>{elem}</tspan>)
                 )
             } 
           </text>
@@ -174,23 +183,31 @@ export default function Statistics() {
                     <Grid container spacing={2} columns={1} >
                         <Grid item xs={1}>
                         <Box display="flex" justifyContent="center" alignItems="center">
-                            <ResponsiveContainer aspect={2.8}>
-                                <LineChart data={data} margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
+                            <ResponsiveContainer aspect={isMobile ? 1 : 2.8}>
+                                <AreaChart data={data} margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
                                     {/* <Line label={renderCustomizedLabel} type="monotone" dataKey={y} stroke="#c4c1f7" strokeWidth={3} /> */}
-                                    <Line 
+                                    <defs>
+                                        <linearGradient id="colorArea" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#c4c1f7" stopOpacity={0.8}/>
+                                        <stop offset="95%" stopColor="#c4c1f7" stopOpacity={0}/>
+                                        </linearGradient>
+                                    </defs>
+                                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                                    <Area 
                                         type="monotone" 
                                         dataKey={y} 
                                         stroke="#c4c1f7" 
                                         strokeWidth={3}
+                                        fill="url(#colorArea)"
                                         label={(props) => <CustomizedLabel {...props} dataPoint={data[props.index]}/>}
                                     />
                                     
-                                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                                    
                                     <XAxis stroke={'white'} dataKey={x}/>
                                     <YAxis stroke={'white'} domain={scale} interval="preserveStartEnd" tickCount={ytick}/>
                                     <Tooltip />
                                     {isRefLine ? <ReferenceLine y={avg} stroke="red"/> : undefined}
-                                </LineChart> 
+                                </AreaChart> 
                             </ResponsiveContainer>
                             </Box>
                         </Grid>
@@ -286,10 +303,10 @@ export default function Statistics() {
             <Grid container spacing={2} columns={3} sx={{margin: 0, paddingRight: 4}}>
                 <Grid item xs={3}>
                     {/* {makeLineGraph(monthRecords, "date", 'quality', 'Monthly Quality', [0,5], 6)} */}
-                    <Box sx={{ width: '100%' }}>
+                    <Box sx={{ width: '100%'}} >
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Paper sx={{ width: '100%', backgroundColor: '#D9D3E4'}}>
-                                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                                <Tabs centered scrollButtons={true} variant="scrollable" value={value} onChange={handleChange} aria-label="basic tabs example">
                                 <Tab label={t("stats.monthlyQuality")} {...a11yProps(0)} />
                                 <Tab label={t("stats.monthlyEfficiency")} {...a11yProps(1)} />
                                 <Tab label={t("stats.monthlyFallingTime")} {...a11yProps(2)} />
