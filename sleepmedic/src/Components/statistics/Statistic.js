@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as React from 'react';
+import { useEffect } from "react";
 import dayjs from 'dayjs';
 
 import PropTypes from 'prop-types';
@@ -34,6 +35,7 @@ import { LineChart,
          ScatterChart, Scatter, LabelList
         } from 'recharts';
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 
 function getCookiesDict() {
@@ -95,6 +97,7 @@ function makeBooleansRadialBar(data) {
 
 export default function Statistics() {
     const [t, i18n] = useTranslation("global");
+    const navigate = useNavigate();
     const[monthRecords, setMonthRecords] = React.useState([]);
     const[allAvgs, setAllAvgs] = React.useState({});
     const[showAvg, setShowAvg] = React.useState(false);
@@ -107,6 +110,15 @@ export default function Statistics() {
     const [journalStaying, setJournalStaying] = React.useState(false);  //difficult staying asleep from journal
     const [journalFalling, setJournalFalling] = React.useState(false); // difficult falling asleep from journal
     const [journalRacing, setJournalRacing] = React.useState(false); // Racing thoughts from journal
+
+    useEffect(() => {
+        //Check if not logged in and redirect.
+        const cookies = getCookiesDict();
+        if (cookies._auth == null) {
+            navigate("/")
+        }
+        
+      }, []);
 
     const CustomizedLabel = props => {
         const { x, y, stroke, value, dataPoint } = props
@@ -358,15 +370,15 @@ export default function Statistics() {
             </Grid>
             <Box display="flex" justifyContent="center" alignContent={'center'} >
                 <FormGroup  sx={{ '& .MuiFormControlLabel-root': { margin: 1 } }} style={{input: {boxSizing: 'border-box'}}} row={ true}>
-                    <FormControlLabel control={<Checkbox title={'Show when you exercised'} checked={journalActivity} onClick={() => setJournalActivity(!journalActivity)}/>} labelPlacement={"bottom"} label={t("Exercise 🏋️‍♂️")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox title={'Show when you napped'} checked={journalNaps} onChange={() => setJournalNaps(!journalNaps)}/>} labelPlacement={"bottom"} label={t("Naps 🛌")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox title={'Show when you consumed caffeine'} checked={journalCaffeine} onChange={() => setJournalCaffeine(!journalCaffeine)}/> } labelPlacement={"bottom"} label={t("Caffeine ☕")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox title={'Show when you consumed alcohol'} checked={journalAlcohol} onChange={() => setJournalAlcohol(!journalAlcohol)}/>} labelPlacement={"bottom"} label={t("Alcohol 🍺")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox title={'Show when you used electronics'} checked={journalElectronics} onChange={() => setJournalElectronics(!journalElectronics)}/>} labelPlacement={"bottom"} label={t("Electronics 📺")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox title={'Show when you had difficulty staying asleep'} checked={journalStaying} onChange={() => setJournalStaying(!journalStaying)}/>} labelPlacement={"bottom"} label={t("Staying 😰")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox title={'Show when you had difficulty falling asleep'} checked={journalFalling} onClick={() => setJournalFalling(!journalFalling)}/>} labelPlacement={"bottom"} label={t("Falling 😫")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox title={'Show when you had racing thoughts'} checked={journalRacing} onClick={() => setJournalRacing(!journalRacing)}/>} labelPlacement={"bottom"} label={t("Racing 🤯")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox title={'Show average line'} checked={showAvg} onClick={() => setShowAvg(!showAvg)}/>} labelPlacement={"bottom"} label={t("Averages")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={t("stats.exerciseHover")} checked={journalActivity} onClick={() => setJournalActivity(!journalActivity)}/>} labelPlacement={"bottom"} label={t("stats.exercise")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={t("stats.napsHover")} checked={journalNaps} onChange={() => setJournalNaps(!journalNaps)}/>} labelPlacement={"bottom"} label={t("stats.naps")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={t("stats.caffeineHover")} checked={journalCaffeine} onChange={() => setJournalCaffeine(!journalCaffeine)}/> } labelPlacement={"bottom"} label={t("stats.caffeine")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={t("stats.alcoholHover")} checked={journalAlcohol} onChange={() => setJournalAlcohol(!journalAlcohol)}/>} labelPlacement={"bottom"} label={t("stats.alcohol")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={t("stats.electronicsHover")} checked={journalElectronics} onChange={() => setJournalElectronics(!journalElectronics)}/>} labelPlacement={"bottom"} label={t("stats.electronics")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={t("stats.stayingHover")}checked={journalStaying} onChange={() => setJournalStaying(!journalStaying)}/>} labelPlacement={"bottom"} label={t("stats.staying")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={t("stats.fallingHover")} checked={journalFalling} onClick={() => setJournalFalling(!journalFalling)}/>} labelPlacement={"bottom"} label={t("stats.falling")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={t("stats.racingHover")} checked={journalRacing} onClick={() => setJournalRacing(!journalRacing)}/>} labelPlacement={"bottom"} label={t("stats.racing")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={t("stats.averagesHover")} checked={showAvg} onClick={() => setShowAvg(!showAvg)}/>} labelPlacement={"bottom"} label={t("stats.averages")} sx={{ m: 2 }}/>
                 </FormGroup>
             </Box>
             
