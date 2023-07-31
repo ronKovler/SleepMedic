@@ -350,7 +350,7 @@ function CreateAccount() {
                                     required
                                     id="demo-simple-select-helper"
                                     value={sex}
-                                    label="Sex"
+                                    label={t("createAccount.sex")}
                                     onChange={(e) => {setSex(e.target.value); checkSex(e.target.value)}}
                                     onBlur={(e) => checkSex(e.target.value)}
                                     color="secondary"
@@ -401,7 +401,7 @@ function CreateAccount() {
                                 color="secondary"
                                 
                                 value={phone}
-                                label='Phone Number' //todo add translation
+                                label={t("createAccount.confirmPassword")}
                                 sx={{ background: 'white', input: { color: 'black' }}}
                                 inputProps={{
                                     maxLength: 10,
@@ -430,7 +430,7 @@ function CreateAccount() {
                                 id="email"
                                 color="secondary"
                                 value={email}
-                                label='Email' //todo add translation
+                                label={t("createAccount.confirmPassword")}
                                 sx={{ background: 'white', input: { color: 'black' }}}
                                 onChange = {(e)=>
                                     setEmail(e.target.value)}  
@@ -451,7 +451,7 @@ function CreateAccount() {
                                 id="password"
                                 color="secondary"
                                 value={password}
-                                label='Password' //todo add translation
+                                label={t("createAccount.password")} 
                                 sx={{ background: 'white', input: { color: 'black' }}}
                                 onChange = {(e)=>
                                     setPassword(e.target.value)}  
@@ -470,7 +470,7 @@ function CreateAccount() {
                                 id="confirmPassword"
                                 color="secondary"
                                 value={confirmation}
-                                label='Confirm Password' //todo add translation
+                                label={t("createAccount.confirmPassword")} 
                                 sx={{ background: 'white', input: { color: 'black' }}}
                                 onChange = {(e)=>
                                     setConfirmation(e.target.value)}  

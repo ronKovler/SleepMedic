@@ -23,6 +23,7 @@ import LanguageSelector from "./LanguageSelector";
 
 
 import styles from './Navbar.module.css';
+import { useTranslation } from "react-i18next";
 
 const barTheme = createTheme({
     palette: {
@@ -51,6 +52,7 @@ const barTheme = createTheme({
 export default function Navbar() {
     const logOut = useSignOut();
     const navigate = useNavigate();
+    const [t, i18n] = useTranslation("global");
     const handleLogout = async (e) => {
         await logOut();
         navigate("/login");
@@ -61,18 +63,18 @@ export default function Navbar() {
                 {/* PUT settings here? */}
                 <LanguageSelector />
                 {/* When more buttons added, probably use ButtonGroup for better UI */}
-                <IconButton title="Go to Insights" href="/statistics" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
+                <IconButton title={t("navbar.insights")} href="/statistics" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
                     <LegendToggleIcon />
                 </IconButton>
                 <Typography  variant="h6" sx={{ mr:2, flexGrow: 1, fontWeight: 'bold', color: 'white'}} textAlign={'center'}>
-                    <Link title="Back to Sleep-Medic Home" to="/home" className={styles['noDecorTitles']}>
+                    <Link title={t("navbar.logoTitle")} to="/home" className={styles['noDecorTitles']}>
                         <img src={navLogo} alt="Sleep-Medic Logo" className="logo" style={{height: "3rem", width: "auto", paddingTop: '10px'}}/>
                     </Link>
                 </Typography>
-                <IconButton title='Go to Account Page' href="/profilepage" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
+                <IconButton title={t("navbar.accountPage")} href="/profilepage" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white' }}>
                     <AccountBoxIcon />
                 </IconButton>
-                <IconButton title='Sign out' size="large" edge="start" aria-label="menu" sx={{ mr: 0, color: 'white' }} onClick={(e) => handleLogout(e)}>
+                <IconButton title={t("navbar.sign-out")} size="large" edge="start" aria-label="menu" sx={{ mr: 0, color: 'white' }} onClick={(e) => handleLogout(e)}>
                     <LogoutIcon /> {/* Hide Logout to left menu button??? */}
                 </IconButton>    
             </Toolbar>
