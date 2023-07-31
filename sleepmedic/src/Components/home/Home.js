@@ -1127,7 +1127,7 @@ export default function Home() {
                                     {t("home.next")}
                                 </Button>
                             ) : (
-                                <Button variant='contained' onClick={handleSubmit}>
+                                <Button endIcon={<NoteAddOutlinedIcon />} variant='contained' onClick={handleSubmit}>
                                     {isNewRecord ? t("home.create") : t("home.update")}
                                 </Button>
                             )}

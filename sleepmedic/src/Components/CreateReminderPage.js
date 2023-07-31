@@ -44,7 +44,7 @@ function CreateRem() {
     );
     const [RemTypeErrMsg, setRemTypeErrMsg] = useState("");
     const reminderTypeErrMsg = t("reminder.reminderTypeErrMsg");
-    const [daysInputErrMsg, setDaysErrMsg] = useState("");
+    const [daysInputErrMsg, setDaysErrMsg] = useState(false);
     const daysErrMsg = t("reminder.daysErrMsg");
     const [timeErrMsg, setRemTimeErrMsg] = useState("");
     const emptyTimeInputMsg = t("reminder.emptyTimeInputMsg");
@@ -74,7 +74,7 @@ function CreateRem() {
         setCheckedState(tempData);
         tempData.forEach(v => {
             if (v) {
-                setDaysErrMsg("");
+                setDaysErrMsg(false);
             }
         })
     };
@@ -98,12 +98,12 @@ function CreateRem() {
         let len = checkedState.length;
         for (let i = 0; i < len; i++) {
             if (checkedState[i] == true) {
-                setDaysErrMsg("");
+                setDaysErrMsg(false);
                 return true;
             }
         }
         //otherwise setDaysErrMsg("Please select at least one day to complete reminder creation" and return false.
-        setDaysErrMsg(daysErrMsg);
+        setDaysErrMsg(true);
         return false;
     };
 
@@ -261,15 +261,21 @@ function CreateRem() {
                             {t("reminder.triggerDaysPrompt")}
                         </Typography>
                         <Box display="flex" justifyContent="center" alignContent={'center'} >
-                            <FormGroup sx={{ '& .MuiFormControlLabel-root': { margin: 0 } }} style={{ input: { boxSizing: 'border-box' } }} row={true}>
-                                <FormControlLabel control={<Checkbox checked={checkedState[0]} onClick={() => handleOnChangeCB(0)} />} labelPlacement={"bottom"} label={t("reminder.sun")} sx={{ m: 1 }} />
-                                <FormControlLabel control={<Checkbox checked={checkedState[1]} onClick={() => handleOnChangeCB(1)} />} labelPlacement={"bottom"} label={t("reminder.mon")} sx={{ m: 1 }} />
-                                <FormControlLabel control={<Checkbox checked={checkedState[2]} onChange={() => handleOnChangeCB(2)} />} labelPlacement={"bottom"} label={t("reminder.tue")} sx={{ m: 1 }} />
-                                <FormControlLabel control={<Checkbox checked={checkedState[3]} onChange={() => handleOnChangeCB(3)} />} labelPlacement={"bottom"} label={t("reminder.wed")} sx={{ m: 1 }} />
-                                <FormControlLabel control={<Checkbox checked={checkedState[4]} onChange={() => handleOnChangeCB(4)} />} labelPlacement={"bottom"} label={t("reminder.thu")} sx={{ m: 1 }} />
-                                <FormControlLabel control={<Checkbox checked={checkedState[5]} onChange={() => handleOnChangeCB(5)} />} labelPlacement={"bottom"} label={t("reminder.fri")} sx={{ m: 1 }} />
-                                <FormControlLabel control={<Checkbox checked={checkedState[6]} onChange={() => handleOnChangeCB(6)} />} labelPlacement={"bottom"} label={t("reminder.sat")} sx={{ m: 1 }} />
-                            </FormGroup>
+                            <FormControl error={daysInputErrMsg}>
+                                <FormGroup 
+                                    sx={{ '& .MuiFormControlLabel-root': { margin: 0 } }} style={{ input: { boxSizing: 'border-box' } }} row={true}>
+                                    <FormControlLabel  control={<Checkbox checked={checkedState[0]} onClick={() => handleOnChangeCB(0)} />} labelPlacement={"bottom"} label={t("reminder.sun")} sx={{ m: 1 }} />
+                                    <FormControlLabel control={<Checkbox checked={checkedState[1]} onClick={() => handleOnChangeCB(1)} />} labelPlacement={"bottom"} label={t("reminder.mon")} sx={{ m: 1 }} />
+                                    <FormControlLabel control={<Checkbox checked={checkedState[2]} onChange={() => handleOnChangeCB(2)} />} labelPlacement={"bottom"} label={t("reminder.tue")} sx={{ m: 1 }} />
+                                    <FormControlLabel control={<Checkbox checked={checkedState[3]} onChange={() => handleOnChangeCB(3)} />} labelPlacement={"bottom"} label={t("reminder.wed")} sx={{ m: 1 }} />
+                                    <FormControlLabel control={<Checkbox checked={checkedState[4]} onChange={() => handleOnChangeCB(4)} />} labelPlacement={"bottom"} label={t("reminder.thu")} sx={{ m: 1 }} />
+                                    <FormControlLabel control={<Checkbox checked={checkedState[5]} onChange={() => handleOnChangeCB(5)} />} labelPlacement={"bottom"} label={t("reminder.fri")} sx={{ m: 1 }} />
+                                    <FormControlLabel control={<Checkbox checked={checkedState[6]} onChange={() => handleOnChangeCB(6)} />} labelPlacement={"bottom"} label={t("reminder.sat")} sx={{ m: 1 }} />
+                                    
+                                </FormGroup>
+                                <FormHelperText >{daysInputErrMsg ? t('reminder.daysErrMsg'): null}</FormHelperText>
+                            </FormControl>
+                            
                         </Box>
 
                         <Box display="flex" justifyContent="center" alignContent={'center'} >
