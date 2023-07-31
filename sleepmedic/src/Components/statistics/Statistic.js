@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
+import { FormGroup, FormControlLabel } from '@mui/material'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { LineChart,
@@ -21,7 +22,7 @@ import { LineChart,
          Legend, 
          BarChart, Bar, 
          ResponsiveContainer,
-         ScatterChart, Scatter
+         ScatterChart, Scatter, LabelList
         } from 'recharts';
 import { useTranslation } from "react-i18next";
 
@@ -44,6 +45,52 @@ function getGetHeaders() {
     return headers; 
 }
 
+const CustomizedLabel = props => {
+    const { x, y, stroke, value, dataPoint } = props
+    console.log(dataPoint);
+    let lab = "";
+    let delim = "";
+    let dy = -8;
+
+    if (dataPoint.physicalActivity) {
+        lab += (delim + '🏋️‍♂️');
+        delim = '\n';
+    }
+    if (dataPoint.naps) {
+        lab += (delim + '🛌');
+        delim = ' ';
+    }
+    if (dataPoint.caffeineConsumption) {
+        lab += (delim + '☕');
+        delim = ' ';
+    }
+    if (dataPoint.alcoholConsumption) {
+        lab += (delim + '🍺');
+        delim = ' ';
+    }
+    if (dataPoint.electronics) {
+        lab += (delim + '📺');
+        delim = ' ';
+    }
+    if (dataPoint.difficultStayingAsleep) {
+        lab += (delim + 'DS');
+        delim = ' ';
+    }
+    if (dataPoint.difficultFallingAsleep) {
+        lab += (delim + 'DF');
+        delim = '\n';
+    }
+    if (dataPoint.racingThoughts) {
+        lab += (delim + '🤔');
+        delim = '\n';
+    }
+    return (
+      <text x={x} y={y} dy={dy} fill={'white'} width='1' fontSize={16} textAnchor="middle">
+        {lab} <br></br> 
+      </text>
+    )
+}
+
 function makeLineGraph(data, x, y, scale=[0,10], ytick, isRefLine, avg) {
     return (
         
@@ -53,7 +100,15 @@ function makeLineGraph(data, x, y, scale=[0,10], ytick, isRefLine, avg) {
                     <Box display="flex" justifyContent="center" alignItems="center">
                         <ResponsiveContainer aspect={2.8}>
                             <LineChart data={data} margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
-                                <Line type="monotone" dataKey={y} stroke="#c4c1f7" strokeWidth={3} />
+                                {/* <Line label={renderCustomizedLabel} type="monotone" dataKey={y} stroke="#c4c1f7" strokeWidth={3} /> */}
+                                <Line 
+                                    type="monotone" 
+                                    dataKey={y} 
+                                    stroke="#c4c1f7" 
+                                    strokeWidth={3}
+                                    label={(props) => <CustomizedLabel {...props} dataPoint={data[props.index]}/>}
+                                   
+                                />
                                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                                 <XAxis stroke={'white'} dataKey={x}/>
                                 <YAxis stroke={'white'} domain={scale} interval="preserveStartEnd" tickCount={ytick}/>
@@ -112,6 +167,15 @@ export default function Statistics() {
     const[monthRecords, setMonthRecords] = React.useState([]);
     const[allAvgs, setAllAvgs] = React.useState({});
     const[showAvg, setShowAvg] = React.useState(false);
+
+    const [journalActivity, setJournalActivity] = React.useState(false); // Physical activity form journal
+    const [journalNaps, setJournalNaps] = React.useState(false);
+    const [journalCaffeine, setJournalCaffeine] = React.useState(false);
+    const [journalAlcohol, setJournalAlcohol] = React.useState(false);
+    const [journalElectronics, setJournalElectronics] = React.useState(false);
+    const [journalStaying, setJournalStaying] = React.useState(false);  //difficult staying asleep from journal
+    const [journalFalling, setJournalFalling] = React.useState(false); // difficult falling asleep from journal
+    const [journalRacing, setJournalRacing] = React.useState(false); // Racing thoughts from journal
     
 
 
@@ -166,6 +230,8 @@ export default function Statistics() {
         const offset = 7;
         return (<g> <text x={cx} y={cy + offset} textAnchor="middle" fontSize={16} fill="#666">{emoji}</text> </g>);
     }
+
+    
 
     if (monthRecords === []) return (<div>HI</div>)
     else return (
@@ -237,6 +303,18 @@ export default function Statistics() {
                     </Box>
                 </Grid>
             </Grid>
+            <Box display="flex" justifyContent="center" alignContent={'center'} >
+                <FormGroup  sx={{ '& .MuiFormControlLabel-root': { margin: 1 } }} style={{input: {boxSizing: 'border-box'}}} row={ true}>
+                    <FormControlLabel control={<Checkbox checked={journalActivity} onClick={() => setJournalActivity(!journalActivity)}/>} labelPlacement={"bottom"} label={t("Exercise")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalNaps} onChange={() => setJournalNaps(!journalNaps)}/>} labelPlacement={"bottom"} label={t("Naps")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalCaffeine} onChange={() => setJournalCaffeine(!journalCaffeine)}/> } labelPlacement={"bottom"} label={t("Caffeine")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalAlcohol} onChange={() => setJournalAlcohol(!journalAlcohol)}/>} labelPlacement={"bottom"} label={t("Alcohol")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalElectronics} onChange={() => setJournalElectronics(!journalElectronics)}/>} labelPlacement={"bottom"} label={t("Electronics")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalStaying} onChange={() => setJournalStaying(!journalStaying)}/>} labelPlacement={"bottom"} label={t("Staying")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalFalling} onClick={() => setJournalFalling(!journalFalling)}/>} labelPlacement={"bottom"} label={t("Falling")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalRacing} onClick={() => setJournalRacing(!journalRacing)}/>} labelPlacement={"bottom"} label={t("Racing")} sx={{ m: 2 }}/>
+                </FormGroup>
+            </Box>
             <Checkbox checked={showAvg} onChange={(e)=>{setShowAvg(e.target.checked)}}/>
             <Button onClick={(e)=> {console.log(allAvgs)}}>TEST</Button>
             
