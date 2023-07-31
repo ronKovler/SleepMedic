@@ -956,7 +956,13 @@ export default function Home() {
                                 <Typography sx={{minHeight: 80}} variant='body' component='div' textAlign='left' paddingTop='5pt' paddingLeft='20pt' paddingRight='20pt' paddingBottom='20pt' color='black' fontSize='16pt'>
                                     {/*t("home.weekly-advices.-1")*/}
                                     {/*homeWeeklyAdvice*/}
-                                    {homeWeeklyAdvice.replace(/\n/g, '<br />')}
+                                    {homeWeeklyAdvice.split('\n').map((ad, id)=>(
+                                        <div>
+                                            {ad} <br/>
+                                        </div>
+
+                                    ))}
+
                                 </Typography>
                             </Paper>
                         </Grid>
