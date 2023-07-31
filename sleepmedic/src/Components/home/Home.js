@@ -892,11 +892,11 @@ export default function Home() {
                 <Grid item xs>
                     <Grid container columns={3} spacing={1}>
                         <Grid item xs={3} sx={{ minWidth: isMobile ? 300 : 320 }}>
-                            <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', height: '200px', minWidth: isMobile ? 300 : 320 }}>
+                            <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4',  minWidth: isMobile ? 300 : 320 }}>
                                 <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                     {t("home.weekly-advices.title")}
                                 </Typography>
-                                <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' color='black' fontSize='16pt'>
+                                <Typography sx={{minHeight: 80}} variant='body' component='div' textAlign='left' paddingTop='5pt' paddingLeft='20pt' paddingRight='20pt' paddingBottom='20pt' color='black' fontSize='16pt'>
                                     {t("home.weekly-advices.1")}
                                 </Typography>
                             </Paper>
