@@ -75,7 +75,9 @@
         "education-progress": "Education Progress",
         "cancel": "Cancel",
         "create": "Create",
-        "update": "Update"
+        "update": "Update",
+        "next" : "Next",
+        "back" : "Back" 
     },
     "login": {
         "title": "Login",

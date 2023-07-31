@@ -188,7 +188,7 @@ public class HomeController {
             return data;
         }
 
-        ArrayList<SleepRecord> records = (ArrayList<SleepRecord>) recordSet.stream().toList();
+        ArrayList<SleepRecord> records = new ArrayList<>(recordSet);
 
         SleepRecord record = records.get(0); // This is the newest record
         records.remove(0);
@@ -313,7 +313,7 @@ public class HomeController {
         record.setQuality(request.getQuality());
         record.setDreams(request.getDreams());
 
-        double efficiency = record.hoursSlept() / record.hoursInBed();
+        double efficiency = 100 * (record.hoursSlept() / record.hoursInBed());
         record.setEfficiency(efficiency);
         recordRepository.save(record);
 

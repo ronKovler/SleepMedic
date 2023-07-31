@@ -85,8 +85,8 @@ public class RecordResponse {
         this.quality = r.getQuality();
         this.physicalActivity = (r.getJournal() & (byte) 0b10000000) != 0;
         this.naps = (r.getJournal() & 0b01000000) != 0;
-        this.caffeineConsumption = (r.getJournal() & 0b00100000) != 0;
-        this.alcoholConsumption = (r.getJournal() & 0b00010000) != 0;
+        this.caffeineConsumption = (r.getJournal() & 0b00010000) != 0;
+        this.alcoholConsumption = (r.getJournal() & 0b00100000) != 0;
         this.electronics = (r.getJournal() & 0b00001000) != 0;
         this.difficultStayingAsleep = (r.getJournal() & 0b00000100) != 0;
         this.difficultFallingAsleep = (r.getJournal() & 0b00000010) != 0;

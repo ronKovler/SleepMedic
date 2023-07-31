@@ -31,7 +31,7 @@ import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfi
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import {isMobile} from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import PropTypes from 'prop-types';
 import Pagination from '@mui/material/Pagination';
 //import TextField from '@material-ui/core/TextField';
@@ -40,12 +40,13 @@ import Badge from '@mui/material/Badge';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
-
+import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined'; // next icon
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'; //back icon
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { createTheme, styled } from '@mui/material/styles';
-import { IconButton } from '@mui/material';
+import { IconButton, FormGroup, FormControlLabel } from '@mui/material';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useNavigate } from 'react-router-dom';
@@ -69,11 +70,11 @@ const calendarTheme = createTheme({
 
 
 const MARKS = [
-    {value: 1, label: <SentimentVeryDissatisfiedIcon/>},
-    {value: 2, label: <SentimentDissatisfiedIcon/>},
-    {value: 3, label: <SentimentNeutralIcon/>},
-    {value: 4, label: <SentimentSatisfiedIcon/>},
-    {value: 5, label: <SentimentVerySatisfiedIcon/>},
+    { value: 1, label: <SentimentVeryDissatisfiedIcon /> },
+    { value: 2, label: <SentimentDissatisfiedIcon /> },
+    { value: 3, label: <SentimentNeutralIcon /> },
+    { value: 4, label: <SentimentSatisfiedIcon /> },
+    { value: 5, label: <SentimentVerySatisfiedIcon /> },
 ]
 
 const FIELDS_SPECIFICATION = `
@@ -88,11 +89,11 @@ function getCurrentWeek() {
     // End of week (Saturday)
     let endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(endOfWeek.getDate() + 6);
-  
+
     function formatDate(date) {
-      let month = date.getMonth() + 1;
-      let day = date.getDate();
-      return `${month}/${day}`;
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        return `${month}/${day}`;
     }
     return `${formatDate(startOfWeek)}-${formatDate(endOfWeek)}`;
 }
@@ -110,9 +111,9 @@ function getGetHeaders() {
     const cookies = getCookiesDict();
     const headers = {
         "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
-        "Authorization":'Bearer ' + cookies._auth
+        "Authorization": 'Bearer ' + cookies._auth
     };
-    return headers; 
+    return headers;
 }
 
 function getPostHeaders() {
@@ -120,7 +121,7 @@ function getPostHeaders() {
     const headers = {
         "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
         "Content-Type": 'application/json; charset=utf-8',
-        "Authorization":'Bearer ' + cookies._auth
+        "Authorization": 'Bearer ' + cookies._auth
     };
     return headers;
 }
@@ -133,7 +134,7 @@ var headers = {
 
 function makeBooleanCheckbox(title, value, onChangeFunction) {
     return (
-        <FormControl sx={{width: '100%', marginTop: '20pt'}}>
+        <FormControl sx={{ width: '100%', marginTop: '20pt' }}>
             <Grid container columns={2} justify='flex-end' alignItems='center'>
                 <Grid item xs={1}>
                     <Box>
@@ -141,9 +142,9 @@ function makeBooleanCheckbox(title, value, onChangeFunction) {
                     </Box>
                 </Grid>
                 <Grid item xs={1}>
-                <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
-                    <Checkbox checked={value} onChange={(e)=>{onChangeFunction(e.target.checked)}}/>
-                </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                        <Checkbox checked={value} onChange={(e) => { onChangeFunction(e.target.checked) }} />
+                    </Box>
                 </Grid>
             </Grid>
         </FormControl>
@@ -161,109 +162,108 @@ export default function Home() {
     const [pieAnimate, setPieAnimate] = React.useState(true);
     const navigate = useNavigate();
     // Control of popup sleep record window
-    const[recordOpen, setRecordOpen] = React.useState(false);
+    const [recordOpen, setRecordOpen] = React.useState(false);
     const [isNewRecord, setIsNewRecord] = React.useState(true);
     const [page, setPage] = React.useState(1);
     const handlePageChange = (event, value) => {
         setPage(value);
     };
 
-    const[piePmData, setPiePmData] = React.useState([{name: 'Asleep', value: 2, fill: '#173e5c'},
-                                                     {name: 'In Bed', value: 1, fill: '#82ca9d'},
-                                                     {name: 'Out of Bed', value: 9}]);
-    const[pieAmData, setPieAmData] = React.useState([{name: 'Out of Bed', value: 6},
-                                                     {name: 'In Bed', value: 1, fill: '#82ca9d'},
-                                                     {name: 'Asleep', value: 5, fill: '#173e5c'},]);
-    const[pieEffData, setPieEffData] = React.useState([{name: 'Efficiency', value: 0.02},
-                                                       {name: 'Efficiency', value: 0.98, fill:'#2f875d'}]);
-    const[pieAmLabel, setPieAmLabel] = React.useState("");
-    const[piePmLabel, setPiePmLabel] = React.useState("");
-    const[pieEffLabel, setPieEffLabel] = React.useState("");
-    
+    const [piePmData, setPiePmData] = React.useState([{ name: 'Asleep', value: 2, fill: '#173e5c' },
+    { name: 'In Bed', value: 1, fill: '#82ca9d' },
+    { name: 'Out of Bed', value: 9 }]);
+    const [pieAmData, setPieAmData] = React.useState([{ name: 'Out of Bed', value: 6 },
+    { name: 'In Bed', value: 1, fill: '#82ca9d' },
+    { name: 'Asleep', value: 5, fill: '#173e5c' },]);
+    const [pieEffData, setPieEffData] = React.useState([{ name: 'Efficiency', value: 0.02 },
+    { name: 'Efficiency', value: 0.98, fill: '#2f875d' }]);
+    const [pieAmLabel, setPieAmLabel] = React.useState("");
+    const [piePmLabel, setPiePmLabel] = React.useState("");
+    const [pieEffLabel, setPieEffLabel] = React.useState("");
+
     // User data
     // INFO
     const[username, setUsername] = React.useState('User Name');
     const [homeWeeklyAdvice, setHomeWeeklyAdvice] = React.useState("");
     //const[advices, setAdvices] = React.useState([]);
     // AVG STATISTICS
-    const[avgFallTime, setAvgFallTime] = React.useState('0');
-    const[avgQuality, setAvgQuality] = React.useState('0');
-    const[avgWakeTime, setAvgWakeTime] = React.useState('00:00');
-    const[avgDownTime, setAvgDownTime] = React.useState('00:00');
-    const[avgUpTime, setAvgUpTime] = React.useState('00:00'); 
-    const[avgSleepTime, setAvgSleepTime] = React.useState('00:00');
-    const[avgAwakeTime, setAvgAwakeTime] = React.useState('0');
-    const[avgEfficiency, setAvgEfficiency] = React.useState('0');
-    const[effAdvice, setEffAdvice] = React.useState("1");
-    const[avgHoursSlept, setAvgHoursSlept] = React.useState(0.0);
+    const [avgFallTime, setAvgFallTime] = React.useState('0');
+    const [avgQuality, setAvgQuality] = React.useState('0');
+    const [avgWakeTime, setAvgWakeTime] = React.useState('00:00');
+    const [avgDownTime, setAvgDownTime] = React.useState('00:00');
+    const [avgUpTime, setAvgUpTime] = React.useState('00:00');
+    const [avgSleepTime, setAvgSleepTime] = React.useState('00:00');
+    const [avgAwakeTime, setAvgAwakeTime] = React.useState('0');
+    const [avgEfficiency, setAvgEfficiency] = React.useState('0');
+    const [effAdvice, setEffAdvice] = React.useState("1");
+    const [avgHoursSlept, setAvgHoursSlept] = React.useState(0.0);
 
 
     function makeBooleanCheckbox(title, value, onChangeFunction) {
         return (
-            <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                <Grid container columns={2} justify='flex-end' alignItems='center'>
-                    <Grid item xs={1}>
-                        <Box>
-                            {title}
-                        </Box>
-                    </Grid>
-                    <Grid item xs={1}>
-                    <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
-                        <Checkbox checked={value} onChange={(e)=>{onChangeFunction(e.target.checked)}}/>
-                    </Box>
-                    </Grid>
-                </Grid>
+            <FormGroup>
+                <FormControlLabel control={
+                    <Checkbox
+                        checked={value}
+                        onChange={(e) => { onChangeFunction(e.target.checked) }}
+                    />
+                }
+                    labelPlacement={"end"}
+                    label={title}
+                // sx={{ m: 2 }}
+                />
                 {value && title === "Did you have any dreams?" && (
                     <TextField
-                      style={{ textAlign: 'left', marginTop: '10pt' }}
-                      //label="If so, feel free to jot some notes"
-                      multiline
-                      rows={2}
-                      value={dreams}
-                      onChange={(e) => setDreams(e.target.value)}
+                        style={{ textAlign: 'left', marginTop: '10pt' }}
+                        //label="If so, feel free to jot some notes"
+                        multiline
+                        rows={2}
+                        value={dreams}
+                        onChange={(e) => setDreams(e.target.value)}
                     />
-                  )}
-            </FormControl>
+                )}
+
+            </FormGroup>
         )
     }
 
     // New record data
     // Date
     const today = dayjs();
-    const[recordDate, setRecordDate] = React.useState(today);
+    const [recordDate, setRecordDate] = React.useState(today);
     // Integer
-    const[quality, setQuality] = React.useState(0); 
-    const[fallTime, setFallTime] = React.useState(0); 
-    const[awakeTime, setAwakeTime] = React.useState(0);
+    const [quality, setQuality] = React.useState(0);
+    const [fallTime, setFallTime] = React.useState(0);
+    const [awakeTime, setAwakeTime] = React.useState(0);
     // Time
-    const[downTime, setDownTime] = React.useState(today.set('hour', 22).set('minute',  30).set('second', 0)); 
-    const[sleepTime, setSleepTime] = React.useState(today.set('hour', 23).set('minute',  30).set('second', 0));
-    const[wakeTime, setWakeTime] = React.useState(today.set('hour', 8).set('minute',  30).set('second', 0));
-    const[upTime, setUpTime] = React.useState(today.set('hour', 9).set('minute',  30).set('second', 0));
+    const [downTime, setDownTime] = React.useState(today.set('hour', 22).set('minute', 30).set('second', 0));
+    const [sleepTime, setSleepTime] = React.useState(today.set('hour', 23).set('minute', 30).set('second', 0));
+    const [wakeTime, setWakeTime] = React.useState(today.set('hour', 8).set('minute', 30).set('second', 0));
+    const [upTime, setUpTime] = React.useState(today.set('hour', 9).set('minute', 30).set('second', 0));
     // Boolean
-    const[physicalActivity, setPhysicalActivity] = React.useState(false);
-    const[naps, setNaps] = React.useState(false);
-    const[caffeineConsumption, setCaffeineConsumption] = React.useState(false);
-    const[alcoholConsumption, setAlcoholConsumption] = React.useState(false);
-    const[electronics, setElectronics] = React.useState(false);
-    const[difficultStayingAsleep, setDifficultStayingAsleep] = React.useState(false);
-    const[difficultFallingAsleep, setDifficultFallingAsleep] = React.useState(false);
-    const[racingThoughts, setRacingThoughts] = React.useState(false);
+    const [physicalActivity, setPhysicalActivity] = React.useState(false);
+    const [naps, setNaps] = React.useState(false);
+    const [caffeineConsumption, setCaffeineConsumption] = React.useState(false);
+    const [alcoholConsumption, setAlcoholConsumption] = React.useState(false);
+    const [electronics, setElectronics] = React.useState(false);
+    const [difficultStayingAsleep, setDifficultStayingAsleep] = React.useState(false);
+    const [difficultFallingAsleep, setDifficultFallingAsleep] = React.useState(false);
+    const [racingThoughts, setRacingThoughts] = React.useState(false);
     // String: Dream & Description
-    const[dreams, setDreams] = React.useState("");
-    const[dreamsCB, setDreamsCB] = React.useState(false);
+    const [dreams, setDreams] = React.useState("");
+    const [dreamsCB, setDreamsCB] = React.useState(false);
 
 
     // Record update
-    const[monthRecords, setMonthRecords] = React.useState([]);
-    const[editMode, setEditMode] = React.useState(false);
-    const[recordId, setRecordID] = React.useState(0);
+    const [monthRecords, setMonthRecords] = React.useState([]);
+    const [editMode, setEditMode] = React.useState(false);
+    const [recordId, setRecordID] = React.useState(0);
 
     function RecordedDays(props) {
         const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
-      
+
         let isSelected =
-          !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) >= 0;
+            !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) >= 0;
 
         var f_date = `${day.get('year')}-${(day.get('month') + 1).toString().padStart(2, '0')}-${day.get('date').toString().padStart(2, '0')}`;
         if (monthRecords.includes(f_date)) {
@@ -272,15 +272,15 @@ export default function Home() {
         else {
             isSelected = false;
         }
-      
+
         return (
-          <Badge
-            key={props.day.toString()}
-            overlap="circular"
-            badgeContent={isSelected ? '😴' : undefined}
-          >
-            <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
-          </Badge>
+            <Badge
+                key={props.day.toString()}
+                overlap="circular"
+                badgeContent={isSelected ? '😴' : undefined}
+            >
+                <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+            </Badge>
         );
     }
 
@@ -321,14 +321,14 @@ export default function Home() {
         setAvgWakeTime(avgWake);
         setAvgUpTime(avgUp);
         let downTimeTemp = res.data.downTime.split(":");
-        downTimeTemp = {name: 'down', value: parseInt(downTimeTemp[0]) + (parseFloat(downTimeTemp[1]) / 60)};
+        downTimeTemp = { name: 'down', value: parseInt(downTimeTemp[0]) + (parseFloat(downTimeTemp[1]) / 60) };
         let sleepTimeTemp = res.data.sleepTime.split(":");
-        sleepTimeTemp = {name: 'sleep', value: parseInt(sleepTimeTemp[0]) + (parseFloat(sleepTimeTemp[1]) / 60)};
+        sleepTimeTemp = { name: 'sleep', value: parseInt(sleepTimeTemp[0]) + (parseFloat(sleepTimeTemp[1]) / 60) };
         let wakeTimeTemp = res.data.wakeTime.split(":");
-        wakeTimeTemp = {name: 'wake', value: parseInt(wakeTimeTemp[0]) + (parseFloat(wakeTimeTemp[1]) / 60)};
+        wakeTimeTemp = { name: 'wake', value: parseInt(wakeTimeTemp[0]) + (parseFloat(wakeTimeTemp[1]) / 60) };
         let upTimeTemp = res.data.upTime.split(":");
-        upTimeTemp = {name: 'up', value: parseInt(upTimeTemp[0]) + (parseFloat(upTimeTemp[1]) / 60)};
-        let times = [downTimeTemp, sleepTimeTemp, wakeTimeTemp, upTimeTemp].sort(function(a,b){return a.value - b.value});
+        upTimeTemp = { name: 'up', value: parseInt(upTimeTemp[0]) + (parseFloat(upTimeTemp[1]) / 60) };
+        let times = [downTimeTemp, sleepTimeTemp, wakeTimeTemp, upTimeTemp].sort(function (a, b) { return a.value - b.value });
         let tempPM = [];
         let tempAM = [];
         console.log('times unsorted ' + times);
@@ -340,7 +340,7 @@ export default function Home() {
             }
         })
         console.log('times sorted ' + times);
-        
+
         // tempAM and tempPM should now be sorted.
         let pm = [];
         let am = [];
@@ -356,14 +356,14 @@ export default function Home() {
             }
 
             if (element.name === 'down') {
-                pm.push({name: 'Out of Bed', value: elapsedTime});
+                pm.push({ name: 'Out of Bed', value: elapsedTime });
                 tempLabel += '🔽@' + avgDown;
             } else if (element.name === 'wake') {
-                pm.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
+                pm.push({ name: 'Asleep', value: elapsedTime, fill: '#173e5c' });
                 tempLabel += '⏰@' + avgWake;
             } else {
                 // Handles both sleep and up
-                pm.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
+                pm.push({ name: 'In Bed', value: elapsedTime, fill: '#82ca9d' });
                 if (element.name === 'sleep') {
                     tempLabel += '💤@' + avgSleep;
                 } else {
@@ -374,14 +374,14 @@ export default function Home() {
             if (count === tempPM.length - 1) {
                 // This was the last one, extend to the end with what should follow
                 elapsedTime = 24 - element.value;
-                if (element.name === 'sleep'){
-                    pm.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
+                if (element.name === 'sleep') {
+                    pm.push({ name: 'Asleep', value: elapsedTime, fill: '#173e5c' });
                 } else if (element.name === 'up') {
-                    pm.push({name: 'Out of Bed', value: elapsedTime})
+                    pm.push({ name: 'Out of Bed', value: elapsedTime })
                 } else {
                     // Handles wake and down
-                    pm.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
-                } 
+                    pm.push({ name: 'In Bed', value: elapsedTime, fill: '#82ca9d' });
+                }
             }
             count += 1;
         })
@@ -398,14 +398,14 @@ export default function Home() {
             }
 
             if (element.name === 'down') {
-                am.push({name: 'Out of Bed', value: elapsedTime});
+                am.push({ name: 'Out of Bed', value: elapsedTime });
                 tempLabel += '🔽@' + avgDown;
             } else if (element.name === 'wake') {
-                am.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
+                am.push({ name: 'Asleep', value: elapsedTime, fill: '#173e5c' });
                 tempLabel += '⏰@' + avgWake;
             } else {
                 // Handles both sleep and up
-                am.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
+                am.push({ name: 'In Bed', value: elapsedTime, fill: '#82ca9d' });
                 if (element.name === 'sleep') {
                     tempLabel += '💤@' + avgSleep;
                 } else {
@@ -416,14 +416,14 @@ export default function Home() {
             if (count === tempAM.length - 1) {
                 // This was the last one, extend to the end with what should follow
                 elapsedTime = 12 - element.value;
-                if (element.name === 'sleep'){
-                    am.push({name: 'Asleep', value: elapsedTime, fill: '#173e5c'});
+                if (element.name === 'sleep') {
+                    am.push({ name: 'Asleep', value: elapsedTime, fill: '#173e5c' });
                 } else if (element.name === 'up') {
-                    am.push({name: 'Out of Bed', value: elapsedTime})
+                    am.push({ name: 'Out of Bed', value: elapsedTime })
                 } else {
                     // Handles wake and down
-                    am.push({name: 'In Bed', value: elapsedTime, fill: '#82ca9d'});
-                } 
+                    am.push({ name: 'In Bed', value: elapsedTime, fill: '#82ca9d' });
+                }
             }
             count += 1;
         })
@@ -432,18 +432,18 @@ export default function Home() {
         if (am.length > 0) {
             setPieAmData(am.reverse());
         } else {
-            setPieAmData([{name: 'Out of Bed', value: 12}])
+            setPieAmData([{ name: 'Out of Bed', value: 12 }])
         }
-        
+
         if (pm.length > 0) {
             setPiePmData(pm.reverse());
         } else {
-            setPiePmData([{name: 'Out of Bed', value: 12}])
+            setPiePmData([{ name: 'Out of Bed', value: 12 }])
         }
-        
-        
+
+
         setPieEffLabel('🔋' + (res.data.efficiency).toFixed(1) + '%');
-        setPieEffData([{name: '0', value: 100 - res.data.efficiency}, {name: '1', value: res.data.efficiency, fill: '#2f875d'}])
+        setPieEffData([{ name: '0', value: 100 - res.data.efficiency }, { name: '1', value: res.data.efficiency, fill: '#2f875d' }])
     }
 
 
@@ -494,14 +494,14 @@ export default function Home() {
     }
 
     async function getData() {
-        
+
         const headers = getGetHeaders();
         //console.log(headers);
-        
+
         try {
             // Get user name
             setIsLoading(true);
-            let res = await axios.get("https://api.sleepmedic.me:8443/home/info", {headers});
+            let res = await axios.get("https://api.sleepmedic.me:8443/home/info", { headers });
             let name = res.data.firstName + ' ' + res.data.lastName;
             setUsername(name);
             setEduBarLabel((res.data.progress * 100).toFixed(1) + "%");
@@ -518,42 +518,42 @@ export default function Home() {
             const date = new Date();
             let currentDate = date.toISOString().slice(0, 10);
             console.log(currentDate);
-            let res1 = await axios.get("https://api.sleepmedic.me:8443/home/calendar/" + currentDate, {headers});
+            let res1 = await axios.get("https://api.sleepmedic.me:8443/home/calendar/" + currentDate, { headers });
             setMonthRecords(res1.data);
             console.log(res1.data);
 
 
             // Get user average sleep data
-            let res2 = await axios.get("https://api.sleepmedic.me:8443/home/average", {headers});
+            let res2 = await axios.get("https://api.sleepmedic.me:8443/home/average", { headers });
             console.log('average');
-            console.log( res2.data)
+            console.log(res2.data)
             setAvgFallTime(res2.data.fallTime + " min");
             setAvgAwakeTime(res2.data.awakeTime + " min");
             setAvgQuality((res2.data.quality).toFixed(1));
-            
-            
+
+
             setPieData(res2);
-        
+
             setAvgHoursSlept((res2.data.hoursSlept).toFixed(1) + " hrs");
 
-            
+
         }
         catch (err) {
             console.log("Failed to retrieve data.");
         }
-        
+
         setIsLoading(false);
-        
+
     }
 
     function formateDate(day) {
-        let monthFix = day.get('month') + 1; 
+        let monthFix = day.get('month') + 1;
         return `${day.get('year')}-${monthFix.toString().padStart(2, '0')}-${day.get('date').toString().padStart(2, '0')}`;
     }
 
     function formatRecord() {
         // TODO: add the boolean & String values to the record, format them as needed
-        let monthFix = recordDate.get('month') + 1; 
+        let monthFix = recordDate.get('month') + 1;
         const f_date = `${recordDate.get('year')}-${monthFix.toString().padStart(2, '0')}-${recordDate.get('date').toString().padStart(2, '0')}`;
         const f_downTime = `${downTime.get('hour').toString().padStart(2, '0')}:${downTime.get('minute').toString().padStart(2, '0')}:00`;
         const f_sleepTime = `${sleepTime.get('hour').toString().padStart(2, '0')}:${sleepTime.get('minute').toString().padStart(2, '0')}:00`;
@@ -561,7 +561,7 @@ export default function Home() {
         const f_upTime = `${upTime.get('hour').toString().padStart(2, '0')}:${upTime.get('minute').toString().padStart(2, '0')}:00`;
         console.log(f_downTime);
 
-        return { 
+        return {
             date: f_date,
             sleepTime: f_sleepTime,
             wakeTime: f_wakeTime,
@@ -584,19 +584,19 @@ export default function Home() {
     }
 
     const DreamTextField = ({ value }) => {
-      return (
-        <TextField
-          style={{ textAlign: 'left' }}
-          label="Message Field" // Updated prop name
-          multiline
-          rows={2}
-          value={value}
-          onChange={(e) => {}}
-        />
-      );
+        return (
+            <TextField
+                style={{ textAlign: 'left' }}
+                label="Message Field" // Updated prop name
+                multiline
+                rows={2}
+                value={value}
+                onChange={(e) => { }}
+            />
+        );
     };
 
-//handleOnChange function for dream checkbox. Render textfield based on box state.
+    //handleOnChange function for dream checkbox. Render textfield based on box state.
     const handleOnChangeDreamCB = (checked) => {
         setDreamsCB(checked);
         if (!checked) {
@@ -618,7 +618,7 @@ export default function Home() {
         if (editMode) {
             try {
                 let record = formatRecord();
-                let res = await axios.patch("https://api.sleepmedic.me:8443/home/update_record/" + recordId, record, {headers});
+                let res = await axios.patch("https://api.sleepmedic.me:8443/home/update_record/" + recordId, record, { headers });
             }
             catch (err2) {
                 console.log("Failed to update record.");
@@ -627,7 +627,7 @@ export default function Home() {
         else {
             try {
                 let record = formatRecord();
-                let res = await axios.post("https://api.sleepmedic.me:8443/home/create_record", record, {headers});
+                let res = await axios.post("https://api.sleepmedic.me:8443/home/create_record", record, { headers });
             }
             catch (err) {
                 alert("You already have a record for this date! Please modify the existing one instead.");
@@ -651,7 +651,7 @@ export default function Home() {
     // Auto loading
     React.useEffect(() => {
         if (initialLoad.current) return;
-        
+
         //Check if not logged in and redirect.
         const cookies = getCookiesDict();
         if (cookies._auth == null) {
@@ -660,12 +660,12 @@ export default function Home() {
         getData();
         initialLoad.current = true;
         setPieAnimate(false);
-        
+
         //Get Data
         console.log("USED effect");
     }, []);
 
-    
+
     // Popup window handlers
     function resetInput() {
         // TODO: reset all booleans to default values (false), String to empty string
@@ -674,10 +674,10 @@ export default function Home() {
         setQuality(0);
         setFallTime(0);
         setAwakeTime(0);
-        setDownTime(today.set('hour', 22).set('minute',  30).set('second', 0));
-        setSleepTime(today.set('hour', 23).set('minute',  30).set('second', 0));
-        setWakeTime(today.set('hour', 8).set('minute',  30).set('second', 0));
-        setUpTime(today.set('hour', 9).set('minute',  30).set('second', 0));
+        setDownTime(today.set('hour', 22).set('minute', 30).set('second', 0));
+        setSleepTime(today.set('hour', 23).set('minute', 30).set('second', 0));
+        setWakeTime(today.set('hour', 8).set('minute', 30).set('second', 0));
+        setUpTime(today.set('hour', 9).set('minute', 30).set('second', 0));
         setDifficultFallingAsleep(false);
         setDifficultStayingAsleep(false);
         setPhysicalActivity(false);
@@ -702,9 +702,9 @@ export default function Home() {
     const handleNewCalendarDates = async (newMonthClicked) => {
         console.log('Selected day', newMonthClicked.$d)
         const formattedDate = dayjs(newMonthClicked.$d).format('YYYY-MM-DD');
-        const headers  = getGetHeaders();
+        const headers = getGetHeaders();
 
-        let res = await axios.get("https://api.sleepmedic.me:8443/home/calendar/" + formattedDate, {headers});
+        let res = await axios.get("https://api.sleepmedic.me:8443/home/calendar/" + formattedDate, { headers });
         setMonthRecords(res.data);
     }
 
@@ -713,15 +713,19 @@ export default function Home() {
         const formattedDate = dayjs(dayClicked.$d).format('YYYY-MM-DD');
         console.log('Formatted date', formattedDate);
         const headers = getGetHeaders();
+        
         if (!monthRecords.includes(formattedDate)) {
-            alert('No record found for the date ' + formattedDate);
-            return;
+            setIsNewRecord(true);
+            console.log('EYO')
+        } else {
+            setIsNewRecord(false)
         }
-        setRecordOpen(true);
-        setEditMode(true);
+        
         //console.log(res.data);
         try {
-            let res = await axios.get("https://api.sleepmedic.me:8443/home/view_record/" + formattedDate, {headers});
+            let res = await axios.get("https://api.sleepmedic.me:8443/home/view_record/" + formattedDate, { headers });
+            setRecordOpen(true);
+            setEditMode(true);
             console.log(res.data);
             setRecordID(res.data.recordID);
 
@@ -771,8 +775,13 @@ export default function Home() {
             console.log("dreams: ", dreams);        //<--- why is this showing nothing when there is actually dreams text for that record?
         }
         catch (err) {
-            console.log("ERROR");
+            console.log("clicked on day without record, make a new one");
+            setEditMode(true);  
+            setRecordOpen(true);
+              
+            setRecordDate(dayClicked)
         }
+
     };
 
     // function CircularProgressWithLabel(props) {
@@ -792,7 +801,7 @@ export default function Home() {
     //     value: PropTypes.number.isRequired,
     // };
 
-    
+
     function pieOver(val) {
 
     }
@@ -801,183 +810,188 @@ export default function Home() {
 
     }
 
-    
+
 
     function AveragePieChart() {
         return isLoading ? (
-            <Box sx={{ width: '90%', padding: '15%'}}>
-                <LinearProgress sx={{height:20}} />
+            <Box sx={{ width: '90%', padding: '15%' }}>
+                <LinearProgress sx={{ height: 20 }} />
             </Box>
         ) : (
-        <ResponsiveContainer aspect={3}>
-            <PieChart >
-                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450}  data={pieEffData} dataKey="value" nameKey="name" cx={isMobile ? "83%" : "80%"} cy="50%" innerRadius={isMobile ? '68%' : '50%'} outerRadius={isMobile ? '98%' : '80%'} fill="#a19b8c"> 
-                    <Label  width={30} position="center" fontSize={isMobile ? '1.2rem' : '1.9rem'} fontWeight={'bold'}>
-                        { `${pieEffLabel}` }
-                    </Label>
-                </Pie>                
-                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"AM"} startAngle={90} endAngle={450}  data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={isMobile ? '68%' : '50%'} outerRadius={isMobile ? '98%' : '80%'} fill="#a19b8c">
-                    <Label width={30} position="center" fontSize={isMobile ? '0.8rem' : '1.2rem'} fontWeight={'bold'} >
-                        { `${pieAmLabel}` }
-                    </Label>
-                </Pie>
-                <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"PM"} startAngle={90} endAngle={450}  data={piePmData} dataKey="value" nameKey="name" cx={isMobile ? "17%" : "20%"} cy="50%" innerRadius={isMobile ? '68%' : '50%'} outerRadius={isMobile ? '98%' : '80%'} fill="#a19b8c">
-                    <Label width={30} position="center" fontSize={isMobile ? '0.8rem' : '1.2rem'} fontWeight={'bold'}>
-                        { `${piePmLabel}` }
-                    </Label>
-                </Pie>                     
-            </PieChart>
-        </ResponsiveContainer>
+            <ResponsiveContainer aspect={3}>
+                <PieChart >
+                    <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"Efficiency"} startAngle={90} endAngle={450} data={pieEffData} dataKey="value" nameKey="name" cx={isMobile ? "83%" : "80%"} cy="50%" innerRadius={isMobile ? '68%' : '50%'} outerRadius={isMobile ? '98%' : '80%'} fill="#a19b8c">
+                        <Label width={30} position="center" fontSize={isMobile ? '1.2rem' : '1.9rem'} fontWeight={'bold'}>
+                            {`${pieEffLabel}`}
+                        </Label>
+                    </Pie>
+                    <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"AM"} startAngle={90} endAngle={450} data={pieAmData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={isMobile ? '68%' : '50%'} outerRadius={isMobile ? '98%' : '80%'} fill="#a19b8c">
+                        <Label width={30} position="center" fontSize={isMobile ? '0.8rem' : '1.2rem'} fontWeight={'bold'} >
+                            {`${pieAmLabel}`}
+                        </Label>
+                    </Pie>
+                    <Pie isAnimationActive={pieAnimate} animationDuration={400} title={"PM"} startAngle={90} endAngle={450} data={piePmData} dataKey="value" nameKey="name" cx={isMobile ? "17%" : "20%"} cy="50%" innerRadius={isMobile ? '68%' : '50%'} outerRadius={isMobile ? '98%' : '80%'} fill="#a19b8c">
+                        <Label width={30} position="center" fontSize={isMobile ? '0.8rem' : '1.2rem'} fontWeight={'bold'}>
+                            {`${piePmLabel}`}
+                        </Label>
+                    </Pie>
+                </PieChart>
+            </ResponsiveContainer>
         )
     }
 
 
-    const[eduBarValue, setEduBarValue] = React.useState(0);
-    const[eduBarLabel, setEduBarLabel] = React.useState("0%");
+    const [eduBarValue, setEduBarValue] = React.useState(0);
+    const [eduBarLabel, setEduBarLabel] = React.useState("0%");
     function EducationProgressBar() {
-        return(
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} padding={'5% 5% 5% 0%'}>
-            <Box width="100%" display="flex" alignItems="center" justifyContent="center">    
-                <LinearProgress sx={{ height: 20, width: '95%', background: '#a19b8c', '& .MuiLinearProgress-bar': {
-        backgroundColor: '#57618E', // Set the progress bar color here
-      } }}  value={eduBarValue} variant={ isLoading ? "indeterminate" : "determinate"}  />
+        return (
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} padding={'5% 5% 5% 0%'}>
+                <Box width="100%" display="flex" alignItems="center" justifyContent="center">
+                    <LinearProgress sx={{
+                        height: 20, width: '95%', background: '#a19b8c', '& .MuiLinearProgress-bar': {
+                            backgroundColor: '#57618E', // Set the progress bar color here
+                        }
+                    }} value={eduBarValue} variant={isLoading ? "indeterminate" : "determinate"} />
+                </Box>
+                <Box >
+                    <Typography variant="body2" color="text.secondary">{`${eduBarLabel}`}
+                    </Typography>
+                </Box>
             </Box>
-            <Box >
-                <Typography variant="body2" color="text.secondary">{`${eduBarLabel}`}
-                </Typography>
-            </Box>
-        </Box>
         )
     }
 
     return (
-        <Box  sx={{
+        <Box sx={{
             backgroundColor: "#57118E",           /*#3E4464 10px, #57618E, #717AA8 45%,  #3E4464 10px */
             background: 'repeating-radial-gradient(circle at -10% -10%, #717AA8 10px, #57618E, #3E4464 50% )',
             animation: 'animazione 13s ease-in-out infinite alternate-reverse',
-        
-            height: '100vh' ,
+
+            height: '100vh',
             width: '100vw',
             overflow: 'hidden',
             overflowY: 'auto'
-            
+
         }}>
-            <Navbar/>
-            <Grid container spacing={2} columns={2} sx={{margin: 0, paddingRight: 4}}>
+            <Navbar />
+            <Grid container spacing={2} columns={2} sx={{ margin: 0, paddingRight: 4 }}>
                 {/* LEFT PANEL */}
-                <Grid item xs sx={{minWidth: isMobile ? 300 : 320}}>
-                    <Grid container space={2} columns={1} sx={{minWidth: isMobile ? 300 : 320}}>
+                <Grid item xs sx={{ minWidth: isMobile ? 300 : 320 }}>
+                    <Grid container space={2} columns={1} sx={{ minWidth: isMobile ? 300 : 320 }}>
                         {/* Username Display */}
                         <Grid item xs={1}>
-                            <Paper elevation={3} sx={{backgroundColor: '#7293A0', minWidth: isMobile ? 300 : 320}}>
+                            <Paper elevation={3} sx={{ backgroundColor: '#7293A0', minWidth: isMobile ? 300 : 320 }}>
                                 <Typography variant="h4" component="div"
-                                            sx={{flexGrow: 1,
-                                                fontWeight: 'bold',
-                                                color: 'white', 
-                                                paddingTop: '10px',
-                                                paddingBottom: '10px',
-                                                textAlign: 'center'}}>
-                                    {username} 
+                                    sx={{
+                                        flexGrow: 1,
+                                        fontWeight: 'bold',
+                                        color: 'white',
+                                        paddingTop: '10px',
+                                        paddingBottom: '10px',
+                                        textAlign: 'center'
+                                    }}>
+                                    {username}
                                 </Typography>
                             </Paper>
                         </Grid>
 
                         {/* Weekly Summary Statistics */}
-                        <Grid  item xs={1} sx={{marginTop: '10pt'}}>
-                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4'}}>
+                        <Grid item xs={1} sx={{ marginTop: '10pt' }}>
+                            <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4' }}>
                                 <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                     {t("home.7-day.title")}
                                 </Typography>
                                 <Box display="flex" justifyContent="center" alignItems="center">
-                                    <AveragePieChart/>
+                                    <AveragePieChart />
                                 </Box>
-                                
+
                                 <Typography variant='body' component='div' textAlign='center' paddingLeft='2%' paddingRight='2%' paddingBottom='10pt' color='black' fontSize='14pt'>
-                                    {t("home.effAdvice."+effAdvice)}
+                                    {t("home.effAdvice." + effAdvice)}
                                 </Typography>
                                 {/* <Typography variant='h6' component='div' textAlign='center'>
                                     {getCurrentWeek()}
                                 </Typography> */}
                                 <Grid container columns={2}>
-                                    
+
                                     <Grid item xs={1}>
-                                        
+
                                         <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
-                                            {t("home.7-day.time-spent-falling")} <br/>
-                                            {t("home.7-day.time-spent-awake")} <br/>
-                                            {t("home.7-day.quality")} <br/>
-                                            {t("home.7-day.hours-slept")} <br/>
+                                            {t("home.7-day.time-spent-falling")} <br />
+                                            {t("home.7-day.time-spent-awake")} <br />
+                                            {t("home.7-day.quality")} <br />
+                                            {t("home.7-day.hours-slept")} <br />
                                         </Typography>
                                     </Grid>
-                                    <Grid item xs={1}> 
-                                    
+                                    <Grid item xs={1}>
+
                                         <Typography variant='body' component='div' textAlign='left' paddingLeft='20pt' paddingBottom='10pt' color='black' fontSize='16pt'>
-                                            {avgFallTime}<br/>
-                                            {avgAwakeTime}<br/>
-                                            {avgQuality}<br/>
+                                            {avgFallTime}<br />
+                                            {avgAwakeTime}<br />
+                                            {avgQuality}<br />
                                             {avgHoursSlept}<br />
                                         </Typography>
                                     </Grid>
                                 </Grid>
-                                <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>              
-                                    <Button onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon/>} variant="contained">Create Reminder</Button>
+                                <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
+                                    <Button onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon />} variant="contained">Create Reminder</Button>
                                 </Box>
                             </Paper>
                         </Grid>
 
 
-                        
+
 
                     </Grid>
                 </Grid>
-               
+
                 {/* RIGHT PANEL CALENDAR */}
                 <Grid item xs>
-                    <Grid container columns={3}  spacing={1}>
-                        <Grid item xs={3} sx={{minWidth: isMobile ? 300 : 320}}>
-                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', height: '200px', minWidth: isMobile ? 300 : 320}}>
+                    <Grid container columns={3} spacing={1}>
+                        <Grid item xs={3} sx={{ minWidth: isMobile ? 300 : 320 }}>
+                            <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4',  minWidth: isMobile ? 300 : 320 }}>
                                 <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                     {t("home.weekly-advices.title")}
                                 </Typography>
-                                <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' color='black' fontSize='16pt'>
+
+                                <Typography sx={{minHeight: 80}} variant='body' component='div' textAlign='left' paddingTop='5pt' paddingLeft='20pt' paddingRight='20pt' paddingBottom='20pt' color='black' fontSize='16pt'>
                                     {/*t("home.weekly-advices.-1")*/}
                                     {/*homeWeeklyAdvice*/}
-                                    <div dangerouslySetInnerHTML={{ __html: homeWeeklyAdvice.replace(/\n/g, '<br />') }} />
+                                    {homeWeeklyAdvice.replace(/\n/g, '<br />')}
                                 </Typography>
                             </Paper>
                         </Grid>
 
-                        <Grid item xs sx={{minWidth: isMobile ? 300 : 320}}>
-                            <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320}}>
+                        <Grid item xs sx={{ minWidth: isMobile ? 300 : 320 }}>
+                            <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320 }}>
                                 <Grid container columns={1} >
-                                    <Grid item  xs={12} md={6} lg={4} sx={{ minWidth: isMobile ? 300 : 320 }}>
+                                    <Grid item xs={12} md={6} lg={4} sx={{ minWidth: isMobile ? 300 : 320 }}>
                                         <LocalizationProvider adapterLocale={i18n.language} dateAdapter={AdapterDayjs}>
-                                        <Box sx={{ minWidth: isMobile ? 300 : 320 }}>
-                                            <DateCalendar 
-                                            reduceAnimations={true}
-                                            // theme={calendarTheme} 
-                                            showDaysOutsideCurrentMonth
-                                            fixedWeekNumber={6}
-                                                //sx={{scale: '150%', paddingTop:'50px'}}
-                                                // sx={{scale: '95%'}}
-                                                sx={{ flexGrow: 1, minWidth: isMobile ? 300 : 320 }}
-                                                views={['day']} 
-                                                onChange={(e) => {
-                                                    console.log(monthRecords);
-                                                    setIsNewRecord(false);
-                                                    handleOpenEditForm(e);
-                                                }}
-                                                onMonthChange={(e) => {
-                                                    handleNewCalendarDates(e);
-                                                }}
-                                                slots={{day: RecordedDays,}}
-                                            />
-                                           </Box>
+                                            <Box sx={{ minWidth: isMobile ? 300 : 320 }}>
+                                                <DateCalendar
+                                                    reduceAnimations={true}
+                                                    // theme={calendarTheme} 
+                                                    showDaysOutsideCurrentMonth
+                                                    fixedWeekNumber={6}
+                                                    //sx={{scale: '150%', paddingTop:'50px'}}
+                                                    // sx={{scale: '95%'}}
+                                                    sx={{ flexGrow: 1, minWidth: isMobile ? 300 : 320 }}
+                                                    views={['day']}
+                                                    onChange={(e) => {
+                                                        console.log(monthRecords);
+
+                                                        handleOpenEditForm(e);
+                                                    }}
+                                                    onMonthChange={(e) => {
+                                                        handleNewCalendarDates(e);
+                                                    }}
+                                                    slots={{ day: RecordedDays, }}
+                                                />
+                                            </Box>
                                         </LocalizationProvider>
                                     </Grid>
                                     <Grid item xs={1}>
                                         <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                            <Button variant='contained' endIcon={<NoteAddOutlinedIcon/>} onClick={handleClickOpen}>
+                                            <Button variant='contained' endIcon={<NoteAddOutlinedIcon />} onClick={handleClickOpen}>
                                                 {t("home.new-record")}
                                             </Button>
                                         </Box>
@@ -986,36 +1000,36 @@ export default function Home() {
                             </Paper>
                         </Grid>
 
-                        <Grid item xs sx={{minWidth: isMobile ? 300 : 320}}>
+                        <Grid item xs sx={{ minWidth: isMobile ? 300 : 320 }}>
                             <Grid container columns={1} spacing={1}>
                                 <Grid item xs={1}>
-                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320}}>
+                                    <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320 }}>
                                         <Typography variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
                                             {t("home.education-progress")}
                                         </Typography>
-                                        <EducationProgressBar/>
+                                        <EducationProgressBar />
                                         <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                                    <Button href="/education" endIcon={<SchoolIcon/>} variant='contained'>{t("home.viewLessons")}</Button>
+                                            <Button href="/education" endIcon={<SchoolIcon />} variant='contained'>{t("home.viewLessons")}</Button>
                                         </Box>
                                     </Paper>
                                 </Grid>
 
                                 <Grid item xs={1}>
-                                    <Paper elevation={3} sx={{backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320}}>
+                                    <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320 }}>
                                         <Grid container columns={1}>
                                             <Grid item xs={1}>
-                                            
+
                                                 <Typography variant='h6' component='div' textAlign='center' paddingTop='10pt' paddingBottom={'5%'} fontWeight='bold'>
                                                     {t("home.insightMessage")}
                                                 </Typography>
                                             </Grid>
-                                            <Grid item xs={1} sx={{paddingTop: '10px'}}>
+                                            <Grid item xs={1} sx={{ paddingTop: '10px' }}>
                                                 <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                                    <Button href="/statistics" endIcon={<LegendToggleIcon/>} variant='contained'>{t("home.viewInsight")}</Button>
+                                                    <Button href="/statistics" endIcon={<LegendToggleIcon />} variant='contained'>{t("home.viewInsight")}</Button>
                                                 </Box>
                                             </Grid>
                                         </Grid>
-                                   </Paper>
+                                    </Paper>
                                 </Grid>
 
                             </Grid>
@@ -1026,157 +1040,169 @@ export default function Home() {
             </Grid>
 
             {/* Record Popup window */}
-            <Dialog open={recordOpen} onClose={handleClose}>
+            <Dialog PaperProps={{
+                style: {
+                    backgroundColor: '#e8e4f2', // Replace this with your desired background color
+                },
+            }} open={recordOpen} onClose={handleClose}>
                 <DialogTitle>
                     <Grid container columns={2} justify='flex-end' alignItems='center'>
                         <Grid item xs={1}>
                             {isNewRecord ? "New Record" : "Edit Record"}
                         </Grid>
                         <Grid item xs={1}>
-                        <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
-                            <Tooltip title={FIELDS_SPECIFICATION} arrow>
-                                <IconButton size='small'><InfoIcon/></IconButton>
-                            </Tooltip>
-                        </Box>
+                            <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                                <Tooltip title={FIELDS_SPECIFICATION} arrow>
+                                    <IconButton size='small'><InfoIcon /></IconButton>
+                                </Tooltip>
+                            </Box>
                         </Grid>
                     </Grid>
                 </DialogTitle>
-                
+
                 {
                     page === 1 ?
-                    <DialogContent>
-                    <DialogContentText>{isNewRecord? t("home.input-prompt.new-record") : t("home.input-prompt.edit-record")}</DialogContentText>
+                        <DialogContent>
+                            <DialogContentText>{isNewRecord ? t("home.input-prompt.new-record") : t("home.input-prompt.edit-record")}</DialogContentText>
 
-                    {/* Date Picker */}
-                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                {isNewRecord ? 
-                                    <DatePicker label="Date" value={recordDate} onChange={(newDate) => setRecordDate(newDate)}/>
-                                    :
-                                    <DatePicker label="Date" value={recordDate} onChange={(newDate) => setRecordDate(newDate)} readOnly/>
-                                }
-                        </LocalizationProvider>
-                    </FormControl>
+                            {/* Date Picker */}
+                            <FormControl sx={{ width: '100%', marginTop: '20pt' }}>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    {isNewRecord ?
+                                        <DatePicker label="Date" value={recordDate} onChange={(newDate) => setRecordDate(newDate)} />
+                                        :
+                                        <DatePicker label="Date" value={recordDate} onChange={(newDate) => setRecordDate(newDate)} readOnly />
+                                    }
+                                </LocalizationProvider>
+                            </FormControl>
 
-                    {/* Sleep Duration Input */}
-                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>{t("home.input-prompt.fall-time")}</InputLabel>
-                        <OutlinedInput
-                            value={fallTime}
-                            label={t("home.input-prompt.fall-time")}
-                            onChange = {(e)=>
-                                setFallTime(e.target.value)}
-                            type="text"
-                        />
-                    </FormControl>
+                            {/* Sleep Duration Input */}
+                            <FormControl sx={{ width: '100%', marginTop: '20pt' }}>
+                                <InputLabel>{t("home.input-prompt.fall-time")}</InputLabel>
+                                <OutlinedInput
+                                    value={fallTime}
+                                    label={t("home.input-prompt.fall-time")}
+                                    onChange={(e) =>
+                                        setFallTime(e.target.value)}
+                                    type="text"
+                                />
+                            </FormControl>
 
-                    {/* Awake Time Input */}
-                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <InputLabel>{t("home.input-prompt.awake-time")}</InputLabel>
-                        <OutlinedInput
-                            value={awakeTime}
-                            label={t("home.input-prompt.awake-time")}
-                            onChange = {(e)=>
-                                setAwakeTime(e.target.value)}
-                            type="text"
-                        />
-                    </FormControl>
+                            {/* Awake Time Input */}
+                            <FormControl sx={{ width: '100%', marginTop: '20pt' }}>
+                                <InputLabel>{t("home.input-prompt.awake-time")}</InputLabel>
+                                <OutlinedInput
+                                    value={awakeTime}
+                                    label={t("home.input-prompt.awake-time")}
+                                    onChange={(e) =>
+                                        setAwakeTime(e.target.value)}
+                                    type="text"
+                                />
+                            </FormControl>
 
-                    {/* Down Time Input */}
-                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label={t("home.input-prompt.down-time")} value={downTime} onChange={(newTime) => setDownTime(newTime)}/>
-                        </LocalizationProvider>
-                    </FormControl>
+                            {/* Down Time Input */}
+                            <FormControl sx={{ width: '100%', marginTop: '20pt' }}>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <TimePicker label={t("home.input-prompt.down-time")} value={downTime} onChange={(newTime) => setDownTime(newTime)} />
+                                </LocalizationProvider>
+                            </FormControl>
 
-                    {/* Sleep Time Input */}
-                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label={t("home.input-prompt.sleep-time")} value={sleepTime} onChange={(newTime) => setSleepTime(newTime)}/>
-                        </LocalizationProvider>
-                    </FormControl>
+                            {/* Sleep Time Input */}
+                            <FormControl sx={{ width: '100%', marginTop: '20pt' }}>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <TimePicker label={t("home.input-prompt.sleep-time")} value={sleepTime} onChange={(newTime) => setSleepTime(newTime)} />
+                                </LocalizationProvider>
+                            </FormControl>
 
-                    {/* Wake Time Input */}
-                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label={t("home.input-prompt.wake-time")} value={wakeTime} onChange={(newTime) => setWakeTime(newTime)}/>
-                        </LocalizationProvider>
-                    </FormControl>
+                            {/* Wake Time Input */}
+                            <FormControl sx={{ width: '100%', marginTop: '20pt' }}>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <TimePicker label={t("home.input-prompt.wake-time")} value={wakeTime} onChange={(newTime) => setWakeTime(newTime)} />
+                                </LocalizationProvider>
+                            </FormControl>
 
-                    {/* Up Time Input */}
-                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker label={t("home.input-prompt.up-time")} value={upTime} onChange={(newTime) => setUpTime(newTime)}/>
-                        </LocalizationProvider>
-                    </FormControl>
+                            {/* Up Time Input */}
+                            <FormControl sx={{ width: '100%', marginTop: '20pt' }}>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <TimePicker label={t("home.input-prompt.up-time")} value={upTime} onChange={(newTime) => setUpTime(newTime)} />
+                                </LocalizationProvider>
+                            </FormControl>
 
-                    {/* Restlessness Input */}
-                    <FormControl sx={{width: '100%', marginTop: '20pt'}}>
-                        <Grid container columns={2} justify='flex-end' alignItems='center'>
-                            <Grid item xs={1}>
-                                <Box>
-                                    {t("home.input-prompt.quality")}
-                                </Box>
-                            </Grid>
-                            <Grid item xs={1}>
-                            <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
-                                <Slider aria-label="Restless" value={quality} onChange={handleRestlessnessChange}
-                                step={1} marks={MARKS} min={1} max={5} />
-                            </Box>
-                            </Grid>
-                        </Grid>
-                    </FormControl>
+                            {/* Restlessness Input */}
+                            <FormControl sx={{ width: '100%', marginTop: '20pt' }}>
+                                <Grid container columns={2} justify='flex-end' alignItems='center'>
+                                    <Grid item xs={1}>
+                                        <Box>
+                                            {t("home.input-prompt.quality")}
+                                        </Box>
+                                    </Grid>
+                                    <Grid item xs={1}>
+                                        <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                                            <Slider aria-label="Restless" value={quality} onChange={handleRestlessnessChange}
+                                                step={1} marks={MARKS} min={1} max={5} />
+                                        </Box>
+                                    </Grid>
+                                </Grid>
+                            </FormControl>
 
-                    {/* Submit/Cancel */}
-                    <Grid container columns={2}>
-                        <Grid item xs={1}>
-                            {/* <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button> */}
-                            <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>{t("home.cancel")}</Button>
-                        </Grid>
-                        
-                    </Grid>
+                        </DialogContent>
+                        :
+                        <DialogContent>
+                            <DialogContentText>{isNewRecord ? t("home.input-prompt.new-record") : t("home.input-prompt.edit-record")}</DialogContentText>
+                            {makeBooleanCheckbox(t("home.sleep-journal.physical-activity"), physicalActivity, setPhysicalActivity)}
+                            {makeBooleanCheckbox(t("home.sleep-journal.naps"), naps, setNaps)}
+                            {makeBooleanCheckbox(t("home.sleep-journal.alcohol"), alcoholConsumption, setAlcoholConsumption)}
+                            {makeBooleanCheckbox(t("home.sleep-journal.caffeine"), caffeineConsumption, setCaffeineConsumption)}
+                            {makeBooleanCheckbox(t("home.sleep-journal.electronics"), electronics, setElectronics)}
+                            {makeBooleanCheckbox(t("home.sleep-journal.difficulty-falling"), difficultFallingAsleep, setDifficultFallingAsleep)}
+                            {makeBooleanCheckbox(t("home.sleep-journal.difficulty-staying"), difficultStayingAsleep, setDifficultStayingAsleep)}
+                            {makeBooleanCheckbox(t("home.sleep-journal.racing-thoughts"), racingThoughts, setRacingThoughts)}
+                            {makeBooleanCheckbox(t("home.sleep-journal.dreams"), dreamsCB, handleOnChangeDreamCB)}
 
-                </DialogContent>
-                :
-                <DialogContent>
-                    <DialogContentText>{isNewRecord? t("home.input-prompt.new-record") : t("home.input-prompt.edit-record")}</DialogContentText>
-                    {makeBooleanCheckbox(t("home.sleep-journal.physical-activity"), physicalActivity, setPhysicalActivity)}
-                    {makeBooleanCheckbox(t("home.sleep-journal.naps"), naps, setNaps)}
-                    {makeBooleanCheckbox(t("home.sleep-journal.alcohol"), alcoholConsumption, setAlcoholConsumption)}
-                    {makeBooleanCheckbox(t("home.sleep-journal.caffeine"), caffeineConsumption, setCaffeineConsumption)}
-                    {makeBooleanCheckbox(t("home.sleep-journal.electronics"), electronics, setElectronics)}
-                    {makeBooleanCheckbox(t("home.sleep-journal.difficulty-falling"), difficultFallingAsleep, setDifficultFallingAsleep)}
-                    {makeBooleanCheckbox(t("home.sleep-journal.difficulty-staying"), difficultStayingAsleep, setDifficultStayingAsleep)}
-                    {makeBooleanCheckbox(t("home.sleep-journal.racing-thoughts"), racingThoughts, setRacingThoughts)}
-                    {makeBooleanCheckbox(t("home.sleep-journal.dreams"), dreamsCB, handleOnChangeDreamCB)}
 
-                    <Grid container columns={2}>
-                        <Grid item xs={1}>
-                            {/* <Button sx={{marginTop: '20pt', color: '#674747'}} onClick={handleSubmit}>Submit</Button> */}
-                            <Button sx={{marginTop: '20pt', color: 'red'}} onClick={handleClose} variant=''>{t("home.cancel")}</Button>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
-                                <Button sx={{marginTop: '20pt'}} variant='contained' onClick={handleSubmit}>
-                                    {isNewRecord ? t("home.create"): t("home.update")}
-                                </Button>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                </DialogContent>
+                        </DialogContent>
                 }
 
-                <Box alignContent='center' justify="center" display="flex" marginBottom='10pt'>
-                    <Pagination count={2} page={page} onChange={handlePageChange} sx={{margin: 'auto'}}/>
-                </Box>
-                
+                <Grid container columns={3} direction={'row'}>
+                    <Grid item xs={1}>
+                        <Box alignContent='center' justifyContent="center" display="flex" marginBottom='10pt' marginTop='10pt'>
+                            {page === 1 ? (
+                                <Button sx={{ color: 'red' }} onClick={handleClose} variant='outlined'>{t("home.cancel")}</Button>
+                            ) : (
+                                <Button startIcon={<ArrowBackOutlinedIcon/>} onClick={() => setPage(1)} variant='outlined'>{t("home.back")}</Button>
+                            )}
+                            
+                        </Box>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Box alignContent='center' justify="center" display="flex" marginBottom='10pt' marginTop='10pt'>
+                            <Pagination count={2} page={page} onChange={handlePageChange} sx={{ margin: 'auto' }} />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Box alignContent='center' justifyContent="center" display="flex" marginBottom='10pt' marginTop='10pt'>
+                            {page === 1 ? (
+                                <Button variant='contained' endIcon={<ArrowForwardOutlinedIcon/>} onClick={() => setPage(2)}>
+                                    {t("home.next")}
+                                </Button>
+                            ) : (
+                                <Button endIcon={<NoteAddOutlinedIcon />} variant='contained' onClick={handleSubmit}>
+                                    {isNewRecord ? t("home.create") : t("home.update")}
+                                </Button>
+                            )}
+
+                        </Box>
+                    </Grid>
+                </Grid>
+
+
             </Dialog>
             <Grid item xs >
-                <Typography  marginBottom={'10px'} variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
-                                    SLEEP MEDIC ALPHA 0.3.0
+                <Typography marginBottom={'10px'} variant='h5' component='div' textAlign='center' paddingTop='10pt' fontWeight='bold'>
+                    SLEEP MEDIC ALPHA 0.3.0
                 </Typography>
             </Grid>
-            
+
         </Box>
     )
 }
