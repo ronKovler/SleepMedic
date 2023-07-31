@@ -7,6 +7,13 @@
       "spanish": "Español",
       "next": "Empezar"
     },
+    "navbar": {
+      "logoTitle": "Volver a la página principal de Sleep-Medic",
+      "sign-out": "Cerrar sesión",
+      "accountPage": "Ir a la página de la cuenta",
+      "insights": "Ir a la página de estadísticas",
+      "languageSelect": "Seleccionar tu idioma"
+    },
     "language-select": {
       "en": "EN",
       "es": "ES"
@@ -60,6 +67,7 @@
   },  
   "login": {
         "title": "Iniciar sesión",
+        "logoTitle": "Volver a seleccionar idioma",
         "email": "Correo electrónico",
         "password": "Contraseña",
         "remember-me": "Recordarme",
@@ -95,10 +103,10 @@
         "createButton": "Crear cuenta",
         "phonenumber": "Número de teléfono",
         "phoneFreeErr": "¡Este número de teléfono ya está en uso!",
-        "phoneErr": "Este número de teléfono no es válido",
+        "phoneErr": "Este número de teléfono no es válido!",
         "email": "Correo electrónico",
         "emailFreeErr": "Este correo electrónico ya está en uso!",
-        "emailErr": "Este correo electrónico no es válido",
+        "emailErr": "Este correo electrónico no es válido!",
         "password": "Contraseña",
         "confirmPassword": "Confirmar contraseña",
         "confirmErr": "¡Las contraseñas no coinciden!",
@@ -152,7 +160,7 @@
         "efficiency": "eficiencia",
         "monthlyFallingTime": "Tiempo de conciliación mensual",
         "fallTime": "Tiempo de conciliación",
-        "times": "Veces",
+        "times": "Duración/Tiempo",
         "downTime": "Tiempo en cama",
         "upTime": "Hora de levantarse",
         "sleepTime": "Hora de dormir"

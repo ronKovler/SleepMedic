@@ -131,7 +131,7 @@ function Login() {
       
     }}>
       <Paper sx={{backgroundColor: '#D9D3E4',  width: isMobile ? '300px' : '350px', padding: 2, borderRadius: '1rem'}} square={false} elevation={3} style={{textAlign: 'center'}}> 
-        <img onMouseOut={() => setLogoSize('100%')} onMouseOver={() => {setLogoSize('120%')}} onClick={() => navigate('/')} src={logo} title='Back to Language Select' alt="Sleep-Medic Logo" style={{height: "8rem", width: "auto", scale: logoSize}}/>
+        <img onMouseOut={() => setLogoSize('100%')} onMouseOver={() => {setLogoSize('120%')}} onClick={() => navigate('/')} src={logo} title={t("login.logoTitle")} alt="Sleep-Medic Logo" style={{height: "8rem", width: "auto", scale: logoSize}}/>
        
         <Typography variant="h4" component="div"
             sx={{flexGrow: 1,

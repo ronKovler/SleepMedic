@@ -10,8 +10,15 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
+import { FormGroup, FormControlLabel } from '@mui/material'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import { LineChart,
          Line,
          CartesianGrid, 
@@ -21,7 +28,7 @@ import { LineChart,
          Legend, 
          BarChart, Bar, 
          ResponsiveContainer,
-         ScatterChart, Scatter
+         ScatterChart, Scatter, LabelList
         } from 'recharts';
 import { useTranslation } from "react-i18next";
 
@@ -44,31 +51,7 @@ function getGetHeaders() {
     return headers; 
 }
 
-function makeLineGraph(data, x, y, scale=[0,10], ytick, isRefLine, avg) {
-    return (
-        
-            <Paper sx={{width: '100%'}} style={{color:'white', background: 'linear-gradient(to top, #3E4464, #222740)'}} elevation={3}> 
-                <Grid container spacing={2} columns={1} >
-                    <Grid item xs={1}>
-                    <Box display="flex" justifyContent="center" alignItems="center">
-                        <ResponsiveContainer aspect={2.8}>
-                            <LineChart data={data} margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
-                                <Line type="monotone" dataKey={y} stroke="#c4c1f7" strokeWidth={3} />
-                                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                                <XAxis stroke={'white'} dataKey={x}/>
-                                <YAxis stroke={'white'} domain={scale} interval="preserveStartEnd" tickCount={ytick}/>
-                                <Tooltip />
-                                {isRefLine ? <ReferenceLine y={avg} stroke="red"/> : undefined}
-                            </LineChart> 
-                        </ResponsiveContainer>
-                        </Box>
-                    </Grid>
-                </Grid>
-            </Paper>
-        
-        
-    );
-}
+
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -112,8 +95,125 @@ export default function Statistics() {
     const[monthRecords, setMonthRecords] = React.useState([]);
     const[allAvgs, setAllAvgs] = React.useState({});
     const[showAvg, setShowAvg] = React.useState(false);
-    
 
+    const [journalActivity, setJournalActivity] = React.useState(false); // Physical activity form journal
+    const [journalNaps, setJournalNaps] = React.useState(false);
+    const [journalCaffeine, setJournalCaffeine] = React.useState(false);
+    const [journalAlcohol, setJournalAlcohol] = React.useState(false);
+    const [journalElectronics, setJournalElectronics] = React.useState(false);
+    const [journalStaying, setJournalStaying] = React.useState(false);  //difficult staying asleep from journal
+    const [journalFalling, setJournalFalling] = React.useState(false); // difficult falling asleep from journal
+    const [journalRacing, setJournalRacing] = React.useState(false); // Racing thoughts from journal
+
+    const CustomizedLabel = props => {
+        const { x, y, stroke, value, dataPoint } = props
+        console.log(dataPoint);
+        let lab = "";
+        let delim = "";
+        let dy = -8;
+        let labels = [];
+    
+        if (dataPoint.physicalActivity && journalActivity) {
+            lab += (delim + '🏋️‍♂️');
+            labels.push('🏋️‍♂️');
+            delim = '\n';
+        }
+        if (dataPoint.naps && journalNaps) {
+            lab += (delim + '🛌');
+            labels.push('🛌');
+            delim = ' ';
+        }
+        if (dataPoint.caffeineConsumption && journalCaffeine) {
+            lab += (delim + '☕');
+            labels.push('☕');
+            delim = ' ';
+        }
+        if (dataPoint.alcoholConsumption && journalAlcohol) {
+            lab += (delim + '🍺');
+            labels.push('🍺');
+            delim = ' ';
+        }
+        if (dataPoint.electronics && journalElectronics) {
+            lab += (delim + '📺');
+            labels.push('📺');
+            delim = ' ';
+        }
+        if (dataPoint.difficultStayingAsleep && journalStaying) {
+            lab += (delim + 'DS');
+            labels.push('😰');
+            delim = ' ';
+        }
+        if (dataPoint.difficultFallingAsleep && journalFalling) {
+            lab += (delim + 'DF');
+            labels.push('😫');
+            delim = '\n';
+        }
+        if (dataPoint.racingThoughts && journalRacing) {
+            lab += (delim + '🤔');
+            labels.push('🤯');
+            delim = '\n';
+        }
+
+        console.log(labels);
+        return (
+          <text x={x} y={y} dy={dy} fill={'white'} width='1' fontSize={16} textAnchor="middle">
+            {/* {lab} <br/> */}
+            {
+                labels.map((elem, index) => 
+                    (<tspan textAnchor="middle" x={x} dy={30}>{elem}</tspan>)
+                )
+            } 
+          </text>
+        )
+    }
+    
+    function makeLineGraph(data, x, y, scale=[0,10], ytick, isRefLine, avg) {
+        return (
+            
+                <Paper sx={{width: '100%'}} style={{color:'white', background: 'linear-gradient(to top, #3E4464, #222740)'}} elevation={3}> 
+                    <Grid container spacing={2} columns={1} >
+                        <Grid item xs={1}>
+                        <Box display="flex" justifyContent="center" alignItems="center">
+                            <ResponsiveContainer aspect={2.8}>
+                                <LineChart data={data} margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
+                                    {/* <Line label={renderCustomizedLabel} type="monotone" dataKey={y} stroke="#c4c1f7" strokeWidth={3} /> */}
+                                    <Line 
+                                        type="monotone" 
+                                        dataKey={y} 
+                                        stroke="#c4c1f7" 
+                                        strokeWidth={3}
+                                        label={(props) => <CustomizedLabel {...props} dataPoint={data[props.index]}/>}
+                                    />
+                                    
+                                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                                    <XAxis stroke={'white'} dataKey={x}/>
+                                    <YAxis stroke={'white'} domain={scale} interval="preserveStartEnd" tickCount={ytick}/>
+                                    <Tooltip />
+                                    {isRefLine ? <ReferenceLine y={avg} stroke="red"/> : undefined}
+                                </LineChart> 
+                            </ResponsiveContainer>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            
+            
+        );
+    }
+    
+    function createData(name, emoji) {
+        return { name, emoji };
+    }
+
+    const rows = [
+        createData("Exercise", '🏋️‍♂️'),
+        createData("Naps", '🛌'),
+        createData("Caffine", '☕'),
+        createData("Alcohol", '🍺'),
+        createData("Difficult staying asleep", '😰'),
+        createData("Difficult falling asleep", '😫'),
+        createData("Racing thoughts", '🤯'),
+    ]
 
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
@@ -167,6 +267,8 @@ export default function Statistics() {
         return (<g> <text x={cx} y={cy + offset} textAnchor="middle" fontSize={16} fill="#666">{emoji}</text> </g>);
     }
 
+    
+
     if (monthRecords === []) return (<div>HI</div>)
     else return (
         <Box  sx={{
@@ -197,13 +299,13 @@ export default function Statistics() {
                             
                         </Box>
                         <CustomTabPanel value={value} index={0}>
-                            {makeLineGraph(monthRecords, t("stats.date"), t("stats.quality"), [0,5], 6, showAvg, allAvgs.quality)}
+                            {makeLineGraph(monthRecords, 'date', 'quality', [0,5], 6, showAvg, allAvgs.quality)}
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={1}>
-                            {makeLineGraph(monthRecords, t("stats.date"), t("stats.efficiency"), [0,100], 6, showAvg, allAvgs.efficiency)}
+                            {makeLineGraph(monthRecords, 'date', 'efficiency', [0,100], 6, showAvg, allAvgs.efficiency)}
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={2}>
-                            {makeLineGraph(monthRecords, t("stats.date"), t("stats.fallTime"), [0,30], 6, showAvg, allAvgs.fallTime)}
+                            {makeLineGraph(monthRecords, 'date', 'fallTime', [0,30], 6, showAvg, allAvgs.fallTime)}
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={3}>
                             {/* {makeLineGraph(monthRecords, "date", 'upTime', [0,24], 4, showAvg)} */}
@@ -215,11 +317,11 @@ export default function Statistics() {
                                                 
                                                 <ScatterChart margin={{ top: 15, right: 50, bottom: 5, left: 0 }}>
                                                     <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-                                                    <XAxis stroke={'white'} type="category" dataKey={t("stats.date")} allowDuplicatedCategory={false}/>
-                                                    <YAxis yAxisId='upT' stroke={'white'} type="number" dataKey={t("stats.upTime")} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
-                                                    <YAxis hide={true} yAxisId='downT' stroke={'white'} type="number" dataKey={t("stats.downTime")} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
-                                                    <YAxis hide={true} yAxisId='wakeT' stroke={'white'} type="number" dataKey={t("stats.upTime")} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
-                                                    <YAxis hide={true} yAxisId='sleepT' stroke={'white'} type="number" dataKey={t("stats.sleepTime")} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <XAxis stroke={'white'} type="category" dataKey={'date'} allowDuplicatedCategory={false}/>
+                                                    <YAxis yAxisId='upT' stroke={'white'} type="number" dataKey={'upTime'} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <YAxis hide={true} yAxisId='downT' stroke={'white'} type="number" dataKey={'downTime'} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <YAxis hide={true} yAxisId='wakeT' stroke={'white'} type="number" dataKey={'wakeTime'} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
+                                                    <YAxis hide={true} yAxisId='sleepT' stroke={'white'} type="number" dataKey={'sleepTime'} domain={[0,24]} interval="preserveStartEnd" tickCount={4}/>
                                                     <Tooltip/>
                                                     <Scatter yAxisId='upT' name="Up Time" data={monthRecords} shape={<UpShape />}/>
                                                     <Scatter yAxisId='downT' name="Down Time" data={monthRecords} shape={<DownShape />}/>
@@ -237,8 +339,19 @@ export default function Statistics() {
                     </Box>
                 </Grid>
             </Grid>
-            <Checkbox checked={showAvg} onChange={(e)=>{setShowAvg(e.target.checked)}}/>
-            <Button onClick={(e)=> {console.log(allAvgs)}}>TEST</Button>
+            <Box display="flex" justifyContent="center" alignContent={'center'} >
+                <FormGroup  sx={{ '& .MuiFormControlLabel-root': { margin: 1 } }} style={{input: {boxSizing: 'border-box'}}} row={ true}>
+                    <FormControlLabel control={<Checkbox checked={journalActivity} onClick={() => setJournalActivity(!journalActivity)}/>} labelPlacement={"bottom"} label={t("Exercise 🏋️‍♂️")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalNaps} onChange={() => setJournalNaps(!journalNaps)}/>} labelPlacement={"bottom"} label={t("Naps 🛌")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalCaffeine} onChange={() => setJournalCaffeine(!journalCaffeine)}/> } labelPlacement={"bottom"} label={t("Caffeine ☕")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalAlcohol} onChange={() => setJournalAlcohol(!journalAlcohol)}/>} labelPlacement={"bottom"} label={t("Alcohol 🍺")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalElectronics} onChange={() => setJournalElectronics(!journalElectronics)}/>} labelPlacement={"bottom"} label={t("Electronics 📺")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalStaying} onChange={() => setJournalStaying(!journalStaying)}/>} labelPlacement={"bottom"} label={t("Staying 😰")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalFalling} onClick={() => setJournalFalling(!journalFalling)}/>} labelPlacement={"bottom"} label={t("Falling 😫")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={journalRacing} onClick={() => setJournalRacing(!journalRacing)}/>} labelPlacement={"bottom"} label={t("Racing 🤯")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox checked={showAvg} onClick={() => setShowAvg(!showAvg)}/>} labelPlacement={"bottom"} label={t("Averages")} sx={{ m: 2 }}/>
+                </FormGroup>
+            </Box>
             
         </Box>
     )

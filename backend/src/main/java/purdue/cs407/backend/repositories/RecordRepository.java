@@ -70,8 +70,8 @@ public interface RecordRepository extends JpaRepository<SleepRecord, Long> {
      * @param user - User we wish to get records from
      * @return Collection of records (can be empty)
      */
-    @Query(value = "SELECT s FROM SleepRecord s WHERE s.user = :user ORDER BY s.date DESC LIMIT 14")
-    Collection<SleepRecord> getLastTwoWeeks(@Param("user") User user);
+    @Query(value = "SELECT s FROM SleepRecord s WHERE s.user = :user ORDER BY s.date DESC LIMIT 15")
+    Collection<SleepRecord> getLastTwoWeeksAndOne(@Param("user") User user);
 
     /**
      * Check if a SleepRecord exists by a user with the given date.

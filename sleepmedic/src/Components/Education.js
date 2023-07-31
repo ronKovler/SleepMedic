@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -35,9 +35,11 @@ import axios from "axios";
 import {isMobile} from 'react-device-detect';
 import "./Education.css"
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function EducationPage() {
   const [t, i18n] = useTranslation("global");
+  const navigate = useNavigate();
   const [readingTitle, setReadingTitle] = useState(t("education.week1.day1.lesson1.title"));
   const [readings, setReadings] = useState(t("education.week1.day1.lesson1.reading"));
   const [weekOpen, setWeekOpen] = useState(0);
@@ -760,7 +762,16 @@ function EducationPage() {
     }
   ];
 
-  const findCurrentPage = (lesson, day, week, weekIndex, dayIndex) => {
+  function getCookiesDict() {
+    let cookies = document.cookie.split("; ");
+    let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
+        acc[key] = val.join('=');
+        return acc;
+    }, {});
+    return cookiesDict;
+  }
+
+    const findCurrentPage = (lesson, day, week, weekIndex, dayIndex) => {
     let currentLessonInd;
     for (var i = 0; i < day.lessons.length; i++) {
         if (day.lessons[i].title === lesson.title) {
@@ -771,6 +782,7 @@ function EducationPage() {
     console.log("weekIndex: " + weekIndex);
     console.log("dayIndex: " + dayIndex);
 
+
     setCurrentWeekIndex(weekIndex);
     console.log("The current weekIndex is: " + weekIndex);
     setCurrentDayIndex(dayIndex);
@@ -779,6 +791,14 @@ function EducationPage() {
     console.log("Current lesson index is: " + currentLessonInd);
   }
 
+  useEffect(() => {
+    //Check if not logged in and redirect.
+    const cookies = getCookiesDict();
+    if (cookies._auth == null) {
+        navigate("/")
+    }
+    
+  }, []);
   const handleButtonClick = (lesson, day, week, weekIndex, dayIndex) => {
     // Handle button click for a specific button
     setReadingTitle(lesson.title);

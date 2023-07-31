@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
 import {TextField, Button, Alert, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, Grid, Paper} from "@mui/material/";
 import axios from "axios";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import {useCookies} from "react-cookie";
@@ -281,9 +281,20 @@ function OpenProfilePage() {
             console.log('Failed to get reminders.');
         }
     }
+    function getCookiesDict() {
+        let cookies = document.cookie.split("; ");
+        let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
+            acc[key] = val.join('=');
+            return acc;
+        }, {});
+        return cookiesDict;
+    }
 
-    React.useEffect(() => {
-        
+    useEffect(() => {
+        const cookies = getCookiesDict();
+        if (cookies._auth == null) {
+            navigate("/")
+        }
         getReminders();
     }, []);
 
