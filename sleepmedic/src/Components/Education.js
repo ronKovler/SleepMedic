@@ -770,6 +770,7 @@ function EducationPage() {
     }, {});
     return cookiesDict;
   }
+
     const findCurrentPage = (lesson, day, week, weekIndex, dayIndex) => {
     let currentLessonInd;
     for (var i = 0; i < day.lessons.length; i++) {
@@ -781,15 +782,6 @@ function EducationPage() {
     console.log("weekIndex: " + weekIndex);
     console.log("dayIndex: " + dayIndex);
 
-  useEffect(() => {
-    //Check if not logged in and redirect.
-    const cookies = getCookiesDict();
-    if (cookies._auth == null) {
-        navigate("/")
-    }
-    
-  }, []);
-
 
     setCurrentWeekIndex(weekIndex);
     console.log("The current weekIndex is: " + weekIndex);
@@ -799,6 +791,14 @@ function EducationPage() {
     console.log("Current lesson index is: " + currentLessonInd);
   }
 
+  useEffect(() => {
+    //Check if not logged in and redirect.
+    const cookies = getCookiesDict();
+    if (cookies._auth == null) {
+        navigate("/")
+    }
+    
+  }, []);
   const handleButtonClick = (lesson, day, week, weekIndex, dayIndex) => {
     // Handle button click for a specific button
     setReadingTitle(lesson.title);
