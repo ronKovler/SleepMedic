@@ -258,7 +258,7 @@ function CreateRem() {
                     </Typography>
                     <Box display="flex" justifyContent="center" alignContent={'center'} >
                         <FormGroup  sx={{ '& .MuiFormControlLabel-root': { margin: 0 } }} style={{input: {boxSizing: 'border-box'}}} row={ true}>
-                        <FormControlLabel  key={checkedState[0]} control={<Checkbox checked={checkedState[0]} onClick={() => handleOnChangeCB(0)}/>} labelPlacement={"bottom"} label={t("reminder.sun")} sx={{ m: 1 }}/>
+                            <FormControlLabel  control={<Checkbox checked={checkedState[0]} onClick={() => handleOnChangeCB(0)}/>} labelPlacement={"bottom"} label={t("reminder.sun")} sx={{ m: 1 }}/>
                             <FormControlLabel control={<Checkbox checked={checkedState[1]} onClick={() => handleOnChangeCB(1)}/>} labelPlacement={"bottom"} label={t("reminder.mon")} sx={{ m: 1 }}/>
                             <FormControlLabel control={<Checkbox checked={checkedState[2]} onChange={() => handleOnChangeCB(2)}/>} labelPlacement={"bottom"} label={t("reminder.tue")} sx={{ m: 1 }}/>
                             <FormControlLabel control={<Checkbox checked={checkedState[3]} onChange={() => handleOnChangeCB(3)}/> } labelPlacement={"bottom"} label={t("reminder.wed")} sx={{ m: 1 }}/>
@@ -296,12 +296,12 @@ function CreateRem() {
                     <Typography variant="body" component="div" color="black" fontSize="14pt">
                         {/* Submitting and Canceling */}
                         <Box display="flex" justifyContent="center" paddingTop='20pt'>
-                        <Box flexGrow={1} paddingRight="5px">
-                            <Button href="/profilepage" variant='outlined' fullWidth>{t("reminder.cancel")}</Button>
-                        </Box>
-                        <Box flexGrow={1} paddingLeft="5px">
-                            <Button variant='contained' endIcon={<AddAlertOutlinedIcon/>} onClick={handleCreateReminder} fullWidth></Button>
-                        </Box>
+                            <Box flexGrow={1} paddingRight="5px">
+                                <Button href="/profilepage" variant='outlined' fullWidth>{t("reminder.cancel")}</Button>
+                            </Box>
+                            <Box flexGrow={1} paddingLeft="5px">
+                                <Button variant='contained' endIcon={<AddAlertOutlinedIcon/>} onClick={handleCreateReminder} fullWidth></Button>
+                            </Box>
                         </Box>
                     </Typography>
                 </Paper>
