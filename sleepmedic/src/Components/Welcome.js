@@ -147,17 +147,6 @@ function Welcome() {
                   {t("welcome.spanish")}
                 </Button><br/>
 
-                <Button sx={{
-                  textTransform: 'none', 
-                  width:'60%', 
-                  color: Object.is("French", selectedLanguage) ? 'black' : '#81899c',
-                  fontSize: '1.2rem',
-                  fontWeight: Object.is("French", selectedLanguage) ? 'bold' : 'regular'
-                  }} 
-                  variant={'uncontained'} onClick={() => handleLanguageChange('French')} >
-                  {"French"} {/* Add more language options here */}
-                </Button><br/>
-
                 <Button sx={{width: '55%'}} variant="contained" color="primary" onClick={(e) => navigate("/login")}>
                   {t("welcome.next")}
                 </Button>
