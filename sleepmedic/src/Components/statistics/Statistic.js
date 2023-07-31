@@ -341,15 +341,15 @@ export default function Statistics() {
             </Grid>
             <Box display="flex" justifyContent="center" alignContent={'center'} >
                 <FormGroup  sx={{ '& .MuiFormControlLabel-root': { margin: 1 } }} style={{input: {boxSizing: 'border-box'}}} row={ true}>
-                    <FormControlLabel control={<Checkbox checked={journalActivity} onClick={() => setJournalActivity(!journalActivity)}/>} labelPlacement={"bottom"} label={t("Exercise 🏋️‍♂️")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox checked={journalNaps} onChange={() => setJournalNaps(!journalNaps)}/>} labelPlacement={"bottom"} label={t("Naps 🛌")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox checked={journalCaffeine} onChange={() => setJournalCaffeine(!journalCaffeine)}/> } labelPlacement={"bottom"} label={t("Caffeine ☕")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox checked={journalAlcohol} onChange={() => setJournalAlcohol(!journalAlcohol)}/>} labelPlacement={"bottom"} label={t("Alcohol 🍺")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox checked={journalElectronics} onChange={() => setJournalElectronics(!journalElectronics)}/>} labelPlacement={"bottom"} label={t("Electronics 📺")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox checked={journalStaying} onChange={() => setJournalStaying(!journalStaying)}/>} labelPlacement={"bottom"} label={t("Staying 😰")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox checked={journalFalling} onClick={() => setJournalFalling(!journalFalling)}/>} labelPlacement={"bottom"} label={t("Falling 😫")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox checked={journalRacing} onClick={() => setJournalRacing(!journalRacing)}/>} labelPlacement={"bottom"} label={t("Racing 🤯")} sx={{ m: 2 }}/>
-                    <FormControlLabel control={<Checkbox checked={showAvg} onClick={() => setShowAvg(!showAvg)}/>} labelPlacement={"bottom"} label={t("Averages")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={'Show when you exercised'} checked={journalActivity} onClick={() => setJournalActivity(!journalActivity)}/>} labelPlacement={"bottom"} label={t("Exercise 🏋️‍♂️")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={'Show when you napped'} checked={journalNaps} onChange={() => setJournalNaps(!journalNaps)}/>} labelPlacement={"bottom"} label={t("Naps 🛌")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={'Show when you consumed caffeine'} checked={journalCaffeine} onChange={() => setJournalCaffeine(!journalCaffeine)}/> } labelPlacement={"bottom"} label={t("Caffeine ☕")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={'Show when you consumed alcohol'} checked={journalAlcohol} onChange={() => setJournalAlcohol(!journalAlcohol)}/>} labelPlacement={"bottom"} label={t("Alcohol 🍺")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={'Show when you used electronics'} checked={journalElectronics} onChange={() => setJournalElectronics(!journalElectronics)}/>} labelPlacement={"bottom"} label={t("Electronics 📺")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={'Show when you had difficulty staying asleep'} checked={journalStaying} onChange={() => setJournalStaying(!journalStaying)}/>} labelPlacement={"bottom"} label={t("Staying 😰")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={'Show when you had difficulty falling asleep'} checked={journalFalling} onClick={() => setJournalFalling(!journalFalling)}/>} labelPlacement={"bottom"} label={t("Falling 😫")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={'Show when you had racing thoughts'} checked={journalRacing} onClick={() => setJournalRacing(!journalRacing)}/>} labelPlacement={"bottom"} label={t("Racing 🤯")} sx={{ m: 2 }}/>
+                    <FormControlLabel control={<Checkbox title={'Show average line'} checked={showAvg} onClick={() => setShowAvg(!showAvg)}/>} labelPlacement={"bottom"} label={t("Averages")} sx={{ m: 2 }}/>
                 </FormGroup>
             </Box>
             
