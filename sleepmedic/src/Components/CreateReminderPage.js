@@ -216,7 +216,7 @@ function CreateRem() {
                         <FormControl
                         sx={{ width:'70%', marginTop: '10pt'}}>
                             <InputLabel sx={{ color: 'black'}} color="secondary" >{t("reminder.carrierPrompt")}</InputLabel>
-                            <Select labelId="Carrier Type" id="carrier-type" value={Carrier} label="To enable SMS notifications, please select your carrier" onChange={(e) => handleOnChangeCarrier(e.target.value)}>
+                            <Select sx={{ backgroundColor: 'white'}} labelId="Carrier Type" id="carrier-type" value={Carrier} label="To enable SMS notifications, please select your carrier" onChange={(e) => handleOnChangeCarrier(e.target.value)}>
                                 <MenuItem value="none">{t("reminder.emailPrefered")}</MenuItem>
                                 <MenuItem value="AT&T">AT&T</MenuItem>
                                 <MenuItem value="Boost Mobile">Boost Mobile</MenuItem>
@@ -238,7 +238,7 @@ function CreateRem() {
                         <FormControl
                         sx={{ width:'70%', marginTop: '10pt'}}>
                             <InputLabel sx={{ color: 'black'}} color="secondary" >{t("reminder.reminderTypePrompt")}</InputLabel>
-                            <Select labelId="Reminder Type" id="reminder-type" value={ReminderType} label="What type of reminder do you want?" onChange={(e) => handleOnChangeRemType(e.target.value)} >
+                            <Select sx={{backgroundColor: 'white'}} labelId="Reminder Type" id="reminder-type" value={ReminderType} label="What type of reminder do you want?" onChange={(e) => handleOnChangeRemType(e.target.value)} >
                                 <MenuItem value="Bedtime Reminder">{t("reminder.bedtimeReminder")}</MenuItem>
                                 <MenuItem value="Sleep Hygiene Reminder">{t("reminder.sleepHygieneReminder")}</MenuItem>
                             </Select>
@@ -277,13 +277,13 @@ function CreateRem() {
                         sx={{ width:'30%', marginTop: '10pt', marginRight: '5pt'}}>
                             <InputLabel shrink={true} sx={{ color: 'black'}} color="secondary" >{t("reminder.reminder-time")}</InputLabel>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <TimePicker label={t("reminder.reminder-time")} value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
+                                <TimePicker sx={{backgroundColor: 'white'}} label={t("reminder.reminder-time")} value={ReminderTime} onChange={(newTime) => setRemTime(newTime)}/>
                             </LocalizationProvider>
                         </FormControl>
                         <FormControl
                         sx={{ width:'30%', marginTop: '10pt', marginLeft: '5pt'}}>
                             <InputLabel sx={{ color: 'black'}} color="secondary" >{t("reminder.timezone")}</InputLabel>
-                            <Select labelId="Timezone" id="Timezone" value={Timezone} label="Timezone" onChange={(e) => handleOnChangeTimezone(e.target.value)}>
+                            <Select sx={{ backgroundColor: 'white'}} labelId="Timezone" id="Timezone" value={Timezone} label="Timezone" onChange={(e) => handleOnChangeTimezone(e.target.value)}>
                                 <MenuItem value="Pacific">{t("reminder.pacific")}</MenuItem>
                                 <MenuItem value="Mountain">{t("reminder.mountain")}</MenuItem>
                                 <MenuItem value="Central">{t("reminder.central")}</MenuItem>
@@ -300,7 +300,7 @@ function CreateRem() {
                                 <Button href="/profilepage" variant='outlined' fullWidth>{t("reminder.cancel")}</Button>
                             </Box>
                             <Box flexGrow={1} paddingLeft="5px">
-                                <Button variant='contained' endIcon={<AddAlertOutlinedIcon/>} onClick={handleCreateReminder} fullWidth></Button>
+                                <Button variant='contained' endIcon={<AddAlertOutlinedIcon/>} onClick={handleCreateReminder} fullWidth>{t("reminder.next")}</Button>
                             </Box>
                         </Box>
                     </Typography>
