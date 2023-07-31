@@ -12,7 +12,7 @@ import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useTranslation } from "react-i18next";
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { MobileTimePicker } from '@mui/x-date-pickers';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import axios from "axios";
 import { valueToPercent } from '@mui/base';
@@ -281,7 +281,7 @@ function CreateRem() {
                                 sx={{ width: '30%', marginTop: '10pt', marginRight: '5pt' }}>
                                 <InputLabel shrink={true} sx={{ color: 'black' }} color="secondary" >{t("reminder.reminder-time")}</InputLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <TimePicker sx={{ backgroundColor: 'white' }} label={t("reminder.reminder-time")} value={ReminderTime} onChange={(newTime) => setRemTime(newTime)} />
+                                    <MobileTimePicker sx={{ backgroundColor: 'white' }} label={t("reminder.reminder-time")} value={ReminderTime} onChange={(newTime) => setRemTime(newTime)} />
                                 </LocalizationProvider>
                             </FormControl>
                             <FormControl
