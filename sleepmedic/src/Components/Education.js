@@ -830,6 +830,21 @@ function EducationPage() {
         setCurrentDayIndex(tempNextDayIndex);
         setCurrentLessonIndex(tempNextLessonIndex);
         //console.log("Current line 819 page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex].title);
+
+        //setDayOpen(nextDayIndex) for the nextDayIndex
+        //setWeekOpen(nextWeekIndex) for the nextWeekIndex
+        /*if (Object.is(weekOpen, weekIndex)) {
+            setDayOpen(-1)
+            setWeekOpen(-1);
+        } else {
+            setWeekOpen(weekIndex)
+        }
+        if (Object.is(dayOpen, dayIndex)) {
+            setDayOpen(-1)
+        } else {
+            setDayOpen(dayIndex)
+        }   */
+
     }
     //if the current lesson is the last of the day, we go to the next day and the first lesson of that day
     else if ((currentLessonIndex == lessonPlan[currentWeekIndex].days[currentDayIndex].lessons.length-1)) {
@@ -841,6 +856,20 @@ function EducationPage() {
         tempNextLessonIndex = 0;
         setReadingTitle(lessonPlan[tempNextWeekIndex].days[tempNextDayIndex].lessons[tempNextLessonIndex].title);
         setReadings(lessonPlan[tempNextWeekIndex].days[tempNextDayIndex].lessons[tempNextLessonIndex].reading);
+        //setDayOpen(nextDayIndex) for the nextDayIndex
+        //setWeekOpen(nextWeekIndex) for the nextWeekIndex
+        /*if (Object.is(weekOpen, weekIndex)) {
+            setDayOpen(-1)
+            setWeekOpen(-1);
+        } else {
+            setWeekOpen(weekIndex)
+        }
+        if (Object.is(dayOpen, dayIndex)) {
+            setDayOpen(-1)
+        } else {
+            setDayOpen(dayIndex)
+        }   */
+
     }
     //if the lesson is not the last of the current day, we just go to the next lesson of the day.
     else {
