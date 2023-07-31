@@ -783,7 +783,7 @@ export default function Home() {
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} padding={'5% 5% 5% 0%'}>
             <Box width="100%" display="flex" alignItems="center" justifyContent="center">    
                 <LinearProgress sx={{ height: 20, width: '95%', background: '#a19b8c', '& .MuiLinearProgress-bar': {
-        backgroundColor: '#173e5c', // Set the progress bar color here
+        backgroundColor: '#57618E', // Set the progress bar color here
       } }}  value={eduBarValue} variant={ isLoading ? "indeterminate" : "determinate"}  />
             </Box>
             <Box >
