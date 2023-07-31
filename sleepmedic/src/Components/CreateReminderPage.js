@@ -300,7 +300,7 @@ function CreateRem() {
                             <Button href="/profilepage" variant='outlined' fullWidth>{t("reminder.cancel")}</Button>
                         </Box>
                         <Box flexGrow={1} paddingLeft="5px">
-                            <Button variant='contained' endIcon={<AddAlertOutlinedIcon/>} onClick={handleCreateReminder} fullWidth></Button>
+                            <Button variant='contained' endIcon={<AddAlertOutlinedIcon/>} onClick={handleCreateReminder} fullWidth>{t("reminder.create")}</Button>
                         </Box>
                         </Box>
                     </Typography>
