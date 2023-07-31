@@ -34,7 +34,19 @@
       "insightMessage": "Obtén información valiosa sobre tus patrones de sueño visualizando tus hábitos. Explora en la página de Información.",
       "weekly-advices": {
           "title": "Consejos Semanales",
-          "1": "Ya quiero echarme una siesta mañana."
+          "-1": "Ya quiero echarme una siesta mañana.",
+          "0": "",
+          "1": "",
+          "2": "",
+          "3": "",
+          "10": "",
+          "11": "",
+          "12": "",
+          "13": "",
+          "20": "",
+          "21": "",
+          "22": "",
+          "23": ""
       },
       "new-record": "Nuevo Registro",
       "input-prompt": {

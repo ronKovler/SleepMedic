@@ -34,7 +34,19 @@
         "insightMessage": "Gain valuable insights into your sleep patterns by visualizing your habits. Explore them on the Insights page.",
         "weekly-advices": {
             "title": "Weekly Advice",
-            "1": "I already want to take a nap tomorrow."
+            "-1": "You must record 14 nights of data before we can analyze your sleep.",
+            "0": "Your sleep efficiency is too high, it's best to be under 90%.",
+            "1": "Your sleep efficiency is too low, it's best to be around or greater than 85%",
+            "2": "You're spending too much time in bed, try getting in bed later around <VAR> instead.",
+            "3": "You're spending too much time in bed, try getting up earlier around <VAR> instead.",
+            "10": "You're not sleeping enough, most people need at least 7 hours!",
+            "11": "You're sleeping too much, try going to sleep later around <VAR> instead.",
+            "12": "Try waking up a little later around <VAR>",
+            "13": "Try going to sleep a little earlier around <VAR>",
+            "20": "Exercising regularly is recommended to rest better.",
+            "21": "Try avoiding electronics around the bed, blue light interferes with your body's processes.",
+            "22": "Remember to avoid caffeine 6 hours before bed.",
+            "23": "It is important to avoid alcohol before bed."
         },
         "new-record": "New Record",
         "input-prompt": {

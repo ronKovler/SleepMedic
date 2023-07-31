@@ -183,6 +183,8 @@ export default function Home() {
     // User data
     // INFO
     const[username, setUsername] = React.useState('User Name');
+    const [homeWeeklyAdvice, setHomeWeeklyAdvice] = React.useState("");
+    //const[advices, setAdvices] = React.useState([]);
     // AVG STATISTICS
     const[avgFallTime, setAvgFallTime] = React.useState('0');
     const[avgQuality, setAvgQuality] = React.useState('0');
@@ -294,18 +296,18 @@ export default function Home() {
         time = time.slice(0, 5);
         let hours = parseInt(time.slice(0, 2), 10);
         let remainder = time.slice(2);
-        if (hours > 21) {
+        if (hours > 21) {       //PM
             hours -= 12;
             return hours + remainder;
-        } else if (hours > 12) {
+        } else if (hours > 12) {    //PM
             hours -= 12;
             return "0" + hours + remainder;
-        } else if (hours > 9) {
+        } else if (hours > 9) {     //AM
             return hours + remainder;
-        } else if (hours === 0) {
+        } else if (hours === 0) {   //AM
             return '12' + remainder;
         }
-        return "0" + hours + remainder;
+        return "0" + hours + remainder;     //AM
     }
 
     function setPieData(res) {
@@ -444,6 +446,53 @@ export default function Home() {
         setPieEffData([{name: '0', value: 100 - res.data.efficiency}, {name: '1', value: res.data.efficiency, fill: '#2f875d'}])
     }
 
+
+    function getFormattedTimeForAdvice(time) {
+        console.log("got time: " + time)
+        time = time.slice(0, 5);
+        let hours = parseInt(time.slice(0, 2), 10);
+        let remainder = time.slice(2);
+        let am = "AM";
+        let pm = "PM";
+            if (hours > 21) {       //PM
+                hours -= 12;
+                return hours + remainder + pm;
+            } else if (hours > 12) {    //PM
+                hours -= 12;
+                return "0" + hours + remainder + pm;
+            } else if (hours > 9) {     //AM
+                return hours + remainder + am;
+            } else if (hours === 0) {   //AM
+                return '12' + remainder + am;
+            }
+            return "0" + hours + remainder + am;     //AM
+    }
+
+    function setWeeklyAdvices(advices) {
+        console.log("Inside setWeeklyAdvices");
+        console.log("advice from /info:", advices);
+        const helperStr = "home.weekly-advices.";
+        let tempAdvices = "";
+        for (var i = 0; i < advices.length; i++) {
+            //if var is not null, we need to do .replace() for <VAR> for the string according to adviceID.
+            console.log(t(helperStr + advices[i].adviceID.toString()));
+            if (advices[i].var != null) {
+                var time = getFormattedTimeForAdvice(advices[i].var);
+                tempAdvices += " - " + t(helperStr + advices[i].adviceID.toString()).replace("<VAR>", time) + "\n";
+                //tempAdvices += t(helperStr + advices[i].adviceID.toString()).replace("<VAR>", advices[i].var) + "\n\n";
+                setHomeWeeklyAdvice(tempAdvices);
+                console.log(tempAdvices);
+            }
+            //else if var is null, simply set the string according to adviceID.
+            else {
+                tempAdvices += " - " + t(helperStr + advices[i].adviceID.toString()) + "\n";
+                setHomeWeeklyAdvice(tempAdvices);
+            }
+            console.log("homeWeeklyAdvice" + homeWeeklyAdvice);
+            console.log(tempAdvices);
+        }
+    }
+
     async function getData() {
         
         const headers = getGetHeaders();
@@ -457,6 +506,13 @@ export default function Home() {
             setUsername(name);
             setEduBarLabel((res.data.progress * 100).toFixed(1) + "%");
             setEduBarValue(res.data.progress * 100);
+
+            //get advices for the user?
+            //setAdvices(res.data.advice);
+            console.log("Res.data.advices:", res.data.advice);
+            //console.log("my advice object:", advices);
+            setWeeklyAdvices(res.data.advice);
+
 
             //Get Calendar
             const date = new Date();
@@ -884,7 +940,9 @@ export default function Home() {
                                     {t("home.weekly-advices.title")}
                                 </Typography>
                                 <Typography variant='body' component='div' textAlign='left' paddingTop='10pt' paddingLeft='20pt' color='black' fontSize='16pt'>
-                                    {t("home.weekly-advices.1")}
+                                    {/*t("home.weekly-advices.-1")*/}
+                                    {/*homeWeeklyAdvice*/}
+                                    <div dangerouslySetInnerHTML={{ __html: homeWeeklyAdvice.replace(/\n/g, '<br />') }} />
                                 </Typography>
                             </Paper>
                         </Grid>
