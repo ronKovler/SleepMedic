@@ -20,6 +20,7 @@ import React, { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import AddAlertOutlinedIcon from '@mui/icons-material/AddAlertOutlined';
 
+//Grabbing cookies for API requests
 function getCookiesDict() {
     let cookies = document.cookie.split("; ");
     let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
@@ -29,19 +30,20 @@ function getCookiesDict() {
     return cookiesDict;
 }
 
-//Shaun
+//Main function for rendering the page, storing, and sending data to the backend.
 function CreateRem() {
+    //Form Entry Components
     const today = dayjs();
     const [Carrier, setCarrier] = useState("none");
     const [t, i18n] = useTranslation("global");
     const [ReminderType, setRemType] = useState("Bedtime Reminder");
-    //const [ReminderTime, setRemTime] = useState('');
     const [ReminderTime, setRemTime] = React.useState(today.set('hour', 22).set('minute', 30).set('second', 0));
     const [Timezone, setTimezone] = useState("Pacific");
     const daysOfWeek = [{ day: t("reminder.sun") }, { day: t("reminder.mon") }, { day: t("reminder.tue") }, { day: t("reminder.wed") }, { day: t("reminder.thu") }, { day: t("reminder.fri") }, { day: t("reminder.sat") }];
     const [checkedState, setCheckedState] = useState(
         [false, false, false, false, false, false, false]
     );
+    //Error Messages
     const [RemTypeErrMsg, setRemTypeErrMsg] = useState("");
     const reminderTypeErrMsg = t("reminder.reminderTypeErrMsg");
     const [daysInputErrMsg, setDaysErrMsg] = useState(false);
@@ -49,9 +51,10 @@ function CreateRem() {
     const [timeErrMsg, setRemTimeErrMsg] = useState("");
     const emptyTimeInputMsg = t("reminder.emptyTimeInputMsg");
     const badTimeInputFormat = t("reminder.badTimeInputFormat");
+
     const navigate = useNavigate();
 
-    //handleChange() method for Carrier
+    //handleChange() method for Carrier selection
     const handleOnChangeCarrier = (value) => {
         setCarrier(value);
     };
@@ -79,11 +82,12 @@ function CreateRem() {
         })
     };
 
-    //handleChange() method for Timezone
+    //handleChange() method for Timezone selection
     const handleOnChangeTimezone = (value) => {
         setTimezone(value);
     };
 
+    //Input Validation function for reminderType. Used in validate().
     const reminderTypeInputValidation = () => {
         if (ReminderType == "None") {
             //invoke state function
@@ -93,8 +97,9 @@ function CreateRem() {
         return true;
     };
 
+    //Input Validation function for days-selection. Used in validate()
     const daysInputValidation = () => {
-        //if there is at least one box selected, reset errMsg and return true
+        //if there is at least one box selected, reset errMsg to false and return true
         let len = checkedState.length;
         for (let i = 0; i < len; i++) {
             if (checkedState[i] == true) {
@@ -102,7 +107,7 @@ function CreateRem() {
                 return true;
             }
         }
-        //otherwise setDaysErrMsg("Please select at least one day to complete reminder creation" and return false.
+        //otherwise setDaysErrMsg and return false.
         setDaysErrMsg(true);
         return false;
     };
@@ -115,20 +120,21 @@ function CreateRem() {
         return false;
     };
 
+    //Main function that takes user inputs and fires off the API request to create a reminder.
     const handleCreateReminder = async (e) => {
         if (validate()) {
             e.preventDefault();
             const cookies = getCookiesDict();
             let tok = cookies._auth;
-            console.log('Create button clicked');
-            //grabbing the carrier type
+
+            //Grabbing the Carrier Type
             let chosenCarrier;
             if (Carrier == "none") {
                 chosenCarrier = null;
             }
             else chosenCarrier = Carrier;
 
-            //grabbing reminderType
+            //Grabbing reminderType
             let reminderTypeInt;
             if (ReminderType == "Bedtime Reminder") {
                 reminderTypeInt = 1;
@@ -139,11 +145,10 @@ function CreateRem() {
             }
 
             console.log("ReminderTime is: " + ReminderTime)
-            //grab ReminderTime and convert to the required format (hr:min:sec) (military)
             const militaryFormat = dayjs(ReminderTime).format('HH:mm:ss');
             console.log("military format of ReminderTime is: " + militaryFormat)
 
-            //grabbing the timezone selected by user
+            //Grabbing the timezone selected by user
             let chosenTimezone;
             if (Timezone == "Pacific") {
                 chosenTimezone = 0;
@@ -156,7 +161,7 @@ function CreateRem() {
             }
             else chosenTimezone = 3;    //Eastern
 
-            //grabbing the days selected by user
+            //Grabbing the days selected by user
             const selectedDays = checkedState
                 .map((isChecked, index) => (isChecked ? index : null))
                 .filter((day) => day !== null);
@@ -165,6 +170,7 @@ function CreateRem() {
                 "Access-Control-Allow-Origin": "https://api.sleepmedic.me:8443/",
                 "Authorization": 'Bearer ' + tok
             }
+            //Preparing user inputs to be sent to the backend.
             var reminderInfo = {
                 carrier: chosenCarrier,
                 timezone: chosenTimezone,

@@ -481,8 +481,7 @@ export default function Home() {
             console.log(t(helperStr + advices[i].adviceID.toString()));
             if (advices[i].var != null) {
                 var time = getFormattedTimeForAdvice(advices[i].var);
-                tempAdvices += " - " + t(helperStr + advices[i].adviceID.toString()).replace("<VAR>", time) + "\n";
-                //tempAdvices += t(helperStr + advices[i].adviceID.toString()).replace("<VAR>", advices[i].var) + "\n\n";
+                tempAdvices += " - " + t(helperStr + advices[i].adviceID.toString(), {VAR:time}) + "\n";
                 setHomeWeeklyAdvice(tempAdvices);
                 console.log(tempAdvices);
             }
@@ -499,7 +498,6 @@ export default function Home() {
     async function getData() {
 
         const headers = getGetHeaders();
-        //console.log(headers);
 
         try {
             // Get user name
@@ -555,7 +553,7 @@ export default function Home() {
     }
 
     function formatRecord() {
-        // TODO: add the boolean & String values to the record, format them as needed
+        //add boolean & String values to the record, format them as needed
         let monthFix = recordDate.get('month') + 1;
         const f_date = `${recordDate.get('year')}-${monthFix.toString().padStart(2, '0')}-${recordDate.get('date').toString().padStart(2, '0')}`;
         const f_downTime = `${downTime.get('hour').toString().padStart(2, '0')}:${downTime.get('minute').toString().padStart(2, '0')}:00`;
@@ -610,13 +608,6 @@ export default function Home() {
     const handleSubmit = async (e) => {
         const headers = getPostHeaders();
 
-        // if (recordDate > today) {
-        //     alert('You cannot record future data. Please try again.');
-        //     setRecordOpen(false);
-        //     resetInput();
-        //     return;
-        // }
-
         //add a flag/indicator for edit vs create new record.
         if (editMode) {
             try {
@@ -637,14 +628,7 @@ export default function Home() {
                 console.log('Failed to create record.');
             }
         }
-        /*try {
-            let record = formatRecord();
-            let res = await axios.post("https://api.sleepmedic.me:8443/home/create_record", record, {headers});
-        }
-        catch (err) {
-            alert("Already recorded!");
-            console.log('Failed to create record.');
-        }*/
+
         setRecordOpen(false);
         setEditMode(false);
         resetInput();
@@ -671,7 +655,7 @@ export default function Home() {
 
     // Popup window handlers
     function resetInput() {
-        // TODO: reset all booleans to default values (false), String to empty string
+        // reset all booleans to default values (false), String to empty string
         setPage(1);
         setRecordDate(today);
         setQuality(0);
@@ -761,16 +745,7 @@ export default function Home() {
             setRacingThoughts(res.data.racingThoughts);
 
             setDreams(res.data.dreams);
-            /*if (res.data.dreams != "") {
-                console.log("res.data.dreams: ", res.data.dreams);
-            }
-            else if (res.data.dreams === null) {
-                console.log("res.data.dreams came back as null");
-            }
-            else {
-                console.log("res.data.dreams is empty string");
-            }
-            console.log("dreams: ", dreams);    */
+
             if ((dreams === null) || (dreams === undefined)) {
                 setDreamsCB(false);
             }
@@ -786,34 +761,6 @@ export default function Home() {
         }
 
     };
-
-    // function CircularProgressWithLabel(props) {
-    //     return (
-    //       <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-    //         <CircularProgress variant="determinate" {...props} size="8rem" thickness={6}/>
-    //         <Box sx={{top: 0,left: 0,bottom: 0,right: 0,position: 'absolute',display: 'flex',alignItems: 'center',justifyContent: 'center',}}>
-    //           <Typography variant="h5" component="div" color="text.secondary" fontWeight='bold'>
-    //             {`${props.value.toFixed(1)}%`}
-    //           </Typography>
-    //         </Box>
-    //       </Box>
-    //     );
-    // }
-
-    // CircularProgressWithLabel.propTypes = {
-    //     value: PropTypes.number.isRequired,
-    // };
-
-
-    function pieOver(val) {
-
-    }
-
-    function pieExits(val) {
-
-    }
-
-
 
     function AveragePieChart() {
         return isLoading ? (
@@ -936,7 +883,7 @@ export default function Home() {
                                     </Grid>
                                 </Grid>
                                 <Box display="flex" alignItems="center" justifyContent="center" paddingBottom='10pt'>
-                                    <Button onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon />} variant="contained">Create Reminder</Button>
+                                    <Button onClick={() => navigate('/createreminder')} endIcon={<NotificationAddOutlinedIcon />} variant="contained">{t("home.createReminder")}</Button>
                                 </Box>
                             </Paper>
                         </Grid>
@@ -1059,7 +1006,7 @@ export default function Home() {
                 <DialogTitle>
                     <Grid container columns={2} justify='flex-end' alignItems='center'>
                         <Grid item xs={1}>
-                            {isNewRecord ? "New Record" : "Edit Record"}
+                            {isNewRecord ? t("home.input-prompt.new-record") : t("home.input-prompt.edit-record")}
                         </Grid>
                         <Grid item xs={1}>
                             <Box sx={{ display: 'flex', flexDirection: 'row-reverse' }}>

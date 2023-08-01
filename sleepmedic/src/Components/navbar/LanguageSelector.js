@@ -11,6 +11,7 @@ const LanguageSelector = () => {
   const handleChangeLanguage = (event) => {
     i18n.changeLanguage(event.target.value);
     localStorage.setItem("i18nextLang", event.target.value)
+    window.location.reload(false)
   };
 
   return (

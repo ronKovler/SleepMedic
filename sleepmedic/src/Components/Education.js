@@ -40,17 +40,21 @@ import { useNavigate } from 'react-router-dom';
 function EducationPage() {
   const [t, i18n] = useTranslation("global");
   const navigate = useNavigate();
+  //Title of the lesson
   const [readingTitle, setReadingTitle] = useState(t("education.week1.day1.lesson1.title"));
+  //Lesson Content
   const [readings, setReadings] = useState(t("education.week1.day1.lesson1.reading"));
+  //Tracking which tabs are open on the Table of Contents
   const [weekOpen, setWeekOpen] = useState(0);
   const [dayOpen, setDayOpen] = useState(0);
-
+  //Tracking what Week, Day, and Lesson of the lesson plan the user is looking at.
   const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
 
   const [progress, setProgress] = useState([]);
 
+  //Full structure of the Lesson Plan for our Educational component. Based off resources shared by Dr. Shah
   const lessonPlan = [
     {
       week: t("education.week1.title"),
@@ -780,6 +784,7 @@ function EducationPage() {
 
   }
 
+  //Grabbing cookies for API request
   function getCookiesDict() {
     let cookies = document.cookie.split("; ");
     let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
@@ -789,24 +794,18 @@ function EducationPage() {
     return cookiesDict;
   }
 
-    const findCurrentPage = (lesson, day, week, weekIndex, dayIndex) => {
+  //Helper function used to find out where the user is in the Lesson Plan
+  const findCurrentPage = (lesson, day, week, weekIndex, dayIndex) => {
     let currentLessonInd;
     for (var i = 0; i < day.lessons.length; i++) {
         if (day.lessons[i].title === lesson.title) {
             currentLessonInd = i;
         }
     }
-    console.log("Inside findCurrentPage()");
-    console.log("weekIndex: " + weekIndex);
-    console.log("dayIndex: " + dayIndex);
-
 
     setCurrentWeekIndex(weekIndex);
-    console.log("The current weekIndex is: " + weekIndex);
     setCurrentDayIndex(dayIndex);
-    console.log("The current day is " + dayIndex);
     setCurrentLessonIndex(currentLessonInd);
-    console.log("Current lesson index is: " + currentLessonInd);
   }
 
   useEffect(() => {
@@ -814,16 +813,18 @@ function EducationPage() {
     const cookies = getCookiesDict();
     if (cookies._auth == null) {
         navigate("/")
-    } 
+    }
     
   }, []);
+
+  //handle() function for when user clicks on the Table of Contents
   const handleButtonClick = (lesson, day, week, weekIndex, dayIndex) => {
-    // Handle button click for a specific button
     setReadingTitle(lesson.title);
     setReadings(lesson.reading);
     findCurrentPage(lesson, day, week, weekIndex, dayIndex);
   };
 
+  //Get cookies for API request
   function getCookiesDict() {
         let cookies = document.cookie.split("; ");
         let cookiesDict = cookies.map(cookie => cookie.split('=')).reduce((acc, [key, ...val]) => {
@@ -852,11 +853,43 @@ function EducationPage() {
     return headers;
   }
 
+  //handle() function for the Back btn
+  const handleBackButtonClick = () => {
+    let tempBackWeekIndex;
+    let tempBackDayIndex;
+    let tempBackLessonIndex;
+    //if in the first lesson of the first day of the current week, back --> last lesson of day 7 of the week before
+    if ((currentLessonIndex == 0) && (currentDayIndex == 0)) {
+        tempBackWeekIndex = currentWeekIndex - 1;
+        tempBackDayIndex = 6;
+        tempBackLessonIndex = lessonPlan[currentWeekIndex-1].days[6].lessons.length-1;
+        setReadingTitle(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].title);
+        setReadings(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].reading);
+    }
+    //if in the first lesson of the current day of the current week, back --> last lesson of the day before
+    else if (currentLessonIndex == 0) {
+        tempBackWeekIndex = currentWeekIndex;
+        tempBackDayIndex = currentDayIndex - 1;
+        tempBackLessonIndex = lessonPlan[currentWeekIndex].days[currentDayIndex - 1].lessons.length-1;
+        setReadingTitle(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].title);
+        setReadings(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].reading);
+    }
+    //if in a lesson that is not first of current day, back --> previous lesson of current day.
+    else {
+        tempBackWeekIndex = currentWeekIndex;
+        tempBackDayIndex = currentDayIndex;
+        tempBackLessonIndex = currentLessonIndex - 1;
+        setReadingTitle(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].title);
+        setReadings(lessonPlan[tempBackWeekIndex].days[tempBackDayIndex].lessons[tempBackLessonIndex].reading);
+    }
+    //reset the global currentWeek, Day, and Lesson variables
+    setCurrentWeekIndex(tempBackWeekIndex);
+    setCurrentDayIndex(tempBackDayIndex);
+    setCurrentLessonIndex(tempBackLessonIndex);
+  }
+
+  //handle() function for the Next btn
   const handleNextButtonClick = async() => {
-    console.log("Inside handleNextButtonClick");
-    console.log("currentWeekIndex is: " + currentWeekIndex);
-    console.log("currentDayIndex is: " + currentDayIndex);
-    console.log("currentLessonIndex is: " + currentLessonIndex);
     let tempNextWeekIndex;
     let tempNextDayIndex;
     let tempNextLessonIndex;
@@ -876,22 +909,6 @@ function EducationPage() {
         setCurrentWeekIndex(tempNextWeekIndex);
         setCurrentDayIndex(tempNextDayIndex);
         setCurrentLessonIndex(tempNextLessonIndex);
-        //console.log("Current line 819 page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex].title);
-
-        //setDayOpen(nextDayIndex) for the nextDayIndex
-        //setWeekOpen(nextWeekIndex) for the nextWeekIndex
-        /*if (Object.is(weekOpen, weekIndex)) {
-            setDayOpen(-1)
-            setWeekOpen(-1);
-        } else {
-            setWeekOpen(weekIndex)
-        }
-        if (Object.is(dayOpen, dayIndex)) {
-            setDayOpen(-1)
-        } else {
-            setDayOpen(dayIndex)
-        }   */
-
     }
     //if the current lesson is the last of the day, we go to the next day and the first lesson of that day
     else if ((currentLessonIndex == lessonPlan[currentWeekIndex].days[currentDayIndex].lessons.length-1)) {
@@ -903,20 +920,6 @@ function EducationPage() {
         tempNextLessonIndex = 0;
         setReadingTitle(lessonPlan[tempNextWeekIndex].days[tempNextDayIndex].lessons[tempNextLessonIndex].title);
         setReadings(lessonPlan[tempNextWeekIndex].days[tempNextDayIndex].lessons[tempNextLessonIndex].reading);
-        //setDayOpen(nextDayIndex) for the nextDayIndex
-        //setWeekOpen(nextWeekIndex) for the nextWeekIndex
-        /*if (Object.is(weekOpen, weekIndex)) {
-            setDayOpen(-1)
-            setWeekOpen(-1);
-        } else {
-            setWeekOpen(weekIndex)
-        }
-        if (Object.is(dayOpen, dayIndex)) {
-            setDayOpen(-1)
-        } else {
-            setDayOpen(dayIndex)
-        }   */
-
     }
     //if the lesson is not the last of the current day, we just go to the next lesson of the day.
     else {
@@ -930,9 +933,11 @@ function EducationPage() {
     setCurrentWeekIndex(tempNextWeekIndex);
     setCurrentDayIndex(tempNextDayIndex);
     setCurrentLessonIndex(tempNextLessonIndex);
-    console.log("Current page title is " + lessonPlan[currentWeekIndex].days[currentDayIndex].lessons[currentLessonIndex].title);
+
+    //for debugging purposes
     console.log("Currently, completedDay is: ", completedDay);
-    //if completedDay is not undefined, do the PATCH request.
+    //Here, we perform a PATCH request for storing the user's progress through the educational curriculum
+    //if completedDay is not undefined, do the PATCH request for progress.
     if (typeof completedDay !== "undefined") {
         const headers = getPostHeaders();
         try {
@@ -1058,7 +1063,7 @@ function EducationPage() {
             </Grid>
             <Grid container direction={'row'} xs spacing={2} paddingTop={1}>
               <Grid item xs textAlign={'right'} >
-              <Button startIcon={<ArrowBackOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}}>
+              <Button startIcon={<ArrowBackOutlinedIcon/>} variant="contained" color="primary" sx={{textAlign:'right'}} onClick={handleBackButtonClick}>
                   {t("education.back")}
                 </Button>
               </Grid>
