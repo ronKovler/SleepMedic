@@ -53,6 +53,9 @@ import { useNavigate } from 'react-router-dom';
 import { ResponsiveContainer, PieChart, Pie, Label } from 'recharts';
 import { Refresh } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import es from 'dayjs/locale/es';
+import en from 'dayjs/locale/en';
+
 import Stack from '@mui/material/Stack';
 const calendarTheme = createTheme({
     components: {
@@ -971,9 +974,11 @@ export default function Home() {
                             <Paper elevation={3} sx={{ backgroundColor: '#D9D3E4', minWidth: isMobile ? 300 : 320 }}>
                                 <Grid container columns={1} >
                                     <Grid item xs={12} md={6} lg={4} sx={{ minWidth: isMobile ? 300 : 320 }}>
-                                        <LocalizationProvider adapterLocale={i18n.language} dateAdapter={AdapterDayjs}>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={i18n.language} >
                                             <Box sx={{ minWidth: isMobile ? 300 : 320 }}>
+                                                
                                                 <DateCalendar
+                                                    
                                                     reduceAnimations={true}
                                                     // theme={calendarTheme} 
                                                     showDaysOutsideCurrentMonth

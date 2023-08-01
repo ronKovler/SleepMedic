@@ -12,8 +12,6 @@ import { height } from '@mui/system';
 import { isMobile } from 'react-device-detect';
 
 
-
-
 function Welcome() {
   let navigate = useNavigate();
   const [started, setStarted] = useState(false);
