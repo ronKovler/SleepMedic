@@ -63,7 +63,7 @@ export default function Navbar() {
                 {/* PUT settings here? */}
                 <LanguageSelector />
                 {/* When more buttons added, probably use ButtonGroup for better UI */}
-                <IconButton title={t("navbar.insights")} href="/statistics" size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: 'white'}}>
+                <IconButton title={t("navbar.insights")} href="/statistics" size="large" edge="start" aria-label="menu" sx={{  color: 'white'}}>
                     <LegendToggleIcon />
                 </IconButton>
                 <Typography  variant="h6" sx={{ mr:2, flexGrow: 1, fontWeight: 'bold', color: 'white'}} textAlign={'center'}>
