@@ -754,7 +754,7 @@ export default function Home() {
         }
         catch (err) {
             console.log("clicked on day without record, make a new one");
-            setEditMode(true);  
+            setEditMode(false);  
             setRecordOpen(true);
               
             setRecordDate(dayClicked)
